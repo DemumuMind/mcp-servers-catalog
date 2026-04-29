@@ -16,11 +16,15 @@ export default async function OfficialServersPage({
       <div className="text-center py-8">
         <h1 className="text-3xl font-bold mb-4">Официальные MCP серверы</h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {servers.map((server) => (
-          <ServerCard key={server.id} server={server} locale={locale} />
-        ))}
-      </div>
+      {servers.length === 0 ? (
+        <p className="text-center text-muted-foreground py-8">Нет серверов</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {servers.map((server) => (
+            <ServerCard key={server.id} server={server} locale={locale} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

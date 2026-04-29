@@ -3,11 +3,12 @@
 import { useState, useCallback } from 'react'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 export function SearchBar() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const [query, setQuery] = useState(searchParams.get('q') || '')
 
   const handleSearch = useCallback((value: string) => {
@@ -18,8 +19,8 @@ export function SearchBar() {
     } else {
       params.delete('q')
     }
-    router.push(`?${params.toString()}`)
-  }, [router, searchParams])
+    router.push(`${pathname}?${params.toString()}`)
+  }, [router, searchParams, pathname])
 
   return (
     <div className="relative">

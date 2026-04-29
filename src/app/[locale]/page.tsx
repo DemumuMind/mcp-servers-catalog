@@ -20,7 +20,7 @@ export default async function HomePage({
 
   const serverFilters = category !== 'all' ? { category } : undefined
   const featuredServers = await getServers({ featured: true, ...serverFilters })
-  const latestServers = await getServers(serverFilters)
+  const latestServers = await getServers({ featured: false, ...serverFilters })
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
@@ -43,21 +43,29 @@ export default async function HomePage({
       {/* Featured */}
       <section>
         <SectionHeader title="Рекомендуемые MCP" href={`/${locale}/all`} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {featuredServers.map((server) => (
-            <ServerCard key={server.id} server={server} locale={locale} />
-          ))}
-        </div>
+        {featuredServers.length === 0 ? (
+          <p className="text-center text-muted-foreground py-8">Нет рекомендуемых серверов</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {featuredServers.map((server) => (
+              <ServerCard key={server.id} server={server} locale={locale} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Latest */}
       <section>
         <SectionHeader title="Последние MCP" href={`/${locale}/all?sort=newest`} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {latestServers.slice(0, 10).map((server) => (
-            <ServerCard key={server.id} server={server} locale={locale} />
-          ))}
-        </div>
+        {latestServers.length === 0 ? (
+          <p className="text-center text-muted-foreground py-8">Нет серверов</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {latestServers.slice(0, 10).map((server) => (
+              <ServerCard key={server.id} server={server} locale={locale} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* FAQ */}

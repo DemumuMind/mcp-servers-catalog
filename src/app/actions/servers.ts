@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
 
 const serverSchema = z.object({
@@ -27,7 +28,7 @@ export async function getServers(filters?: {
   featured?: boolean
   search?: string
 }) {
-  const where: any = {}
+  const where: Prisma.ServerWhereInput = {}
 
   if (filters?.category && filters.category !== 'all') {
     where.category = filters.category
@@ -68,8 +69,7 @@ export async function createServer(data: z.infer<typeof serverSchema>) {
       fullSlug: `${validated.owner}/${validated.repo}`,
     },
   })
-  revalidatePath('/')
-  revalidatePath('/all')
+  revalidatePath('/', 'layout')
   return server
 }
 
@@ -82,13 +82,12 @@ export async function updateServer(id: string, data: z.infer<typeof serverSchema
       fullSlug: `${validated.owner}/${validated.repo}`,
     },
   })
-  revalidatePath('/')
-  revalidatePath(`/servers/${validated.owner}/${validated.repo}`)
+  revalidatePath('/', 'layout')
+  revalidatePath(`/servers/${validated.owner}/${validated.repo}`, 'layout')
   return server
 }
 
 export async function deleteServer(id: string) {
   await prisma.server.delete({ where: { id } })
-  revalidatePath('/')
-  revalidatePath('/all')
+  revalidatePath('/', 'layout')
 }

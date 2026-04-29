@@ -23,11 +23,15 @@ export default async function AllServersPage({
           <SearchBar />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {servers.map((server) => (
-          <ServerCard key={server.id} server={server} locale={locale} />
-        ))}
-      </div>
+      {servers.length === 0 ? (
+        <p className="text-center text-muted-foreground py-8">Нет серверов</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {servers.map((server) => (
+            <ServerCard key={server.id} server={server} locale={locale} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
