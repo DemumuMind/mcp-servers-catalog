@@ -12,6 +12,18 @@ function createPrismaClient() {
   return new PrismaClient({ adapter })
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient()
+function getPrismaClient() {
+  const cached = globalForPrisma.prisma
+  // If cached client exists but doesn't have the 'client' model (e.g. stale schema),
+  // discard it and create a fresh one
+  if (cached && typeof (cached as any).client === 'object') {
+    return cached
+  }
+  const fresh = createPrismaClient()
+  if (process.env.NODE_ENV !== 'production') {
+    globalForPrisma.prisma = fresh
+  }
+  return fresh
+}
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+export const prisma = getPrismaClient()
