@@ -5,12 +5,15 @@ import { SearchBar } from '@/components/search-bar'
 export const dynamic = 'force-dynamic'
 
 export default async function AllServersPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>
   searchParams: Promise<{ q?: string }>
 }) {
-  const params = await searchParams
-  const servers = await getServers({ search: params.q })
+  const { locale } = await params
+  const sp = await searchParams
+  const servers = await getServers({ search: sp.q })
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -22,7 +25,7 @@ export default async function AllServersPage({
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {servers.map((server) => (
-          <ServerCard key={server.id} server={server} />
+          <ServerCard key={server.id} server={server} locale={locale} />
         ))}
       </div>
     </div>

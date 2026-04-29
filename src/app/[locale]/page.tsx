@@ -45,7 +45,7 @@ export default async function HomePage({
         <SectionHeader title="Рекомендуемые MCP" href={`/${locale}/all`} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {featuredServers.map((server) => (
-            <ServerCard key={server.id} server={server} />
+            <ServerCard key={server.id} server={server} locale={locale} />
           ))}
         </div>
       </section>
@@ -55,7 +55,7 @@ export default async function HomePage({
         <SectionHeader title="Последние MCP" href={`/${locale}/all?sort=newest`} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {latestServers.slice(0, 10).map((server) => (
-            <ServerCard key={server.id} server={server} />
+            <ServerCard key={server.id} server={server} locale={locale} />
           ))}
         </div>
       </section>

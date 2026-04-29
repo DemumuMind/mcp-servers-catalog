@@ -14,11 +14,16 @@ interface ServerCardProps {
     tags: string[]
     category: string
   }
+  locale?: string
 }
 
-export function ServerCard({ server }: ServerCardProps) {
+export function ServerCard({ server, locale }: ServerCardProps) {
+  const detailPath = locale
+    ? `/${locale}/servers/${server.owner}/${server.repo}`
+    : `/servers/${server.owner}/${server.repo}`
+
   return (
-    <Link href={`/servers/${server.owner}/${server.repo}`}>
+    <Link href={detailPath}>
       <Card className="h-full hover:shadow-md transition-shadow">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between">

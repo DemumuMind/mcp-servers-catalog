@@ -3,7 +3,12 @@ import { ServerCard } from '@/components/server-card'
 
 export const dynamic = 'force-dynamic'
 
-export default async function OfficialServersPage() {
+export default async function OfficialServersPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
   const servers = await getServers({ isOfficial: true })
 
   return (
@@ -13,7 +18,7 @@ export default async function OfficialServersPage() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {servers.map((server) => (
-          <ServerCard key={server.id} server={server} />
+          <ServerCard key={server.id} server={server} locale={locale} />
         ))}
       </div>
     </div>
