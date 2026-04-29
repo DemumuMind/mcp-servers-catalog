@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { auth } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 export default async function AdminLayout({
   children,
@@ -9,8 +9,9 @@ export default async function AdminLayout({
 }) {
   const session = await auth()
 
+  // Middleware handles auth redirects; this is a fallback for direct access
   if (!session || session.user?.role !== 'admin') {
-    redirect('/')
+    redirect('/admin/login')
   }
 
   return (
