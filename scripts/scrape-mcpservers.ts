@@ -16,7 +16,8 @@ interface McpServerSeed {
   featured?: boolean
 }
 
-const servers: McpServerSeed[] = [
+// Fallback hardcoded servers if scraping fails
+const fallbackServers: McpServerSeed[] = [
   {
     name: 'GitHub',
     description: "GitHub's official MCP Server for repository management, issue tracking, and code search",
@@ -294,7 +295,148 @@ const servers: McpServerSeed[] = [
   },
 ]
 
+/**
+ * Decode basic HTML entities
+ */
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+}
+
+/**
+ * Extract owner and repo from a URL or slug
+ */
+function extractOwnerRepo(url: string, slug: string): { owner: string; repo: string } {
+  // Try GitHub URL first
+  const githubMatch = url.match(/^https:\/\/github\.com\/([^\/]+)\/([^\/]+)/)
+  if (githubMatch) {
+    return {
+      owner: decodeURIComponent(githubMatch[1]),
+      repo: decodeURIComponent(githubMatch[2]),
+    }
+  }
+
+  // Try npmjs URL
+  const npmMatch = url.match(/^https:\/\/www\.npmjs\.com\/package\/([^\/]+)\/([^\/]+)/)
+  if (npmMatch) {
+    return {
+      owner: npmMatch[1].replace(/^@/, ''),
+      repo: npmMatch[2],
+    }
+  }
+
+  // Fallback to slug
+  const slugParts = slug.split('/')
+  if (slugParts.length >= 2) {
+    return {
+      owner: decodeURIComponent(slugParts[0]),
+      repo: decodeURIComponent(slugParts[1]),
+    }
+  }
+
+  // Last resort: use slug as owner, last path segment as repo
+  const urlParts = new URL(url).pathname.split('/').filter(Boolean)
+  return {
+    owner: slug.replace(/^@/, '') || 'unknown',
+    repo: urlParts[urlParts.length - 1] || 'unknown',
+  }
+}
+
+/**
+ * Scrape MCP servers from mcpservers.org/ru/
+ */
+async function scrapeServersFromWebsite(): Promise<McpServerSeed[]> {
+  const url = 'https://mcpservers.org/ru/'
+  console.log(`Fetching ${url}...`)
+
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+  }
+
+  const html = await response.text()
+  console.log(`Received ${html.length} bytes of HTML`)
+
+  // Extract server objects from TanStack Router SSR data
+  // The page embeds TSR dehydrated state in script tags with $R variable
+  const regex =
+    /\$R\[\d+\]=\{id:\d+,slug:"([^"]+)",name:"([^"]*)",description:"([^"]*)",content:[^,]*,url:"([^"]+)",category:"([^"]+)",tags:\$R\[\d+\]=\[([^\]]*)\],featured:(!0|!1)\}/g
+
+  const servers: McpServerSeed[] = []
+  let match: RegExpExecArray | null
+  const seenSlugs = new Set<string>()
+
+  while ((match = regex.exec(html)) !== null) {
+    const slug = match[1]
+    const name = decodeHtmlEntities(match[2])
+    const description = decodeHtmlEntities(match[3])
+    const serverUrl = match[4]
+    const category = match[5]
+    const tagsStr = match[6]
+    const featured = match[7] === '!0'
+
+    // Skip duplicates (featured and latest arrays may overlap)
+    if (seenSlugs.has(slug)) continue
+    seenSlugs.add(slug)
+
+    // Parse tags
+    const tags = tagsStr
+      .split(',')
+      .map((t) => t.replace(/"/g, '').trim())
+      .filter(Boolean)
+
+    // Determine official status from tags
+    const isOfficial = tags.includes('official')
+
+    // Extract owner/repo
+    const { owner, repo } = extractOwnerRepo(serverUrl, slug)
+
+    servers.push({
+      name: name || slug,
+      description: description || 'No description available',
+      owner,
+      repo,
+      category: category || 'other',
+      isOfficial,
+      isSponsored: false,
+      githubUrl: serverUrl,
+      tags: tags.length > 0 ? tags : ['mcp'],
+      featured,
+    })
+  }
+
+  console.log(`Parsed ${servers.length} unique servers from HTML`)
+  return servers
+}
+
 async function scrapeMcpServers() {
+  let servers: McpServerSeed[]
+
+  // Attempt scraping first
+  try {
+    servers = await scrapeServersFromWebsite()
+    if (servers.length === 0) {
+      console.warn('No servers scraped from website. Using fallback data...')
+      servers = fallbackServers
+    } else {
+      console.log(`Successfully scraped ${servers.length} servers from mcpservers.org`)
+    }
+  } catch (err) {
+    console.error('Failed to scrape mcpservers.org:', err)
+    console.warn('Using fallback hardcoded servers...')
+    servers = fallbackServers
+  }
+
   console.log(`Starting to seed ${servers.length} MCP servers...`)
 
   let created = 0
