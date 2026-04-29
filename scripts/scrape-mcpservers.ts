@@ -16,6 +16,14 @@ interface McpServerSeed {
   featured?: boolean
 }
 
+interface McpClientSeed {
+  name: string
+  description: string
+  url: string
+  icon?: string
+  featured?: boolean
+}
+
 // Fallback hardcoded servers if scraping fails
 const fallbackServers: McpServerSeed[] = [
   {
@@ -295,6 +303,141 @@ const fallbackServers: McpServerSeed[] = [
   },
 ]
 
+// Fallback hardcoded clients if scraping fails
+const fallbackClients: McpClientSeed[] = [
+  {
+    name: 'MCP Dock',
+    description: 'A macOS app to centralize and sync MCP configs for Claude Code, Codex, Cursor, and more.',
+    url: 'https://apps.apple.com/app/mcp-dock/id6748305262',
+    featured: true,
+  },
+  {
+    name: '5ire',
+    description: 'Open source cross-platform desktop AI assistant that supports tools through MCP servers',
+    url: 'https://github.com/nanbingxyz/5ire',
+  },
+  {
+    name: 'AgentAI',
+    description: 'Rust library designed to simplify AI agent creation with MCP server integration',
+    url: 'https://github.com/AdamStrojek/rust-agentai',
+  },
+  {
+    name: 'AgenticFlow',
+    description: 'No-code AI platform for building agents that connect 2,500+ APIs and 10,000+ tools via MCP',
+    url: 'https://agenticflow.ai/mcp',
+  },
+  {
+    name: 'Amazon Q CLI',
+    description: 'Open-source agentic coding assistant for terminals with full MCP server support',
+    url: 'https://github.com/aws/amazon-q-developer-cli',
+  },
+  {
+    name: 'Apify MCP Tester',
+    description: 'Open-source client connecting to MCP servers using Server-Sent Events',
+    url: 'https://apify.com/jiri.spilka/tester-mcp-client',
+  },
+  {
+    name: 'Augment Code',
+    description: 'AI-powered coding platform for VS Code and JetBrains with autonomous agents and MCP support',
+    url: 'https://augmentcode.com/',
+  },
+  {
+    name: 'BeeAI Framework',
+    description: 'Open-source framework for building, deploying, and serving powerful agentic workflows with MCP integration',
+    url: 'https://i-am-bee.github.io/beeai-framework',
+  },
+  {
+    name: 'BoltAI',
+    description: 'Native, all-in-one AI chat client with MCP support for multiple AI providers',
+    url: 'https://boltai.com/',
+  },
+  {
+    name: 'Claude Code',
+    description: 'Interactive agentic coding tool from Anthropic with MCP integration for prompts and tools',
+    url: 'https://claude.ai/code',
+  },
+  {
+    name: 'Claude Desktop App',
+    description: "Anthropic's desktop application with comprehensive MCP support for local and remote servers",
+    url: 'https://claude.ai/download',
+  },
+  {
+    name: 'Cline',
+    description: 'Autonomous coding agent in VS Code that edits files, runs commands, and uses MCP servers',
+    url: 'https://github.com/cline/cline',
+  },
+  {
+    name: 'Continue',
+    description: 'Open-source AI code assistant with built-in support for all MCP features',
+    url: 'https://github.com/continuedev/continue',
+  },
+  {
+    name: 'Cursor',
+    description: 'AI code editor with support for MCP tools in Cursor Composer',
+    url: 'https://cursor.com/',
+  },
+  {
+    name: 'fast-agent',
+    description: 'Python Agent framework with full multi-modal MCP support and end-to-end tests',
+    url: 'https://github.com/evalstate/fast-agent',
+  },
+  {
+    name: 'Goose',
+    description: 'Open source AI agent for software development with MCP functionality through tools',
+    url: 'https://github.com/block/goose',
+  },
+  {
+    name: 'JetBrains AI Assistant',
+    description: 'AI-powered features for software development available in all JetBrains IDEs with MCP support',
+    url: 'https://plugins.jetbrains.com/plugin/22282-jetbrains-ai-assistant',
+  },
+  {
+    name: 'LibreChat',
+    description: 'Open-source, customizable AI chat UI with MCP integration for agent tools',
+    url: 'https://github.com/danny-avila/LibreChat',
+  },
+  {
+    name: 'mcp-agent',
+    description: 'Simple, composable framework to build agents using Model Context Protocol',
+    url: 'https://github.com/lastmile-ai/mcp-agent',
+  },
+  {
+    name: 'Postman',
+    description: 'Popular API client with full MCP server testing and debugging support',
+    url: 'https://postman.com/downloads',
+  },
+  {
+    name: 'Roo Code',
+    description: 'AI coding assistance platform with MCP tools and resources integration',
+    url: 'https://roocode.com/',
+  },
+  {
+    name: 'Sourcegraph Cody',
+    description: 'AI coding assistant with MCP resource support through OpenCTX integration',
+    url: 'https://sourcegraph.com/cody',
+  },
+  {
+    name: 'VS Code GitHub Copilot',
+    description: 'VS Code integration with GitHub Copilot featuring comprehensive MCP support',
+    url: 'https://code.visualstudio.com/',
+  },
+  {
+    name: 'Warp',
+    description: 'Intelligent terminal with AI and MCP support for natural language command line interaction',
+    url: 'https://www.warp.dev/',
+  },
+  {
+    name: 'Windsurf Editor',
+    description: 'Agentic IDE with AI Flow system and MCP support for collaborative development',
+    url: 'https://codeium.com/windsurf',
+  },
+  {
+    name: 'Zed',
+    description: 'High-performance code editor with MCP support focusing on prompt templates and tools',
+    url: 'https://zed.dev/',
+  },
+]
+
 /**
  * Decode basic HTML entities
  */
@@ -419,6 +562,62 @@ async function scrapeServersFromWebsite(): Promise<McpServerSeed[]> {
   return servers
 }
 
+/**
+ * Scrape MCP clients from mcpservers.org/ru/clients
+ */
+async function scrapeClientsFromWebsite(): Promise<McpClientSeed[]> {
+  const url = 'https://mcpservers.org/ru/clients'
+  console.log(`\nFetching ${url}...`)
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+
+    const html = await response.text()
+    console.log(`Received ${html.length} bytes of HTML for clients`)
+
+    // Client data is embedded in the page but with different structure than servers
+    // Use a broader regex to find client entries with url, name, description
+    const regex =
+      /\$R\[\d+\]=\{[^}]*url:"([^"]+)"[^}]*name:"([^"]*)"[^}]*description:"([^"]*)"[^}]*\}/g
+
+    const clients: McpClientSeed[] = []
+    let match: RegExpExecArray | null
+    const seenUrls = new Set<string>()
+
+    while ((match = regex.exec(html)) !== null) {
+      const clientUrl = match[1]
+      const name = decodeHtmlEntities(match[2])
+      const description = decodeHtmlEntities(match[3])
+
+      // Skip duplicates and non-client URLs (filter out server URLs)
+      if (seenUrls.has(clientUrl)) continue
+      if (clientUrl.includes('/servers/') || clientUrl.includes('mcpservers.org')) continue
+      seenUrls.add(clientUrl)
+
+      clients.push({
+        name: name || 'Unknown Client',
+        description: description || 'No description available',
+        url: clientUrl,
+        featured: false,
+      })
+    }
+
+    console.log(`Parsed ${clients.length} unique clients from HTML`)
+    return clients
+  } catch (err) {
+    console.error('Failed to scrape clients:', err)
+    return []
+  }
+}
+
 async function scrapeMcpServers() {
   let servers: McpServerSeed[]
 
@@ -492,11 +691,65 @@ async function scrapeMcpServers() {
   }
 
   console.log(`\nDone! Created ${created}, Updated ${updated}. Total: ${servers.length} servers.`)
+
+  // Also scrape and seed clients
+  let clients: McpClientSeed[]
+
+  try {
+    clients = await scrapeClientsFromWebsite()
+    if (clients.length === 0) {
+      console.warn('No clients scraped from website. Using fallback data...')
+      clients = fallbackClients
+    } else {
+      console.log(`Successfully scraped ${clients.length} clients from mcpservers.org`)
+    }
+  } catch (err) {
+    console.error('Failed to scrape clients:', err)
+    console.warn('Using fallback hardcoded clients...')
+    clients = fallbackClients
+  }
+
+  console.log(`\nStarting to seed ${clients.length} MCP clients...`)
+
+  let clientsCreated = 0
+  let clientsUpdated = 0
+
+  for (const client of clients) {
+    const existing = await prisma.client.findFirst({
+      where: { url: client.url },
+    })
+
+    if (existing) {
+      await prisma.client.update({
+        where: { id: existing.id },
+        data: {
+          name: client.name,
+          description: client.description,
+          featured: client.featured ?? false,
+        },
+      })
+      clientsUpdated++
+      console.log(`  Updated client: ${client.name}`)
+    } else {
+      await prisma.client.create({
+        data: {
+          name: client.name,
+          description: client.description,
+          url: client.url,
+          featured: client.featured ?? false,
+        },
+      })
+      clientsCreated++
+      console.log(`  Created client: ${client.name}`)
+    }
+  }
+
+  console.log(`\nDone! Created ${clientsCreated}, Updated ${clientsUpdated}. Total: ${clients.length} clients.`)
 }
 
 scrapeMcpServers()
   .catch((err) => {
-    console.error('Failed to seed MCP servers:', err)
+    console.error('Failed to seed MCP servers and clients:', err)
     process.exit(1)
   })
   .finally(async () => {

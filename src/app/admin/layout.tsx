@@ -24,6 +24,9 @@ export default async function AdminLayout({
           <Link href="/admin/servers" className="block p-2 rounded hover:bg-accent">
             Servers
           </Link>
+          <Link href="/admin/clients" className="block p-2 rounded hover:bg-accent">
+            Clients
+          </Link>
         </nav>
       </aside>
       <main className="flex-1 p-8 overflow-auto">{children}</main>
