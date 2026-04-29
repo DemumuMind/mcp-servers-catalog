@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import { GitBranch } from 'lucide-react'
 
-export function Footer() {
+interface FooterProps {
+  locale: string
+}
+
+export function Footer({ locale }: FooterProps) {
   return (
     <footer className="border-t bg-muted/50">
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -11,16 +15,16 @@ export function Footer() {
             <span>Awesome MCP Servers</span>
           </div>
           <nav className="flex items-center gap-6 text-sm text-muted-foreground">
-            <Link href="/all" className="hover:text-foreground transition-colors">
+            <Link href={`/${locale}/all`} className="hover:text-foreground transition-colors">
               Все серверы
             </Link>
-            <Link href="/official" className="hover:text-foreground transition-colors">
+            <Link href={`/${locale}/official`} className="hover:text-foreground transition-colors">
               Официальные
             </Link>
-            <Link href="/clients" className="hover:text-foreground transition-colors">
+            <Link href={`/${locale}/clients`} className="hover:text-foreground transition-colors">
               Клиенты
             </Link>
-            <Link href="/submit" className="hover:text-foreground transition-colors">
+            <Link href={`/${locale}/submit`} className="hover:text-foreground transition-colors">
               Добавить
             </Link>
           </nav>

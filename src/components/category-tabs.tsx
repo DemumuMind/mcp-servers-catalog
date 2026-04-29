@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const categories = [
@@ -20,26 +22,38 @@ const categories = [
 
 interface CategoryTabsProps {
   activeCategory: string
-  onCategoryChange: (category: string) => void
 }
 
-export function CategoryTabs({ activeCategory, onCategoryChange }: CategoryTabsProps) {
+export function CategoryTabs({ activeCategory }: CategoryTabsProps) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   return (
     <div className="flex flex-wrap gap-2">
-      {categories.map((category) => (
-        <button
-          key={category.id}
-          onClick={() => onCategoryChange(category.id)}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-            activeCategory === category.id
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-muted hover:bg-muted/80'
-          )}
-        >
-          {category.label}
-        </button>
-      ))}
+      {categories.map((category) => {
+        const params = new URLSearchParams(searchParams.toString())
+        if (category.id === 'all') {
+          params.delete('category')
+        } else {
+          params.set('category', category.id)
+        }
+        const href = params.toString() ? `${pathname}?${params.toString()}` : pathname
+
+        return (
+          <Link
+            key={category.id}
+            href={href}
+            className={cn(
+              'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+              activeCategory === category.id
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted hover:bg-muted/80'
+            )}
+          >
+            {category.label}
+          </Link>
+        )
+      })}
     </div>
   )
 }
