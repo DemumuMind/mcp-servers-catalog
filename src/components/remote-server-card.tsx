@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -7,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Copy, Check } from 'lucide-react'
 
 interface RemoteServerCardProps {
   server: {
@@ -20,6 +22,18 @@ interface RemoteServerCardProps {
 }
 
 export function RemoteServerCard({ server }: RemoteServerCardProps) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(server.endpoint)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Silently fail if clipboard API is unavailable
+    }
+  }
+
   return (
     <Card className="h-full">
       <CardHeader className="pb-2">
@@ -43,6 +57,16 @@ export function RemoteServerCard({ server }: RemoteServerCardProps) {
           <code className="text-xs bg-muted px-2 py-1 rounded flex-1 truncate">
             {server.endpoint}
           </code>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-7 w-7 shrink-0"
+            onClick={handleCopy}
+            title={copied ? 'Скопировано!' : 'Копировать URL'}
+            aria-label={copied ? 'Скопировано!' : 'Копировать URL'}
+          >
+            {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button size="sm">Подключить</Button>

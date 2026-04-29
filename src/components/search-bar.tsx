@@ -5,29 +5,21 @@ import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-interface SearchBarProps {
-  onSearch?: (query: string) => void
-}
-
-export function SearchBar({ onSearch }: SearchBarProps) {
+export function SearchBar() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') || '')
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value)
-    if (onSearch) {
-      onSearch(value)
+    const params = new URLSearchParams(searchParams)
+    if (value) {
+      params.set('q', value)
     } else {
-      const params = new URLSearchParams(searchParams)
-      if (value) {
-        params.set('q', value)
-      } else {
-        params.delete('q')
-      }
-      router.push(`?${params.toString()}`)
+      params.delete('q')
     }
-  }, [onSearch, router, searchParams])
+    router.push(`?${params.toString()}`)
+  }, [router, searchParams])
 
   return (
     <div className="relative">
