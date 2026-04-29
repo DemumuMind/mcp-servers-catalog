@@ -1,9 +1,13 @@
-import { prisma } from '../lib/db'
+import { prisma } from '../lib/db-pglite'
 import { hash } from 'bcryptjs'
 
 async function main() {
   // Seed admin user
-  const password = await hash(process.env.ADMIN_PASSWORD || 'admin123', 10)
+  const adminPassword = process.env.ADMIN_PASSWORD
+  if (!adminPassword) {
+    throw new Error('ADMIN_PASSWORD environment variable is required')
+  }
+  const password = await hash(adminPassword, 10)
   await prisma.user.upsert({
     where: { email: process.env.ADMIN_EMAIL || 'admin@example.com' },
     update: {},
@@ -72,4 +76,5 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect()
+    process.exit(0)
   })
