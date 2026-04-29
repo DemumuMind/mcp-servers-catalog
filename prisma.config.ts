@@ -9,7 +9,6 @@ type Env = {
 }
 
 export default defineConfig({
-  earlyAccess: true,
   schema: 'prisma/schema.prisma',
   migrations: {
     path: 'prisma/migrations',
