@@ -24,7 +24,7 @@ export function Header({ locale }: HeaderProps) {
             Клиенты
           </Link>
           <Link href={`/${locale}/submit`} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Добавить
+            Отправить
           </Link>
         </nav>
       </div>

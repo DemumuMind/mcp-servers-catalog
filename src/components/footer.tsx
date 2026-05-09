@@ -25,7 +25,7 @@ export function Footer({ locale }: FooterProps) {
               Клиенты
             </Link>
             <Link href={`/${locale}/submit`} className="hover:text-foreground transition-colors">
-              Добавить
+              Отправить
             </Link>
           </nav>
           <p className="text-sm text-muted-foreground">
