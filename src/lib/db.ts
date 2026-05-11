@@ -6,6 +6,7 @@ import { PrismaPGlite } from 'pglite-prisma-adapter'
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
   pgliteInstance: PGlite | undefined
+  dbFailed: boolean | undefined
 }
 
 function getDataDir(): string {
@@ -41,25 +42,79 @@ function createPrismaClient(): PrismaClient {
   return new PrismaClient({ adapter })
 }
 
+// Create a mock Prisma client that returns empty results for all queries
+// Used as fallback when database is unavailable (e.g., on Vercel serverless)
+function createNullPrismaClient(): PrismaClient {
+  const handler = {
+    get(_target: any, prop: string) {
+      if (prop === '$connect' || prop === '$disconnect' || prop === '$transaction' || prop === '$queryRaw' || prop === '$executeRaw') {
+        return async () => {
+          console.warn(`[DB] Mock Prisma: ${prop} called, database unavailable`)
+          return prop === '$queryRaw' ? [] : undefined
+        }
+      }
+      if (prop === '$extends') {
+        return () => createNullPrismaClient()
+      }
+      // Return a proxy for model methods (findMany, findUnique, etc.)
+      return new Proxy({}, {
+        get(_t, method) {
+          return async () => {
+            console.warn(`[DB] Mock Prisma: ${prop}.${String(method)} called, returning empty result`)
+            if (method === 'count' || method === 'aggregate') return 0
+            if (method === 'findUnique' || method === 'findFirst') return null
+            if (method === 'groupBy') return []
+            return []
+          }
+        }
+      })
+    }
+  }
+  return new Proxy({} as PrismaClient, handler) as PrismaClient
+}
+
 function getPrismaClient(): PrismaClient {
+  // If DB already failed, return null client immediately
+  if (globalForPrisma.dbFailed) {
+    return createNullPrismaClient()
+  }
+
   const cached = globalForPrisma.prisma
   if (cached) {
     return cached
   }
-  const fresh = createPrismaClient()
-  if (process.env.NODE_ENV !== 'production') {
-    globalForPrisma.prisma = fresh
+
+  try {
+    const fresh = createPrismaClient()
+    if (process.env.NODE_ENV !== 'production') {
+      globalForPrisma.prisma = fresh
+    }
+    return fresh
+  } catch (err) {
+    console.error('[DB] Failed to create Prisma client, using null fallback:', err)
+    globalForPrisma.dbFailed = true
+    return createNullPrismaClient()
   }
-  return fresh
 }
 
 // Lazy export — don't initialize at module load time
 let _prisma: PrismaClient | undefined
+let _dbFailed = false
 
 export const prisma = new Proxy({} as PrismaClient, {
   get(_target, prop) {
+    if (_dbFailed && globalForPrisma.dbFailed) {
+      return (createNullPrismaClient() as any)[prop]
+    }
     if (!_prisma) {
-      _prisma = getPrismaClient()
+      try {
+        _prisma = getPrismaClient()
+      } catch (err) {
+        console.error('[DB] Lazy init failed:', err)
+        _dbFailed = true
+        globalForPrisma.dbFailed = true
+        _prisma = createNullPrismaClient()
+      }
     }
     return (_prisma as any)[prop]
   },
@@ -69,8 +124,10 @@ export const prisma = new Proxy({} as PrismaClient, {
 export function resetDatabaseConnection() {
   console.log('[DB] Resetting database connection...')
   _prisma = undefined
+  _dbFailed = false
   globalForPrisma.prisma = undefined
   globalForPrisma.pgliteInstance = undefined
+  globalForPrisma.dbFailed = undefined
 }
 
 // Helper to execute Prisma queries with automatic retry on PGLite crash
@@ -79,7 +136,7 @@ export async function withDbRetry<T>(fn: (prisma: PrismaClient) => Promise<T>): 
     return await fn(prisma)
   } catch (err: any) {
     const message = err?.message || String(err)
-    if (message.includes('Aborted') || message.includes('RuntimeError')) {
+    if (message.includes('Aborted') || message.includes('RuntimeError') || message.includes('PGlite')) {
       console.warn('[DB] PGLite crashed, resetting and retrying...')
       resetDatabaseConnection()
       // Small delay to let filesystem settle
