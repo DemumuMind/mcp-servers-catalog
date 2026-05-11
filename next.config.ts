@@ -1,13 +1,18 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
-import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
-const withAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-})
+let withAnalyzer = (config: NextConfig) => config
+if (process.env.ANALYZE === 'true') {
+  try {
+    const withBundleAnalyzer = require('@next/bundle-analyzer')
+    withAnalyzer = withBundleAnalyzer({ enabled: true })
+  } catch {
+    console.warn('@next/bundle-analyzer not installed, skipping bundle analysis')
+  }
+}
 
 const nextConfig: NextConfig = {
   output: 'standalone',
