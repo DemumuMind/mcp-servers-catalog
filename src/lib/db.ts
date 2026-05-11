@@ -47,14 +47,17 @@ function createPrismaClient(): PrismaClient {
 function createNullPrismaClient(): PrismaClient {
   const handler = {
     get(_target: any, prop: string) {
-      if (prop === '$connect' || prop === '$disconnect' || prop === '$transaction' || prop === '$queryRaw' || prop === '$executeRaw') {
+      if (['$connect', '$disconnect', '$transaction', '$queryRaw', '$executeRaw', '$queryRawUnsafe', '$executeRawUnsafe'].includes(prop)) {
         return async () => {
           console.warn(`[DB] Mock Prisma: ${prop} called, database unavailable`)
-          return prop === '$queryRaw' ? [] : undefined
+          return prop.startsWith('$query') ? [] : undefined
         }
       }
-      if (prop === '$extends') {
+      if (prop === '$extends' || prop === '$on') {
         return () => createNullPrismaClient()
+      }
+      if (prop === '$use') {
+        return () => {}
       }
       // Return a proxy for model methods (findMany, findUnique, etc.)
       return new Proxy({}, {
@@ -76,6 +79,13 @@ function createNullPrismaClient(): PrismaClient {
 function getPrismaClient(): PrismaClient {
   // If DB already failed, return null client immediately
   if (globalForPrisma.dbFailed) {
+    return createNullPrismaClient()
+  }
+
+  // On Vercel serverless, PGLite/WASM doesn't work - use null client
+  if (process.env.VERCEL || process.env.VERCEL_ENV) {
+    console.warn('[DB] Vercel serverless detected, using null Prisma client (no DB)')
+    globalForPrisma.dbFailed = true
     return createNullPrismaClient()
   }
 
