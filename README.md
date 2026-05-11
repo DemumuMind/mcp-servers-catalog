@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Awesome MCP Servers
 
-## Getting Started
+Коллекция серверов и клиентов для Model Context Protocol (MCP). Платформа для поиска, сравнения и обмена MCP серверами.
 
-First, run the development server:
+## 🚀 Функции
+
+### Для пользователей
+- 🔍 **Поиск и фильтрация** — находите серверы по категориям, тегам, названию
+- ⭐ **Закладки** — сохраняйте понравившиеся серверы
+- ⭐ **Оценки** — ставьте рейтинг серверам 1-5 звёзд
+- 💬 **Комментарии** — обсуждайте серверы с сообществом
+- 📊 **История просмотров** — отслеживайте просмотренные серверы
+- 🔔 **Уведомления** — получайте уведомления о статусе заявок и ответах
+- 👤 **Профиль** — управляйте своим аккаунтом, закладками, комментариями
+
+### Для администраторов
+- 📋 **Управление заявками** — одобрение, отклонение, удаление
+- 📊 **Аналитика** — графики, статистика, экспорт CSV
+- 🔄 **Синхронизация GitHub** — автоматическое обновление stars/forks
+- 💾 **Бэкап и восстановление** — SQL дампы базы данных
+- 📡 **RSS/JSON Feed** — фиды с новыми серверами
+
+## 🛠 Технологии
+
+- **Next.js 16** — App Router, Server Actions
+- **Prisma 7 + PGLite** — ORM и встроенная PostgreSQL
+- **NextAuth v5** — аутентификация (email/password + admin credentials)
+- **Tailwind CSS + shadcn/ui** — стилизация и компоненты
+- **recharts** — графики и аналитика
+- **Playwright + Vitest** — тестирование
+
+## 📦 Установка
 
 ```bash
+# Клонирование
+git clone <repo-url>
+cd mcpservers-clone
+
+# Установка зависимостей
+npm install
+
+# Настройка окружения
+cp .env.example .env
+# Отредактируйте .env
+
+# Генерация Prisma Client и миграции
+npx prisma generate
+npx tsx scripts/migrate-view-history.ts
+npx tsx scripts/migrate-notifications.ts
+
+# Запуск dev сервера
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Переменные окружения
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Переменная | Описание | Обязательная |
+|---|---|---|
+| `DATABASE_DIR` | Путь к PGLite директории | Да |
+| `AUTH_SECRET` | Секрет NextAuth | Да |
+| `ADMIN_EMAIL` | Email администратора | Да |
+| `ADMIN_PASSWORD` | Пароль администратора | Да |
+| `GITHUB_TOKEN` | GitHub PAT для API | Нет |
+| `SMTP_*` | Настройки почты для уведомлений | Нет |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚢 Деплой
 
-## Learn More
+### Vercel
+1. Подключите репозиторий к Vercel
+2. Установите переменные окружения в dashboard
+3. Деплой произойдёт автоматически
 
-To learn more about Next.js, take a look at the following resources:
+### Docker
+```bash
+docker-compose up -d
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Самостоятельный сервер
+```bash
+npm run build
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📝 API
 
-## Deploy on Vercel
+### Server Actions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `getServersPublic(page, search, category, tag)` — получить серверы
+- `toggleBookmark(userId, serverId)` — добавить/удалить закладку
+- `rateServer(userId, serverId, value)` — оценить сервер
+- `addComment(userId, serverId, content)` — добавить комментарий
+- `searchServers(query)` — умный поиск с ранжированием
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+См. [docs/API.md](docs/API.md) для полной документации.
+
+## 🧪 Тесты
+
+```bash
+# Unit тесты
+npm run test:unit
+
+# E2E тесты
+npm run test:e2e
+```
+
+## 📄 Лицензия
+
+MIT

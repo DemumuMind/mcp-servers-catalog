@@ -1,6 +1,8 @@
-import { getServers } from '@/app/actions/servers'
+import { getServersPublic } from '@/app/actions/public'
 import { ServerCard } from '@/components/server-card'
-import { SearchBar } from '@/components/search-bar'
+import { AutocompleteSearch } from '@/components/autocomplete-search'
+import { InfiniteServerList } from '@/components/infinite-server-list'
+import { SortDropdown } from '@/components/sort-dropdown'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,28 +11,54 @@ export default async function AllServersPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ q?: string }>
+  searchParams: Promise<{ q?: string; category?: string; official?: string; remote?: string; sort?: string }>
 }) {
   const { locale } = await params
   const sp = await searchParams
-  const servers = await getServers({ search: sp.q })
+  const search = sp.q
+  const category = sp.category
+  const onlyOfficial = sp.official === 'true'
+  const onlyRemote = sp.remote === 'true'
+  const sortBy = sp.sort || 'featured'
+
+  const { servers, pages, currentPage } = await getServersPublic(
+    1,
+    search,
+    category,
+    undefined,
+    onlyOfficial,
+    undefined,
+    onlyRemote,
+    sortBy
+  )
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="text-center py-8">
         <h1 className="text-3xl font-bold mb-4">Все MCP серверы</h1>
         <div className="flex justify-center">
-          <SearchBar />
+          <AutocompleteSearch locale={locale} defaultValue={search} />
         </div>
       </div>
+
+      <div className="flex justify-end mb-4">
+        <SortDropdown currentSort={sortBy} locale={locale} />
+      </div>
+
       {servers.length === 0 ? (
         <p className="text-center text-muted-foreground py-8">Нет серверов</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {servers.map((server) => (
-            <ServerCard key={server.id} server={server} locale={locale} />
-          ))}
-        </div>
+        <InfiniteServerList
+          initialServers={servers as any}
+          initialPage={currentPage}
+          totalPages={pages}
+          locale={locale}
+          category={category}
+          search={search}
+          onlyOfficial={onlyOfficial}
+          onlyRemote={onlyRemote}
+          sortBy={sortBy}
+        />
       )}
     </div>
   )

@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /ru/profile/
+Disallow: /en/profile/
+
+Sitemap: https://mcpservers.org/sitemap.xml
+
+# AI crawlers — be polite
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Crawl-delay: 1

@@ -128,3 +128,18 @@
     @apply font-sans;
   }
 }
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--velocity-x, 50px), calc(var(--velocity-y, -100px) + 200px)) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confetti-fall 1.5s ease-out forwards;
+}

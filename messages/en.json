@@ -1,0 +1,122 @@
+{
+  "Metadata": {
+    "title": "Awesome MCP Servers",
+    "description": "Collection of servers for Model Context Protocol. Find, compare and use MCP servers for your AI."
+  },
+  "Navigation": {
+    "home": "Home",
+    "all": "All Servers",
+    "official": "Official",
+    "clients": "Clients",
+    "submit": "Submit",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Sign Out",
+    "profile": "Profile",
+    "bookmarks": "Bookmarks",
+    "settings": "Settings",
+    "search": "Search MCP servers..."
+  },
+  "Home": {
+    "heroTitle": "Awesome MCP Servers",
+    "heroDescription": "Collection of servers for Model Context Protocol",
+    "featured": "Featured MCP",
+    "trending": "Trending Now",
+    "allServers": "All MCP",
+    "showAll": "Show all →",
+    "noResults": "No results",
+    "noServers": "No servers",
+    "officialOnly": "Official only"
+  },
+  "Server": {
+    "stars": "stars",
+    "forks": "forks",
+    "official": "Official",
+    "sponsored": "sponsored",
+    "category": "Category",
+    "github": "GitHub",
+    "endpoint": "Endpoint",
+    "authType": "Auth Type",
+    "viewOnGithub": "View on GitHub",
+    "related": "Related Servers",
+    "comments": "Comments",
+    "addComment": "Add comment",
+    "rating": "Rating",
+    "bookmark": "Bookmark",
+    "removeBookmark": "Remove bookmark"
+  },
+  "Profile": {
+    "title": "Profile",
+    "bookmarks": "Bookmarks",
+    "comments": "Comments",
+    "ratings": "Ratings",
+    "history": "View History",
+    "settings": "Settings",
+    "name": "Name",
+    "email": "Email",
+    "changePassword": "Change Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "save": "Save",
+    "emailNotifications": "Email notifications",
+    "notificationsDesc": "Receive notifications about submission status and comment replies",
+    "clearHistory": "Clear history",
+    "joined": "Member since",
+    "noBookmarks": "You don't have any bookmarks yet",
+    "noComments": "You haven't left any comments yet",
+    "noRatings": "You haven't rated any servers yet",
+    "noHistory": "View history is empty"
+  },
+  "Admin": {
+    "dashboard": "Dashboard",
+    "servers": "Servers",
+    "clients": "Clients",
+    "submissions": "Submissions",
+    "users": "Users",
+    "analytics": "Analytics",
+    "backup": "Backup",
+    "settings": "Settings"
+  },
+  "Auth": {
+    "loginTitle": "Sign In",
+    "registerTitle": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "confirmPassword": "Confirm password",
+    "loginButton": "Sign In",
+    "registerButton": "Sign Up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "adminLink": "Admin login"
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications"
+  },
+  "Compare": {
+    "title": "Compare Servers",
+    "selectServers": "Select at least 2 servers to compare",
+    "characteristic": "Characteristic",
+    "link": "Link"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "submit": "Submit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "all": "All"
+  }
+}

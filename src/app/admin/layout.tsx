@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { auth } from '@/lib/auth'
-import { redirect } from 'next/navigation'
+import AdminLoginForm from '@/components/admin-login-form'
+import { AdminNav } from '@/components/admin-nav'
 
 export default async function AdminLayout({
   children,
@@ -9,26 +9,17 @@ export default async function AdminLayout({
 }) {
   const session = await auth()
 
-  // Middleware handles auth redirects; this is a fallback for direct access
-  if (!session || session.user?.role !== 'admin') {
-    redirect('/admin/login')
+  if (!session?.user || session.user.role !== 'admin') {
+    return (
+      <div className="min-h-screen">
+        <AdminLoginForm />
+      </div>
+    )
   }
 
   return (
     <div className="flex h-screen">
-      <aside className="w-64 bg-muted border-r p-4">
-        <nav className="space-y-2">
-          <Link href="/admin" className="block p-2 rounded hover:bg-accent">
-            Dashboard
-          </Link>
-          <Link href="/admin/servers" className="block p-2 rounded hover:bg-accent">
-            Servers
-          </Link>
-          <Link href="/admin/clients" className="block p-2 rounded hover:bg-accent">
-            Clients
-          </Link>
-        </nav>
-      </aside>
+      <AdminNav email={session.user.email ?? ''} />
       <main className="flex-1 p-8 overflow-auto">{children}</main>
     </div>
   )

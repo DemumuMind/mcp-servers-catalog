@@ -1,17 +1,28 @@
-import { getClients } from '@/app/actions/clients'
-import { ClientForm } from '@/components/admin/client-form'
-import { ClientDataTable } from '@/components/admin/client-data-table'
+import { getClients, deleteClients } from '@/app/actions/clients'
+import { Button } from '@/components/ui/button'
+import { ClientFormDialog } from '@/components/admin/client-form-dialog'
+import { BulkClientTable } from '@/components/admin/bulk-client-table'
+
+export const dynamic = 'force-dynamic'
 
 export default async function AdminClientsPage() {
-  const clients = await getClients({})
+  const clients = await getClients()
+
+  async function handleDelete(ids: string[]) {
+    'use server'
+    await deleteClients(ids)
+  }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Clients Management</h1>
-        <ClientForm mode="create" />
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Clients</h1>
+        <ClientFormDialog>
+          <Button>Добавить клиент</Button>
+        </ClientFormDialog>
       </div>
-      <ClientDataTable data={clients} />
+
+      <BulkClientTable clients={clients} deleteAction={handleDelete} />
     </div>
   )
 }

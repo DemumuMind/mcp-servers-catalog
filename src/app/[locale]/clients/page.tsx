@@ -7,9 +7,10 @@ export const dynamic = 'force-dynamic'
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: { q?: string }
+  searchParams: Promise<{ q?: string }>
 }) {
-  const clients = await getClients({ search: searchParams.q })
+  const { q } = await searchParams
+  const clients = await getClients({ search: q })
   const featuredClients = clients.filter((c) => c.featured)
   const regularClients = clients.filter((c) => !c.featured)
 
@@ -41,7 +42,7 @@ export default async function ClientsPage({
         <h2 className="text-xl font-semibold mb-4">Все клиенты</h2>
         {regularClients.length === 0 && clients.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
-            {searchParams.q ? 'Нет клиентов, соответствующих поиску' : 'Нет клиентов'}
+            {q ? 'Нет клиентов, соответствующих поиску' : 'Нет клиентов'}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

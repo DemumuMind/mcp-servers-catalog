@@ -5,11 +5,11 @@ import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
-export function SearchBar() {
+export function SearchBar({ defaultValue }: { defaultValue?: string }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const [query, setQuery] = useState(searchParams.get('q') || '')
+  const [query, setQuery] = useState(searchParams.get('q') || defaultValue || '')
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value)

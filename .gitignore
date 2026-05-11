@@ -43,3 +43,6 @@ next-env.d.ts
 
 # pglite
 /.pglite/
+
+*storybook.log
+storybook-static

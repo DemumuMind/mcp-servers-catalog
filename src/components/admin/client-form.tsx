@@ -52,8 +52,11 @@ export function ClientForm({ mode, client }: ClientFormProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button>{mode === 'create' ? 'Add Client' : 'Edit'}</Button>} />
+    <>
+      <Button onClick={() => setOpen(true)}>
+        {mode === 'create' ? 'Add Client' : 'Edit'}
+      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{mode === 'create' ? 'Add New Client' : 'Edit Client'}</DialogTitle>
@@ -88,5 +91,6 @@ export function ClientForm({ mode, client }: ClientFormProps) {
         </form>
       </DialogContent>
     </Dialog>
+    </>
   )
 }

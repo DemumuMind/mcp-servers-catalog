@@ -75,8 +75,11 @@ export function ServerForm({ mode, server }: ServerFormProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button>{mode === 'create' ? 'Add Server' : 'Edit'}</Button>} />
+    <>
+      <Button onClick={() => setOpen(true)}>
+        {mode === 'create' ? 'Add Server' : 'Edit'}
+      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
@@ -186,5 +189,6 @@ export function ServerForm({ mode, server }: ServerFormProps) {
         </form>
       </DialogContent>
     </Dialog>
+    </>
   )
 }

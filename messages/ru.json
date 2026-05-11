@@ -1,0 +1,122 @@
+{
+  "Metadata": {
+    "title": "Awesome MCP Servers",
+    "description": "Коллекция серверов для Model Context Protocol. Найдите, сравните и используйте MCP серверы для вашего AI."
+  },
+  "Navigation": {
+    "home": "Главная",
+    "all": "Все серверы",
+    "official": "Официальные",
+    "clients": "Клиенты",
+    "submit": "Отправить",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "logout": "Выйти",
+    "profile": "Профиль",
+    "bookmarks": "Закладки",
+    "settings": "Настройки",
+    "search": "Поиск MCP серверов..."
+  },
+  "Home": {
+    "heroTitle": "Awesome MCP Servers",
+    "heroDescription": "Коллекция серверов для Model Context Protocol",
+    "featured": "Рекомендуемые MCP",
+    "trending": "Сейчас в тренде",
+    "allServers": "Все MCP",
+    "showAll": "Показать все →",
+    "noResults": "Нет результатов",
+    "noServers": "Нет серверов",
+    "officialOnly": "Только официальные"
+  },
+  "Server": {
+    "stars": "stars",
+    "forks": "forks",
+    "official": "Официальный",
+    "sponsored": "спонсор",
+    "category": "Категория",
+    "github": "GitHub",
+    "endpoint": "Endpoint",
+    "authType": "Auth Type",
+    "viewOnGithub": "View on GitHub",
+    "related": "Похожие серверы",
+    "comments": "Комментарии",
+    "addComment": "Добавить комментарий",
+    "rating": "Оценка",
+    "bookmark": "В закладки",
+    "removeBookmark": "Удалить из закладок"
+  },
+  "Profile": {
+    "title": "Профиль",
+    "bookmarks": "Закладки",
+    "comments": "Комментарии",
+    "ratings": "Оценки",
+    "history": "История просмотров",
+    "settings": "Настройки",
+    "name": "Имя",
+    "email": "Email",
+    "changePassword": "Смена пароля",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердите новый пароль",
+    "save": "Сохранить",
+    "emailNotifications": "Email-уведомления",
+    "notificationsDesc": "Получать уведомления о статусе заявок и ответах на комментарии",
+    "clearHistory": "Очистить историю",
+    "joined": "На сайте с",
+    "noBookmarks": "У вас пока нет закладок",
+    "noComments": "Вы пока не оставили ни одного комментария",
+    "noRatings": "Вы пока не оценили ни один сервер",
+    "noHistory": "История просмотров пуста"
+  },
+  "Admin": {
+    "dashboard": "Панель управления",
+    "servers": "Серверы",
+    "clients": "Клиенты",
+    "submissions": "Заявки",
+    "users": "Пользователи",
+    "analytics": "Аналитика",
+    "backup": "Бэкап",
+    "settings": "Настройки"
+  },
+  "Auth": {
+    "loginTitle": "Вход в аккаунт",
+    "registerTitle": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Имя",
+    "confirmPassword": "Подтвердите пароль",
+    "loginButton": "Войти",
+    "registerButton": "Зарегистрироваться",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "adminLink": "Вход для админов"
+  },
+  "Notifications": {
+    "title": "Уведомления",
+    "markAllRead": "Все прочитаны",
+    "empty": "Нет уведомлений"
+  },
+  "Compare": {
+    "title": "Сравнение серверов",
+    "selectServers": "Выберите минимум 2 сервера для сравнения",
+    "characteristic": "Характеристика",
+    "link": "Ссылка"
+  },
+  "Common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "submit": "Отправить",
+    "close": "Закрыть",
+    "back": "Назад",
+    "next": "Далее",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "sort": "Сортировка",
+    "all": "Все"
+  }
+}

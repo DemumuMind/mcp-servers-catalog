@@ -1,0 +1,2506 @@
+Error: Failed to find Server Action "402033eb076cecb7f5e530783048b0291107896ffa". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5167:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[browser] Uncaught TypeError: chunk.reason.enqueueModel is not a function
+    at LocaleLayout (src\app\[locale]\layout.tsx:31:9)
+  29 |       <PullToRefresh />
+  30 |       <div className="flex flex-col min-h-screen">
+> 31 |         <Header locale={resolvedLocale} />
+     |         ^
+  32 |         <main className="flex-1">{children}</main>
+  33 |         <Footer locale={resolvedLocale} />
+  34 |         <A2HSBanner />
+[browser] Uncaught TypeError: Cannot read properties of null (reading 'enqueueModel')
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/ru/server..." tree={[...]} params={{locale:"ru", ...}} cacheNode={{rsc:{...}, ...}} ...>
+            <SegmentViewNode type="page" pagePath="[locale]/s...">
+              <SegmentTrieNode>
+              <ServerDetailPage>
+                <div className="max-w-3xl ...">
+                  <script>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <div className="mt-12">
+                    <ReviewSection serverId="cmp13r9580..." userId="cmp13r90v0..." initialReviews={[...]}>
+                      <div className="space-y-6">
+                        <h2>
+                        <form>
+                        <div className="space-y-4">
+                          <div className="flex gap-3...">
+                            <Avatar>
+                            <div className="flex-1 min...">
+                              <div className="flex items...">
+                                <div>
+                                <span className="text-xs text-muted-foreground">
++                                 4 мин. назад
+-                                 3 мин. назад
+                              ...
+                  ...
+            ...
+          ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at span (<anonymous>)
+    at <unknown> (src/components/review-section.tsx:153:17)
+    at Array.map (<anonymous>)
+    at ReviewSection (src/components/review-section.tsx:137:18)
+    at ServerDetailPage (src\app\[locale]\servers\[owner]\[repo]\page.tsx:347:9)
+  151 |                   )}
+  152 |                 </div>
+> 153 |                 <span className="text-xs text-muted-foreground">
+      |                 ^
+  154 |                   {formatDistanceToNow(new Date(review.createdAt))}
+  155 |                 </span>
+  156 |               </div>
+⨯ Error: useTheme must be used within a ThemeProvider
+    at useTheme (src\components\theme-provider.tsx:74:11)
+    at ThemeToggle (src\components\theme-toggle.tsx:9:39)
+  72 |   const context = useContext(ThemeContext)
+  73 |   if (context === undefined) {
+> 74 |     throw new Error('useTheme must be used within a ThemeProvider')
+     |           ^
+  75 |   }
+  76 |   return context
+  77 | } {
+  digest: '174043507'
+}
+[browser] Uncaught TypeError: Cannot read properties of null (reading 'enqueueModel')
+[browser] Uncaught TypeError: chunk.reason.enqueueModel is not a function
+[browser] Base UI: A component is changing the uncontrolled value state of Select to be controlled.
+Elements should not switch from uncontrolled to controlled (or vice versa).
+Decide between using a controlled or uncontrolled Select element for the lifetime of the component.
+The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.
+More info: https://fb.me/react-controlled-components 
+Failed to send email notification: Error: Missing credentials for "PLAIN"
+    at ignore-listed frames {
+  code: 'EAUTH',
+  command: 'API'
+}
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at async ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 | {
+  clientVersion: '7.8.0',
+  digest: '289349349'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at async ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 | {
+  clientVersion: '7.8.0',
+  digest: '289349349'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at async ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 | {
+  clientVersion: '7.8.0',
+  digest: '289349349'
+}
+[browser] Uncaught RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at <anonymous> (about://React/Server/wasm://wasm/021570fa?0:1:6003842)
+    at <anonymous> (about://React/Server/wasm://wasm/021570fa?1:1:5294569)
+    at <anonymous> (about://React/Server/wasm://wasm/021570fa?2:1:954749)
+    at <anonymous> (about://React/Server/wasm://wasm/021570fa?3:1:5356687)
+    at <anonymous> (about://React/Server/wasm://wasm/021570fa?4:1:3891668)
+    at <anonymous> (about://React/Server/wasm://wasm/021570fa?5:1:2503825)
+    at ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 |
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at async ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 | {
+  clientVersion: '7.8.0',
+  digest: '289349349'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at async ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 | {
+  clientVersion: '7.8.0',
+  digest: '289349349'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at async ClientsPage (src\app\[locale]\clients\page.tsx:13:19)
+  11 | }) {
+  12 |   const { q } = await searchParams
+> 13 |   const clients = await getClients({ search: q })
+     |                   ^
+  14 |   const featuredClients = clients.filter((c) => c.featured)
+  15 |   const regularClients = clients.filter((c) => !c.featured)
+  16 | {
+  clientVersion: '7.8.0',
+  digest: '289349349'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[browser] RuntimeError: Aborted(). Build with -sASSERTIONS for more info. (src/app/[locale]/error.tsx:14:13)
+[browser] RuntimeError: Aborted(). Build with -sASSERTIONS for more info. (src/app/[locale]/error.tsx:14:13)
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:1228:11)
+    at AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5161:222)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18297:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18360:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18414:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+[31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+[31m[auth][cause][0m: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at abort (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:1:77811)
+    at __abort_js (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:2:68975)
+    at wasm://wasm/021570fa:wasm-function[11285]:0x5b9c80
+    at wasm://wasm/021570fa:wasm-function[9524]:0x50c9e8
+    at wasm://wasm/021570fa:wasm-function[1336]:0xe917c
+    at wasm://wasm/021570fa:wasm-function[9712]:0x51bc8e
+    at invoke_viiiiii (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:265751)
+    at wasm://wasm/021570fa:wasm-function[5538]:0x3b61d3
+    at wasm://wasm/021570fa:wasm-function[3520]:0x263490
+    at Object.callMain (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:270645)
+    at q.at (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:283576)
+    at q.Qe (file:///C:/Users/Romanchello/source/repo/MCP_Servers/mcpservers-clone/node_modules/@electric-sql/pglite/dist/index.js:3:280650)
+[31m[auth][details][0m: {
+  "provider": "credentials"
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+Auth authorize error: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[31m[auth][error][0m CredentialsSignin: Read more at https://errors.authjs.dev#credentialssignin
+    at Module.callback (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:4314:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5162:24)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18303:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18366:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18420:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.
+Auth authorize error: RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[31m[auth][error][0m CredentialsSignin: Read more at https://errors.authjs.dev#credentialssignin
+    at Module.callback (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:4314:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async AuthInternal (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5162:24)
+    at async Auth (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_@auth_core_09h2y9.._.js:5384:34)
+    at async AppRouteRouteModule.do (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:40115)
+    at async AppRouteRouteModule.handle (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:47321)
+    at async responseGenerator (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18303:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:227216)
+    at async handleResponse (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18366:32)
+    at async Module.handler (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\.next\dev\server\chunks\node_modules_next_0fkt7xl._.js:18420:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1454:9)
+    at async DevServer.renderPageComponent (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1506:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1556:32)
+    at async DevServer.pipeImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:1043:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\next-server.js:338:17)
+    at async DevServer.handleRequestImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\base-server.js:934:17)
+    at async C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:394:20
+    at async Span.traceAsyncFn (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\trace\trace.js:164:20)
+    at async DevServer.handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\dev\next-dev-server.js:390:24)
+    at async invokeRender (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:266:21)
+    at async handleRequest (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:465:24)
+    at async requestHandlerImpl (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\router-server.js:514:13)
+    at async Server.requestListener (C:\Users\Romanchello\source\repo\MCP_Servers\mcpservers-clone\node_modules\next\dist\server\lib\start-server.js:225:13)
+⨯ RuntimeError: Aborted(). Build with -sASSERTIONS for more info.
+    at ignore-listed frames {
+  clientVersion: '7.8.0',
+  digest: '3700860032'
+}
+[browser] Uncaught TypeError: Failed to execute 'measure' on 'Performance': '​AdminDashboard' cannot have a negative time stamp.

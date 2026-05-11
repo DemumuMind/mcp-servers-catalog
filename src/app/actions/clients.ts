@@ -64,3 +64,11 @@ export async function deleteClient(id: string) {
   await prisma.client.delete({ where: { id } })
   revalidatePath('/', 'layout')
 }
+
+export async function deleteClients(ids: string[]) {
+  await prisma.client.deleteMany({
+    where: { id: { in: ids } },
+  })
+  revalidatePath('/', 'layout')
+  revalidatePath('/admin/clients')
+}

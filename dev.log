@@ -1,0 +1,1577 @@
+
+> mcpservers-clone@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://198.18.0.1:3000
+- Environments: .env
+✓ Ready in 822ms
+
+[2026-05-11T12:35:46.165Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=7ms ip=::1
+[2026-05-11T12:35:47.171Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=3ms ip=::1
+○ Compiling /[locale]/servers/[owner]/[repo] ...
+[2026-05-11T12:35:57.965Z] GET http://localhost:3000/ru/login status=200 duration=6ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 404 in 17.8s (next.js: 13.9s, proxy.ts: 17ms, application-code: 3.8s)
+[2026-05-11T12:36:07.899Z] GET http://localhost:3000/ru status=200 duration=2ms ip=::1
+[2026-05-11T12:36:07.910Z] GET http://localhost:3000/en status=200 duration=2ms ip=::1
+ GET /api/auth/session 200 in 3.1s (next.js: 3.0s, application-code: 107ms)
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 25.1s (next.js: 14.9s, proxy.ts: 270ms, application-code: 9.9s)
+ GET /api/auth/session 200 in 50ms (next.js: 18ms, application-code: 32ms)
+[2026-05-11T12:36:11.327Z] GET http://localhost:3000/ru/login status=200 duration=2ms ip=::1
+ GET /ru/login? 200 in 640ms (next.js: 95ms, proxy.ts: 16ms, application-code: 529ms)
+[2026-05-11T12:36:38.279Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 68ms (next.js: 23ms, proxy.ts: 10ms, application-code: 35ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 6ms src/app/actions/notifications.ts
+[2026-05-11T12:36:38.356Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 252ms (next.js: 10ms, proxy.ts: 9ms, application-code: 233ms)
+ POST /api/auth/callback/credentials 302 in 22ms (next.js: 11ms, application-code: 11ms)
+[2026-05-11T12:37:08.268Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 51ms (next.js: 21ms, proxy.ts: 8ms, application-code: 22ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:37:08.329Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 265ms (next.js: 10ms, proxy.ts: 10ms, application-code: 245ms)
+ POST /api/auth/signin 302 in 26ms (next.js: 12ms, application-code: 13ms)
+ GET /api/auth/csrf 200 in 22ms (next.js: 12ms, application-code: 11ms)
+[2026-05-11T12:37:38.273Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 55ms (next.js: 17ms, proxy.ts: 13ms, application-code: 24ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:37:38.332Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 325ms (next.js: 11ms, proxy.ts: 9ms, application-code: 305ms)
+ GET /api/auth/csrf 200 in 19ms (next.js: 12ms, application-code: 8ms)
+ POST /api/auth/callback/credentials 302 in 12ms (next.js: 3ms, application-code: 9ms)
+ GET /api/auth/csrf 200 in 21ms (next.js: 13ms, application-code: 9ms)
+ POST /api/auth/callback/credentials 302 in 22ms (next.js: 4ms, application-code: 18ms)
+[2026-05-11T12:38:08.269Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 39ms (next.js: 17ms, proxy.ts: 7ms, application-code: 14ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:38:08.315Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 317ms (next.js: 10ms, proxy.ts: 6ms, application-code: 301ms)
+ GET /api/auth/csrf 200 in 19ms (next.js: 10ms, application-code: 9ms)
+[2026-05-11T12:38:38.288Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 60ms (next.js: 25ms, proxy.ts: 14ms, application-code: 21ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:38:38.345Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 244ms (next.js: 14ms, proxy.ts: 6ms, application-code: 225ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+User found: true
+Password valid: true
+ POST /api/auth/callback/credentials 302 in 172ms (next.js: 16ms, application-code: 155ms)
+[2026-05-11T12:39:08.280Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 51ms (next.js: 21ms, proxy.ts: 9ms, application-code: 21ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:39:08.342Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 336ms (next.js: 11ms, proxy.ts: 10ms, application-code: 316ms)
+ GET /api/auth/session 200 in 26ms (next.js: 10ms, application-code: 15ms)
+[2026-05-11T12:39:57.283Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 53ms (next.js: 25ms, proxy.ts: 9ms, application-code: 20ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 2ms src/app/actions/notifications.ts
+[2026-05-11T12:39:57.344Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 237ms (next.js: 7ms, proxy.ts: 8ms, application-code: 221ms)
+[2026-05-11T12:40:06.622Z] GET http://localhost:3000/ru/login status=200 duration=2ms ip=::1
+ GET /ru/login? 200 in 506ms (next.js: 30ms, proxy.ts: 13ms, application-code: 462ms)
+ GET /api/auth/session 200 in 42ms (next.js: 26ms, application-code: 16ms)
+ GET /api/auth/session 200 in 15ms (next.js: 5ms, application-code: 10ms)
+[2026-05-11T12:40:12.722Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 80ms (next.js: 42ms, proxy.ts: 13ms, application-code: 25ms)
+  └─ ƒ getUnreadNotificationsCount("cmp00y8uc00003ct8zun4g6ah") in 3ms src/app/actions/notifications.ts
+ GET /api/auth/session 200 in 78ms (next.js: 15ms, application-code: 63ms)
+[2026-05-11T12:40:12.808Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 478ms (next.js: 23ms, application-code: 455ms)
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 643ms (next.js: 14ms, proxy.ts: 13ms, application-code: 616ms)
+ GET /api/auth/csrf 200 in 18ms (next.js: 10ms, application-code: 8ms)
+ POST /api/auth/signout 200 in 12ms (next.js: 2ms, application-code: 10ms)
+[2026-05-11T12:40:16.011Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 5.4s (next.js: 4.2s, proxy.ts: 8ms, application-code: 1228ms)
+ GET /api/auth/session 200 in 33ms (next.js: 17ms, application-code: 17ms)
+[2026-05-11T12:40:22.108Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:40:22.112Z] GET http://localhost:3000/en status=200 duration=0ms ip=::1
+ GET /api/auth/session 200 in 12ms (next.js: 4ms, application-code: 8ms)
+ GET /api/auth/providers 200 in 26ms (next.js: 14ms, application-code: 12ms)
+ GET /api/auth/csrf 200 in 12ms (next.js: 3ms, application-code: 9ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+User found: true
+Password valid: true
+ POST /api/auth/callback/credentials? 200 in 123ms (next.js: 3ms, application-code: 120ms)
+[2026-05-11T12:40:30.064Z] GET http://localhost:3000/ status=307 duration=1ms ip=::1
+[2026-05-11T12:40:30.077Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 35ms (next.js: 5ms, application-code: 30ms)
+[2026-05-11T12:40:30.243Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 441ms (next.js: 25ms, proxy.ts: 8ms, application-code: 409ms)
+ GET /ru 200 in 284ms (next.js: 20ms, proxy.ts: 8ms, application-code: 256ms)
+[2026-05-11T12:41:00.705Z] POST http://localhost:3000/ru status=200 duration=1ms ip=::1
+ POST /ru 200 in 47ms (next.js: 18ms, proxy.ts: 9ms, application-code: 20ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:41:00.756Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 200ms (next.js: 8ms, proxy.ts: 8ms, application-code: 184ms)
+[2026-05-11T12:41:12.096Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 1189ms (next.js: 29ms, proxy.ts: 17ms, application-code: 1142ms)
+ GET /api/auth/session 200 in 37ms (next.js: 21ms, application-code: 16ms)
+[2026-05-11T12:43:00.799Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=3ms ip=::1
+ GET /api/auth/session 200 in 38ms (next.js: 11ms, application-code: 26ms)
+ GET /api/auth/session 200 in 45ms (next.js: 8ms, application-code: 36ms)
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 833ms (next.js: 51ms, proxy.ts: 25ms, application-code: 757ms)
+[2026-05-11T12:43:31.270Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 42ms (next.js: 16ms, proxy.ts: 8ms, application-code: 18ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:43:31.318Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 308ms (next.js: 10ms, proxy.ts: 7ms, application-code: 291ms)
+[2026-05-11T12:44:01.260Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 48ms (next.js: 19ms, proxy.ts: 7ms, application-code: 21ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 6ms src/app/actions/notifications.ts
+[2026-05-11T12:44:01.319Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 314ms (next.js: 12ms, proxy.ts: 11ms, application-code: 291ms)
+[2026-05-11T12:44:17.315Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 66ms (next.js: 15ms, proxy.ts: 8ms, application-code: 44ms)
+  └─ ƒ addComment("cmp13r90v00004kt8o1nlw44g", "cmp13r95800034kt8vb8762tt", "Test comment from Playwright") in 29ms src/app/actions/public.ts
+[2026-05-11T12:44:17.390Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 251ms (next.js: 12ms, proxy.ts: 8ms, application-code: 231ms)
+[2026-05-11T12:44:31.262Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 45ms (next.js: 20ms, proxy.ts: 8ms, application-code: 18ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:44:31.318Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 221ms (next.js: 9ms, proxy.ts: 8ms, application-code: 203ms)
+[2026-05-11T12:45:01.270Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 58ms (next.js: 23ms, proxy.ts: 13ms, application-code: 21ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:45:01.330Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 250ms (next.js: 12ms, proxy.ts: 8ms, application-code: 230ms)
+[2026-05-11T12:45:31.258Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 48ms (next.js: 23ms, proxy.ts: 8ms, application-code: 17ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:45:31.324Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 300ms (next.js: 12ms, proxy.ts: 18ms, application-code: 270ms)
+[2026-05-11T12:46:01.265Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 40ms (next.js: 16ms, proxy.ts: 6ms, application-code: 19ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:46:01.316Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 408ms (next.js: 9ms, proxy.ts: 8ms, application-code: 391ms)
+[2026-05-11T12:46:31.275Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=2ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 130ms (next.js: 39ms, proxy.ts: 16ms, application-code: 75ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 8ms src/app/actions/notifications.ts
+[2026-05-11T12:46:31.411Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 710ms (next.js: 96ms, proxy.ts: 13ms, application-code: 601ms)
+[2026-05-11T12:47:01.264Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 46ms (next.js: 20ms, proxy.ts: 7ms, application-code: 19ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 6ms src/app/actions/notifications.ts
+[2026-05-11T12:47:01.324Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 311ms (next.js: 9ms, proxy.ts: 13ms, application-code: 289ms)
+[2026-05-11T12:47:31.273Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 61ms (next.js: 24ms, proxy.ts: 11ms, application-code: 26ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:47:31.346Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 513ms (next.js: 13ms, proxy.ts: 16ms, application-code: 484ms)
+[2026-05-11T12:48:01.275Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=2ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 67ms (next.js: 25ms, proxy.ts: 15ms, application-code: 28ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:48:01.354Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=2ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 504ms (next.js: 20ms, proxy.ts: 16ms, application-code: 467ms)
+[2026-05-11T12:48:31.270Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 43ms (next.js: 16ms, proxy.ts: 7ms, application-code: 19ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:48:31.321Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 311ms (next.js: 12ms, proxy.ts: 7ms, application-code: 291ms)
+[2026-05-11T12:49:01.268Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 43ms (next.js: 17ms, proxy.ts: 7ms, application-code: 20ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 6ms src/app/actions/notifications.ts
+[2026-05-11T12:49:01.324Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 338ms (next.js: 8ms, proxy.ts: 12ms, application-code: 318ms)
+[2026-05-11T12:49:31.262Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 49ms (next.js: 18ms, proxy.ts: 8ms, application-code: 23ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:49:31.321Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 328ms (next.js: 18ms, proxy.ts: 9ms, application-code: 300ms)
+[2026-05-11T12:49:34.361Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 87ms (next.js: 15ms, proxy.ts: 18ms, application-code: 54ms)
+  └─ ƒ createReview("cmp13r90v00004kt8o1nlw44g", "cmp13r95800034kt8vb8762tt", "Test review from Playwright") in 32ms src/app/actions/reviews.ts
+[2026-05-11T12:49:34.450Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 448ms (next.js: 16ms, proxy.ts: 10ms, application-code: 422ms)
+[2026-05-11T12:50:01.273Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 56ms (next.js: 25ms, proxy.ts: 9ms, application-code: 22ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:50:01.340Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 379ms (next.js: 13ms, proxy.ts: 11ms, application-code: 355ms)
+[2026-05-11T12:50:31.260Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 37ms (next.js: 15ms, proxy.ts: 7ms, application-code: 15ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T12:50:31.307Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 225ms (next.js: 8ms, proxy.ts: 11ms, application-code: 206ms)
+[2026-05-11T12:51:01.263Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 39ms (next.js: 15ms, proxy.ts: 6ms, application-code: 18ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 5ms src/app/actions/notifications.ts
+[2026-05-11T12:51:01.311Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 315ms (next.js: 10ms, proxy.ts: 8ms, application-code: 297ms)
+[2026-05-11T12:51:31.270Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 56ms (next.js: 21ms, proxy.ts: 10ms, application-code: 25ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T12:51:31.336Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 442ms (next.js: 10ms, proxy.ts: 14ms, application-code: 418ms)
+[2026-05-11T12:51:56.846Z] GET http://localhost:3000/admin/login status=307 duration=1ms ip=::1
+[2026-05-11T12:51:56.878Z] GET http://localhost:3000/admin/login status=307 duration=1ms ip=::1
+[2026-05-11T12:51:56.898Z] GET http://localhost:3000/admin/login status=307 duration=0ms ip=::1
+[2026-05-11T12:51:56.918Z] GET http://localhost:3000/admin/login status=307 duration=0ms ip=::1
+[2026-05-11T12:51:56.944Z] GET http://localhost:3000/admin/login status=307 duration=0ms ip=::1
+[2026-05-11T12:51:56.965Z] GET http://localhost:3000/admin/login status=307 duration=0ms ip=::1
+[2026-05-11T12:51:56.986Z] GET http://localhost:3000/admin/login status=307 duration=1ms ip=::1
+✓ Compiled in 767ms
+[2026-05-11T12:53:27.732Z] GET http://localhost:3000/ru status=200 duration=4ms ip=::1
+[2026-05-11T12:53:27.739Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=2ms ip=::1
+[2026-05-11T12:53:30.004Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 1108ms (next.js: 758ms, application-code: 350ms)
+[2026-05-11T12:53:31.851Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:53:31.858Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:53:31.866Z] GET http://localhost:3000/ru status=200 duration=3ms ip=::1
+[2026-05-11T12:53:31.872Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 1244ms (next.js: 32ms, application-code: 1213ms)
+ GET /ru 200 in 6.8s (next.js: 365ms, proxy.ts: 1224ms, application-code: 5.2s)
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 6.8s (next.js: 1063ms, proxy.ts: 1224ms, application-code: 4.5s)
+[2026-05-11T12:53:33.315Z] GET http://localhost:3000/ru status=200 duration=3ms ip=::1
+ GET /ru 200 in 3.7s (next.js: 35ms, proxy.ts: 343ms, application-code: 3.3s)
+[2026-05-11T12:53:33.570Z] GET http://localhost:3000/ru status=200 duration=2ms ip=::1
+ GET /ru 200 in 3.3s (next.js: 159ms, proxy.ts: 1558ms, application-code: 1570ms)
+ GET /ru 200 in 3.3s (next.js: 465ms, proxy.ts: 1568ms, application-code: 1245ms)
+ GET /ru 200 in 3.3s (next.js: 268ms, proxy.ts: 1564ms, application-code: 1449ms)
+ GET /ru 200 in 3.4s (next.js: 376ms, proxy.ts: 1562ms, application-code: 1437ms)
+[2026-05-11T12:53:33.787Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T12:53:33.790Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T12:53:33.792Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T12:53:33.794Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+ GET /ru 200 in 1265ms (next.js: 33ms, proxy.ts: 16ms, application-code: 1216ms)
+[2026-05-11T12:53:34.585Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 1157ms (next.js: 19ms, proxy.ts: 129ms, application-code: 1008ms)
+[2026-05-11T12:53:34.793Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 1091ms (next.js: 41ms, proxy.ts: 78ms, application-code: 972ms)
+ GET /ru 200 in 1092ms (next.js: 105ms, proxy.ts: 79ms, application-code: 908ms)
+ GET /ru 200 in 1091ms (next.js: 169ms, proxy.ts: 79ms, application-code: 843ms)
+ GET /ru 200 in 1049ms (next.js: 248ms, proxy.ts: 27ms, application-code: 774ms)
+[2026-05-11T12:53:35.018Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:53:35.026Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:53:35.028Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T12:53:35.034Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+ GET /ru 200 in 1215ms (next.js: 16ms, proxy.ts: 14ms, application-code: 1185ms)
+ GET /ru 200 in 1091ms (next.js: 33ms, proxy.ts: 91ms, application-code: 967ms)
+ GET /ru 200 in 981ms (next.js: 33ms, proxy.ts: 200ms, application-code: 748ms)
+ GET /ru 200 in 894ms (next.js: 162ms, proxy.ts: 122ms, application-code: 610ms)
+ GET /ru 200 in 901ms (next.js: 101ms, proxy.ts: 125ms, application-code: 676ms)
+ GET /ru 200 in 863ms (next.js: 252ms, proxy.ts: 94ms, application-code: 518ms)
+[2026-05-11T12:53:57.703Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 45ms (next.js: 19ms, proxy.ts: 6ms, application-code: 20ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 2ms src/app/actions/notifications.ts
+[2026-05-11T12:53:57.763Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 292ms (next.js: 10ms, proxy.ts: 12ms, application-code: 270ms)
+✓ Compiled in 847ms
+[2026-05-11T12:54:02.274Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=8ms ip=::1
+[2026-05-11T12:54:02.395Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:04.462Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 2.6s (next.js: 1450ms, application-code: 1191ms)
+[2026-05-11T12:54:05.614Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:05.617Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:05.620Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:05.624Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+ GET /api/auth/session 200 in 915ms (next.js: 21ms, application-code: 894ms)
+ GET /ru 200 in 5.3s (next.js: 1090ms, proxy.ts: 1047ms, application-code: 3.2s)
+[2026-05-11T12:54:06.667Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 500 in 5.7s (next.js: 507ms, proxy.ts: 1346ms, application-code: 3.9s)
+ GET /ru 200 in 2.3s (next.js: 783ms, proxy.ts: 64ms, application-code: 1435ms)
+[2026-05-11T12:54:06.889Z] GET http://localhost:3000/ru status=200 duration=2ms ip=::1
+ GET /ru 200 in 1332ms (next.js: 71ms, proxy.ts: 49ms, application-code: 1212ms)
+ GET /ru 200 in 1336ms (next.js: 143ms, proxy.ts: 49ms, application-code: 1144ms)
+ GET /ru 200 in 1330ms (next.js: 238ms, proxy.ts: 53ms, application-code: 1039ms)
+ GET /ru 200 in 1421ms (next.js: 181ms, proxy.ts: 51ms, application-code: 1190ms)
+[2026-05-11T12:54:07.090Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:07.092Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T12:54:07.101Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:07.103Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 1124ms (next.js: 18ms, proxy.ts: 12ms, application-code: 1094ms)
+[2026-05-11T12:54:07.795Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 947ms (next.js: 18ms, proxy.ts: 32ms, application-code: 897ms)
+[2026-05-11T12:54:08.009Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 1023ms (next.js: 82ms, proxy.ts: 99ms, application-code: 842ms)
+ GET /ru 200 in 1027ms (next.js: 29ms, proxy.ts: 98ms, application-code: 900ms)
+ GET /ru 200 in 954ms (next.js: 180ms, proxy.ts: 33ms, application-code: 741ms)
+ GET /ru 200 in 1033ms (next.js: 397ms, proxy.ts: 24ms, application-code: 612ms)
+[2026-05-11T12:54:08.229Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T12:54:08.232Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:08.247Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T12:54:08.252Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+ GET /ru 200 in 1139ms (next.js: 27ms, proxy.ts: 10ms, application-code: 1102ms)
+[2026-05-11T12:54:08.938Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 1038ms (next.js: 28ms, proxy.ts: 102ms, application-code: 908ms)
+ GET /ru 200 in 1079ms (next.js: 44ms, proxy.ts: 201ms, application-code: 834ms)
+ GET /ru 200 in 1077ms (next.js: 110ms, proxy.ts: 201ms, application-code: 767ms)
+ GET /ru 200 in 994ms (next.js: 248ms, proxy.ts: 130ms, application-code: 616ms)
+ GET /ru 200 in 903ms (next.js: 385ms, proxy.ts: 50ms, application-code: 468ms)
+ GET /ru 200 in 190ms (next.js: 14ms, proxy.ts: 9ms, application-code: 167ms)
+[2026-05-11T13:03:16.201Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=2ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 1069ms (next.js: 147ms, proxy.ts: 14ms, application-code: 908ms)
+[2026-05-11T13:03:18.170Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 36ms (next.js: 12ms, application-code: 23ms)
+ GET /api/auth/session 200 in 53ms (next.js: 8ms, application-code: 44ms)
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 967ms (next.js: 33ms, proxy.ts: 13ms, application-code: 920ms)
+[2026-05-11T13:03:43.932Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 52ms (next.js: 17ms, proxy.ts: 7ms, application-code: 27ms)
+  └─ ƒ addComment("cmp13r90v00004kt8o1nlw44g", "cmp13r95800034kt8vb8762tt", "аываыаы") in 11ms src/app/actions/public.ts
+[2026-05-11T13:03:43.992Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 327ms (next.js: 12ms, proxy.ts: 7ms, application-code: 307ms)
+[2026-05-11T13:03:51.840Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare? 200 in 497ms (next.js: 22ms, proxy.ts: 7ms, application-code: 468ms)
+ GET /api/auth/session 200 in 38ms (next.js: 18ms, application-code: 20ms)
+ GET /api/auth/session 200 in 16ms (next.js: 4ms, application-code: 13ms)
+[2026-05-11T13:03:56.693Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 48ms (next.js: 16ms, proxy.ts: 8ms, application-code: 23ms)
+  └─ ƒ addComment("cmp13r90v00004kt8o1nlw44g", "cmp13r95800034kt8vb8762tt", "вфывфв") in 9ms src/app/actions/public.ts
+[2026-05-11T13:03:56.750Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 262ms (next.js: 11ms, proxy.ts: 9ms, application-code: 243ms)
+[2026-05-11T13:04:03.048Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 513ms (next.js: 468ms, proxy.ts: 7ms, application-code: 38ms)
+  └─ ƒ voteReview("cmp13r90v00004kt8o1nlw44g", "cmp178729000qbgt84wounusk", true) in 20ms src/app/actions/reviews.ts
+[2026-05-11T13:04:03.570Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 332ms (next.js: 10ms, proxy.ts: 9ms, application-code: 312ms)
+[2026-05-11T13:04:04.342Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 30ms (next.js: 8ms, proxy.ts: 6ms, application-code: 16ms)
+  └─ ƒ voteReview("cmp13r90v00004kt8o1nlw44g", "cmp178729000qbgt84wounusk", false) in 7ms src/app/actions/reviews.ts
+[2026-05-11T13:04:04.379Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 238ms (next.js: 9ms, proxy.ts: 6ms, application-code: 222ms)
+[2026-05-11T13:04:06.103Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 34ms (next.js: 7ms, proxy.ts: 6ms, application-code: 20ms)
+  └─ ƒ voteReview("cmp13r90v00004kt8o1nlw44g", "cmp178729000qbgt84wounusk", true) in 11ms src/app/actions/reviews.ts
+[2026-05-11T13:04:06.143Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 233ms (next.js: 9ms, proxy.ts: 7ms, application-code: 218ms)
+[2026-05-11T13:04:10.751Z] GET http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ GET /ru/advanced-search 200 in 1740ms (next.js: 1675ms, proxy.ts: 6ms, application-code: 59ms)
+[2026-05-11T13:04:17.987Z] POST http://localhost:3000/ru/advanced-search status=200 duration=0ms ip=::1
+ POST /ru/advanced-search 200 in 62ms (next.js: 18ms, proxy.ts: 8ms, application-code: 35ms)
+  └─ ƒ autocompleteServers("Cl") in 14ms src/app/actions/autocomplete.ts
+[2026-05-11T13:04:18.063Z] GET http://localhost:3000/ru/advanced-search status=200 duration=0ms ip=::1
+ GET /ru/advanced-search 200 in 137ms (next.js: 9ms, proxy.ts: 6ms, application-code: 122ms)
+[2026-05-11T13:04:18.257Z] POST http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ POST /ru/advanced-search 200 in 31ms (next.js: 7ms, proxy.ts: 7ms, application-code: 16ms)
+  └─ ƒ autocompleteServers("Cla") in 5ms src/app/actions/autocomplete.ts
+[2026-05-11T13:04:18.295Z] GET http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ GET /ru/advanced-search 200 in 122ms (next.js: 7ms, proxy.ts: 7ms, application-code: 108ms)
+[2026-05-11T13:04:19.401Z] POST http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ POST /ru/advanced-search 200 in 66ms (next.js: 31ms, proxy.ts: 12ms, application-code: 23ms)
+  └─ ƒ autocompleteServers("Clau") in 6ms src/app/actions/autocomplete.ts
+[2026-05-11T13:04:19.471Z] GET http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ GET /ru/advanced-search 200 in 118ms (next.js: 7ms, proxy.ts: 7ms, application-code: 104ms)
+[2026-05-11T13:04:19.915Z] POST http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ POST /ru/advanced-search 200 in 29ms (next.js: 8ms, proxy.ts: 7ms, application-code: 14ms)
+  └─ ƒ autocompleteServers("Claude") in 5ms src/app/actions/autocomplete.ts
+[2026-05-11T13:04:19.950Z] GET http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ GET /ru/advanced-search 200 in 139ms (next.js: 7ms, proxy.ts: 6ms, application-code: 126ms)
+[2026-05-11T13:04:22.731Z] POST http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ POST /ru/advanced-search 200 in 36ms (next.js: 15ms, proxy.ts: 6ms, application-code: 16ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T13:04:22.779Z] GET http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ GET /ru/advanced-search 200 in 149ms (next.js: 10ms, proxy.ts: 10ms, application-code: 129ms)
+[2026-05-11T13:04:52.739Z] POST http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ POST /ru/advanced-search 200 in 37ms (next.js: 15ms, proxy.ts: 7ms, application-code: 15ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T13:04:52.788Z] GET http://localhost:3000/ru/advanced-search status=200 duration=1ms ip=::1
+ GET /ru/advanced-search 200 in 160ms (next.js: 9ms, proxy.ts: 10ms, application-code: 140ms)
+[2026-05-11T13:05:06.553Z] GET http://localhost:3000/ru/profile/bookmarks status=200 duration=1ms ip=::1
+ GET /ru/profile/bookmarks 200 in 3.8s (next.js: 3.7s, proxy.ts: 8ms, application-code: 119ms)
+[2026-05-11T13:05:13.279Z] GET http://localhost:3000/ru/all status=200 duration=1ms ip=::1
+ GET /ru/all 200 in 4.1s (next.js: 4.1s, proxy.ts: 7ms, application-code: 67ms)
+[2026-05-11T13:05:19.153Z] GET http://localhost:3000/ru/servers/github/github-mcp-server status=200 duration=1ms ip=::1
+ GET /ru/servers/github/github-mcp-server 200 in 2.6s (next.js: 14ms, proxy.ts: 7ms, application-code: 2.6s)
+ GET /api/proxy-image?url=https%3A%2F%2Fgoreportcard.com%2Fbadge%2Fgithub.com%2Fgithub%2Fgithub-mcp-server 403 in 281ms (next.js: 274ms, application-code: 7ms)
+[2026-05-11T13:05:22.724Z] POST http://localhost:3000/ru/servers/github/github-mcp-server status=200 duration=0ms ip=::1
+ POST /ru/servers/github/github-mcp-server 200 in 48ms (next.js: 18ms, proxy.ts: 5ms, application-code: 25ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 2ms src/app/actions/notifications.ts
+[2026-05-11T13:05:22.784Z] GET http://localhost:3000/ru/servers/github/github-mcp-server status=200 duration=2ms ip=::1
+ GET /ru/servers/github/github-mcp-server 200 in 374ms (next.js: 10ms, proxy.ts: 10ms, application-code: 354ms)
+[2026-05-11T13:05:23.172Z] POST http://localhost:3000/ru/servers/github/github-mcp-server status=200 duration=1ms ip=::1
+ POST /ru/servers/github/github-mcp-server 200 in 39ms (next.js: 9ms, proxy.ts: 9ms, application-code: 21ms)
+  └─ ƒ toggleBookmark("cmp13r90v00004kt8o1nlw44g", "cmp13r93500014kt83q1x3b5t") in 8ms src/app/actions/public.ts
+[2026-05-11T13:05:23.215Z] GET http://localhost:3000/ru/servers/github/github-mcp-server status=200 duration=0ms ip=::1
+ GET /ru/servers/github/github-mcp-server 200 in 252ms (next.js: 8ms, proxy.ts: 6ms, application-code: 238ms)
+ GET /api/proxy-image?url=https%3A%2F%2Fgoreportcard.com%2Fbadge%2Fgithub.com%2Fgithub%2Fgithub-mcp-server 403 in 15ms (next.js: 7ms, application-code: 8ms)
+[2026-05-11T13:05:26.223Z] GET http://localhost:3000/ru/profile/bookmarks status=200 duration=0ms ip=::1
+ GET /ru/profile/bookmarks 200 in 116ms (next.js: 15ms, proxy.ts: 7ms, application-code: 93ms)
+[2026-05-11T13:05:28.790Z] GET http://localhost:3000/ru/profile/comments status=200 duration=0ms ip=::1
+ GET /ru/profile/comments 200 in 1652ms (next.js: 1575ms, proxy.ts: 6ms, application-code: 71ms)
+[2026-05-11T13:05:32.687Z] GET http://localhost:3000/ru/profile/ratings status=200 duration=1ms ip=::1
+ GET /ru/profile/ratings 200 in 2.2s (next.js: 2.1s, proxy.ts: 7ms, application-code: 71ms)
+[2026-05-11T13:05:38.209Z] GET http://localhost:3000/ru/profile/comments status=200 duration=1ms ip=::1
+ GET /ru/profile/comments 200 in 118ms (next.js: 17ms, proxy.ts: 9ms, application-code: 92ms)
+[2026-05-11T13:05:39.726Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 200ms (next.js: 15ms, proxy.ts: 6ms, application-code: 179ms)
+[2026-05-11T13:05:42.541Z] POST http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ POST /ru/servers/cloudflare/mcp-server-cloudflare 200 in 41ms (next.js: 9ms, proxy.ts: 10ms, application-code: 22ms)
+  └─ ƒ rateServer("cmp13r90v00004kt8o1nlw44g", "cmp13r95800034kt8vb8762tt", 5) in 9ms src/app/actions/public.ts
+[2026-05-11T13:05:42.586Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 231ms (next.js: 8ms, proxy.ts: 6ms, application-code: 218ms)
+[2026-05-11T13:05:46.062Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=1ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare? 200 in 737ms (next.js: 29ms, proxy.ts: 8ms, application-code: 700ms)
+[2026-05-11T13:05:52.324Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=0ms ip=::1
+ GET /api/auth/session 200 in 35ms (next.js: 14ms, application-code: 21ms)
+ GET /api/auth/session 200 in 420ms (next.js: 5ms, application-code: 415ms)
+ GET /ru/servers/cloudflare/mcp-server-cloudflare? 200 in 1232ms (next.js: 638ms, proxy.ts: 5ms, application-code: 589ms)
+[2026-05-11T13:05:56.192Z] GET http://localhost:3000/ru/profile/bookmarks status=200 duration=1ms ip=::1
+ GET /ru/profile/bookmarks 200 in 112ms (next.js: 15ms, proxy.ts: 8ms, application-code: 90ms)
+[2026-05-11T13:05:57.726Z] GET http://localhost:3000/ru/profile/ratings status=200 duration=1ms ip=::1
+ GET /ru/profile/ratings 200 in 110ms (next.js: 19ms, proxy.ts: 6ms, application-code: 86ms)
+[2026-05-11T13:05:59.176Z] GET http://localhost:3000/ru/profile/history status=200 duration=1ms ip=::1
+ GET /ru/profile/history 200 in 1786ms (next.js: 1696ms, proxy.ts: 8ms, application-code: 82ms)
+[2026-05-11T13:06:04.430Z] GET http://localhost:3000/ru/profile/settings status=200 duration=0ms ip=::1
+ GET /ru/profile/settings 200 in 1693ms (next.js: 1609ms, proxy.ts: 6ms, application-code: 78ms)
+[2026-05-11T13:06:13.113Z] POST http://localhost:3000/ru/profile/settings status=200 duration=1ms ip=::1
+ POST /ru/profile/settings 200 in 168ms (next.js: 15ms, proxy.ts: 7ms, application-code: 145ms)
+  └─ ƒ updateProfile("cmp13r90v00004kt8o1nlw44g", {"name":"Demu"}) in 6ms src/app/actions/profile.ts
+[2026-05-11T13:06:22.767Z] POST http://localhost:3000/ru/profile/settings status=200 duration=0ms ip=::1
+ POST /ru/profile/settings 200 in 36ms (next.js: 15ms, proxy.ts: 7ms, application-code: 15ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 2ms src/app/actions/notifications.ts
+[2026-05-11T13:06:22.808Z] GET http://localhost:3000/ru/profile/settings status=200 duration=1ms ip=::1
+ GET /ru/profile/settings 200 in 165ms (next.js: 8ms, proxy.ts: 6ms, application-code: 151ms)
+[2026-05-11T13:06:23.599Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ GET /ru/profile 200 in 3.5s (next.js: 3.4s, proxy.ts: 8ms, application-code: 99ms)
+[2026-05-11T13:06:27.456Z] POST http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ POST /ru/profile 200 in 136ms (next.js: 19ms, proxy.ts: 99ms, application-code: 18ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/author-analytics.ts
+[2026-05-11T13:06:27.506Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+[2026-05-11T13:06:27.656Z] POST http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ POST /ru/profile 200 in 29ms (next.js: 10ms, proxy.ts: 6ms, application-code: 12ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 2ms src/app/actions/author-analytics.ts
+ GET /ru/profile 200 in 182ms (next.js: 6ms, proxy.ts: 6ms, application-code: 170ms)
+[2026-05-11T13:06:27.692Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ GET /ru/profile 200 in 146ms (next.js: 7ms, proxy.ts: 6ms, application-code: 132ms)
+[2026-05-11T13:06:31.911Z] GET http://localhost:3000/ru/profile/settings status=200 duration=1ms ip=::1
+ GET /ru/profile/settings 200 in 111ms (next.js: 16ms, proxy.ts: 6ms, application-code: 89ms)
+[2026-05-11T13:06:33.568Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ GET /ru/profile 200 in 170ms (next.js: 96ms, proxy.ts: 8ms, application-code: 67ms)
+[2026-05-11T13:06:33.763Z] POST http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ POST /ru/profile 200 in 37ms (next.js: 10ms, proxy.ts: 7ms, application-code: 20ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/author-analytics.ts
+[2026-05-11T13:06:33.808Z] GET http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+[2026-05-11T13:06:33.815Z] POST http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ POST /ru/profile 200 in 93ms (next.js: 69ms, proxy.ts: 7ms, application-code: 17ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 2ms src/app/actions/author-analytics.ts
+[2026-05-11T13:06:33.984Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ GET /ru/profile 200 in 338ms (next.js: 12ms, proxy.ts: 8ms, application-code: 318ms)
+ GET /ru/profile 200 in 233ms (next.js: 16ms, proxy.ts: 73ms, application-code: 144ms)
+[2026-05-11T13:06:36.914Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 2.1s (next.js: 2.1s, proxy.ts: 10ms, application-code: 51ms)
+[2026-05-11T13:06:42.427Z] POST http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ POST /ru/profile 200 in 47ms (next.js: 17ms, proxy.ts: 10ms, application-code: 20ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/author-analytics.ts
+[2026-05-11T13:06:42.484Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+[2026-05-11T13:06:42.488Z] POST http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ POST /ru/profile 200 in 128ms (next.js: 89ms, proxy.ts: 11ms, application-code: 28ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/author-analytics.ts
+[2026-05-11T13:06:42.634Z] GET http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ GET /ru/profile 200 in 386ms (next.js: 14ms, proxy.ts: 12ms, application-code: 360ms)
+ GET /ru/profile 200 in 249ms (next.js: 67ms, proxy.ts: 16ms, application-code: 166ms)
+[2026-05-11T13:06:46.560Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 57ms (next.js: 16ms, proxy.ts: 6ms, application-code: 35ms)
+[2026-05-11T13:06:52.774Z] POST http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ POST /ru/submit 200 in 172ms (next.js: 36ms, proxy.ts: 9ms, application-code: 127ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 4ms src/app/actions/notifications.ts
+[2026-05-11T13:06:52.955Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 162ms (next.js: 10ms, proxy.ts: 8ms, application-code: 143ms)
+[2026-05-11T13:06:59.451Z] POST http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ POST /ru/submit 200 in 1100ms (next.js: 19ms, proxy.ts: 9ms, application-code: 1073ms)
+  └─ ƒ fetchRepoFromGitHub("https://github.com/Kibrom1/BridgeMind") in 1055ms src/app/actions/github.ts
+[2026-05-11T13:07:00.561Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 177ms (next.js: 24ms, proxy.ts: 12ms, application-code: 141ms)
+[2026-05-11T13:07:22.766Z] POST http://localhost:3000/ru/submit status=200 duration=0ms ip=::1
+ POST /ru/submit 200 in 39ms (next.js: 15ms, proxy.ts: 6ms, application-code: 18ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 2ms src/app/actions/notifications.ts
+[2026-05-11T13:07:22.814Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 127ms (next.js: 9ms, proxy.ts: 8ms, application-code: 110ms)
+[2026-05-11T13:07:37.882Z] POST http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ POST /ru/submit 200 in 2.1s (next.js: 18ms, proxy.ts: 7ms, application-code: 2.0s)
+  └─ ƒ createSubmission({"category":"development","description":"BridgeMind is an AI agent that unifies structured and unstructured data sources.","email":"demumuchat@gmail.com","...":"3 items not stringified"}) in 2029ms src/app/actions/submissions.ts
+[2026-05-11T13:07:39.958Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 138ms (next.js: 17ms, proxy.ts: 7ms, application-code: 114ms)
+[2026-05-11T13:07:45.680Z] GET http://localhost:3000/ru/profile/settings status=200 duration=0ms ip=::1
+ GET /ru/profile/settings 200 in 110ms (next.js: 15ms, proxy.ts: 9ms, application-code: 87ms)
+[2026-05-11T13:07:48.637Z] GET http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ GET /ru/profile 200 in 102ms (next.js: 14ms, proxy.ts: 6ms, application-code: 81ms)
+[2026-05-11T13:07:48.771Z] POST http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ POST /ru/profile 200 in 38ms (next.js: 10ms, proxy.ts: 10ms, application-code: 18ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/author-analytics.ts
+[2026-05-11T13:07:48.812Z] GET http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+[2026-05-11T13:07:48.826Z] POST http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ POST /ru/profile 200 in 115ms (next.js: 82ms, proxy.ts: 11ms, application-code: 21ms)
+  └─ ƒ getAuthorServers("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/author-analytics.ts
+[2026-05-11T13:07:48.954Z] GET http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ GET /ru/profile 200 in 416ms (next.js: 24ms, proxy.ts: 7ms, application-code: 385ms)
+ GET /ru/profile 200 in 295ms (next.js: 88ms, proxy.ts: 16ms, application-code: 191ms)
+[2026-05-11T13:07:52.764Z] POST http://localhost:3000/ru/profile status=200 duration=1ms ip=::1
+ POST /ru/profile 200 in 40ms (next.js: 16ms, proxy.ts: 7ms, application-code: 17ms)
+  └─ ƒ getUnreadNotificationsCount("cmp13r90v00004kt8o1nlw44g") in 3ms src/app/actions/notifications.ts
+[2026-05-11T13:07:52.812Z] GET http://localhost:3000/ru/profile status=200 duration=0ms ip=::1
+ GET /ru/profile 200 in 153ms (next.js: 8ms, proxy.ts: 9ms, application-code: 136ms)
+[2026-05-11T13:07:56.519Z] GET http://localhost:3000/ru/submit status=200 duration=1ms ip=::1
+ GET /ru/submit 200 in 61ms (next.js: 16ms, proxy.ts: 6ms, application-code: 39ms)
+[2026-05-11T13:07:57.599Z] GET http://localhost:3000/ru/clients status=200 duration=1ms ip=::1
+[2026-05-11T13:07:59.411Z] GET http://localhost:3000/ru/clients status=200 duration=0ms ip=::1
+ GET /ru/clients 200 in 1823ms (next.js: 1748ms, proxy.ts: 6ms, application-code: 70ms)
+ GET /ru/clients 200 in 95ms (next.js: 25ms, proxy.ts: 7ms, application-code: 63ms)
+[2026-05-11T13:08:06.205Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:06.224Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:06.241Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:06.259Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:06.277Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:06.296Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:06.313Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:06.330Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:06.350Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:06.368Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:07.442Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.471Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.490Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.507Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.524Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.542Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:07.561Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.581Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.600Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:07.618Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:12.507Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:12.528Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:12.546Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:12.564Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:12.579Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:12.601Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:12.617Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:12.633Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:12.652Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:12.668Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:13.746Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.771Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.790Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:13.807Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.824Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.842Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.862Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.881Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.898Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:13.916Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:25.829Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:25.851Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:25.868Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:25.885Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:25.903Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:25.921Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:25.942Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:25.967Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:25.993Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:26.017Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.116Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:27.141Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.162Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.180Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.199Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.217Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.235Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.253Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.273Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:27.292Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:28.476Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:28.499Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:28.519Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:28.538Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:28.556Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:28.576Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:28.597Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:08:28.615Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:28.634Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:08:28.651Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+✓ Compiled in 269ms
+[2026-05-11T13:08:56.778Z] GET http://localhost:3000/ru status=200 duration=3ms ip=::1
+[2026-05-11T13:08:57.584Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:08:57.760Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:08:57.762Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T13:08:57.765Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:08:57.767Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+ GET /ru 200 in 1820ms (next.js: 280ms, proxy.ts: 123ms, application-code: 1417ms)
+[2026-05-11T13:08:58.492Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 938ms (next.js: 8ms, proxy.ts: 18ms, application-code: 911ms)
+[2026-05-11T13:08:58.517Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 793ms (next.js: 28ms, proxy.ts: 28ms, application-code: 737ms)
+ GET /ru 200 in 793ms (next.js: 68ms, proxy.ts: 28ms, application-code: 696ms)
+ GET /ru 200 in 799ms (next.js: 198ms, proxy.ts: 29ms, application-code: 572ms)
+ GET /ru 200 in 799ms (next.js: 153ms, proxy.ts: 30ms, application-code: 616ms)
+[2026-05-11T13:08:58.564Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:08:58.569Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+[2026-05-11T13:08:58.575Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:08:58.577Z] GET http://localhost:3000/ru status=200 duration=0ms ip=::1
+ GET /ru 200 in 1551ms (next.js: 173ms, proxy.ts: 32ms, application-code: 1346ms)
+ GET /ru 200 in 1530ms (next.js: 271ms, proxy.ts: 21ms, application-code: 1238ms)
+ GET /ru 200 in 1604ms (next.js: 187ms, proxy.ts: 10ms, application-code: 1407ms)
+ GET /ru 200 in 1550ms (next.js: 444ms, proxy.ts: 32ms, application-code: 1074ms)
+ GET /ru 200 in 1582ms (next.js: 268ms, proxy.ts: 10ms, application-code: 1303ms)
+ GET /ru 200 in 1534ms (next.js: 486ms, proxy.ts: 21ms, application-code: 1027ms)
+[2026-05-11T13:09:00.110Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:09:00.113Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+ GET /ru 200 in 441ms (next.js: 97ms, proxy.ts: 15ms, application-code: 329ms)
+ GET /ru 200 in 446ms (next.js: 14ms, proxy.ts: 14ms, application-code: 417ms)
+[2026-05-11T13:09:02.063Z] GET http://localhost:3000/ru status=200 duration=3ms ip=::1
+ GET /ru 200 in 728ms (next.js: 197ms, proxy.ts: 96ms, application-code: 435ms)
+[2026-05-11T13:10:54.989Z] GET http://localhost:3000/admin status=307 duration=2ms ip=::1
+[2026-05-11T13:10:55.015Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:10:55.036Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:55.064Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:10:55.088Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:55.113Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:10:55.133Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:55.153Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:10:55.170Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:55.191Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.266Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.288Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.308Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.330Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.347Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.365Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.383Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.401Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.420Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:10:56.437Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:15.056Z] GET http://localhost:3000/admin status=307 duration=2ms ip=::1
+[2026-05-11T13:14:15.094Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:15.118Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:15.140Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:15.164Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:15.184Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:15.202Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:15.221Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:15.243Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:15.271Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:16.352Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.376Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.398Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.416Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:16.436Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.455Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.475Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:16.493Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.512Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:16.533Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:21.588Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:21.622Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:21.648Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:21.670Z] GET http://localhost:3000/admin status=307 duration=2ms ip=::1
+[2026-05-11T13:14:21.692Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:21.714Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:21.734Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:21.753Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:21.772Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:21.792Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:51.910Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:51.952Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:51.996Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:52.025Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:52.063Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:52.096Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:52.129Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:52.157Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+[2026-05-11T13:14:52.196Z] GET http://localhost:3000/admin status=307 duration=1ms ip=::1
+[2026-05-11T13:14:52.221Z] GET http://localhost:3000/admin status=307 duration=0ms ip=::1
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://198.18.0.1:3000
+- Environments: .env
+✓ Ready in 1025ms
+
+[2026-05-11T13:15:17.917Z] GET http://localhost:3000/ru status=200 duration=16ms ip=::1
+[2026-05-11T13:15:17.956Z] GET http://localhost:3000/ru/clients status=200 duration=6ms ip=::1
+ GET /ru/clients 200 in 5.8s (next.js: 2.9s, proxy.ts: 703ms, application-code: 2.2s)
+ GET /ru 200 in 9.0s (next.js: 5.8s, proxy.ts: 711ms, application-code: 2.5s)
+[2026-05-11T13:15:27.651Z] GET http://localhost:3000/en status=200 duration=1ms ip=::1
+[2026-05-11T13:15:27.655Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:15:27.692Z] GET http://localhost:3000/offline status=307 duration=1ms ip=unknown
+ GET /api/auth/session 200 in 1429ms (next.js: 1395ms, application-code: 34ms)
+ GET /api/auth/session 200 in 27ms (next.js: 16ms, application-code: 10ms)
+[2026-05-11T13:15:29.116Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 2.7s (next.js: 2.3s, proxy.ts: 10ms, application-code: 407ms)
+ GET /api/auth/session 200 in 46ms (next.js: 20ms, application-code: 27ms)
+ GET /api/auth/session 200 in 16ms (next.js: 5ms, application-code: 11ms)
+[2026-05-11T13:16:26.180Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 805ms (next.js: 34ms, proxy.ts: 21ms, application-code: 751ms)
+[2026-05-11T13:18:31.980Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /api/auth/session 200 in 54ms (next.js: 37ms, application-code: 17ms)
+ GET /api/auth/session 200 in 26ms (next.js: 11ms, application-code: 15ms)
+ GET /admin 200 in 475ms (next.js: 14ms, proxy.ts: 10ms, application-code: 451ms)
+[2026-05-11T13:18:39.646Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 329ms (next.js: 25ms, proxy.ts: 15ms, application-code: 290ms)
+ GET /api/auth/session 200 in 37ms (next.js: 19ms, application-code: 18ms)
+ GET /api/auth/session 200 in 20ms (next.js: 7ms, application-code: 13ms)
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://198.18.0.1:3000
+- Environments: .env
+✓ Ready in 769ms
+
+[2026-05-11T13:19:15.853Z] GET http://localhost:3000/admin status=200 duration=4ms ip=::1
+[2026-05-11T13:19:15.908Z] GET http://localhost:3000/ru status=200 duration=15ms ip=::1
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://198.18.0.1:3000
+- Environments: .env
+✓ Ready in 1072ms
+
+[2026-05-11T13:19:22.222Z] GET http://localhost:3000/admin status=200 duration=7ms ip=::ffff:127.0.0.1
+[2026-05-11T13:19:24.675Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:19:24.909Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::ffff:127.0.0.1
+ GET /admin 200 in 5.2s (next.js: 1283ms, proxy.ts: 815ms, application-code: 3.1s)
+ GET /admin 200 in 1985ms (next.js: 15ms, proxy.ts: 19ms, application-code: 1951ms)
+ GET /admin 200 in 1763ms (next.js: 12ms, proxy.ts: 28ms, application-code: 1723ms)
+[2026-05-11T13:23:21.719Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 368ms (next.js: 28ms, proxy.ts: 23ms, application-code: 317ms)
+ GET /api/auth/session 200 in 1315ms (next.js: 1275ms, application-code: 41ms)
+ GET /api/auth/session 200 in 21ms (next.js: 11ms, application-code: 10ms)
+ GET /api/auth/providers 200 in 24ms (next.js: 16ms, application-code: 8ms)
+ GET /api/auth/csrf 200 in 15ms (next.js: 6ms, application-code: 9ms)
+ POST /api/auth/callback/credentials? 200 in 18ms (next.js: 6ms, application-code: 11ms)
+ GET /api/auth/session 200 in 9ms (next.js: 4ms, application-code: 6ms)
+ GET /api/auth/providers 200 in 19ms (next.js: 11ms, application-code: 8ms)
+ GET /api/auth/csrf 200 in 15ms (next.js: 4ms, application-code: 11ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 53ms (next.js: 8ms, application-code: 45ms)
+ GET /api/auth/session 200 in 11ms (next.js: 3ms, application-code: 9ms)
+[2026-05-11T13:23:48.657Z] GET http://localhost:3000/ru/login status=200 duration=8ms ip=::1
+ GET /ru/login 200 in 1903ms (next.js: 1429ms, proxy.ts: 21ms, application-code: 452ms)
+[2026-05-11T13:23:50.707Z] GET http://localhost:3000/ru/login status=200 duration=2ms ip=::1
+ GET /ru/login? 200 in 375ms (next.js: 99ms, proxy.ts: 14ms, application-code: 262ms)
+[2026-05-11T13:23:52.282Z] GET http://localhost:3000/ru/login status=200 duration=1ms ip=::1
+ GET /ru/login? 200 in 360ms (next.js: 55ms, proxy.ts: 10ms, application-code: 295ms)
+ GET /api/auth/session 200 in 24ms (next.js: 11ms, application-code: 13ms)
+ GET /api/auth/session 200 in 13ms (next.js: 3ms, application-code: 10ms)
+ GET /api/auth/session 200 in 9ms (next.js: 4ms, application-code: 5ms)
+ GET /api/auth/providers 200 in 13ms (next.js: 6ms, application-code: 8ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 15ms (next.js: 3ms, application-code: 13ms)
+ GET /api/auth/csrf 200 in 21ms (next.js: 11ms, application-code: 10ms)
+ GET /api/auth/session 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET /api/auth/providers 200 in 7ms (next.js: 3ms, application-code: 5ms)
+ GET /api/auth/csrf 200 in 8ms (next.js: 4ms, application-code: 5ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 15ms (next.js: 3ms, application-code: 12ms)
+ GET /api/auth/session 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET /api/auth/providers 200 in 21ms (next.js: 12ms, application-code: 9ms)
+ GET /api/auth/csrf 200 in 11ms (next.js: 4ms, application-code: 8ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 16ms (next.js: 2ms, application-code: 14ms)
+ GET /api/auth/session 200 in 8ms (next.js: 2ms, application-code: 5ms)
+[2026-05-11T13:23:56.831Z] GET http://localhost:3000/ru status=200 duration=1ms ip=::1
+[2026-05-11T13:24:02.153Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /ru 200 in 5.6s (next.js: 3.2s, proxy.ts: 9ms, application-code: 2.4s)
+ GET /api/auth/session 200 in 47ms (next.js: 27ms, application-code: 21ms)
+ GET /api/auth/session 200 in 19ms (next.js: 9ms, application-code: 10ms)
+ GET /api/auth/session 200 in 25ms (next.js: 8ms, application-code: 16ms)
+ GET /admin 200 in 489ms (next.js: 11ms, proxy.ts: 137ms, application-code: 342ms)
+ GET /api/auth/providers 200 in 19ms (next.js: 11ms, application-code: 8ms)
+ GET /api/auth/csrf 200 in 11ms (next.js: 3ms, application-code: 7ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 16ms (next.js: 5ms, application-code: 11ms)
+ GET /api/auth/session 200 in 9ms (next.js: 2ms, application-code: 6ms)
+ GET /api/auth/providers 200 in 10ms (next.js: 4ms, application-code: 7ms)
+ GET /api/auth/csrf 200 in 8ms (next.js: 3ms, application-code: 5ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 14ms (next.js: 4ms, application-code: 10ms)
+ GET /api/auth/session 200 in 9ms (next.js: 3ms, application-code: 6ms)
+[2026-05-11T13:24:51.767Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 386ms (next.js: 13ms, proxy.ts: 17ms, application-code: 355ms)
+ GET /api/auth/session 200 in 33ms (next.js: 20ms, application-code: 13ms)
+ GET /api/auth/session 200 in 17ms (next.js: 5ms, application-code: 12ms)
+ GET /api/auth/session 200 in 11ms (next.js: 4ms, application-code: 7ms)
+ GET /api/auth/providers 200 in 25ms (next.js: 15ms, application-code: 9ms)
+ GET /api/auth/csrf 200 in 12ms (next.js: 4ms, application-code: 9ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 17ms (next.js: 3ms, application-code: 15ms)
+ GET /api/auth/session 200 in 11ms (next.js: 4ms, application-code: 6ms)
+ GET /api/auth/session 200 in 24ms (next.js: 15ms, application-code: 9ms)
+ GET /api/auth/csrf 200 in 20ms (next.js: 12ms, application-code: 8ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials 302 in 17ms (next.js: 5ms, application-code: 12ms)
+ GET /api/auth/csrf 200 in 22ms (next.js: 11ms, application-code: 11ms)
+ GET /api/auth/csrf 200 in 19ms (next.js: 11ms, application-code: 8ms)
+ POST /api/auth/callback/credentials 302 in 12ms (next.js: 4ms, application-code: 8ms)
+[2026-05-11T13:25:39.824Z] GET http://localhost:3000/login?error=MissingCSRF status=307 duration=1ms ip=::1
+[2026-05-11T13:25:39.837Z] GET http://localhost:3000/ru/login status=200 duration=1ms ip=::1
+ GET /ru/login 200 in 348ms (next.js: 18ms, proxy.ts: 6ms, application-code: 324ms)
+ GET /api/auth/csrf 200 in 25ms (next.js: 16ms, application-code: 10ms)
+ POST /api/auth/callback/credentials 302 in 19ms (next.js: 6ms, application-code: 13ms)
+ GET /api/auth/csrf 200 in 24ms (next.js: 14ms, application-code: 10ms)
+ POST /api/auth/callback/credentials 302 in 17ms (next.js: 4ms, application-code: 13ms)
+ GET /api/auth/csrf 200 in 31ms (next.js: 17ms, application-code: 14ms)
+ GET /api/auth/csrf 200 in 31ms (next.js: 19ms, application-code: 12ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials 302 in 29ms (next.js: 8ms, application-code: 21ms)
+ GET /api/auth/providers 200 in 33ms (next.js: 19ms, application-code: 14ms)
+ GET /api/auth/session 200 in 23ms (next.js: 13ms, application-code: 10ms)
+ GET /api/auth/session 200 in 17ms (next.js: 10ms, application-code: 7ms)
+[2026-05-11T13:29:26.393Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+✓ Compiled in 3.7s
+[2026-05-11T13:29:33.070Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:33.307Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:33.311Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:33.313Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:33.316Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 7.8s (next.js: 6.3s, proxy.ts: 202ms, application-code: 1325ms)
+[2026-05-11T13:29:34.050Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1144ms (next.js: 10ms, proxy.ts: 162ms, application-code: 972ms)
+[2026-05-11T13:29:34.315Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1283ms (next.js: 175ms, proxy.ts: 30ms, application-code: 1079ms)
+ GET /admin 200 in 1283ms (next.js: 337ms, proxy.ts: 30ms, application-code: 915ms)
+ GET /admin 200 in 1287ms (next.js: 24ms, proxy.ts: 28ms, application-code: 1236ms)
+ GET /admin 200 in 1283ms (next.js: 510ms, proxy.ts: 31ms, application-code: 743ms)
+[2026-05-11T13:29:34.632Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:34.636Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:34.644Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:34.646Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1392ms (next.js: 11ms, proxy.ts: 12ms, application-code: 1368ms)
+[2026-05-11T13:29:35.461Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1169ms (next.js: 12ms, proxy.ts: 18ms, application-code: 1139ms)
+ GET /api/auth/csrf 200 in 433ms (next.js: 245ms, application-code: 188ms)
+[2026-05-11T13:29:35.913Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1510ms (next.js: 261ms, proxy.ts: 47ms, application-code: 1202ms)
+ GET /admin 200 in 1510ms (next.js: 463ms, proxy.ts: 47ms, application-code: 1000ms)
+ GET /admin 200 in 1519ms (next.js: 27ms, proxy.ts: 43ms, application-code: 1449ms)
+ GET /admin 200 in 1527ms (next.js: 650ms, proxy.ts: 46ms, application-code: 832ms)
+[2026-05-11T13:29:36.165Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:36.168Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:36.170Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:36.177Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials 302 in 177ms (next.js: 9ms, application-code: 168ms)
+ GET /admin 200 in 1773ms (next.js: 265ms, proxy.ts: 22ms, application-code: 1486ms)
+[2026-05-11T13:29:37.235Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1338ms (next.js: 27ms, proxy.ts: 13ms, application-code: 1298ms)
+[2026-05-11T13:29:37.427Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1411ms (next.js: 425ms, proxy.ts: 28ms, application-code: 959ms)
+ GET /admin 200 in 1418ms (next.js: 191ms, proxy.ts: 30ms, application-code: 1196ms)
+ GET /admin 200 in 1421ms (next.js: 649ms, proxy.ts: 27ms, application-code: 745ms)
+ GET /admin 200 in 1419ms (next.js: 853ms, proxy.ts: 22ms, application-code: 544ms)
+[2026-05-11T13:29:37.607Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:37.610Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:37.611Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:37.615Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 945ms (next.js: 10ms, proxy.ts: 12ms, application-code: 923ms)
+[2026-05-11T13:29:38.199Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 788ms (next.js: 6ms, proxy.ts: 13ms, application-code: 768ms)
+[2026-05-11T13:29:38.380Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 967ms (next.js: 12ms, proxy.ts: 31ms, application-code: 923ms)
+ GET /admin 200 in 963ms (next.js: 274ms, proxy.ts: 30ms, application-code: 659ms)
+ GET /admin 200 in 967ms (next.js: 143ms, proxy.ts: 31ms, application-code: 793ms)
+ GET /admin 200 in 970ms (next.js: 414ms, proxy.ts: 24ms, application-code: 532ms)
+[2026-05-11T13:29:38.585Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:38.590Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:38.594Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:38.600Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1227ms (next.js: 16ms, proxy.ts: 24ms, application-code: 1186ms)
+[2026-05-11T13:29:39.429Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1221ms (next.js: 10ms, proxy.ts: 171ms, application-code: 1041ms)
+[2026-05-11T13:29:39.676Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1316ms (next.js: 21ms, proxy.ts: 23ms, application-code: 1271ms)
+ GET /admin 200 in 1315ms (next.js: 167ms, proxy.ts: 25ms, application-code: 1122ms)
+ GET /admin 200 in 1329ms (next.js: 372ms, proxy.ts: 26ms, application-code: 931ms)
+ GET /admin 200 in 1334ms (next.js: 583ms, proxy.ts: 21ms, application-code: 730ms)
+[2026-05-11T13:29:39.931Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:39.933Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:39.944Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:40.244Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1122ms (next.js: 23ms, proxy.ts: 17ms, application-code: 1082ms)
+[2026-05-11T13:29:40.585Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1147ms (next.js: 8ms, proxy.ts: 232ms, application-code: 907ms)
+[2026-05-11T13:29:40.813Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1072ms (next.js: 21ms, proxy.ts: 23ms, application-code: 1027ms)
+ GET /admin 200 in 1071ms (next.js: 161ms, proxy.ts: 23ms, application-code: 887ms)
+ GET /admin 200 in 1076ms (next.js: 307ms, proxy.ts: 25ms, application-code: 744ms)
+ GET /admin 200 in 1078ms (next.js: 158ms, proxy.ts: 310ms, application-code: 610ms)
+[2026-05-11T13:29:41.020Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:41.025Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:41.041Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:41.419Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1085ms (next.js: 22ms, proxy.ts: 11ms, application-code: 1052ms)
+[2026-05-11T13:29:41.818Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1223ms (next.js: 9ms, proxy.ts: 214ms, application-code: 999ms)
+[2026-05-11T13:29:41.987Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1001ms (next.js: 24ms, proxy.ts: 28ms, application-code: 949ms)
+ GET /admin 200 in 1136ms (next.js: 200ms, proxy.ts: 28ms, application-code: 909ms)
+ GET /admin 200 in 1151ms (next.js: 394ms, proxy.ts: 26ms, application-code: 732ms)
+ GET /admin 200 in 1146ms (next.js: 245ms, proxy.ts: 392ms, application-code: 509ms)
+[2026-05-11T13:29:42.181Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:42.183Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:42.461Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:42.468Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 817ms (next.js: 14ms, proxy.ts: 9ms, application-code: 794ms)
+[2026-05-11T13:29:42.801Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 833ms (next.js: 8ms, proxy.ts: 19ms, application-code: 806ms)
+[2026-05-11T13:29:42.969Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 971ms (next.js: 19ms, proxy.ts: 23ms, application-code: 928ms)
+ GET /admin 200 in 969ms (next.js: 147ms, proxy.ts: 23ms, application-code: 799ms)
+ GET /admin 200 in 963ms (next.js: 16ms, proxy.ts: 277ms, application-code: 670ms)
+ GET /admin 200 in 970ms (next.js: 178ms, proxy.ts: 278ms, application-code: 514ms)
+[2026-05-11T13:29:43.167Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:43.173Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:43.194Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:43.524Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 735ms (next.js: 13ms, proxy.ts: 10ms, application-code: 712ms)
+[2026-05-11T13:29:43.944Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 987ms (next.js: 11ms, proxy.ts: 12ms, application-code: 963ms)
+[2026-05-11T13:29:44.167Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1176ms (next.js: 30ms, proxy.ts: 25ms, application-code: 1121ms)
+ GET /admin 200 in 1176ms (next.js: 179ms, proxy.ts: 28ms, application-code: 970ms)
+ GET /admin 200 in 1175ms (next.js: 337ms, proxy.ts: 32ms, application-code: 806ms)
+[2026-05-11T13:29:44.347Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:44.349Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1172ms (next.js: 243ms, proxy.ts: 347ms, application-code: 583ms)
+[2026-05-11T13:29:44.609Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:44.625Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 866ms (next.js: 35ms, proxy.ts: 183ms, application-code: 649ms)
+ GET /admin 200 in 962ms (next.js: 9ms, proxy.ts: 196ms, application-code: 758ms)
+[2026-05-11T13:29:44.939Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:45.112Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 945ms (next.js: 134ms, proxy.ts: 18ms, application-code: 792ms)
+ GET /admin 200 in 948ms (next.js: 20ms, proxy.ts: 18ms, application-code: 910ms)
+ GET /admin 200 in 949ms (next.js: 25ms, proxy.ts: 258ms, application-code: 665ms)
+[2026-05-11T13:29:45.305Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:45.309Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 951ms (next.js: 174ms, proxy.ts: 265ms, application-code: 513ms)
+[2026-05-11T13:29:45.650Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 861ms (next.js: 11ms, proxy.ts: 146ms, application-code: 704ms)
+[2026-05-11T13:29:45.658Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1123ms (next.js: 9ms, proxy.ts: 170ms, application-code: 945ms)
+[2026-05-11T13:29:46.069Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:46.266Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1006ms (next.js: 24ms, proxy.ts: 21ms, application-code: 962ms)
+ GET /admin 200 in 1238ms (next.js: 188ms, proxy.ts: 18ms, application-code: 1032ms)
+ GET /admin 200 in 1233ms (next.js: 18ms, proxy.ts: 336ms, application-code: 879ms)
+[2026-05-11T13:29:46.551Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 930ms (next.js: 184ms, proxy.ts: 16ms, application-code: 730ms)
+[2026-05-11T13:29:46.576Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:46.800Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1323ms (next.js: 18ms, proxy.ts: 410ms, application-code: 895ms)
+[2026-05-11T13:29:47.010Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:47.178Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1249ms (next.js: 42ms, proxy.ts: 189ms, application-code: 1018ms)
+[2026-05-11T13:29:47.473Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 949ms (next.js: 29ms, proxy.ts: 27ms, application-code: 893ms)
+ GET /admin 200 in 1067ms (next.js: 234ms, proxy.ts: 22ms, application-code: 811ms)
+[2026-05-11T13:29:47.634Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1070ms (next.js: 223ms, proxy.ts: 232ms, application-code: 615ms)
+[2026-05-11T13:29:47.647Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 983ms (next.js: 168ms, proxy.ts: 219ms, application-code: 595ms)
+[2026-05-11T13:29:47.919Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 918ms (next.js: 153ms, proxy.ts: 163ms, application-code: 601ms)
+[2026-05-11T13:29:47.951Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:48.095Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 883ms (next.js: 10ms, proxy.ts: 19ms, application-code: 854ms)
+[2026-05-11T13:29:48.351Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 735ms (next.js: 20ms, proxy.ts: 16ms, application-code: 700ms)
+ GET /admin 200 in 851ms (next.js: 142ms, proxy.ts: 17ms, application-code: 693ms)
+[2026-05-11T13:29:48.519Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 875ms (next.js: 34ms, proxy.ts: 273ms, application-code: 568ms)
+[2026-05-11T13:29:48.529Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 750ms (next.js: 148ms, proxy.ts: 29ms, application-code: 574ms)
+ GET /admin 200 in 851ms (next.js: 128ms, proxy.ts: 149ms, application-code: 573ms)
+[2026-05-11T13:29:48.803Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:48.815Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:48.961Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 746ms (next.js: 10ms, proxy.ts: 8ms, application-code: 728ms)
+[2026-05-11T13:29:49.247Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 765ms (next.js: 15ms, proxy.ts: 35ms, application-code: 715ms)
+ GET /admin 200 in 876ms (next.js: 149ms, proxy.ts: 15ms, application-code: 712ms)
+[2026-05-11T13:29:49.408Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:49.416Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 750ms (next.js: 15ms, proxy.ts: 137ms, application-code: 597ms)
+ GET /admin 200 in 779ms (next.js: 149ms, proxy.ts: 17ms, application-code: 613ms)
+[2026-05-11T13:29:49.750Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 942ms (next.js: 134ms, proxy.ts: 150ms, application-code: 659ms)
+[2026-05-11T13:29:49.763Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:50.035Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 801ms (next.js: 8ms, proxy.ts: 10ms, application-code: 783ms)
+[2026-05-11T13:29:50.190Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 802ms (next.js: 17ms, proxy.ts: 17ms, application-code: 768ms)
+ GET /admin 200 in 967ms (next.js: 181ms, proxy.ts: 16ms, application-code: 771ms)
+ GET /admin 200 in 794ms (next.js: 18ms, proxy.ts: 173ms, application-code: 603ms)
+ GET /admin 200 in 628ms (next.js: 145ms, proxy.ts: 17ms, application-code: 466ms)
+ GET /admin 200 in 612ms (next.js: 15ms, proxy.ts: 272ms, application-code: 326ms)
+ GET /admin 200 in 334ms (next.js: 9ms, proxy.ts: 146ms, application-code: 179ms)
+[2026-05-11T13:29:51.266Z] GET http://localhost:3000/admin status=200 duration=2ms ip=::1
+[2026-05-11T13:29:51.897Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:52.233Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:52.243Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:52.248Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:52.252Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1872ms (next.js: 271ms, proxy.ts: 266ms, application-code: 1336ms)
+[2026-05-11T13:29:53.084Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1362ms (next.js: 11ms, proxy.ts: 17ms, application-code: 1334ms)
+[2026-05-11T13:29:53.258Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1063ms (next.js: 46ms, proxy.ts: 36ms, application-code: 981ms)
+ GET /admin 200 in 1058ms (next.js: 263ms, proxy.ts: 45ms, application-code: 750ms)
+ GET /admin 200 in 1205ms (next.js: 440ms, proxy.ts: 43ms, application-code: 723ms)
+ GET /admin 200 in 1215ms (next.js: 625ms, proxy.ts: 49ms, application-code: 541ms)
+[2026-05-11T13:29:53.469Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:53.474Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:53.479Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:53.495Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 938ms (next.js: 8ms, proxy.ts: 11ms, application-code: 919ms)
+[2026-05-11T13:29:54.371Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1302ms (next.js: 9ms, proxy.ts: 11ms, application-code: 1283ms)
+[2026-05-11T13:29:54.565Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1139ms (next.js: 402ms, proxy.ts: 46ms, application-code: 691ms)
+ GET /admin 200 in 1147ms (next.js: 35ms, proxy.ts: 45ms, application-code: 1066ms)
+ GET /admin 200 in 1356ms (next.js: 534ms, proxy.ts: 49ms, application-code: 773ms)
+ GET /admin 200 in 1340ms (next.js: 702ms, proxy.ts: 36ms, application-code: 602ms)
+[2026-05-11T13:29:54.808Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:54.811Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:54.817Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:55.092Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1036ms (next.js: 13ms, proxy.ts: 179ms, application-code: 845ms)
+[2026-05-11T13:29:55.375Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 821ms (next.js: 11ms, proxy.ts: 8ms, application-code: 802ms)
+[2026-05-11T13:29:55.539Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 751ms (next.js: 17ms, proxy.ts: 19ms, application-code: 716ms)
+ GET /admin 200 in 752ms (next.js: 156ms, proxy.ts: 19ms, application-code: 576ms)
+ GET /admin 200 in 870ms (next.js: 279ms, proxy.ts: 18ms, application-code: 573ms)
+[2026-05-11T13:29:55.684Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 875ms (next.js: 152ms, proxy.ts: 280ms, application-code: 443ms)
+[2026-05-11T13:29:55.691Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:55.696Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:55.965Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 851ms (next.js: 7ms, proxy.ts: 134ms, application-code: 710ms)
+[2026-05-11T13:29:56.229Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 701ms (next.js: 11ms, proxy.ts: 10ms, application-code: 680ms)
+[2026-05-11T13:29:56.378Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 710ms (next.js: 17ms, proxy.ts: 14ms, application-code: 679ms)
+ GET /admin 200 in 708ms (next.js: 148ms, proxy.ts: 15ms, application-code: 544ms)
+ GET /admin 200 in 844ms (next.js: 271ms, proxy.ts: 15ms, application-code: 558ms)
+[2026-05-11T13:29:56.551Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 860ms (next.js: 135ms, proxy.ts: 268ms, application-code: 457ms)
+[2026-05-11T13:29:56.567Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:56.700Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:56.845Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 757ms (next.js: 11ms, proxy.ts: 8ms, application-code: 739ms)
+[2026-05-11T13:29:57.131Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 897ms (next.js: 10ms, proxy.ts: 143ms, application-code: 744ms)
+[2026-05-11T13:29:57.276Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 764ms (next.js: 29ms, proxy.ts: 37ms, application-code: 698ms)
+ GET /admin 200 in 752ms (next.js: 144ms, proxy.ts: 37ms, application-code: 571ms)
+ GET /admin 200 in 874ms (next.js: 149ms, proxy.ts: 149ms, application-code: 577ms)
+[2026-05-11T13:29:57.439Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 870ms (next.js: 139ms, proxy.ts: 271ms, application-code: 461ms)
+[2026-05-11T13:29:57.459Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:57.598Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:29:57.737Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 754ms (next.js: 11ms, proxy.ts: 8ms, application-code: 735ms)
+[2026-05-11T13:29:58.026Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 889ms (next.js: 15ms, proxy.ts: 138ms, application-code: 736ms)
+[2026-05-11T13:29:58.184Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 900ms (next.js: 25ms, proxy.ts: 155ms, application-code: 720ms)
+ GET /admin 200 in 760ms (next.js: 147ms, proxy.ts: 27ms, application-code: 587ms)
+ GET /admin 200 in 910ms (next.js: 144ms, proxy.ts: 157ms, application-code: 609ms)
+[2026-05-11T13:29:58.364Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 782ms (next.js: 143ms, proxy.ts: 140ms, application-code: 499ms)
+[2026-05-11T13:29:58.383Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:58.598Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:29:58.857Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1172ms (next.js: 14ms, proxy.ts: 17ms, application-code: 1141ms)
+[2026-05-11T13:29:59.580Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1553ms (next.js: 13ms, proxy.ts: 152ms, application-code: 1387ms)
+[2026-05-11T13:29:59.929Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1740ms (next.js: 34ms, proxy.ts: 174ms, application-code: 1532ms)
+ GET /admin 200 in 1601ms (next.js: 227ms, proxy.ts: 26ms, application-code: 1349ms)
+ GET /admin 200 in 1913ms (next.js: 265ms, proxy.ts: 230ms, application-code: 1417ms)
+[2026-05-11T13:30:00.289Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:00.305Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1979ms (next.js: 354ms, proxy.ts: 258ms, application-code: 1367ms)
+[2026-05-11T13:30:00.585Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:00.992Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1799ms (next.js: 28ms, proxy.ts: 388ms, application-code: 1383ms)
+[2026-05-11T13:30:01.216Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1619ms (next.js: 37ms, proxy.ts: 332ms, application-code: 1250ms)
+[2026-05-11T13:30:01.402Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1457ms (next.js: 25ms, proxy.ts: 341ms, application-code: 1091ms)
+ GET /admin 200 in 1132ms (next.js: 292ms, proxy.ts: 23ms, application-code: 816ms)
+ GET /admin 200 in 1251ms (next.js: 223ms, proxy.ts: 291ms, application-code: 738ms)
+[2026-05-11T13:30:01.556Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:01.565Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 918ms (next.js: 24ms, proxy.ts: 192ms, application-code: 702ms)
+[2026-05-11T13:30:01.721Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:01.984Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 991ms (next.js: 14ms, proxy.ts: 218ms, application-code: 760ms)
+[2026-05-11T13:30:02.131Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 737ms (next.js: 20ms, proxy.ts: 7ms, application-code: 710ms)
+ GET /admin 200 in 864ms (next.js: 19ms, proxy.ts: 142ms, application-code: 703ms)
+[2026-05-11T13:30:02.282Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 740ms (next.js: 160ms, proxy.ts: 18ms, application-code: 561ms)
+ GET /admin 200 in 872ms (next.js: 139ms, proxy.ts: 156ms, application-code: 578ms)
+[2026-05-11T13:30:02.442Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:02.447Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 597ms (next.js: 14ms, proxy.ts: 130ms, application-code: 453ms)
+[2026-05-11T13:30:02.581Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:02.713Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 710ms (next.js: 13ms, proxy.ts: 8ms, application-code: 689ms)
+[2026-05-11T13:30:02.991Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 852ms (next.js: 13ms, proxy.ts: 142ms, application-code: 697ms)
+ GET /admin 200 in 843ms (next.js: 14ms, proxy.ts: 153ms, application-code: 676ms)
+[2026-05-11T13:30:03.141Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 712ms (next.js: 141ms, proxy.ts: 15ms, application-code: 556ms)
+[2026-05-11T13:30:03.288Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 841ms (next.js: 135ms, proxy.ts: 134ms, application-code: 572ms)
+[2026-05-11T13:30:03.296Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 716ms (next.js: 129ms, proxy.ts: 130ms, application-code: 457ms)
+[2026-05-11T13:30:03.555Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:03.562Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 703ms (next.js: 8ms, proxy.ts: 11ms, application-code: 684ms)
+[2026-05-11T13:30:03.834Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 711ms (next.js: 13ms, proxy.ts: 15ms, application-code: 683ms)
+ GET /admin 200 in 834ms (next.js: 14ms, proxy.ts: 143ms, application-code: 678ms)
+[2026-05-11T13:30:03.983Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 713ms (next.js: 144ms, proxy.ts: 22ms, application-code: 547ms)
+[2026-05-11T13:30:04.113Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 818ms (next.js: 10ms, proxy.ts: 258ms, application-code: 550ms)
+[2026-05-11T13:30:04.118Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 689ms (next.js: 131ms, proxy.ts: 128ms, application-code: 430ms)
+[2026-05-11T13:30:04.402Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:04.409Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 592ms (next.js: 6ms, proxy.ts: 16ms, application-code: 570ms)
+[2026-05-11T13:30:04.676Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 706ms (next.js: 13ms, proxy.ts: 10ms, application-code: 683ms)
+ GET /admin 200 in 869ms (next.js: 14ms, proxy.ts: 124ms, application-code: 731ms)
+[2026-05-11T13:30:04.860Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 756ms (next.js: 145ms, proxy.ts: 12ms, application-code: 600ms)
+[2026-05-11T13:30:05.016Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 775ms (next.js: 13ms, proxy.ts: 159ms, application-code: 603ms)
+[2026-05-11T13:30:05.023Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 899ms (next.js: 134ms, proxy.ts: 149ms, application-code: 616ms)
+[2026-05-11T13:30:05.293Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:05.310Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 914ms (next.js: 8ms, proxy.ts: 141ms, application-code: 764ms)
+[2026-05-11T13:30:05.622Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 772ms (next.js: 14ms, proxy.ts: 10ms, application-code: 748ms)
+ GET /admin 200 in 918ms (next.js: 14ms, proxy.ts: 152ms, application-code: 752ms)
+[2026-05-11T13:30:05.785Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 926ms (next.js: 141ms, proxy.ts: 152ms, application-code: 633ms)
+[2026-05-11T13:30:05.991Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 966ms (next.js: 20ms, proxy.ts: 267ms, application-code: 679ms)
+[2026-05-11T13:30:05.999Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 715ms (next.js: 149ms, proxy.ts: 21ms, application-code: 546ms)
+[2026-05-11T13:30:06.392Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:06.401Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 969ms (next.js: 10ms, proxy.ts: 9ms, application-code: 950ms)
+[2026-05-11T13:30:06.797Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1023ms (next.js: 22ms, proxy.ts: 13ms, application-code: 987ms)
+ GET /admin 200 in 1208ms (next.js: 19ms, proxy.ts: 193ms, application-code: 996ms)
+[2026-05-11T13:30:07.010Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1048ms (next.js: 239ms, proxy.ts: 34ms, application-code: 775ms)
+[2026-05-11T13:30:07.232Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1237ms (next.js: 14ms, proxy.ts: 391ms, application-code: 832ms)
+[2026-05-11T13:30:07.244Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1019ms (next.js: 193ms, proxy.ts: 170ms, application-code: 656ms)
+[2026-05-11T13:30:07.880Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:07.892Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1334ms (next.js: 11ms, proxy.ts: 25ms, application-code: 1298ms)
+[2026-05-11T13:30:08.314Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1317ms (next.js: 27ms, proxy.ts: 11ms, application-code: 1279ms)
+ GET /admin 200 in 1480ms (next.js: 34ms, proxy.ts: 218ms, application-code: 1228ms)
+[2026-05-11T13:30:08.499Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1487ms (next.js: 235ms, proxy.ts: 216ms, application-code: 1036ms)
+[2026-05-11T13:30:08.752Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1494ms (next.js: 16ms, proxy.ts: 622ms, application-code: 856ms)
+[2026-05-11T13:30:08.761Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 897ms (next.js: 228ms, proxy.ts: 18ms, application-code: 651ms)
+[2026-05-11T13:30:09.184Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:09.194Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 896ms (next.js: 17ms, proxy.ts: 15ms, application-code: 864ms)
+[2026-05-11T13:30:09.522Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1042ms (next.js: 29ms, proxy.ts: 16ms, application-code: 996ms)
+ GET /admin 200 in 1166ms (next.js: 25ms, proxy.ts: 234ms, application-code: 907ms)
+[2026-05-11T13:30:09.689Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 949ms (next.js: 252ms, proxy.ts: 18ms, application-code: 679ms)
+ GET /api/test-db 500 in 478ms (next.js: 458ms, application-code: 20ms)
+[2026-05-11T13:30:10.012Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1248ms (next.js: 16ms, proxy.ts: 417ms, application-code: 816ms)
+[2026-05-11T13:30:10.020Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 847ms (next.js: 164ms, proxy.ts: 14ms, application-code: 669ms)
+[2026-05-11T13:30:10.427Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:10.435Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1250ms (next.js: 8ms, proxy.ts: 170ms, application-code: 1072ms)
+[2026-05-11T13:30:10.794Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1118ms (next.js: 18ms, proxy.ts: 9ms, application-code: 1091ms)
+ GET /admin 200 in 1277ms (next.js: 22ms, proxy.ts: 318ms, application-code: 938ms)
+[2026-05-11T13:30:10.976Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1114ms (next.js: 227ms, proxy.ts: 155ms, application-code: 732ms)
+ GET /admin 200 in 1122ms (next.js: 15ms, proxy.ts: 399ms, application-code: 708ms)
+[2026-05-11T13:30:11.157Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 920ms (next.js: 188ms, proxy.ts: 196ms, application-code: 537ms)
+[2026-05-11T13:30:11.165Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:11.532Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:11.539Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 760ms (next.js: 9ms, proxy.ts: 13ms, application-code: 737ms)
+[2026-05-11T13:30:11.812Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 853ms (next.js: 17ms, proxy.ts: 14ms, application-code: 822ms)
+ GET /admin 200 in 980ms (next.js: 17ms, proxy.ts: 176ms, application-code: 788ms)
+[2026-05-11T13:30:11.965Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 827ms (next.js: 215ms, proxy.ts: 20ms, application-code: 592ms)
+[2026-05-11T13:30:12.115Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 951ms (next.js: 13ms, proxy.ts: 365ms, application-code: 573ms)
+ GET /admin 200 in 904ms (next.js: 140ms, proxy.ts: 186ms, application-code: 578ms)
+[2026-05-11T13:30:12.262Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:12.273Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:12.409Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 732ms (next.js: 10ms, proxy.ts: 134ms, application-code: 588ms)
+[2026-05-11T13:30:12.695Z] GET http://localhost:3000/admin status=200 duration=6ms ip=::1
+ GET /admin 200 in 752ms (next.js: 10ms, proxy.ts: 21ms, application-code: 721ms)
+[2026-05-11T13:30:12.858Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 891ms (next.js: 18ms, proxy.ts: 147ms, application-code: 726ms)
+ GET /admin 200 in 889ms (next.js: 14ms, proxy.ts: 146ms, application-code: 729ms)
+[2026-05-11T13:30:13.027Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 772ms (next.js: 140ms, proxy.ts: 16ms, application-code: 616ms)
+[2026-05-11T13:30:13.039Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 920ms (next.js: 146ms, proxy.ts: 139ms, application-code: 634ms)
+[2026-05-11T13:30:13.347Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:13.360Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1014ms (next.js: 12ms, proxy.ts: 148ms, application-code: 855ms)
+[2026-05-11T13:30:13.836Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1137ms (next.js: 12ms, proxy.ts: 157ms, application-code: 968ms)
+ GET /admin 200 in 1282ms (next.js: 15ms, proxy.ts: 164ms, application-code: 1103ms)
+[2026-05-11T13:30:14.149Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1149ms (next.js: 168ms, proxy.ts: 15ms, application-code: 966ms)
+[2026-05-11T13:30:14.391Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1211ms (next.js: 16ms, proxy.ts: 159ms, application-code: 1036ms)
+[2026-05-11T13:30:14.601Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1405ms (next.js: 216ms, proxy.ts: 160ms, application-code: 1029ms)
+[2026-05-11T13:30:14.635Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:14.881Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1274ms (next.js: 12ms, proxy.ts: 27ms, application-code: 1235ms)
+[2026-05-11T13:30:15.343Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1215ms (next.js: 29ms, proxy.ts: 21ms, application-code: 1165ms)
+[2026-05-11T13:30:15.525Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1362ms (next.js: 18ms, proxy.ts: 227ms, application-code: 1116ms)
+ GET /admin 200 in 1315ms (next.js: 39ms, proxy.ts: 209ms, application-code: 1067ms)
+[2026-05-11T13:30:15.716Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1115ms (next.js: 253ms, proxy.ts: 30ms, application-code: 833ms)
+[2026-05-11T13:30:15.879Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1250ms (next.js: 233ms, proxy.ts: 250ms, application-code: 767ms)
+[2026-05-11T13:30:15.892Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:30:16.180Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1088ms (next.js: 18ms, proxy.ts: 235ms, application-code: 835ms)
+[2026-05-11T13:30:16.660Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1310ms (next.js: 11ms, proxy.ts: 174ms, application-code: 1125ms)
+[2026-05-11T13:30:16.903Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1373ms (next.js: 21ms, proxy.ts: 184ms, application-code: 1167ms)
+ GET /admin 200 in 1373ms (next.js: 20ms, proxy.ts: 163ms, application-code: 1190ms)
+ GET /admin 200 in 1367ms (next.js: 159ms, proxy.ts: 160ms, application-code: 1048ms)
+[2026-05-11T13:30:17.102Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:17.342Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1465ms (next.js: 47ms, proxy.ts: 286ms, application-code: 1132ms)
+[2026-05-11T13:30:17.363Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:17.775Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1554ms (next.js: 23ms, proxy.ts: 439ms, application-code: 1092ms)
+ GET /admin 200 in 1282ms (next.js: 17ms, proxy.ts: 234ms, application-code: 1030ms)
+[2026-05-11T13:30:17.956Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:18.127Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1216ms (next.js: 18ms, proxy.ts: 190ms, application-code: 1008ms)
+ GET /admin 200 in 1220ms (next.js: 31ms, proxy.ts: 238ms, application-code: 951ms)
+ GET /admin 200 in 1220ms (next.js: 217ms, proxy.ts: 253ms, application-code: 750ms)
+[2026-05-11T13:30:18.333Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:18.477Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 905ms (next.js: 13ms, proxy.ts: 202ms, application-code: 690ms)
+[2026-05-11T13:30:18.484Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:30:18.751Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 981ms (next.js: 13ms, proxy.ts: 174ms, application-code: 794ms)
+[2026-05-11T13:30:18.923Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 963ms (next.js: 13ms, proxy.ts: 167ms, application-code: 784ms)
+ GET /admin 200 in 926ms (next.js: 12ms, proxy.ts: 199ms, application-code: 716ms)
+[2026-05-11T13:30:19.063Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 741ms (next.js: 18ms, proxy.ts: 143ms, application-code: 579ms)
+[2026-05-11T13:30:19.210Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 875ms (next.js: 139ms, proxy.ts: 144ms, application-code: 592ms)
+[2026-05-11T13:30:19.432Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 945ms (next.js: 23ms, proxy.ts: 261ms, application-code: 661ms)
+[2026-05-11T13:30:19.444Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:19.835Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1069ms (next.js: 10ms, proxy.ts: 154ms, application-code: 906ms)
+[2026-05-11T13:30:20.078Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1150ms (next.js: 14ms, proxy.ts: 135ms, application-code: 1002ms)
+ GET /admin 200 in 1267ms (next.js: 18ms, proxy.ts: 143ms, application-code: 1106ms)
+[2026-05-11T13:30:20.340Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1401ms (next.js: 16ms, proxy.ts: 219ms, application-code: 1166ms)
+[2026-05-11T13:30:20.624Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1215ms (next.js: 210ms, proxy.ts: 30ms, application-code: 974ms)
+[2026-05-11T13:30:20.882Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1258ms (next.js: 19ms, proxy.ts: 202ms, application-code: 1037ms)
+[2026-05-11T13:30:20.898Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:21.365Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1519ms (next.js: 20ms, proxy.ts: 231ms, application-code: 1269ms)
+[2026-05-11T13:30:21.698Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1610ms (next.js: 17ms, proxy.ts: 250ms, application-code: 1343ms)
+ GET /admin 200 in 1597ms (next.js: 29ms, proxy.ts: 281ms, application-code: 1287ms)
+[2026-05-11T13:30:21.947Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1327ms (next.js: 29ms, proxy.ts: 251ms, application-code: 1048ms)
+[2026-05-11T13:30:22.203Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1556ms (next.js: 249ms, proxy.ts: 250ms, application-code: 1057ms)
+[2026-05-11T13:30:22.225Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:22.465Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1346ms (next.js: 21ms, proxy.ts: 246ms, application-code: 1079ms)
+ GET /admin 200 in 1480ms (next.js: 33ms, proxy.ts: 321ms, application-code: 1126ms)
+[2026-05-11T13:30:22.863Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1347ms (next.js: 18ms, proxy.ts: 226ms, application-code: 1104ms)
+[2026-05-11T13:30:23.073Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1323ms (next.js: 25ms, proxy.ts: 249ms, application-code: 1049ms)
+[2026-05-11T13:30:23.281Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1083ms (next.js: 259ms, proxy.ts: 19ms, application-code: 805ms)
+[2026-05-11T13:30:23.441Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1225ms (next.js: 220ms, proxy.ts: 247ms, application-code: 759ms)
+[2026-05-11T13:30:23.604Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:23.628Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 950ms (next.js: 30ms, proxy.ts: 185ms, application-code: 736ms)
+ GET /admin 200 in 1069ms (next.js: 20ms, proxy.ts: 203ms, application-code: 847ms)
+[2026-05-11T13:30:23.944Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1015ms (next.js: 14ms, proxy.ts: 202ms, application-code: 799ms)
+[2026-05-11T13:30:24.099Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:24.276Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 993ms (next.js: 17ms, proxy.ts: 158ms, application-code: 818ms)
+ GET /admin 200 in 1036ms (next.js: 28ms, proxy.ts: 164ms, application-code: 844ms)
+[2026-05-11T13:30:24.490Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 893ms (next.js: 173ms, proxy.ts: 29ms, application-code: 691ms)
+[2026-05-11T13:30:24.731Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:24.744Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 949ms (next.js: 12ms, proxy.ts: 147ms, application-code: 790ms)
+ GET /admin 200 in 1177ms (next.js: 11ms, proxy.ts: 152ms, application-code: 1014ms)
+[2026-05-11T13:30:25.143Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:25.313Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1210ms (next.js: 14ms, proxy.ts: 173ms, application-code: 1023ms)
+[2026-05-11T13:30:25.489Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1208ms (next.js: 16ms, proxy.ts: 207ms, application-code: 984ms)
+ GET /admin 200 in 1007ms (next.js: 19ms, proxy.ts: 241ms, application-code: 746ms)
+[2026-05-11T13:30:25.654Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 929ms (next.js: 202ms, proxy.ts: 18ms, application-code: 709ms)
+[2026-05-11T13:30:25.666Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:25.831Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1083ms (next.js: 12ms, proxy.ts: 202ms, application-code: 869ms)
+ GET /admin 200 in 1062ms (next.js: 14ms, proxy.ts: 169ms, application-code: 879ms)
+[2026-05-11T13:30:26.216Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:26.408Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1101ms (next.js: 15ms, proxy.ts: 167ms, application-code: 920ms)
+ GET /admin 200 in 1187ms (next.js: 14ms, proxy.ts: 159ms, application-code: 1014ms)
+[2026-05-11T13:30:26.689Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1047ms (next.js: 169ms, proxy.ts: 16ms, application-code: 861ms)
+[2026-05-11T13:30:26.897Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1238ms (next.js: 210ms, proxy.ts: 168ms, application-code: 859ms)
+[2026-05-11T13:30:26.911Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:27.315Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1300ms (next.js: 18ms, proxy.ts: 185ms, application-code: 1097ms)
+ GET /admin 200 in 1340ms (next.js: 26ms, proxy.ts: 191ms, application-code: 1124ms)
+[2026-05-11T13:30:27.567Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:27.792Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1118ms (next.js: 20ms, proxy.ts: 15ms, application-code: 1083ms)
+[2026-05-11T13:30:28.009Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1317ms (next.js: 25ms, proxy.ts: 204ms, application-code: 1087ms)
+ GET /admin 200 in 1125ms (next.js: 204ms, proxy.ts: 19ms, application-code: 902ms)
+[2026-05-11T13:30:28.213Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1299ms (next.js: 30ms, proxy.ts: 402ms, application-code: 868ms)
+[2026-05-11T13:30:28.223Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1093ms (next.js: 15ms, proxy.ts: 228ms, application-code: 850ms)
+[2026-05-11T13:30:28.612Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1242ms (next.js: 15ms, proxy.ts: 221ms, application-code: 1006ms)
+[2026-05-11T13:30:28.817Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1237ms (next.js: 16ms, proxy.ts: 208ms, application-code: 1013ms)
+[2026-05-11T13:30:29.042Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:29.317Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1143ms (next.js: 18ms, proxy.ts: 32ms, application-code: 1093ms)
+ GET /admin 200 in 1125ms (next.js: 217ms, proxy.ts: 19ms, application-code: 890ms)
+[2026-05-11T13:30:29.544Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1321ms (next.js: 26ms, proxy.ts: 386ms, application-code: 909ms)
+[2026-05-11T13:30:29.551Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1164ms (next.js: 30ms, proxy.ts: 200ms, application-code: 934ms)
+[2026-05-11T13:30:30.023Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1193ms (next.js: 19ms, proxy.ts: 204ms, application-code: 969ms)
+[2026-05-11T13:30:30.215Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1343ms (next.js: 23ms, proxy.ts: 264ms, application-code: 1055ms)
+[2026-05-11T13:30:30.400Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:30.645Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1125ms (next.js: 19ms, proxy.ts: 22ms, application-code: 1084ms)
+ GET /admin 200 in 1343ms (next.js: 232ms, proxy.ts: 24ms, application-code: 1087ms)
+[2026-05-11T13:30:30.895Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:30.902Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1146ms (next.js: 14ms, proxy.ts: 263ms, application-code: 869ms)
+ GET /admin 200 in 1215ms (next.js: 15ms, proxy.ts: 191ms, application-code: 1009ms)
+[2026-05-11T13:30:31.246Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1177ms (next.js: 28ms, proxy.ts: 180ms, application-code: 970ms)
+[2026-05-11T13:30:31.414Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1178ms (next.js: 16ms, proxy.ts: 235ms, application-code: 927ms)
+[2026-05-11T13:30:31.598Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:31.745Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 870ms (next.js: 16ms, proxy.ts: 20ms, application-code: 834ms)
+ GET /admin 200 in 867ms (next.js: 194ms, proxy.ts: 18ms, application-code: 654ms)
+[2026-05-11T13:30:31.902Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 821ms (next.js: 13ms, proxy.ts: 153ms, application-code: 655ms)
+[2026-05-11T13:30:31.916Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 949ms (next.js: 13ms, proxy.ts: 165ms, application-code: 771ms)
+[2026-05-11T13:30:32.202Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 970ms (next.js: 9ms, proxy.ts: 181ms, application-code: 780ms)
+[2026-05-11T13:30:32.391Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 967ms (next.js: 16ms, proxy.ts: 146ms, application-code: 804ms)
+[2026-05-11T13:30:32.581Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1004ms (next.js: 20ms, proxy.ts: 147ms, application-code: 837ms)
+[2026-05-11T13:30:32.763Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 875ms (next.js: 144ms, proxy.ts: 17ms, application-code: 713ms)
+[2026-05-11T13:30:32.998Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 963ms (next.js: 14ms, proxy.ts: 159ms, application-code: 790ms)
+[2026-05-11T13:30:33.018Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1158ms (next.js: 13ms, proxy.ts: 177ms, application-code: 968ms)
+[2026-05-11T13:30:33.380Z] GET http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare status=200 duration=5ms ip=::1
+ GET /admin 200 in 1004ms (next.js: 13ms, proxy.ts: 185ms, application-code: 805ms)
+[2026-05-11T13:30:33.659Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:33.662Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1079ms (next.js: 18ms, proxy.ts: 180ms, application-code: 882ms)
+ GET /admin 200 in 1335ms (next.js: 25ms, proxy.ts: 230ms, application-code: 1080ms)
+[2026-05-11T13:30:34.109Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1127ms (next.js: 199ms, proxy.ts: 27ms, application-code: 901ms)
+[2026-05-11T13:30:34.353Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:34.364Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1380ms (next.js: 48ms, proxy.ts: 246ms, application-code: 1086ms)
+ GET /admin 200 in 1379ms (next.js: 211ms, proxy.ts: 247ms, application-code: 922ms)
+[2026-05-11T13:30:34.822Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1123ms (next.js: 19ms, proxy.ts: 410ms, application-code: 695ms)
+[2026-05-11T13:30:34.827Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:35.297Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1184ms (next.js: 17ms, proxy.ts: 240ms, application-code: 927ms)
+ GET /admin 200 in 979ms (next.js: 230ms, proxy.ts: 30ms, application-code: 719ms)
+[2026-05-11T13:30:35.590Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:35.597Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1189ms (next.js: 21ms, proxy.ts: 17ms, application-code: 1150ms)
+ GET /admin 200 in 1189ms (next.js: 219ms, proxy.ts: 19ms, application-code: 950ms)
+[2026-05-11T13:30:36.021Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:36.024Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1192ms (next.js: 24ms, proxy.ts: 464ms, application-code: 705ms)
+ GET /admin 200 in 1132ms (next.js: 11ms, proxy.ts: 280ms, application-code: 842ms)
+[2026-05-11T13:30:36.446Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 873ms (next.js: 206ms, proxy.ts: 14ms, application-code: 654ms)
+[2026-05-11T13:30:36.625Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:36.632Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1081ms (next.js: 25ms, proxy.ts: 17ms, application-code: 1039ms)
+ GET /admin 200 in 1080ms (next.js: 207ms, proxy.ts: 17ms, application-code: 857ms)
+[2026-05-11T13:30:37.140Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:37.144Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 714ms (next.js: 17ms, proxy.ts: 13ms, application-code: 684ms)
+ GET /admin 200 in 1079ms (next.js: 13ms, proxy.ts: 171ms, application-code: 895ms)
+[2026-05-11T13:30:37.542Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 929ms (next.js: 257ms, proxy.ts: 11ms, application-code: 661ms)
+[2026-05-11T13:30:37.767Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:38.061Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1151ms (next.js: 22ms, proxy.ts: 26ms, application-code: 1102ms)
+ GET /admin 200 in 1151ms (next.js: 199ms, proxy.ts: 27ms, application-code: 924ms)
+[2026-05-11T13:30:38.298Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:38.300Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1151ms (next.js: 23ms, proxy.ts: 385ms, application-code: 743ms)
+ GET /admin 200 in 1294ms (next.js: 35ms, proxy.ts: 222ms, application-code: 1037ms)
+[2026-05-11T13:30:38.845Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1092ms (next.js: 12ms, proxy.ts: 292ms, application-code: 788ms)
+[2026-05-11T13:30:39.098Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:30:39.333Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1333ms (next.js: 29ms, proxy.ts: 18ms, application-code: 1285ms)
+ GET /admin 200 in 1331ms (next.js: 247ms, proxy.ts: 17ms, application-code: 1067ms)
+[2026-05-11T13:30:39.657Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:39.661Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 845ms (next.js: 20ms, proxy.ts: 30ms, application-code: 795ms)
+ GET /admin 200 in 2.1s (next.js: 16ms, proxy.ts: 243ms, application-code: 1801ms)
+[2026-05-11T13:30:40.919Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 2.6s (next.js: 13ms, proxy.ts: 233ms, application-code: 2.3s)
+[2026-05-11T13:30:41.676Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:41.882Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 2.5s (next.js: 219ms, proxy.ts: 31ms, application-code: 2.2s)
+ GET /admin 200 in 2.5s (next.js: 15ms, proxy.ts: 31ms, application-code: 2.4s)
+[2026-05-11T13:30:42.109Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:42.114Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 2.1s (next.js: 421ms, proxy.ts: 858ms, application-code: 779ms)
+ GET /admin 200 in 1208ms (next.js: 20ms, proxy.ts: 360ms, application-code: 829ms)
+[2026-05-11T13:30:42.529Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1040ms (next.js: 11ms, proxy.ts: 201ms, application-code: 827ms)
+[2026-05-11T13:30:42.725Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:42.950Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /ru/servers/cloudflare/mcp-server-cloudflare 200 in 9.7s (next.js: 6.7s, proxy.ts: 174ms, application-code: 2.9s)
+ GET /admin 200 in 1092ms (next.js: 19ms, proxy.ts: 17ms, application-code: 1056ms)
+ GET /admin 200 in 1092ms (next.js: 232ms, proxy.ts: 15ms, application-code: 844ms)
+[2026-05-11T13:30:43.207Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:43.217Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:43.384Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 875ms (next.js: 17ms, proxy.ts: 14ms, application-code: 844ms)
+ GET /admin 200 in 1196ms (next.js: 28ms, proxy.ts: 192ms, application-code: 977ms)
+[2026-05-11T13:30:43.734Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:43.896Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1153ms (next.js: 15ms, proxy.ts: 207ms, application-code: 932ms)
+[2026-05-11T13:30:44.057Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 877ms (next.js: 18ms, proxy.ts: 26ms, application-code: 833ms)
+ GET /admin 200 in 866ms (next.js: 177ms, proxy.ts: 20ms, application-code: 669ms)
+ GET /admin 200 in 1003ms (next.js: 179ms, proxy.ts: 174ms, application-code: 650ms)
+[2026-05-11T13:30:44.217Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:44.225Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:44.366Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 931ms (next.js: 14ms, proxy.ts: 175ms, application-code: 742ms)
+ GET /admin 200 in 901ms (next.js: 16ms, proxy.ts: 157ms, application-code: 728ms)
+[2026-05-11T13:30:44.649Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:44.831Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 926ms (next.js: 13ms, proxy.ts: 150ms, application-code: 763ms)
+[2026-05-11T13:30:45.067Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 879ms (next.js: 14ms, proxy.ts: 22ms, application-code: 843ms)
+ GET /admin 200 in 1056ms (next.js: 143ms, proxy.ts: 15ms, application-code: 899ms)
+ GET /admin 200 in 1059ms (next.js: 135ms, proxy.ts: 143ms, application-code: 781ms)
+[2026-05-11T13:30:45.294Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:45.302Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:30:45.510Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1013ms (next.js: 25ms, proxy.ts: 152ms, application-code: 836ms)
+ GET /admin 200 in 1238ms (next.js: 24ms, proxy.ts: 182ms, application-code: 1032ms)
+[2026-05-11T13:30:45.896Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1064ms (next.js: 12ms, proxy.ts: 224ms, application-code: 828ms)
+[2026-05-11T13:30:45.912Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+[2026-05-11T13:30:46.300Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1030ms (next.js: 16ms, proxy.ts: 22ms, application-code: 993ms)
+ GET /admin 200 in 1219ms (next.js: 213ms, proxy.ts: 23ms, application-code: 984ms)
+ GET /admin 200 in 1240ms (next.js: 205ms, proxy.ts: 212ms, application-code: 823ms)
+[2026-05-11T13:30:46.544Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:46.599Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:47.199Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1696ms (next.js: 19ms, proxy.ts: 196ms, application-code: 1481ms)
+ GET /admin 200 in 1739ms (next.js: 187ms, proxy.ts: 15ms, application-code: 1538ms)
+[2026-05-11T13:30:47.647Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 1566ms (next.js: 12ms, proxy.ts: 206ms, application-code: 1348ms)
+[2026-05-11T13:30:47.850Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:48.039Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 1541ms (next.js: 93ms, proxy.ts: 46ms, application-code: 1402ms)
+ GET /admin 200 in 1685ms (next.js: 608ms, proxy.ts: 67ms, application-code: 1011ms)
+ GET /admin 200 in 1649ms (next.js: 229ms, proxy.ts: 606ms, application-code: 814ms)
+[2026-05-11T13:30:48.252Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:48.256Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+[2026-05-11T13:30:48.591Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /admin 200 in 961ms (next.js: 18ms, proxy.ts: 17ms, application-code: 927ms)
+ GET /admin 200 in 958ms (next.js: 16ms, proxy.ts: 202ms, application-code: 740ms)
+ GET /admin 200 in 1071ms (next.js: 9ms, proxy.ts: 183ms, application-code: 879ms)
+ GET /api/auth/session 200 in 146ms (next.js: 123ms, application-code: 23ms)
+ GET /admin 200 in 723ms (next.js: 11ms, proxy.ts: 17ms, application-code: 695ms)
+ GET /admin 200 in 725ms (next.js: 182ms, proxy.ts: 17ms, application-code: 526ms)
+ GET /admin 200 in 728ms (next.js: 20ms, proxy.ts: 334ms, application-code: 374ms)
+[2026-05-11T13:33:43.422Z] GET http://localhost:3000/admin status=200 duration=1ms ip=::1
+ GET /admin 200 in 383ms (next.js: 20ms, proxy.ts: 15ms, application-code: 348ms)
+ GET /api/auth/session 200 in 41ms (next.js: 20ms, application-code: 21ms)
+ GET /api/auth/session 200 in 16ms (next.js: 4ms, application-code: 12ms)
+ GET /api/auth/providers 200 in 18ms (next.js: 6ms, application-code: 12ms)
+ GET /api/auth/csrf 200 in 30ms (next.js: 5ms, application-code: 25ms)
+Auth attempt: admin@example.com
+Prisma user model exists: true
+ POST /api/auth/callback/credentials? 200 in 206ms (next.js: 14ms, application-code: 192ms)
+ GET /api/auth/session 200 in 17ms (next.js: 5ms, application-code: 12ms)
+[2026-05-11T13:33:47.745Z] GET http://localhost:3000/admin status=200 duration=0ms ip=::1
+ GET /api/auth/session 200 in 36ms (next.js: 25ms, application-code: 11ms)
+ GET /admin 200 in 398ms (next.js: 45ms, proxy.ts: 11ms, application-code: 341ms)
+ GET /api/auth/session 200 in 29ms (next.js: 11ms, application-code: 18ms)
+[?25h

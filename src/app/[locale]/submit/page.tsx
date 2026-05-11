@@ -16,7 +16,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Card, CardContent } from '@/components/ui/card'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, Loader2, Sparkles } from 'lucide-react'
+import { createSubmission } from '@/app/actions/submissions'
+import { fetchRepoFromGitHub } from '@/app/actions/github'
 
 const submitSchema = z.object({
   name: z.string().min(1, 'Введите название сервера'),
@@ -47,6 +49,9 @@ const categories = [
 
 export default function SubmitPage() {
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
+  const [fetchError, setFetchError] = useState('')
   const form = useForm<SubmitFormData>({
     resolver: zodResolver(submitSchema),
     defaultValues: {
@@ -55,9 +60,46 @@ export default function SubmitPage() {
   })
 
   const onSubmit = async (data: SubmitFormData) => {
-    // In a real app, this would send to an API endpoint
-    console.log('Submission:', data)
-    setSubmitted(true)
+    setIsSubmitting(true)
+    try {
+      await createSubmission(data)
+      setSubmitted(true)
+    } catch (err) {
+      console.error('Submission error:', err)
+      alert('Ошибка при отправке. Пожалуйста, попробуйте снова.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleAutoFill = async () => {
+    const url = form.getValues('url')
+    if (!url) {
+      setFetchError('Сначала введите ссылку на GitHub репозиторий')
+      return
+    }
+
+    setIsFetching(true)
+    setFetchError('')
+
+    try {
+      const data = await fetchRepoFromGitHub(url)
+      form.setValue('name', data.name)
+      if (data.description) form.setValue('description', data.description)
+      if (data.license) {
+        // Try to match category from topics
+        const matchedCategory = categories.find((c) =>
+          data.topics?.some((t) => t.toLowerCase().includes(c.value.toLowerCase()))
+        )
+        if (matchedCategory) {
+          form.setValue('category', matchedCategory.value)
+        }
+      }
+    } catch (err: any) {
+      setFetchError(err.message || 'Не удалось получить данные из GitHub')
+    } finally {
+      setIsFetching(false)
+    }
   }
 
   if (submitted) {
@@ -109,14 +151,41 @@ export default function SubmitPage() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium">Ссылка (GitHub или документация)</label>
-          <Input
-            placeholder="https://github.com/owner/repo"
-            {...form.register('url')}
-          />
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium">Ссылка (GitHub или документация)</label>
+          </div>
+          <div className="flex gap-2">
+            <Input
+              placeholder="https://github.com/owner/repo"
+              {...form.register('url')}
+              className="flex-1"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleAutoFill}
+              disabled={isFetching}
+              className="shrink-0"
+            >
+              {isFetching ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4 mr-1" />
+                  Авто
+                </>
+              )}
+            </Button>
+          </div>
+          {fetchError && (
+            <p className="text-sm text-amber-600">{fetchError}</p>
+          )}
           {form.formState.errors.url && (
             <p className="text-sm text-red-500">{form.formState.errors.url.message}</p>
           )}
+          <p className="text-xs text-muted-foreground">
+            Введите GitHub URL и нажмите «Авто» для автозаполнения
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -125,6 +194,7 @@ export default function SubmitPage() {
             onValueChange={(value: string | null) => {
               if (value) form.setValue('category', value)
             }}
+            value={form.watch('category') || ''}
           >
             <SelectTrigger>
               <SelectValue placeholder="Выберите категорию" />
@@ -179,8 +249,14 @@ export default function SubmitPage() {
           </CardContent>
         </Card>
 
-        <Button type="submit" size="lg" className="w-full sm:w-auto">
-          Отправить
+        <Button 
+          type="submit" 
+          size="lg" 
+          className="w-full sm:w-auto hover:bg-gray-800"
+          style={{ backgroundColor: 'black', color: 'white' }}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Отправка...' : 'Отправить'}
         </Button>
       </form>
     </div>

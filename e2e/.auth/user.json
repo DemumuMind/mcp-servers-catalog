@@ -1,0 +1,65 @@
+{
+  "cookies": [
+    {
+      "name": "authjs.csrf-token",
+      "value": "14eb2ed5865822d34897f2c0aca753d265d118491cafce8783c3cf791a98cac8%7Cbf740ed64e346e894417f81958eabb9a3313c660e89fa5efcd98a7d304472df3",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2F",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.session-token",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiWjdYVUwwLW4wOHMtVHFMaHR2eVV4Y25zekJzLXlZTzhpbG82cVEzWGZaTUpOUVd0TDN1dUNtcExwWHNFR01ZVElWY2hVWDZWV3hXcHBKbTN2MUhrZ3cifQ..kXGttdlFLEbruf2v0YUxwQ.BZAIVN_DGy9CXREb3Bds19kHPv9Z3qIdKSTyhRjzEwTdEEgPQyGECdCjOHdxizYyosZnq49C9K48BMoHmchyAnOub9v5P_QLFTXGWG3C9Qu0eLMbuhQVXLAk9uu2b_S1zxiEV3JUxFsIwRTHui3lUAPv4M-x8F7FS-oaZltsvyzTrI3r2fFkians9VAQMSEgcUastCwcnFH6bWDabzAL2JMW6J97xHfy9FuXuPPHP6wRoSV84HMdV34-XIIq4Cp8jFQyvh1hKsS-JvX6se1ZSdKB1MH2zSxy068mU7F8ODw.sYV1wvq9XsethNYyPyyB4M2l9fe4L78Mdy8m_aI7E24",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1781121293,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NEXT_LOCALE",
+      "value": "ru",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "csrf-token",
+      "value": "f3847b997a3a018f1037ffb6b84d2f09cc3dd875a1ce7ae3797d8d5a6a23a0de",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1778615704.827056,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "ab-home-sort",
+      "value": "featured",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1779134094.131,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
