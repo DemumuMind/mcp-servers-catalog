@@ -4,16 +4,6 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
-let withAnalyzer = (config: NextConfig) => config
-if (process.env.ANALYZE === 'true') {
-  try {
-    const withBundleAnalyzer = require('@next/bundle-analyzer')
-    withAnalyzer = withBundleAnalyzer({ enabled: true })
-  } catch {
-    console.warn('@next/bundle-analyzer not installed, skipping bundle analysis')
-  }
-}
-
 const nextConfig: NextConfig = {
   output: 'standalone',
   serverExternalPackages: ['@electric-sql/pglite', 'pglite-prisma-adapter'],
@@ -69,4 +59,4 @@ const sentryWrapped = sentryDsn
   ? withSentryConfig(config, sentryOptions)
   : config
 
-export default withAnalyzer(sentryWrapped)
+export default sentryWrapped
