@@ -3,7 +3,6 @@
 import { prisma } from '@/lib/db'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { getCacheKey, getCache, setCache, delCachePattern } from '@/lib/cache'
-import DOMPurify from 'isomorphic-dompurify'
 import { Server } from '@prisma/client'
 
 const ITEMS_PER_PAGE = 12
@@ -21,7 +20,12 @@ export interface ServersPublicResult {
 }
 
 function sanitizeHtml(input: string): string {
-  return DOMPurify.sanitize(input, { ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'code', 'pre'], ALLOWED_ATTR: ['href', 'target', 'rel'] })
+  // Simple server-side HTML sanitization without jsdom dependency
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/javascript:/gi, 'blocked:')
+    .replace(/on\w+\s*=/gi, 'data-blocked=')
 }
 
 export async function getServersPublic(

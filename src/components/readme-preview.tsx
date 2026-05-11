@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import DOMPurify from 'isomorphic-dompurify'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, ChevronUp, BookOpen } from 'lucide-react'
@@ -20,23 +19,8 @@ export function ReadmePreview({ content, repoUrl }: ReadmePreviewProps) {
   const isLong = lines.length > 50
 
   const displayContent = useMemo(() => {
-    const raw = expanded ? content : previewLines.join('\n')
-    // Sanitize user-generated README content before rendering
-    return DOMPurify.sanitize(raw, {
-      ALLOWED_TAGS: [
-        'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'strike', 'del',
-        'a', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'hr',
-        'table', 'thead', 'tbody', 'tr', 'th', 'td', 'div', 'span',
-        'sup', 'sub', 'details', 'summary'
-      ],
-      ALLOWED_ATTR: [
-        'href', 'src', 'alt', 'title', 'class', 'id', 'target',
-        'rel', 'width', 'height', 'align', 'colspan', 'rowspan',
-        'open'
-      ],
-      FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover'],
-    })
+    // react-markdown is safe by default — no raw HTML rendering without explicit config
+    return expanded ? content : previewLines.join('\n')
   }, [content, expanded])
 
   return (

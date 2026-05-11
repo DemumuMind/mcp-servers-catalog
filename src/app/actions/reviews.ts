@@ -2,13 +2,14 @@
 
 import { prisma } from '@/lib/db'
 import { rateLimit } from '@/lib/rate-limit'
-import DOMPurify from 'isomorphic-dompurify'
 
 function sanitizeReviewContent(input: string): string {
-  return DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'code', 'pre', 'br', 'p'],
-    ALLOWED_ATTR: ['href', 'target', 'rel'],
-  })
+  // Simple server-side HTML sanitization without jsdom dependency
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/javascript:/gi, 'blocked:')
+    .replace(/on\w+\s*=/gi, 'data-blocked=')
 }
 
 export async function getServerReviews(serverId: string) {
