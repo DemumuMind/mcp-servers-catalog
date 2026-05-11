@@ -1,4 +1,4 @@
-import { prisma } from '../lib/db-pglite'
+import { prisma } from '../src/lib/db'
 import { hash } from 'bcryptjs'
 
 async function main() {
