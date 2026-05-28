@@ -43,8 +43,27 @@ next-env.d.ts
 
 # pglite
 /.pglite/
+/.pglite2/
+/.pglite3/
+.rate-limit.json
 
 *storybook.log
 storybook-static
 
 .vercel
+
+# debug/dev logs
+dev.err
+dev.err.log
+dev.log
+dev.out.log
+
+# temp/scrap files
+cookies.txt
+csrf*.txt
+headers*.txt
+session*.txt
+api-test.json
+clients-page.png
+test-detail.html
+console-errors.log

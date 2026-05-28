@@ -2,10 +2,13 @@ import path from 'path'
 import { PrismaClient } from '@prisma/client'
 import { PGlite } from '@electric-sql/pglite'
 import { PrismaPGlite } from 'pglite-prisma-adapter'
+import { Pool } from 'pg'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
   pgliteInstance: PGlite | undefined
+  pgPool: Pool | undefined
   dbFailed: boolean | undefined
 }
 
@@ -76,15 +79,40 @@ function createNullPrismaClient(): PrismaClient {
   return new Proxy({} as PrismaClient, handler) as PrismaClient
 }
 
+function isExternalPostgresUrl(url?: string): boolean {
+  if (!url || url.trim() === '' || url === 'undefined') return false
+  const lower = url.toLowerCase()
+  // Reject dummy/localhost URLs used for local dev or build-time type generation
+  if (lower.includes('localhost') || lower.includes('127.0.0.1')) return false
+  return lower.startsWith('postgresql://') || lower.startsWith('postgres://')
+}
+
+function createStandardPrismaClient(): PrismaClient {
+  let pool = globalForPrisma.pgPool
+  if (!pool) {
+    const connectionString = process.env.DATABASE_URL!
+    pool = new Pool({ connectionString })
+    globalForPrisma.pgPool = pool
+  }
+  const adapter = new PrismaPg(pool)
+  return new PrismaClient({ adapter })
+}
+
 function getPrismaClient(): PrismaClient {
   // If DB already failed, return null client immediately
   if (globalForPrisma.dbFailed) {
     return createNullPrismaClient()
   }
 
-  // On Vercel serverless, PGLite/WASM doesn't work - use null client
+  const dbUrl = process.env.DATABASE_URL
+
+  // On Vercel serverless, check if a real external PostgreSQL DATABASE_URL is configured
   if (process.env.VERCEL || process.env.VERCEL_ENV) {
-    console.warn('[DB] Vercel serverless detected, using null Prisma client (no DB)')
+    if (isExternalPostgresUrl(dbUrl)) {
+      console.log('[DB] Vercel serverless with external PostgreSQL detected, using standard Prisma client')
+      return createStandardPrismaClient()
+    }
+    console.warn('[DB] Vercel serverless detected without external DB, using null Prisma client')
     globalForPrisma.dbFailed = true
     return createNullPrismaClient()
   }
@@ -137,6 +165,7 @@ export function resetDatabaseConnection() {
   _dbFailed = false
   globalForPrisma.prisma = undefined
   globalForPrisma.pgliteInstance = undefined
+  globalForPrisma.pgPool = undefined
   globalForPrisma.dbFailed = undefined
 }
 
