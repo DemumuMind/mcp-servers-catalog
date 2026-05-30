@@ -34,20 +34,14 @@ export const {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        console.log("Auth attempt:", credentials?.email)
         if (!credentials?.email || !credentials?.password) {
-          console.log("Missing credentials")
           return null
         }
 
         try {
-          console.log("Prisma user model exists:", !!prisma.user)
-          
           const user = await prisma.user.findUnique({
             where: { email: credentials.email as string },
           })
-
-          console.log("User found:", !!user)
 
           if (!user || !user.password) return null
 
@@ -56,7 +50,11 @@ export const {
             user.password
           )
 
-          console.log("Password valid:", isValid)
+          if (!isValid) return null
+
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('[AUTH] Login success:', credentials.email)
+          }
 
           if (!isValid) return null
 

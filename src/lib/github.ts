@@ -69,7 +69,7 @@ export async function fetchRepoReadme(repoUrl: string): Promise<string | null> {
     const data = await githubFetch(
       `${GITHUB_API_BASE}/repos/${owner}/${repo}/readme`
     )
-    return data.content ? atob(data.content) : null
+    return data.content ? Buffer.from(data.content, 'base64').toString('utf-8') : null
   } catch {
     return null
   }

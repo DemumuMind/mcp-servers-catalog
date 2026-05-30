@@ -35,7 +35,7 @@ function assignABVariant(request: NextRequest, response: NextResponse) {
   // Variants: 'featured' (control) vs 'trending' (test)
   const abCookie = request.cookies.get('ab-home-sort')
   if (!abCookie) {
-    const variant = Math.random() < 0.5 ? 'featured' : 'trending'
+    const variant = crypto.randomUUID().charCodeAt(0) % 2 === 0 ? 'featured' : 'trending'
     response.cookies.set('ab-home-sort', variant, {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',

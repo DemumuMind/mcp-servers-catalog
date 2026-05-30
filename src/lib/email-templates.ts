@@ -70,7 +70,7 @@ export function statusUpdateTemplate(submission: {
 }): string {
   const statusText = submission.status === 'approved' ? 'одобрена' : 'отклонена'
   return emailTemplate(
-    `Ваша отправка ${submission.name} ${statusText}`,
+    `Ваша отправка ${submission.name.replace(/[\r\n]/g, ' ')} ${statusText}`,
     `
     <p>Ваша отправка сервера <strong>${escapeHtml(submission.name)}</strong> была <strong>${statusText}</strong>.</p>
     <p>Спасибо за участие в развитии экосистемы MCP!</p>

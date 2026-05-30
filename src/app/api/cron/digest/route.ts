@@ -60,14 +60,20 @@ export async function GET(request: Request) {
 
     const categoryTitle = category ? ` категории "${category}"` : ''
     
-    for (const sub of subs) {
-      if (sub.user.email) {
-        await sendDigestEmail(
-          sub.user.email,
-          categoryTitle,
-          recentServers.map((s: any) => ({ name: s.name, description: s.description }))
+    const batches: Array<typeof subs> = []
+    for (let i = 0; i < subs.length; i += 10) {
+      batches.push(subs.slice(i, i + 10))
+    }
+
+    for (const batch of batches) {
+      const results = await Promise.allSettled(
+        batch.filter((sub) => sub.user.email).map((sub) =>
+          sendDigestEmail(sub.user.email!, categoryTitle, recentServers.map((s: any) => ({ name: s.name, description: s.description })))
         )
-        totalSent++
+      )
+      for (const r of results) {
+        if (r.status === 'fulfilled') totalSent++
+        else console.error('[DIGEST] Failed to send email:', (r as PromiseRejectedResult).reason)
       }
     }
   }

@@ -1,8 +1,11 @@
-'use server'
-
 import { prisma } from '@/lib/db'
 import { writeFileSync, readFileSync, existsSync } from 'fs'
 import { join } from 'path'
+
+// NOTE: This rate limiter uses an in-memory Map with file persistence.
+// It does NOT work correctly on Vercel/serverless — each cold start creates
+// a fresh instance, and the filesystem is ephemeral. For production serverless,
+// use Redis (Upstash) or a database-backed rate limiter instead.
 
 const RATE_LIMIT_FILE = join(process.cwd(), '.rate-limit.json')
 

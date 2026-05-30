@@ -52,7 +52,7 @@ export async function sendSubmissionNotification(submission: {
     await getTransporter().sendMail({
       from: process.env.SMTP_USER || 'noreply@mcpservers.org',
       to: adminEmail,
-      subject: `Новая отправка MCP-сервера: ${submission.name}`,
+      subject: `Новая отправка MCP-сервера: ${submission.name.replace(/[\r\n]/g, ' ')}`,
       html: submissionNotificationTemplate(submission),
     })
     console.log('Email notification sent successfully')
@@ -72,7 +72,7 @@ export async function sendStatusUpdateNotification(submission: {
     await getTransporter().sendMail({
       from: process.env.SMTP_USER || 'noreply@mcpservers.org',
       to: submission.email,
-      subject: `Ваша отправка MCP-сервера ${submission.name} ${statusText}`,
+      subject: `Ваша отправка MCP-сервера ${submission.name.replace(/[\r\n]/g, ' ')} ${statusText}`,
       html: statusUpdateTemplate(submission),
     })
     console.log('Status update email sent successfully')

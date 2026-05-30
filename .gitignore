@@ -67,3 +67,6 @@ api-test.json
 clients-page.png
 test-detail.html
 console-errors.log
+
+# E2E test auth sessions (contain tokens)
+e2e/.auth/
