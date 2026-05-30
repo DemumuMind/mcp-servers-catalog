@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  serverExternalPackages: ['@electric-sql/pglite', 'pglite-prisma-adapter'],
+  serverExternalPackages: ['@electric-sql/pglite', 'pglite-prisma-adapter', '@prisma/adapter-pg', 'pg'],
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**.githubusercontent.com' },

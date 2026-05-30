@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url)
   const format = searchParams.get('format') || 'json' // json or csv
-  const table = searchParams.get('table') || 'servers' // servers, clients, users
+  const table = searchParams.get('table') || 'servers' // servers, clients
 
   try {
     let data: any[] = []
@@ -39,14 +39,8 @@ export async function GET(request: Request) {
           orderBy: { createdAt: 'desc' },
         })
         break
-      case 'users':
-        data = await prisma.user.findMany({
-          select: { id: true, email: true, name: true, role: true, createdAt: true },
-          orderBy: { createdAt: 'desc' },
-        })
-        break
       default:
-        return NextResponse.json({ error: 'Invalid table' }, { status: 400 })
+        return NextResponse.json({ error: 'Invalid table. Allowed: servers, clients' }, { status: 400 })
     }
 
     if (format === 'csv') {

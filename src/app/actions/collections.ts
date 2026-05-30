@@ -4,6 +4,7 @@ import { prisma } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
+import crypto from 'crypto'
 
 export async function getUserCollections(userId: string) {
   return prisma.collection.findMany({
@@ -177,12 +178,7 @@ export async function removeServerFromCollection(collectionId: string, serverId:
 }
 
 function generateShareSlug(): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let slug = ''
-  for (let i = 0; i < 12; i++) {
-    slug += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return slug
+  return crypto.randomBytes(9).toString('base64url')
 }
 
 export async function exportCollectionConfig(collectionId: string) {

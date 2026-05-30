@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
+import { requireAdmin } from '@/lib/auth-guard'
 
 const clientSchema = z.object({
   name: z.string().min(1),
@@ -42,6 +43,7 @@ export async function getClientById(id: string) {
 }
 
 export async function createClient(data: z.infer<typeof clientSchema>) {
+  await requireAdmin()
   const validated = clientSchema.parse(data)
   const client = await prisma.client.create({
     data: validated,
@@ -51,6 +53,7 @@ export async function createClient(data: z.infer<typeof clientSchema>) {
 }
 
 export async function updateClient(id: string, data: z.infer<typeof clientSchema>) {
+  await requireAdmin()
   const validated = clientSchema.parse(data)
   const client = await prisma.client.update({
     where: { id },
@@ -61,11 +64,13 @@ export async function updateClient(id: string, data: z.infer<typeof clientSchema
 }
 
 export async function deleteClient(id: string) {
+  await requireAdmin()
   await prisma.client.delete({ where: { id } })
   revalidatePath('/', 'layout')
 }
 
 export async function deleteClients(ids: string[]) {
+  await requireAdmin()
   await prisma.client.deleteMany({
     where: { id: { in: ids } },
   })

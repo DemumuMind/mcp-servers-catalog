@@ -3,6 +3,32 @@
 import { PGlite } from '@electric-sql/pglite'
 import path from 'path'
 
+const DANGEROUS_SQL_PATTERNS = [
+  /\bDROP\b/i,
+  /\bDELETE\b/i,
+  /\bTRUNCATE\b/i,
+  /\bALTER\b/i,
+  /\bGRANT\b/i,
+  /\bREVOKE\b/i,
+  /\bCOPY\b/i,
+  /\bEXECUTE\b/i,
+  /\bVACUUM\b/i,
+  /\bREINDEX\b/i,
+  /\bCLUSTER\b/i,
+  /\bREFRESH\b/i,
+]
+
+function validateSqlStatement(statement: string): boolean {
+  const trimmed = statement.trim().toUpperCase()
+  if (!trimmed.startsWith('INSERT') && !trimmed.startsWith('CREATE TABLE')) {
+    return false
+  }
+  for (const pattern of DANGEROUS_SQL_PATTERNS) {
+    if (pattern.test(statement)) return false
+  }
+  return true
+}
+
 export async function backupDatabase(): Promise<string> {
   const dataDir = process.env.DATABASE_DIR
     ? path.resolve(process.env.DATABASE_DIR)
@@ -77,19 +103,26 @@ export async function restoreDatabase(sql: string): Promise<void> {
   const db = new PGlite({ dataDir })
 
   try {
-    // Split SQL into statements and execute
     const statements = sql
       .split(';')
       .map(s => s.trim())
       .filter(s => s.length > 0 && !s.startsWith('--'))
     
+    let skipped = 0
     for (const statement of statements) {
+      if (!validateSqlStatement(statement)) {
+        console.warn('[RESTORE] Skipping potentially dangerous statement:', statement.substring(0, 80))
+        skipped++
+        continue
+      }
       try {
         await db.query(statement + ';')
       } catch (err) {
         console.error('Error executing statement:', err)
-        // Continue with next statement
       }
+    }
+    if (skipped > 0) {
+      console.warn(`[RESTORE] Skipped ${skipped} dangerous statements`)
     }
   } finally {
     await db.close()

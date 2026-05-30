@@ -4,12 +4,17 @@ import { PGlite } from '@electric-sql/pglite'
 import { PrismaPGlite } from 'pglite-prisma-adapter'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { validateProductionSecrets } from '@/lib/auth-guard'
+
+validateProductionSecrets()
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
   pgliteInstance: PGlite | undefined
   pgPool: Pool | undefined
   dbFailed: boolean | undefined
+  nullPrismaClient: PrismaClient | undefined
+  vercelNoExternalDb: boolean | undefined
 }
 
 function getDataDir(): string {
@@ -98,10 +103,16 @@ function createStandardPrismaClient(): PrismaClient {
   return new PrismaClient({ adapter })
 }
 
+function getNullPrismaClient(): PrismaClient {
+  if (!globalForPrisma.nullPrismaClient) {
+    globalForPrisma.nullPrismaClient = createNullPrismaClient()
+  }
+  return globalForPrisma.nullPrismaClient
+}
+
 function getPrismaClient(): PrismaClient {
-  // If DB already failed, return null client immediately
   if (globalForPrisma.dbFailed) {
-    return createNullPrismaClient()
+    return getNullPrismaClient()
   }
 
   const dbUrl = process.env.DATABASE_URL
@@ -112,9 +123,13 @@ function getPrismaClient(): PrismaClient {
       console.log('[DB] Vercel serverless with external PostgreSQL detected, using standard Prisma client')
       return createStandardPrismaClient()
     }
+    if (globalForPrisma.vercelNoExternalDb) {
+      return getNullPrismaClient()
+    }
     console.warn('[DB] Vercel serverless detected without external DB, using null Prisma client')
     globalForPrisma.dbFailed = true
-    return createNullPrismaClient()
+    globalForPrisma.vercelNoExternalDb = true
+    return getNullPrismaClient()
   }
 
   const cached = globalForPrisma.prisma
@@ -131,18 +146,17 @@ function getPrismaClient(): PrismaClient {
   } catch (err) {
     console.error('[DB] Failed to create Prisma client, using null fallback:', err)
     globalForPrisma.dbFailed = true
-    return createNullPrismaClient()
+    return getNullPrismaClient()
   }
 }
 
-// Lazy export — don't initialize at module load time
 let _prisma: PrismaClient | undefined
 let _dbFailed = false
 
 export const prisma = new Proxy({} as PrismaClient, {
   get(_target, prop) {
     if (_dbFailed && globalForPrisma.dbFailed) {
-      return (createNullPrismaClient() as any)[prop]
+      return (getNullPrismaClient() as any)[prop]
     }
     if (!_prisma) {
       try {
@@ -151,7 +165,7 @@ export const prisma = new Proxy({} as PrismaClient, {
         console.error('[DB] Lazy init failed:', err)
         _dbFailed = true
         globalForPrisma.dbFailed = true
-        _prisma = createNullPrismaClient()
+        _prisma = getNullPrismaClient()
       }
     }
     return (_prisma as any)[prop]
@@ -167,21 +181,27 @@ export function resetDatabaseConnection() {
   globalForPrisma.pgliteInstance = undefined
   globalForPrisma.pgPool = undefined
   globalForPrisma.dbFailed = undefined
+  globalForPrisma.nullPrismaClient = undefined
+  globalForPrisma.vercelNoExternalDb = undefined
 }
 
 // Helper to execute Prisma queries with automatic retry on PGLite crash
-export async function withDbRetry<T>(fn: (prisma: PrismaClient) => Promise<T>): Promise<T> {
-  try {
-    return await fn(prisma)
-  } catch (err: any) {
-    const message = err?.message || String(err)
-    if (message.includes('Aborted') || message.includes('RuntimeError') || message.includes('PGlite')) {
-      console.warn('[DB] PGLite crashed, resetting and retrying...')
-      resetDatabaseConnection()
-      // Small delay to let filesystem settle
-      await new Promise(r => setTimeout(r, 100))
+export async function withDbRetry<T>(fn: (prisma: PrismaClient) => Promise<T>, maxRetries: number = 3): Promise<T> {
+  let lastError: any
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
       return await fn(prisma)
+    } catch (err: any) {
+      lastError = err
+      const message = err?.message || String(err)
+      if (message.includes('Aborted') || message.includes('RuntimeError') || message.includes('PGlite')) {
+        console.warn(`[DB] PGLite crashed (attempt ${attempt + 1}/${maxRetries}), resetting and retrying...`)
+        resetDatabaseConnection()
+        await new Promise(r => setTimeout(r, 100 * (attempt + 1)))
+        continue
+      }
+      throw err
     }
-    throw err
   }
+  throw lastError
 }

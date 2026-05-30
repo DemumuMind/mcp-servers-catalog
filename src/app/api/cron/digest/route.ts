@@ -4,6 +4,23 @@ import { getServersPublic } from '@/app/actions/public'
 import { sendDigestEmail } from '@/lib/email'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 
+function verifyCronAuth(req: Request): NextResponse | null {
+  const authHeader = req.headers.get('authorization')
+  const token = authHeader?.replace('Bearer ', '')
+  const urlSecret = new URL(req.url).searchParams.get('secret')
+  const expected = process.env.CRON_SECRET
+
+  if (!expected || expected === '') {
+    return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 })
+  }
+
+  if (token !== expected && urlSecret !== expected) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  return null
+}
+
 const checkCronRateLimit = apiRateLimit(rateLimits.cron)
 
 export async function GET(request: Request) {
@@ -11,12 +28,8 @@ export async function GET(request: Request) {
   const limited = await checkCronRateLimit(request)
   if (limited) return limited
 
-  const { searchParams } = new URL(request.url)
-  const secret = searchParams.get('secret')
-
-  if (secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const unauthorized = verifyCronAuth(request)
+  if (unauthorized) return unauthorized
 
   const subscribers = await getDigestSubscribers()
 

@@ -7,6 +7,7 @@ import { prisma } from '@/lib/db'
 import { triggerWebhooks } from './webhooks'
 import { delCachePattern } from '@/lib/cache'
 import { logAudit } from './audit-log'
+import { requireAdmin } from '@/lib/auth-guard'
 
 const serverSchema = z.object({
   name: z.string().min(1),
@@ -104,6 +105,7 @@ export async function createServer(data: z.infer<typeof serverSchema>, userId?: 
 }
 
 export async function updateServer(id: string, data: z.infer<typeof serverSchema>) {
+  const userId = await requireAdmin()
   const validated = serverSchema.parse(data)
   const server = await prisma.server.update({
     where: { id },
@@ -126,6 +128,7 @@ export async function updateServer(id: string, data: z.infer<typeof serverSchema
 }
 
 export async function deleteServer(id: string, userId?: string) {
+  const adminUserId = await requireAdmin()
   const server = await prisma.server.findUnique({ where: { id }, select: { name: true } })
   await prisma.server.delete({ where: { id } })
   revalidatePath('/', 'layout')
@@ -134,6 +137,7 @@ export async function deleteServer(id: string, userId?: string) {
 }
 
 export async function deleteServers(ids: string[]) {
+  await requireAdmin()
   await prisma.server.deleteMany({
     where: { id: { in: ids } },
   })
@@ -143,6 +147,7 @@ export async function deleteServers(ids: string[]) {
 }
 
 export async function reorderFeaturedServers(orderedIds: string[]) {
+  await requireAdmin()
   for (let i = 0; i < orderedIds.length; i++) {
     await prisma.server.update({
       where: { id: orderedIds[i] },
@@ -154,6 +159,7 @@ export async function reorderFeaturedServers(orderedIds: string[]) {
 }
 
 export async function toggleServerFeatured(id: string, featured: boolean) {
+  await requireAdmin()
   await prisma.server.update({
     where: { id },
     data: { featured },

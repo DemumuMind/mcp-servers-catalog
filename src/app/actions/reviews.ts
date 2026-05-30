@@ -2,15 +2,7 @@
 
 import { prisma } from '@/lib/db'
 import { rateLimit } from '@/lib/rate-limit'
-
-function sanitizeReviewContent(input: string): string {
-  // Simple server-side HTML sanitization without jsdom dependency
-  return input
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-    .replace(/javascript:/gi, 'blocked:')
-    .replace(/on\w+\s*=/gi, 'data-blocked=')
-}
+import { sanitizeUserHtml } from '@/lib/sanitize'
 
 export async function getServerReviews(serverId: string) {
   return prisma.review.findMany({
@@ -29,7 +21,7 @@ export async function createReview(userId: string, serverId: string, content: st
     throw new Error('Слишком много отзывов. Попробуйте позже.')
   }
 
-  const sanitized = sanitizeReviewContent(content)
+  const sanitized = sanitizeUserHtml(content)
 
   // Check if user already reviewed this server
   const existing = await prisma.review.findUnique({

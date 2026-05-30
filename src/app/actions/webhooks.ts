@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
+import crypto from 'crypto'
 
 export async function createWebhook(
   userId: string,
@@ -9,7 +10,7 @@ export async function createWebhook(
   events: string[]
 ): Promise<{ success: boolean; webhook?: { id: string; url: string; events: string[] } }> {
   try {
-    const secret = 'whsec_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    const secret = 'whsec_' + crypto.randomBytes(32).toString('hex')
 
     const webhook = await prisma.webhook.create({
       data: {

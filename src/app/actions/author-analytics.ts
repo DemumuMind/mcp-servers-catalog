@@ -1,9 +1,14 @@
 'use server'
 
 import { prisma } from '@/lib/db'
+import { auth } from '@/lib/auth'
 
 export async function claimServer(serverId: string, userId: string) {
-  // Check if server is already claimed
+  const session = await auth()
+  if (!session?.user || session.user.id !== userId) {
+    return { success: false, error: 'Unauthorized' }
+  }
+
   const server = await prisma.server.findUnique({
     where: { id: serverId },
     select: { authorId: true, owner: true },
@@ -13,8 +18,9 @@ export async function claimServer(serverId: string, userId: string) {
     return { success: false, error: 'Server already claimed' }
   }
 
-  // TODO: In production, verify via GitHub API that user owns the repo
-  // For now, we just allow claiming if not already claimed
+  // NOTE: Production deployments should verify via GitHub API that the user
+  // owns the repo matching server.owner. This is currently a trust-based claim.
+  console.warn(`[AUTH] User ${userId} claimed server ${serverId} (${server?.owner}) without GitHub ownership verification`)
 
   await prisma.server.update({
     where: { id: serverId },

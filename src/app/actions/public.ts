@@ -4,6 +4,7 @@ import { prisma } from '@/lib/db'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { getCacheKey, getCache, setCache, delCachePattern } from '@/lib/cache'
 import { Server } from '@prisma/client'
+import { sanitizeUserHtml } from '@/lib/sanitize'
 
 const ITEMS_PER_PAGE = 12
 
@@ -17,15 +18,6 @@ export interface ServersPublicResult {
   total: number
   pages: number
   currentPage: number
-}
-
-function sanitizeHtml(input: string): string {
-  // Simple server-side HTML sanitization without jsdom dependency
-  return input
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-    .replace(/javascript:/gi, 'blocked:')
-    .replace(/on\w+\s*=/gi, 'data-blocked=')
 }
 
 export async function getServersPublic(
@@ -236,7 +228,7 @@ export async function addComment(userId: string, serverId: string, content: stri
     throw new Error('Слишком много комментариев. Попробуйте позже.')
   }
 
-  const sanitizedContent = sanitizeHtml(content)
+  const sanitizedContent = sanitizeUserHtml(content)
 
   const comment = await prisma.comment.create({
     data: { userId, serverId, content: sanitizedContent },

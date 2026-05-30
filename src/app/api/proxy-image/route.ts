@@ -34,7 +34,8 @@ export async function GET(request: Request) {
 
   try {
     const parsedUrl = new URL(url)
-    if (!allowedHosts.some((host) => parsedUrl.hostname.includes(host))) {
+    const hostname = parsedUrl.hostname
+    if (!allowedHosts.some((host) => hostname === host || hostname.endsWith(`.${host}`))) {
       return NextResponse.json({ error: 'Domain not allowed' }, { status: 403 })
     }
 

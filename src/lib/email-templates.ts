@@ -1,3 +1,12 @@
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 function emailTemplate(title: string, content: string): string {
   return `<!DOCTYPE html>
 <html lang="ru">
@@ -43,11 +52,11 @@ export function submissionNotificationTemplate(submission: {
     'Новая отправка MCP-сервера',
     `
     <table>
-      <tr><th>Название</th><td>${submission.name}</td></tr>
-      <tr><th>Email</th><td>${submission.email}</td></tr>
-      <tr><th>Описание</th><td>${submission.description}</td></tr>
-      <tr><th>URL</th><td><a href="${submission.url}">${submission.url}</a></td></tr>
-      <tr><th>Категория</th><td>${submission.category}</td></tr>
+      <tr><th>Название</th><td>${escapeHtml(submission.name)}</td></tr>
+      <tr><th>Email</th><td>${escapeHtml(submission.email)}</td></tr>
+      <tr><th>Описание</th><td>${escapeHtml(submission.description)}</td></tr>
+      <tr><th>URL</th><td><a href="${escapeHtml(submission.url)}">${escapeHtml(submission.url)}</a></td></tr>
+      <tr><th>Категория</th><td>${escapeHtml(submission.category)}</td></tr>
       <tr><th>Premium</th><td>${submission.premium ? '✅ Да' : '❌ Нет'}</td></tr>
     </table>
     <p><a href="${process.env.NEXTAUTH_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">Перейти в админку</a></p>
@@ -63,7 +72,7 @@ export function statusUpdateTemplate(submission: {
   return emailTemplate(
     `Ваша отправка ${submission.name} ${statusText}`,
     `
-    <p>Ваша отправка сервера <strong>${submission.name}</strong> была <strong>${statusText}</strong>.</p>
+    <p>Ваша отправка сервера <strong>${escapeHtml(submission.name)}</strong> была <strong>${statusText}</strong>.</p>
     <p>Спасибо за участие в развитии экосистемы MCP!</p>
     `
   )
@@ -75,7 +84,7 @@ export function digestTemplate(categoryTitle: string, servers: Array<{ name: str
     `
     <p>Новые MCP серверы за неделю${categoryTitle}:</p>
     <ul>
-      ${servers.map((s) => `<li><strong>${s.name}</strong>: ${s.description}</li>`).join('')}
+      ${servers.map((s) => `<li><strong>${escapeHtml(s.name)}</strong>: ${escapeHtml(s.description)}</li>`).join('')}
     </ul>
     <p><a href="https://mcpservers.org/ru/all" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">Посмотреть все серверы →</a></p>
     `
