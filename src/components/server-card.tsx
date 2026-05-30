@@ -26,7 +26,6 @@ interface ServerCardProps {
 }
 
 function ServerCardInner({ server, locale }: ServerCardProps) {
-  console.log('[ServerCard] server:', server?.name, 'desc:', server?.description?.substring(0, 20))
   const detailPath = locale
     ? `/${locale}/servers/${server.owner}/${server.repo}`
     : `/servers/${server.owner}/${server.repo}`
