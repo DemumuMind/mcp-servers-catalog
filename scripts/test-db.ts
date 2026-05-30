@@ -1,14 +1,12 @@
+import 'dotenv/config'
 import { prisma } from '../src/lib/db'
 
-async function main() {
-  console.log('DATABASE_DIR:', process.env.DATABASE_DIR)
-  console.log('Testing prisma.server.findMany...')
-  try {
-    const servers = await prisma.server.findMany({ take: 1 })
-    console.log('SUCCESS:', servers.length, 'servers found')
-  } catch (e) {
-    console.error('ERROR:', e)
+async function test() {
+  const servers = await prisma.server.findMany()
+  console.log('Servers found:', servers.length)
+  for (const s of servers) {
+    console.log(`- ${s.name}: ${s.description?.substring(0, 30)}...`)
   }
 }
 
-main()
+test().catch(console.error).finally(() => process.exit(0))

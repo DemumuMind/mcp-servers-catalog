@@ -26,6 +26,7 @@ interface ServerCardProps {
 }
 
 function ServerCardInner({ server, locale }: ServerCardProps) {
+  console.log('[ServerCard] server:', server?.name, 'desc:', server?.description?.substring(0, 20))
   const detailPath = locale
     ? `/${locale}/servers/${server.owner}/${server.repo}`
     : `/servers/${server.owner}/${server.repo}`
@@ -89,25 +90,4 @@ function ServerCardInner({ server, locale }: ServerCardProps) {
   )
 }
 
-export const ServerCard = React.memo(ServerCardInner, (prev, next) => {
-  // Deep compare server object key fields
-  if (prev.locale !== next.locale) return false
-  const ps = prev.server
-  const ns = next.server
-  return (
-    ps.id === ns.id &&
-    ps.name === ns.name &&
-    ps.description === ns.description &&
-    ps.owner === ns.owner &&
-    ps.repo === ns.repo &&
-    ps.isOfficial === ns.isOfficial &&
-    ps.isSponsored === ns.isSponsored &&
-    ps.category === ns.category &&
-    ps.stars === ns.stars &&
-    ps.forks === ns.forks &&
-    ps.avgRating === ns.avgRating &&
-    ps.ratingCount === ns.ratingCount &&
-    ps.tags.length === ns.tags.length &&
-    ps.tags.every((t, i) => t === ns.tags[i])
-  )
-})
+export const ServerCard = ServerCardInner
