@@ -10,6 +10,7 @@ import { HelpModal } from "@/components/help-modal";
 import { WebVitals } from "@/components/web-vitals";
 import { auth } from "@/lib/auth";
 import { getUserNotifications, getUnreadNotificationsCount } from "@/app/actions/notifications";
+import { cookies } from "next/headers";
 
 export default async function LocaleLayout({
   children,
@@ -25,7 +26,14 @@ export default async function LocaleLayout({
   const messages = (await import(`../../../messages/${resolvedLocale}.json`)).default;
 
   // Fetch auth and notifications in layout to avoid nested async components
-  const session = await auth().catch(() => null);
+  const session = await auth().catch(async (e) => {
+    if (e?.message?.includes('no matching decryption secret') || e?.code === 'JWTSessionError') {
+      const cookieStore = await cookies()
+      cookieStore.delete('authjs.session-token')
+      cookieStore.delete('__Secure-authjs.session-token')
+    }
+    return null
+  })
   const notifications = session?.user?.id ? await getUserNotifications(session.user.id).catch(() => []) : [];
   const unreadCount = session?.user?.id ? await getUnreadNotificationsCount(session.user.id).catch(() => 0) : 0;
 

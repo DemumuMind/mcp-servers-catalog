@@ -17,7 +17,7 @@
     "build-storybook": "storybook build",
     "db:init": "tsx scripts/init-db.ts",
     "db:seed": "tsx -r dotenv/config prisma/seed.ts",
-    "db:reset": "rimraf .pglite3 && tsx scripts/init-db.ts && tsx -r dotenv/config prisma/seed.ts"
+    "db:reset": "tsx -e \"require('fs').rmSync('.pglite3',{recursive:true,force:true})\" && tsx scripts/init-db.ts && tsx -r dotenv/config prisma/seed.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.2",
