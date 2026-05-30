@@ -14,7 +14,10 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "db:init": "tsx scripts/init-db.ts",
+    "db:seed": "tsx -r dotenv/config prisma/seed.ts",
+    "db:reset": "rimraf .pglite3 && tsx scripts/init-db.ts && tsx -r dotenv/config prisma/seed.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.2",
