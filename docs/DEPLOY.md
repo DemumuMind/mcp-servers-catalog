@@ -10,14 +10,15 @@
 1. Зайдите в [Vercel Dashboard](https://vercel.com)
 2. Импортируйте репозиторий
 3. Настройте переменные окружения:
-   - `DATABASE_DIR` — `./.pglite`
+   - `DATABASE_URL` — внешний PostgreSQL URL (Neon, Supabase, Vercel Postgres). Для serverless production PGLite в файловой системе не подходит.
    - `AUTH_SECRET` — случайная строка (генерируйте через `openssl rand -base64 32`)
    - `ADMIN_EMAIL` и `ADMIN_PASSWORD`
    - `GITHUB_TOKEN` (опционально)
 4. Деплой запустится автоматически
 
 ### После деплоя
-- Создайте администратора через API или добавьте вручную в БД
+- Примените схему к внешней PostgreSQL базе перед первым запуском production трафика. Минимальный вариант: выполните SQL из `prisma/full-schema.sql` любым клиентом PostgreSQL для вашего провайдера.
+- Создайте стартового администратора через API или добавьте вручную в БД. Локальная команда `npm run db:seed` предназначена для PGLite setup и не заменяет seed внешней production БД.
 - Настройте SMTP для email-уведомлений (опционально)
 
 ## Docker
@@ -54,14 +55,15 @@ docker-compose up -d --build
 
 ### Установка
 ```bash
+# Настройка окружения до npm install: postinstall запускает Prisma
+cp .env.example .env
+# Отредактируйте .env: DATABASE_DIR, DATABASE_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
+
 npm install
 
-# Генерация Prisma Client
-npx prisma generate
-
-# Миграции (PGLite — встроенная БД, SQL миграции через скрипты)
-npx tsx scripts/migrate-view-history.ts
-npx tsx scripts/migrate-notifications.ts
+# Инициализация PGLite схемы и стартовых данных
+npm run db:init
+npm run db:seed
 
 # Сборка
 npm run build
@@ -84,6 +86,7 @@ pm2 startup
 | Переменная | Описание | Пример |
 |---|---|---|
 | `DATABASE_DIR` | Путь к PGLite | `./.pglite` |
+| `DATABASE_URL` | Внешний PostgreSQL для Vercel/serverless production | `postgresql://user:password@host/db?sslmode=require` |
 | `AUTH_SECRET` | JWT секрет NextAuth | `base64-encoded-secret` |
 | `ADMIN_EMAIL` | Email админа | `admin@example.com` |
 | `ADMIN_PASSWORD` | Пароль админа | `admin123` |
@@ -141,7 +144,7 @@ cp -r .pglite .pglite-backup-$(date +%Y%m%d)
 ## Устранение неполадок
 
 ### Ошибка "DATABASE_URL not found"
-PGLite не требует DATABASE_URL. Убедитесь, что `DATABASE_DIR` установлен.
+Для локального/self-hosted запуска PGLite использует `DATABASE_DIR`. Для Vercel/serverless production нужен внешний `DATABASE_URL`, иначе приложение перейдет в fallback без реальной БД.
 
 ### Ошибка Prisma "model not found"
 Запустите `npx prisma generate` для перегенерации клиента.

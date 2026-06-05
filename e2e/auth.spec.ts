@@ -3,15 +3,15 @@ import { test, expect } from '@playwright/test'
 test.describe('Authentication', () => {
   test('should show login form', async ({ page }) => {
     await page.goto('/ru/login')
-    await expect(page.getByPlaceholder('you@example.com')).toBeVisible()
-    await expect(page.locator('input[type="password"]')).toBeVisible()
+    await expect(page.locator('input[placeholder="you@example.com"]:visible')).toBeVisible()
+    await expect(page.locator('input[type="password"]:visible')).toBeVisible()
     await expect(page.locator('form button[type="submit"]')).toBeVisible()
   })
 
   test('should show register form', async ({ page }) => {
     await page.goto('/ru/register')
-    await expect(page.getByPlaceholder('Ваше имя')).toBeVisible()
-    await expect(page.locator('input[type="email"]')).toBeVisible()
+    await expect(page.locator('input[placeholder="Ваше имя"]:visible')).toBeVisible()
+    await expect(page.locator('input[type="email"]:visible')).toBeVisible()
     await expect(page.locator('form button[type="submit"]')).toBeVisible()
   })
 
