@@ -9,34 +9,34 @@ export async function getTimeSeriesMetrics(days: number = 30) {
   const [dailyActiveUsers, dailyServers, dailyViews, dailyBookmarks] = await Promise.all([
     // Daily active users (unique users with view history per day)
     prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE(created_at) as date, COUNT(DISTINCT user_id) as count
+      SELECT DATE("createdAt") as date, COUNT(DISTINCT "userId") as count
       FROM "ViewHistory"
-      WHERE created_at >= ${startDate}
-      GROUP BY DATE(created_at)
+      WHERE "createdAt" >= ${startDate}
+      GROUP BY DATE("createdAt")
       ORDER BY date ASC
     `,
     // New servers per day
     prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE(created_at) as date, COUNT(*) as count
+      SELECT DATE("createdAt") as date, COUNT(*) as count
       FROM "Server"
-      WHERE created_at >= ${startDate}
-      GROUP BY DATE(created_at)
+      WHERE "createdAt" >= ${startDate}
+      GROUP BY DATE("createdAt")
       ORDER BY date ASC
     `,
     // Views per day
     prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE(created_at) as date, COUNT(*) as count
+      SELECT DATE("createdAt") as date, COUNT(*) as count
       FROM "ViewHistory"
-      WHERE created_at >= ${startDate}
-      GROUP BY DATE(created_at)
+      WHERE "createdAt" >= ${startDate}
+      GROUP BY DATE("createdAt")
       ORDER BY date ASC
     `,
     // Bookmarks per day
     prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE(created_at) as date, COUNT(*) as count
+      SELECT DATE("createdAt") as date, COUNT(*) as count
       FROM "Bookmark"
-      WHERE created_at >= ${startDate}
-      GROUP BY DATE(created_at)
+      WHERE "createdAt" >= ${startDate}
+      GROUP BY DATE("createdAt")
       ORDER BY date ASC
     `,
   ])

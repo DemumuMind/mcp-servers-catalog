@@ -68,5 +68,11 @@ clients-page.png
 test-detail.html
 console-errors.log
 
+# local git worktrees
+.worktrees/
+
+# local MCP/browser artifacts
+.playwright-mcp/
+
 # E2E test auth sessions (contain tokens)
 e2e/.auth/
