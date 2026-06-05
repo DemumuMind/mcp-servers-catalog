@@ -36,17 +36,16 @@
 git clone <repo-url>
 cd mcpservers-clone
 
-# Установка зависимостей
+# Настройка окружения до npm install: postinstall запускает Prisma
+cp .env.example .env
+# Отредактируйте .env: DATABASE_DIR, DATABASE_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
+
+# Установка зависимостей и генерация Prisma Client
 npm install
 
-# Настройка окружения
-cp .env.example .env
-# Отредактируйте .env
-
-# Генерация Prisma Client и миграции
-npx prisma generate
-npx tsx scripts/migrate-view-history.ts
-npx tsx scripts/migrate-notifications.ts
+# Схема БД и стартовые данные
+npm run db:init
+npm run db:seed
 
 # Запуск dev сервера
 npm run dev
@@ -57,6 +56,7 @@ npm run dev
 | Переменная | Описание | Обязательная |
 |---|---|---|
 | `DATABASE_DIR` | Путь к PGLite директории | Да |
+| `DATABASE_URL` | Safe URL для Prisma generate или внешний PostgreSQL для production | Да |
 | `AUTH_SECRET` | Секрет NextAuth | Да |
 | `ADMIN_EMAIL` | Email администратора | Да |
 | `ADMIN_PASSWORD` | Пароль администратора | Да |
@@ -96,8 +96,17 @@ npm start
 ## 🧪 Тесты
 
 ```bash
+# Линтинг
+npm run lint
+
+# Проверка TypeScript
+npm run typecheck
+
 # Unit тесты
 npm run test:unit
+
+# Быстрая локальная проверка без E2E
+npm run validate
 
 # E2E тесты
 npm run test:e2e

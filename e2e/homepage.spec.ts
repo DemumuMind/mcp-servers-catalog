@@ -15,7 +15,7 @@ test.describe('Homepage', () => {
 
   test('should have search input', async ({ page }) => {
     await page.goto('/ru', { timeout: 30000 })
-    const searchInput = page.getByPlaceholder('Поиск MCP серверов...').first()
+    const searchInput = page.locator('input[placeholder="Поиск MCP серверов..."]:visible').first()
     await expect(searchInput).toBeVisible()
   })
 })

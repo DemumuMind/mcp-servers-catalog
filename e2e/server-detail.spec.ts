@@ -6,7 +6,7 @@ test.describe('Server Detail Page', () => {
     await page.waitForLoadState('networkidle')
 
     // Check h1 title
-    await expect(page.locator('h1').first()).toContainText('github-mcp-server')
+    await expect(page.locator('h1').first()).toContainText('GitHub')
 
     // Check comments section exists
     await expect(page.locator('text=Комментарии').first()).toBeVisible()
@@ -19,9 +19,9 @@ test.describe('Server Detail Page', () => {
   })
 
   test('should load another server detail page', async ({ page }) => {
-    await page.goto('http://localhost:3000/ru/servers/n8n-io/n8n')
+    await page.goto('http://localhost:3000/ru/servers/cloudflare/mcp-server-cloudflare')
     await page.waitForLoadState('networkidle')
-    await expect(page.locator('h1').first()).toContainText('n8n')
+    await expect(page.locator('h1').first()).toContainText('Cloudflare')
     await expect(page.locator('text=Комментарии').first()).toBeVisible()
   })
 })
@@ -31,7 +31,7 @@ test.describe('Search', () => {
     await page.goto('http://localhost:3000/ru/all')
     await page.waitForLoadState('networkidle')
 
-    const searchInput = page.locator('input[placeholder*="Поиск"]').first()
+    const searchInput = page.locator('input[placeholder*="Поиск"]:visible').first()
     await expect(searchInput).toBeVisible()
     await searchInput.fill('database')
     await searchInput.press('Enter')

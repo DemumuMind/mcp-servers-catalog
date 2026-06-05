@@ -4,13 +4,13 @@ test.describe('Submit Flow', () => {
   test('should display submit page', async ({ page }) => {
     await page.goto('/ru/submit', { timeout: 30000 })
     await expect(page.locator('h1')).toContainText('Отправьте свой MCP-сервер')
-    await expect(page.getByPlaceholder('e.g., Brave Search')).toBeVisible()
-    await expect(page.getByPlaceholder('https://github.com/owner/repo')).toBeVisible()
+    await expect(page.locator('input[placeholder="e.g., Brave Search"]:visible')).toBeVisible()
+    await expect(page.locator('input[placeholder="https://github.com/owner/repo"]:visible')).toBeVisible()
   })
 
   test('should show URL validation error', async ({ page }) => {
     await page.goto('/ru/submit', { timeout: 30000 })
-    await page.getByPlaceholder('https://github.com/owner/repo').fill('not-a-url')
+    await page.locator('input[placeholder="https://github.com/owner/repo"]:visible').fill('not-a-url')
     await page.getByRole('button', { name: 'Отправить' }).click()
     
     // Zod url validation should show some error
