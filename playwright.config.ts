@@ -1,5 +1,10 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const port = Number(process.env.PLAYWRIGHT_PORT || 3100)
+const host = process.env.PLAYWRIGHT_HOST || '127.0.0.1'
+const baseURL = `http://${host}:${port}`
+const reuseExistingServer = process.env.PLAYWRIGHT_REUSE_SERVER === 'true'
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -9,7 +14,7 @@ export default defineConfig({
   timeout: 60000,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL,
     trace: 'on-first-retry',
   },
   projects: [
@@ -37,9 +42,12 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: true,
+    command: `npm run dev -- --port ${port} --hostname ${host}`,
+    url: baseURL,
+    // Keep false by default so tests never run against an unrelated app that
+    // happens to occupy the same port. Set PLAYWRIGHT_REUSE_SERVER=true to
+    // intentionally target an already-running local server.
+    reuseExistingServer,
     timeout: 300000,
   },
 })

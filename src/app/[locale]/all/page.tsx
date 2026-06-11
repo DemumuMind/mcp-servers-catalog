@@ -1,8 +1,11 @@
 import { getServersPublic } from '@/app/actions/public'
-import { ServerCard } from '@/components/server-card'
 import { AutocompleteSearch } from '@/components/autocomplete-search'
-import { InfiniteServerList } from '@/components/infinite-server-list'
+import { InfiniteServerList, type ServerWithRating } from '@/components/infinite-server-list'
 import { SortDropdown } from '@/components/sort-dropdown'
+import { EmptyState, FilterPanel, PageHero, PageShell } from '@/components/page-components'
+import { Badge } from '@/components/ui/badge'
+import { Layers3 } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,6 +24,8 @@ export default async function AllServersPage({
   const onlyRemote = sp.remote === 'true'
   const sortBy = sp.sort || 'featured'
 
+  const t = await getTranslations({ locale, namespace: 'AllServers' })
+
   const { servers, pages, currentPage } = await getServersPublic(
     1,
     search,
@@ -33,23 +38,30 @@ export default async function AllServersPage({
   )
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="text-center py-8">
-        <h1 className="text-3xl font-bold mb-4">Все MCP серверы</h1>
-        <div className="flex justify-center">
-          <AutocompleteSearch locale={locale} defaultValue={search} />
-        </div>
-      </div>
+    <PageShell className="space-y-8">
+      <PageHero
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
+      >
+        <AutocompleteSearch locale={locale} defaultValue={search} />
+      </PageHero>
 
-      <div className="flex justify-end mb-4">
+      <FilterPanel className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap gap-2">
+          {category && <Badge variant="outline">category: {category}</Badge>}
+          {onlyOfficial && <Badge>official</Badge>}
+          {onlyRemote && <Badge>remote</Badge>}
+          {search && <Badge variant="secondary">query: {search}</Badge>}
+        </div>
         <SortDropdown currentSort={sortBy} locale={locale} />
-      </div>
+      </FilterPanel>
 
       {servers.length === 0 ? (
-        <p className="text-center text-muted-foreground py-8">Нет серверов</p>
+        <EmptyState icon={Layers3} title={t('emptyTitle')} description={t('emptyDescription')} />
       ) : (
         <InfiniteServerList
-          initialServers={servers as any}
+          initialServers={servers as ServerWithRating[]}
           initialPage={currentPage}
           totalPages={pages}
           locale={locale}
@@ -60,6 +72,6 @@ export default async function AllServersPage({
           sortBy={sortBy}
         />
       )}
-    </div>
+    </PageShell>
   )
 }

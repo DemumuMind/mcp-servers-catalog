@@ -1,6 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, webhooks } from '@/lib/db'
+import { eq, and, desc, sql } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import crypto from 'crypto'
 
@@ -12,14 +13,15 @@ export async function createWebhook(
   try {
     const secret = 'whsec_' + crypto.randomBytes(32).toString('hex')
 
-    const webhook = await prisma.webhook.create({
-      data: {
+    const [webhook] = await db
+      .insert(webhooks)
+      .values({
         userId,
         url,
         secret,
         events,
-      },
-    })
+      })
+      .returning()
 
     revalidatePath('/profile/webhooks')
 
@@ -46,20 +48,20 @@ export async function listWebhooks(userId: string): Promise<Array<{
   createdAt: Date
 }>> {
   try {
-    const webhooks = await prisma.webhook.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      select: {
-        id: true,
-        url: true,
-        events: true,
-        active: true,
-        lastError: true,
-        createdAt: true,
-      },
-    })
+    const result = await db
+      .select({
+        id: webhooks.id,
+        url: webhooks.url,
+        events: webhooks.events,
+        active: webhooks.active,
+        lastError: webhooks.lastError,
+        createdAt: webhooks.createdAt,
+      })
+      .from(webhooks)
+      .where(eq(webhooks.userId, userId))
+      .orderBy(desc(webhooks.createdAt))
 
-    return webhooks
+    return result
   } catch (error) {
     console.error('Failed to list webhooks:', error)
     return []
@@ -68,9 +70,9 @@ export async function listWebhooks(userId: string): Promise<Array<{
 
 export async function deleteWebhook(userId: string, webhookId: string): Promise<{ success: boolean }> {
   try {
-    await prisma.webhook.deleteMany({
-      where: { id: webhookId, userId },
-    })
+    await db
+      .delete(webhooks)
+      .where(and(eq(webhooks.id, webhookId), eq(webhooks.userId, userId)))
 
     revalidatePath('/profile/webhooks')
     return { success: true }
@@ -82,16 +84,19 @@ export async function deleteWebhook(userId: string, webhookId: string): Promise<
 
 export async function toggleWebhook(userId: string, webhookId: string): Promise<{ success: boolean }> {
   try {
-    const webhook = await prisma.webhook.findFirst({
-      where: { id: webhookId, userId },
-    })
+    const rows = await db
+      .select()
+      .from(webhooks)
+      .where(and(eq(webhooks.id, webhookId), eq(webhooks.userId, userId)))
+      .limit(1)
 
+    const webhook = rows[0]
     if (!webhook) return { success: false }
 
-    await prisma.webhook.update({
-      where: { id: webhookId },
-      data: { active: !webhook.active },
-    })
+    await db
+      .update(webhooks)
+      .set({ active: !webhook.active })
+      .where(eq(webhooks.id, webhookId))
 
     revalidatePath('/profile/webhooks')
     return { success: true }
@@ -107,15 +112,19 @@ export async function triggerWebhooks(
   payload: Record<string, unknown>
 ): Promise<void> {
   try {
-    const webhooks = await prisma.webhook.findMany({
-      where: {
-        active: true,
-        events: { has: event },
-      },
-    })
+    // Find active webhooks whose events JSON array contains this event
+    const activeWebhooks = await db
+      .select()
+      .from(webhooks)
+      .where(
+        and(
+          eq(webhooks.active, true),
+          sql`EXISTS (SELECT 1 FROM json_each(${webhooks.events}) WHERE json_each.value = ${event})`
+        )
+      )
 
     await Promise.all(
-      webhooks.map(async (webhook) => {
+      activeWebhooks.map(async (webhook: any) => {
         const maxRetries = 3
         let lastError = ''
 
@@ -146,19 +155,19 @@ export async function triggerWebhooks(
             }
 
             // Success — clear error and stop retrying
-            await prisma.webhook.update({
-              where: { id: webhook.id },
-              data: { lastError: null },
-            })
+            await db
+              .update(webhooks)
+              .set({ lastError: null })
+              .where(eq(webhooks.id, webhook.id))
             return
           } catch (error) {
             lastError = error instanceof Error ? error.message : 'Unknown error'
             if (attempt === maxRetries - 1) {
               // All retries exhausted
-              await prisma.webhook.update({
-                where: { id: webhook.id },
-                data: { lastError: `${lastError} (failed after ${maxRetries} attempts)` },
-              })
+              await db
+                .update(webhooks)
+                .set({ lastError: `${lastError} (failed after ${maxRetries} attempts)` })
+                .where(eq(webhooks.id, webhook.id))
             }
           }
         }

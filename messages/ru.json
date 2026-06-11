@@ -15,24 +15,63 @@
     "profile": "Профиль",
     "bookmarks": "Закладки",
     "settings": "Настройки",
-    "search": "Поиск MCP серверов..."
+    "search": "Поиск MCP серверов...",
+    "mainNav": "Основная навигация",
+    "mobileNav": "Мобильная навигация",
+    "openMenu": "Открыть меню",
+    "guide": "Гайд"
   },
   "Home": {
-    "heroTitle": "Awesome MCP Servers",
-    "heroDescription": "Коллекция серверов для Model Context Protocol",
+    "heroEyebrow": "Model Context Protocol index",
+    "heroTitle": "Найдите MCP‑сервер для вашего AI‑стека",
+    "heroDescription": "Кураторский каталог MCP‑серверов, клиентов и интеграций: поиск, рейтинги, официальные реализации и remote endpoints в одном месте.",
+    "viewCatalog": "Смотреть каталог",
+    "addServer": "Добавить сервер",
+    "inCatalog": "В каталоге",
+    "serversAndIntegrations": "серверов и интеграций",
+    "officialLabel": "Официальные",
+    "verifiedSources": "проверенные источники",
+    "remoteLabel": "Remote",
+    "availableByEndpoint": "доступны по endpoint",
+    "filters": "Фильтры",
+    "quickNavigation": "Быстрая навигация по каталогу",
+    "popularTags": "Популярные теги",
+    "officialOnly": "Только официальные",
+    "remoteOnly": "Только remote",
     "featured": "Рекомендуемые MCP",
     "trending": "Сейчас в тренде",
     "allServers": "Все MCP",
     "showAll": "Показать все →",
-    "noResults": "Нет результатов",
+    "noFeatured": "Нет рекомендуемых серверов",
+    "changeFiltersOrCatalog": "Измените фильтры или посмотрите полный каталог.",
+    "noTrendsYet": "Пока нет трендов",
+    "trendsWillAppear": "Тренды появятся, когда накопится достаточно активности.",
+    "noResultsFor": "Нет результатов для «{search}»",
     "noServers": "Нет серверов",
-    "officialOnly": "Только официальные"
+    "tryDifferent": "Попробуйте другой запрос, категорию или сбросьте фильтры.",
+    "noResults": "Нет результатов",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Часто задаваемые вопросы о Model Context Protocol"
+  },
+  "Footer": {
+    "description": "Кураторский каталог серверов Model Context Protocol.",
+    "guide": "Гайд",
+    "brandSubtitle": "КУРАТОРСКИЙ КАТАЛОГ"
+  },
+  "ThemeToggle": {
+    "light": "Светлая тема",
+    "system": "Системная тема",
+    "dark": "Тёмная тема"
+  },
+  "SectionHeader": {
+    "eyebrow": "Каталог",
+    "showAll": "Показать все"
   },
   "Server": {
     "stars": "stars",
     "forks": "forks",
     "official": "Официальный",
-    "sponsored": "спонсор",
+    "sponsored": "Промо",
     "category": "Категория",
     "github": "GitHub",
     "endpoint": "Endpoint",
@@ -43,7 +82,8 @@
     "addComment": "Добавить комментарий",
     "rating": "Оценка",
     "bookmark": "В закладки",
-    "removeBookmark": "Удалить из закладок"
+    "removeBookmark": "Удалить из закладок",
+    "open": "Открыть"
   },
   "Profile": {
     "title": "Профиль",
@@ -66,17 +106,469 @@
     "noBookmarks": "У вас пока нет закладок",
     "noComments": "Вы пока не оставили ни одного комментария",
     "noRatings": "Вы пока не оценили ни один сервер",
-    "noHistory": "История просмотров пуста"
+    "noHistory": "История просмотров пуста",
+    "eyebrow": "Профиль",
+    "defaultName": "Пользователь",
+    "memberSince": "На сайте с {date}",
+    "edit": "Редактировать",
+    "addServer": "Добавить сервер",
+    "analyticsTitle": "Аналитика ваших серверов"
   },
   "Admin": {
-    "dashboard": "Панель управления",
-    "servers": "Серверы",
-    "clients": "Клиенты",
-    "submissions": "Заявки",
-    "users": "Пользователи",
-    "analytics": "Аналитика",
-    "backup": "Бэкап",
-    "settings": "Настройки"
+    "eyebrow": "Админ",
+    "nav": {
+      "brandSubtitle": "АДМИН ПАНЕЛЬ",
+      "signOut": "Выйти",
+      "dashboard": "Панель управления",
+      "servers": "Серверы",
+      "clients": "Клиенты",
+      "submissions": "Заявки",
+      "moderation": "Модерация",
+      "sponsorships": "Спонсорство",
+      "analytics": "Аналитика",
+      "monitoring": "Мониторинг",
+      "backup": "Резервные копии",
+      "users": "Пользователи",
+      "auditLog": "Журнал аудита",
+      "timeSeries": "Временные ряды",
+      "searchGaps": "Пропуски поиска",
+      "settings": "Настройки"
+    },
+    "login": {
+      "eyebrow": "Защищённая зона",
+      "title": "Вход для администратора",
+      "description": "Войдите для управления каталогом MCP.",
+      "email": "Электронная почта",
+      "password": "Пароль",
+      "signingIn": "Вход...",
+      "signIn": "Войти",
+      "invalidCredentials": "Неверный email или пароль"
+    },
+    "dashboard": {
+      "eyebrow": "Операции",
+      "title": "Панель управления",
+      "description": "Обзор каталога, синхронизация с GitHub и модерация.",
+      "totalServers": "Всего серверов",
+      "totalClients": "Всего клиентов",
+      "totalSubmissions": "Всего заявок",
+      "pending": "Ожидают",
+      "approved": "Одобрены",
+      "rejected": "Отклонены",
+      "official": "Официальные",
+      "featured": "Избранные",
+      "remote": "Удалённые",
+      "totalStars": "Всего звёзд",
+      "system": "Система",
+      "ready": "Готов",
+      "syncChecksOperational": "Синхронизация и проверки работают"
+    },
+    "syncGithub": {
+      "syncGithub": "Синхронизировать GitHub",
+      "syncing": "Синхронизация...",
+      "updatedErrors": "Обновлено: {updated}, Ошибки: {failed}",
+      "syncError": "Ошибка синхронизации"
+    },
+    "charts": {
+      "title": "Аналитика",
+      "submissions30days": "Заявки (последние 30 дней)",
+      "noSubmissions30days": "Нет заявок за последние 30 дней",
+      "submissionStatus": "Статус заявок",
+      "noSubmissionsYet": "Заявок пока нет",
+      "serversByCategory": "Серверы по категориям",
+      "noServersCategorized": "Серверы ещё не категоризированы",
+      "submissionTypes": "Типы заявок",
+      "pending": "Ожидают",
+      "approved": "Одобрены",
+      "rejected": "Отклонены",
+      "free": "Бесплатные",
+      "premium": "Премиум"
+    },
+    "servers": {
+      "title": "Серверы",
+      "description": "Управление MCP-серверами, избранным статусом и массовыми действиями.",
+      "addServer": "Добавить сервер",
+      "editServer": "Редактировать сервер",
+      "exportCSV": "Экспорт CSV",
+      "selected": "Выбрано: {count}",
+      "delete": "Удалить",
+      "confirmDelete": "Удалить сервер?",
+      "confirmBulkDelete": "Удалить {count} серверов?",
+      "ariaEdit": "Редактировать сервер",
+      "ariaDelete": "Удалить сервер",
+      "table": {
+        "name": "Название",
+        "category": "Категория",
+        "official": "Официальный",
+        "featured": "Избранный",
+        "featuredUntil": "Избранный до",
+        "sponsoredUntil": "Спонсируемый до",
+        "actions": "Действия",
+        "featuredYes": "✅ Избранный"
+      },
+      "form": {
+        "name": "Название",
+        "githubUrl": "URL GitHub",
+        "description": "Описание",
+        "owner": "Владелец",
+        "repo": "Репозиторий",
+        "category": "Категория",
+        "selectCategory": "Выберите категорию",
+        "tags": "Теги (через запятую)",
+        "tagsPlaceholder": "тег1, тег2, тег3",
+        "authType": "Тип авторизации",
+        "endpoint": "Эндпоинт",
+        "official": "Официальный",
+        "sponsored": "Спонсируемый",
+        "remote": "Удалённый",
+        "featured": "Избранный",
+        "cancel": "Отмена",
+        "saving": "Сохранение...",
+        "save": "Сохранить",
+        "create": "Создать",
+        "errorSaving": "Ошибка сохранения сервера",
+        "validation": {
+          "nameRequired": "Введите название",
+          "descriptionRequired": "Введите описание",
+          "ownerRequired": "Введите владельца",
+          "repoRequired": "Введите репозиторий",
+          "categoryRequired": "Выберите категорию",
+          "urlInvalid": "Введите корректный URL"
+        }
+      }
+    },
+    "clients": {
+      "title": "Клиенты",
+      "description": "Приложения и инструменты с поддержкой MCP.",
+      "addClient": "Добавить клиент",
+      "editClient": "Редактировать клиента",
+      "exportCSV": "Экспорт CSV",
+      "selected": "Выбрано: {count}",
+      "delete": "Удалить",
+      "confirmDelete": "Удалить клиента?",
+      "confirmBulkDelete": "Удалить {count} клиентов?",
+      "ariaEdit": "Редактировать клиента",
+      "ariaDelete": "Удалить клиента",
+      "table": {
+        "name": "Название",
+        "url": "URL",
+        "featured": "Избранный",
+        "actions": "Действия"
+      },
+      "form": {
+        "name": "Название",
+        "description": "Описание",
+        "url": "URL",
+        "iconUrl": "URL иконки (необязательно)",
+        "featured": "Избранный",
+        "cancel": "Отмена",
+        "saving": "Сохранение...",
+        "save": "Сохранить",
+        "create": "Создать",
+        "errorSaving": "Ошибка сохранения клиента",
+        "validation": {
+          "nameRequired": "Введите название",
+          "descriptionRequired": "Введите описание",
+          "urlInvalid": "Введите корректный URL"
+        }
+      }
+    },
+    "submissions": {
+      "title": "Заявки на MCP-серверы",
+      "description": "Очередь модерации, одобрение и отклонение новых записей.",
+      "filters": "Фильтры",
+      "search": "Поиск",
+      "searchPlaceholder": "Поиск по названию, описанию или email...",
+      "status": "Статус",
+      "allStatuses": "Все статусы",
+      "all": "Все",
+      "pending": "Ожидают",
+      "approved": "Одобрены",
+      "rejected": "Отклонены",
+      "premium": "Премиум",
+      "apply": "Применить",
+      "noSubmissions": "Нет заявок для отображения",
+      "selected": "Выбрано: {count}",
+      "delete": "Удалить",
+      "approve": "Одобрить",
+      "reject": "Отклонить",
+      "exportCSV": "Экспорт CSV",
+      "confirmBulkDelete": "Удалить {count} заявок?",
+      "confirmBulkApprove": "Одобрить {count} заявок?",
+      "errorAction": "Ошибка выполнения действия",
+      "table": {
+        "name": "Название",
+        "email": "Email",
+        "category": "Категория",
+        "premium": "Премиум",
+        "status": "Статус",
+        "date": "Дата",
+        "actions": "Действия"
+      },
+      "buttonTitle": {
+        "approve": "Одобрить",
+        "reject": "Отклонить",
+        "delete": "Удалить"
+      }
+    },
+    "moderation": {
+      "title": "Модерация комментариев",
+      "description": "Очередь проверки и история комментариев.",
+      "underReviewTab": "На проверке",
+      "allCommentsTab": "Все комментарии",
+      "totalComments": "Всего комментариев: {count}",
+      "commentsUnderReview": "Комментариев на проверке: {count}",
+      "selected": "Выбрано: {count}",
+      "approve": "Одобрить",
+      "reject": "Отклонить",
+      "confirmBulkApprove": "Одобрить {count} комментариев?",
+      "confirmBulkReject": "Отклонить {count} комментариев?",
+      "anonymous": "Аноним",
+      "approved": "Одобрен",
+      "underReview": "На проверке",
+      "noComments": "Нет комментариев",
+      "table": {
+        "server": "Сервер",
+        "author": "Автор",
+        "comment": "Комментарий",
+        "status": "Статус",
+        "date": "Дата",
+        "actions": "Действия"
+      },
+      "buttonTitle": {
+        "approve": "Одобрить",
+        "delete": "Удалить"
+      }
+    },
+    "sponsorships": {
+      "title": "Спонсорство",
+      "description": "Активные размещения и рекламные периоды.",
+      "newSponsorship": "Новое спонсорство",
+      "noActiveSponsorships": "Нет активных спонсорств",
+      "until": "до",
+      "active": "Активно",
+      "inactive": "Неактивно",
+      "table": {
+        "server": "Сервер",
+        "sponsor": "Спонсор",
+        "period": "Период",
+        "amount": "Сумма",
+        "status": "Статус",
+        "actions": "Действия"
+      },
+      "form": {
+        "noServersAvailable": "Нет доступных серверов для спонсорства. Все серверы уже спонсируются.",
+        "server": "Сервер",
+        "selectServer": "Выберите сервер",
+        "sponsorName": "Имя спонсора",
+        "sponsorNamePlaceholder": "Компания-спонсор",
+        "sponsorUrl": "URL спонсора",
+        "sponsorUrlPlaceholder": "URL страницы спонсора",
+        "amount": "Сумма (USD)",
+        "amountPlaceholder": "0.00",
+        "endDate": "Дата окончания",
+        "creating": "Создание...",
+        "createSponsorship": "Создать спонсорство",
+        "sponsorshipCreated": "Спонсорство создано!"
+      }
+    },
+    "promoteServer": {
+      "promote": "Продвигать",
+      "title": "Продвижение сервера",
+      "description": "Выберите план для повышения видимости вашего сервера",
+      "paymentUnavailable": "⚠️ Платёжная система временно недоступна. Свяжитесь с администратором для активации.",
+      "featured": "Избранный",
+      "featuredPrice": "$29 / 30 дней",
+      "featuredDescription": "Ваш сервер будет выделен в разделе избранных на главной странице",
+      "activeUntil": "Активно до {date}",
+      "renewFeatured": "Продлить «Избранный»",
+      "buyFeatured": "Купить «Избранный»",
+      "sponsored": "Спонсируемый",
+      "sponsoredPrice": "$99 / 30 дней",
+      "sponsoredDescription": "Премиум-размещение с badge спонсора на карточке сервера",
+      "renewSponsored": "Продлить «Спонсируемый»",
+      "buySponsored": "Купить «Спонсируемый»"
+    },
+    "analytics": {
+      "title": "Аналитика",
+      "description": "Категории, отправители и графики роста каталога.",
+      "totalServers": "Всего серверов",
+      "totalSubmissions": "Всего заявок",
+      "conversion": "Конверсия",
+      "popularCategories": "Популярные категории",
+      "topSubmitters": "Топ отправителей"
+    },
+    "monitoring": {
+      "title": "Мониторинг здоровья",
+      "description": "Доступность и аптайм удалённых серверов.",
+      "remoteServers": "Удалённые серверы",
+      "online": "В сети",
+      "offlineIssues": "Не в сети / Проблемы",
+      "avgUptime24h": "Средний аптайм (24ч)",
+      "na": "Н/Д",
+      "remoteServerStatus": "Статус удалённых серверов",
+      "noRemoteServers": "Удалённые серверы не настроены. Проверка здоровья применяется только к удалённым серверам с эндпоинтами.",
+      "localGithubServers": "Локальные / GitHub серверы",
+      "localGithubDescription": "Эти серверы — репозитории на GitHub. Мониторинг здоровья применяется только к удалённым серверам с активными эндпоинтами.",
+      "github": "GitHub",
+      "statusLabels": {
+        "online": "В сети",
+        "degraded": "Деградация",
+        "offline": "Не в сети",
+        "timeout": "Таймаут",
+        "noData": "Нет данных"
+      },
+      "table": {
+        "server": "Сервер",
+        "status": "Статус",
+        "uptime24h": "Аптайм (24ч)",
+        "latency": "Задержка",
+        "lastCheck": "Последняя проверка",
+        "checks": "Проверки"
+      },
+      "localTable": {
+        "server": "Сервер",
+        "category": "Категория",
+        "status": "Статус"
+      },
+      "checkAll": {
+        "checkAll": "Проверить все",
+        "checkedResult": "Проверено {checked} серверов: {online} в сети, {offline} не в сети",
+        "checkFailed": "Проверка не удалась",
+        "failedToRun": "Не удалось запустить проверки здоровья",
+        "checking": "Проверка..."
+      }
+    },
+    "backup": {
+      "title": "Резервная копия / Восстановление",
+      "description": "Экспорт и восстановление базы данных.",
+      "createBackup": "Создать резервную копию",
+      "downloadDump": "Скачать дамп базы данных SQL.",
+      "downloadBackup": "Скачать резервную копию",
+      "creating": "Создание...",
+      "restoreFromBackup": "Восстановить из резервной копии",
+      "warning": "⚠️ Внимание! Это перезапишет текущие данные. Сначала создайте резервную копию!",
+      "pasteSqlPlaceholder": "Вставьте SQL-дамп сюда...",
+      "restore": "Восстановить"
+    },
+    "users": {
+      "title": "Пользователи",
+      "description": "Роли, верифицированные авторы и управление пользователями.",
+      "verified": "Верифицирован",
+      "unverified": "Не верифицирован",
+      "table": {
+        "email": "Email",
+        "role": "Роль",
+        "authorStatus": "Статус автора",
+        "created": "Создан",
+        "actions": "Действия"
+      }
+    },
+    "auditLog": {
+      "title": "Журнал аудита",
+      "description": "Журнал действий администратора и системных событий.",
+      "table": {
+        "time": "Время",
+        "action": "Действие",
+        "user": "Пользователь",
+        "type": "Тип",
+        "id": "ID",
+        "ip": "IP"
+      }
+    },
+    "timeSeries": {
+      "title": "Панель аналитики",
+      "description": "Метрики временных рядов и когортный анализ.",
+      "dauToday": "DAU (сегодня)",
+      "newServersToday": "Новые серверы (сегодня)",
+      "viewsToday": "Просмотры (сегодня)",
+      "bookmarksToday": "Закладки (сегодня)",
+      "metrics30days": "Метрики (30 дней)",
+      "cohortAnalysis": "Когортный анализ (удержание, %)",
+      "notEnoughData": "Недостаточно данных для когортного анализа",
+      "table": {
+        "date": "Дата",
+        "dau": "DAU",
+        "newServers": "Новые серверы",
+        "views": "Просмотры",
+        "bookmarks": "Закладки"
+      },
+      "cohortTable": {
+        "cohort": "Когорта",
+        "size": "Размер"
+      }
+    },
+    "searchGaps": {
+      "title": "Аналитика поиска",
+      "totalSearches30d": "Всего поисков (30д)",
+      "withResults": "С результатами",
+      "withoutResults": "Без результатов",
+      "notFoundRate": "Процент «не найдено»",
+      "searchGapsTitle": "Пропуски поиска (0 результатов)",
+      "allQueriesReturnResults": "Все запросы возвращают результаты. Отлично!",
+      "times": "раз",
+      "topSearchQueries": "Топ поисковых запросов",
+      "approxResults": "~{count} результатов"
+    },
+    "settings": {
+      "title": "Настройки",
+      "description": "SEO, аналитика и основные параметры сайта.",
+      "seoSettings": "Настройки SEO",
+      "siteTitle": "Название сайта",
+      "siteDescription": "Описание сайта",
+      "siteUrl": "URL сайта",
+      "saveSEO": "Сохранить SEO",
+      "analyticsCard": "Аналитика",
+      "googleAnalyticsId": "ID Google Analytics",
+      "yandexMetrikaId": "ID Яндекс Метрики",
+      "saveAnalytics": "Сохранить аналитику",
+      "cacheManagement": "Управление кэшем",
+      "cacheDescription": "Очистить кэш Next.js и данные.",
+      "clearLocalStorage": "Очистить LocalStorage",
+      "clearCacheApi": "Очистить Cache API",
+      "localStorageCleared": "LocalStorage очищен!",
+      "cacheApiCleared": "Cache API очищен!",
+      "moderationQueue": "Очередь модерации",
+      "moderationSettings": "Настройки модерации.",
+      "automaticModeration": "Автоматическая модерация",
+      "emailNotifications": "Email-уведомления",
+      "requirePremiumForFeatured": "Требовать Премиум для «Избранный»",
+      "saveSettings": "Сохранить настройки",
+      "settingsSaved": "Настройки сохранены!"
+    },
+    "authorAnalytics": {
+      "noLinkedServers": "У вас ещё нет привязанных серверов. Вы можете привязать сервер на странице сервера.",
+      "selectServer": "Выберите сервер",
+      "loading": "Загрузка...",
+      "selectServerToView": "Выберите сервер для просмотра аналитики"
+    },
+    "authorDashboard": {
+      "views30d": "Просмотры (30д)",
+      "bookmarks": "Закладки",
+      "avgRating": "Средний рейтинг",
+      "ratings": "Оценок",
+      "comments": "Комментариев",
+      "githubStars": "GitHub Stars",
+      "viewsByDay": "Просмотры по дням",
+      "views": "Просмотры",
+      "comparisonWithSimilar": "Сравнение с похожими серверами",
+      "recommendations": "Рекомендации"
+    },
+    "common": {
+      "selected": "Выбрано: {count}",
+      "delete": "Удалить",
+      "approve": "Одобрить",
+      "reject": "Отклонить",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "create": "Создать",
+      "saving": "Сохранение...",
+      "creating": "Создание...",
+      "exportCSV": "Экспорт CSV",
+      "actions": "Действия",
+      "noData": "Нет данных",
+      "loading": "Загрузка...",
+      "na": "Н/Д"
+    }
   },
   "Auth": {
     "loginTitle": "Вход в аккаунт",
@@ -89,18 +581,40 @@
     "registerButton": "Зарегистрироваться",
     "noAccount": "Нет аккаунта?",
     "hasAccount": "Уже есть аккаунт?",
-    "adminLink": "Вход для админов"
+    "adminLink": "Вход для админов",
+    "invalidCredentials": "Неверный email или пароль",
+    "signingIn": "Вход...",
+    "adminPrompt": "Администратор?",
+    "passwordsNoMatch": "Пароли не совпадают",
+    "registrationError": "Ошибка регистрации",
+    "optional": "опционально",
+    "namePlaceholder": "Ваше имя",
+    "passwordMinLength": "Минимум 6 символов",
+    "registering": "Регистрация..."
   },
   "Notifications": {
     "title": "Уведомления",
     "markAllRead": "Все прочитаны",
-    "empty": "Нет уведомлений"
+    "empty": "Нет уведомлений",
+    "ariaLabel": "Уведомления"
   },
   "Compare": {
     "title": "Сравнение серверов",
     "selectServers": "Выберите минимум 2 сервера для сравнения",
     "characteristic": "Характеристика",
-    "link": "Ссылка"
+    "link": "Ссылка",
+    "selectMin": "Выберите минимум 2 сервера для сравнения. Добавьте ?ids=id1,id2 в URL.",
+    "goCatalog": "Перейти к каталогу",
+    "fieldName": "Название",
+    "fieldCategory": "Категория",
+    "fieldOfficial": "Официальный",
+    "fieldRemote": "Remote",
+    "fieldTags": "Теги",
+    "fieldDescription": "Описание",
+    "fieldGithub": "GitHub",
+    "linkLabel": "Ссылка",
+    "yes": "Да",
+    "no": "Нет"
   },
   "Common": {
     "loading": "Загрузка...",
@@ -117,6 +631,695 @@
     "search": "Поиск",
     "filter": "Фильтр",
     "sort": "Сортировка",
-    "all": "Все"
+    "all": "Все",
+    "errors": {
+      "INVALID_EMAIL": "Некорректный email",
+      "PASSWORD_MIN_LENGTH": "Минимум 6 символов",
+      "NAME_REQUIRED": "Введите имя",
+      "EMAIL_ALREADY_EXISTS": "Пользователь с таким email уже существует",
+      "CANNOT_CHANGE_PASSWORD": "Невозможно сменить пароль для этого типа аккаунта",
+      "INVALID_CURRENT_PASSWORD": "Текущий пароль неверен",
+      "RATE_LIMIT_COMMENTS": "Слишком много комментариев. Попробуйте позже.",
+      "RATE_LIMIT_REVIEWS": "Слишком много отзывов. Попробуйте позже.",
+      "REVIEW_ALREADY_EXISTS": "Вы уже оставили отзыв на этот сервер.",
+      "AUTH_REQUIRED": "Необходимо авторизоваться",
+      "SERVER_NOT_FOUND": "Сервер не найден",
+      "PROMOTE_UNAUTHORIZED": "Только автор или администратор может продвигать сервер",
+      "CHECKOUT_SESSION_FAILED": "Не удалось создать сессию оплаты",
+      "STRIPE_NOT_CONFIGURED": "Stripe не настроен. Укажите STRIPE_SECRET_KEY в .env",
+      "PAYMENT_SYSTEM_UNAVAILABLE": "Платежная система временно недоступна. Обратитесь к администратору.",
+      "ADD_MORE_TAGS": "Добавьте больше тегов — сервера с 5+ тегами получают в 2 раза больше просмотров",
+      "SPECIFY_CONNECTION_TYPE": "Укажите тип подключения (local/stdio/remote) в тегах",
+      "ASK_FOR_FIRST_RATING": "Попросите пользователей оставить первый рейтинг — это повышает доверие",
+      "LOW_VIEWS_PROMOTE": "Сервер пока мало просматривается. Расскажите о нём в сообществах MCP.",
+      "LOW_BOOKMARK_CONVERSION": "Низкая конверсия в закладки. Улучшите описание, добавьте примеры использования."
+    }
+  },
+  "Categories": {
+    "all": "Все",
+    "official": "Официальный ✦",
+    "search": "Поиск",
+    "web-scraping": "Веб-скрейпинг",
+    "communication": "Коммуникация",
+    "productivity": "Продуктивность",
+    "development": "Разработка",
+    "database": "База данных",
+    "cloud-service": "Облачный сервис",
+    "file-system": "Файловая система",
+    "cloud-storage": "Облачное хранилище",
+    "version-control": "Контроль версий",
+    "other": "Другое"
+  },
+  "Pagination": {
+    "label": "Пагинация",
+    "back": "← Назад",
+    "next": "Вперёд →"
+  },
+  "Search": {
+    "placeholder": "Поиск MCP серверов, тегов, репозиториев...",
+    "fullSearch": "Enter — полный поиск"
+  },
+  "Brand": {
+    "subtitle": "ИНДЕКС ПРОТОКОЛА"
+  },
+  "FAQ": {
+    "q0": "Что такое Model Context Protocol (MCP)?",
+    "a0": "Model Context Protocol (MCP) — это открытый протокол, разработанный Anthropic, который позволяет AI-моделям безопасно подключаться к внешним источникам данных и инструментам. MCP стандартизирует взаимодействие между AI и различными сервисами.",
+    "q1": "Как установить MCP сервер?",
+    "a1": "Установка MCP сервера обычно выполняется через npm или другой пакетный менеджер. Большинство серверов имеют подробную документацию с инструкциями по установке и настройке в файле README репозитория.",
+    "q2": "Чем MCP отличается от традиционных API?",
+    "a2": "В отличие от традиционных API, где разработчик вручную интегрирует endpoints, MCP предоставляет стандартизированный способ для AI моделей автоматически обнаруживать и использовать доступные инструменты и данные.",
+    "q3": "Какие клиенты поддерживают MCP?",
+    "a3": "MCP поддерживается в Claude Desktop, Claude Code, а также в различных редакторах кода и AI-инструментах. Список поддерживаемых клиентов постоянно растет.",
+    "q4": "Могу ли я создать свой MCP сервер?",
+    "a4": "Да, вы можете создать собственный MCP сервер используя SDK для TypeScript, Python или других языков. MCP SDK предоставляет все необходимые инструменты для разработки серверов.",
+    "q5": "Безопасен ли MCP протокол?",
+    "a5": "MCP разработан с учетом безопасности. Пользователь всегда контролирует, какие серверы запущены и какие разрешения им предоставлены. Каждый сервер работает в изолированном процессе."
+  },
+  "Guide": {
+    "title": "Гайд по MCP серверам",
+    "subtitle": "Пошаговое руководство: от выбора клиента до запуска первого MCP сервера. Всё, что нужно знать о Model Context Protocol.",
+    "eyebrow": "Руководство",
+    "whatIsMcp": {
+      "title": "Что такое MCP?",
+      "description": "Model Context Protocol (MCP) — это открытый протокол, который позволяет AI-моделям безопасно подключаться к внешним инструментам и данным. MCP серверы предоставляют инструменты (tools), ресурсы (resources) и подсказки (prompts), которые AI использует для выполнения задач — от чтения файлов до запросов к базам данных.",
+      "servers": "Серверы",
+      "serversDesc": "Предоставляют инструменты и данные",
+      "clients": "Клиенты",
+      "clientsDesc": "AI-приложения, использующие MCP",
+      "security": "Безопасность",
+      "securityDesc": "Контроль доступа и разрешений"
+    },
+    "step1": {
+      "title": "Выберите MCP клиент",
+      "description": "MCP серверы работают с различными AI-клиентами. Выберите подходящий:",
+      "recommended": "Рекомендуемый",
+      "popular": "Популярный",
+      "openSource": "Open Source"
+    },
+    "step2": {
+      "title": "Установите MCP сервер",
+      "description": "MCP серверы устанавливаются через npm или запускаются напрямую через npx:",
+      "globalInstall": "# Глобальная установка",
+      "npxRun": "# Запуск без установки (рекомендуется)",
+      "tip": "💡 Рекомендуется использовать npx — так вы всегда получите последнюю версию без глобальной установки."
+    },
+    "step3": {
+      "title": "Настройте конфигурацию",
+      "description": "Добавьте сервер в конфигурационный файл вашего клиента:",
+      "apiKeys": "🔑 Серверы, требующие API-ключи, указываются в поле env."
+    },
+    "step4": {
+      "title": "Используйте инструменты",
+      "description": "После подключения AI автоматически получит доступ к инструментам сервера:",
+      "files": "Файлы",
+      "filesDesc": "Чтение, запись и поиск файлов на диске",
+      "search": "Поиск",
+      "searchDesc": "Веб-поиск и поиск по документации",
+      "databases": "Базы данных",
+      "databasesDesc": "SQL-запросы к PostgreSQL, SQLite, MySQL",
+      "github": "GitHub",
+      "githubDesc": "Управление PR, issues и репозиториями",
+      "browser": "Браузер",
+      "browserDesc": "Автоматизация и скрейпинг веб-страниц",
+      "cloud": "Облако",
+      "cloudDesc": "AWS, Cloudflare, Azure, GCP сервисы"
+    },
+    "step5": {
+      "title": "Популярные MCP серверы"
+    },
+    "cta": {
+      "title": "Найдите больше серверов",
+      "description": "В нашем каталоге собраны тысячи MCP серверов с описаниями, тегами и рейтингами.",
+      "allServers": "Все серверы",
+      "allClients": "Все клиенты"
+    }
+  },
+  "ProfileNav": {
+    "profile": "Профиль",
+    "bookmarks": "Закладки",
+    "comments": "Комментарии",
+    "ratings": "Оценки",
+    "history": "История",
+    "settings": "Настройки"
+  },
+  "ProfileComments": {
+    "title": "Мои комментарии",
+    "empty": "Вы пока не оставили ни одного комментария."
+  },
+  "ProfileHistory": {
+    "title": "История просмотров",
+    "empty": "История просмотров пуста. Посещайте страницы серверов, чтобы они появились здесь."
+  },
+  "ProfileRatings": {
+    "title": "Мои оценки",
+    "empty": "Вы пока не оценили ни один сервер.",
+    "outOf5": "{value} из 5"
+  },
+  "Ecosystem": {
+    "title": "Экосистема MCP",
+    "totalServers": "Всего серверов",
+    "tagLinks": "Связей по тегам",
+    "avgConnectivity": "Средняя связность",
+    "connectionViz": "Визуализация связей",
+    "tagCategoryLinks": "Связи по тегам и категориям",
+    "connections": "{count} связей",
+    "more": "+{count} ещё"
+  },
+  "Embed": {
+    "title": "Embed виджет",
+    "description": "Встраивайте карточки MCP серверов на свои сайты, блоги и документацию.",
+    "method1Iframe": "Способ 1: iframe",
+    "method1Desc": "Простой и надёжный способ. Замените SERVER_ID на ID сервера из URL.",
+    "method2Js": "Способ 2: JavaScript",
+    "method2Desc": "Автоматическая адаптация размеров и ленивая загрузка.",
+    "whereId": "Где взять ID сервера?",
+    "whereIdDescPrefix": "Откройте страницу сервера и скопируйте часть URL после",
+    "whereIdDescMiddle": "Например, для",
+    "whereIdDescSuffix": "ID сервера можно найти в админ-панели или через API."
+  },
+  "ApiStatus": {
+    "title": "Статус API",
+    "subtitle": "Публичный статус API endpoints и информация об использовании",
+    "statusLabel": "Статус",
+    "allSystemsOk": "Все системы работают",
+    "auth": "Аутентификация",
+    "apiUsage": "Использование API",
+    "serversList": "список серверов",
+    "serverDetails": "детали сервера",
+    "search": "поиск",
+    "header": "Заголовок:",
+    "graphqlPlayground": "Playground доступен по тому же адресу (GET)"
+  },
+  "Rankings": {
+    "title": "Рейтинг серверов",
+    "subtitle": "Топ серверов по активности сообщества",
+    "weeklyTop": "Топ недели",
+    "monthlyTop": "Топ месяца",
+    "noDataWeek": "Недостаточно данных за эту неделю",
+    "noDataMonth": "Недостаточно данных за этот месяц"
+  },
+  "Badges": {
+    "title": "Бейджи для README",
+    "description": "Добавьте бейдж в README вашего MCP сервера, чтобы привлечь больше пользователей.",
+    "preview": "Превью:",
+    "badgeDefaultName": "Основной",
+    "badgeDefaultDesc": "Показывает, что сервер зарегистрирован в каталоге",
+    "badgeStarsName": "Звёзды",
+    "badgeStarsDesc": "Показывает количество звёзд на GitHub",
+    "badgeOfficialName": "Официальный",
+    "badgeOfficialDesc": "Показывает статус официального/комьюнити сервера",
+    "badgeCategoryName": "Категория",
+    "badgeCategoryDesc": "Показывает категорию сервера",
+    "replacePrefix": "Замените",
+    "replaceMiddle": "на реальный путь вашего сервера. Например, для",
+    "replaceSuffix": "используйте"
+  },
+  "Authors": {
+    "title": "Топ авторов",
+    "subtitle": "Разработчики, создающие лучшие MCP серверы сообщества",
+    "noAuthors": "Пока нет авторов с привязанными серверами",
+    "anonymous": "Аноним",
+    "servers": "{count} серверов",
+    "ratings": "{count} оценок"
+  },
+  "Offline": {
+    "title": "Нет подключения к интернету",
+    "description": "Похоже, вы потеряли соединение. Некоторые ранее загруженные страницы могут быть доступны.",
+    "retry": "Попробовать снова"
+  },
+  "WhatsNew": {
+    "title": "Что нового?",
+    "subtitle": "Новые серверы, обновления и тренды за последнюю неделю",
+    "newServers": "Новых серверов",
+    "last7days": "за последние 7 дней",
+    "trending": "В тренде",
+    "updated": "Обновлённые",
+    "newServersSection": "Новые серверы",
+    "trendingSection": "Сейчас в тренде",
+    "recentlyUpdatedSection": "Недавно обновлённые",
+    "nothingNew": "Пока ничего нового за эту неделю",
+    "comeBackLater": "Возвращайтесь позже!"
+  },
+  "Submit": {
+    "hero": {
+      "eyebrow": "Отправить сервер",
+      "title": "Отправьте свой MCP-сервер",
+      "description": "Добавьте репозиторий или документацию. Если это GitHub-ссылка, мы попробуем заполнить название и описание автоматически."
+    },
+    "validation": {
+      "nameRequired": "Введите название сервера",
+      "descriptionRequired": "Введите описание",
+      "urlInvalid": "Введите корректный URL",
+      "urlRequired": "Введите ссылку",
+      "categoryRequired": "Выберите категорию",
+      "emailInvalid": "Введите корректный email",
+      "emailRequired": "Введите email"
+    },
+    "categories": {
+      "search": "Поиск",
+      "webScraping": "Веб-скрейпинг",
+      "communication": "Коммуникация",
+      "productivity": "Продуктивность",
+      "development": "Разработка",
+      "database": "База данных",
+      "cloudService": "Облачный сервис",
+      "fileSystem": "Файловая система",
+      "cloudStorage": "Облачное хранилище",
+      "versionControl": "Контроль версий",
+      "browserAutomation": "Браузерная автоматизация",
+      "aiMl": "AI / ML",
+      "other": "Другое"
+    },
+    "labels": {
+      "serverName": "Название сервера",
+      "shortDescription": "Краткое описание",
+      "githubUrl": "Ссылка на GitHub или документацию",
+      "category": "Категория",
+      "tags": "Теги",
+      "owner": "Владелец (owner)",
+      "contactEmail": "Контактный email"
+    },
+    "placeholders": {
+      "description": "Одна понятная фраза о том, что делает сервер",
+      "selectCategory": "Выберите категорию",
+      "tagsHint": "Через запятую. До 10 тегов.",
+      "ownerHint": "GitHub-username владельца репозитория."
+    },
+    "autoFill": "Автозаполнить",
+    "errors": {
+      "submissionFailed": "Ошибка при отправке. Пожалуйста, попробуйте снова.",
+      "enterGitHubUrl": "Сначала введите ссылку на GitHub репозиторий",
+      "githubFetchFailed": "Не удалось получить данные из GitHub"
+    },
+    "success": {
+      "title": "Спасибо за отправку",
+      "description": "Ваш MCP-сервер отправлен на рассмотрение. Мы проверим его и добавим в каталог.",
+      "submitAnother": "Отправить ещё один"
+    },
+    "duplicate": {
+      "inCatalog": "Этот сервер уже есть в каталоге!",
+      "inSubmissions": "Этот сервер уже отправлен на рассмотрение!",
+      "goToServer": "Перейти к серверу →",
+      "stillSubmit": "Вы всё равно можете отправить, если это другая версия или форк."
+    },
+    "urlHint": "Введите GitHub URL и нажмите «Автозаполнить», чтобы подтянуть metadata.",
+    "premium": {
+      "title": "Premium-отправка",
+      "fastReview": "Более быстрая проверка.",
+      "badge": "Значок на листинге MCP.",
+      "dofollow": "Dofollow-ссылка."
+    },
+    "submitting": "Отправка...",
+    "submit": "Отправить"
+  },
+  "Error": {
+    "title": "Что-то пошло не так",
+    "description": "Произошла ошибка при загрузке страницы. Попробуйте обновить или вернуться на главную.",
+    "tryAgain": "Попробовать снова",
+    "goHome": "На главную"
+  },
+  "NotFound": {
+    "title": "Страница не найдена",
+    "goHome": "На главную"
+  },
+  "AllServers": {
+    "eyebrow": "Полный индекс",
+    "title": "Все MCP серверы",
+    "description": "Ищите по названию, репозиторию, категории и тегам. Список подгружается постепенно, чтобы каталог оставался быстрым.",
+    "emptyTitle": "Серверы не найдены",
+    "emptyDescription": "Попробуйте изменить запрос, сортировку или фильтры."
+  },
+  "OfficialServers": {
+    "eyebrow": "Verified sources",
+    "title": "Официальные MCP серверы",
+    "description": "Реализации от владельцев платформ и команд, которые поддерживают исходный продукт или сервис.",
+    "emptyTitle": "Нет официальных серверов",
+    "emptyDescription": "Когда появятся новые проверенные реализации, они будут здесь."
+  },
+  "RemoteServers": {
+    "eyebrow": "Remote endpoints",
+    "title": "Remote MCP серверы",
+    "description": "Удалённые MCP-серверы с авторизацией и endpoint-подключением для облачных workflows.",
+    "emptyTitle": "Удалённые серверы не найдены",
+    "emptyDescription": "Попробуйте другой поисковый запрос."
+  },
+  "Clients": {
+    "eyebrow": "MCP clients",
+    "title": "Клиенты и приложения с поддержкой MCP",
+    "description": "Инструменты, IDE и desktop-приложения, которые умеют подключаться к MCP-серверам.",
+    "featuredTitle": "Рекомендуемые клиенты",
+    "allTitle": "Все клиенты",
+    "emptySearchTitle": "Клиенты не найдены",
+    "emptyNoSearchTitle": "Клиентов пока нет",
+    "emptyDescription": "Попробуйте другой запрос или вернитесь позже."
+  },
+  "AboutMcp": {
+    "metaTitle": "Что такое Model Context Protocol (MCP)",
+    "metaDescription": "Подробное объяснение Model Context Protocol (MCP) — открытого протокола для интеграции AI-ассистентов с внешними инструментами, базами данных и сервисами.",
+    "metaKeywords": "MCP, Model Context Protocol, AI протокол, MCP серверы, что такое MCP",
+    "ogDescription": "Подробное объяснение протокола MCP для AI-интеграций",
+    "h1": "Что такое Model Context Protocol (MCP)?",
+    "intro": "Model Context Protocol (MCP) — это открытый протокол, разработанный компанией Anthropic для стандартизации взаимодействия между AI-ассистентами и внешними источниками данных, инструментами и сервисами.",
+    "whyMcpTitle": "Зачем нужен MCP?",
+    "whyMcpP1": "До появления MCP каждый AI-интегратор создавал свой собственный способ подключения к внешним системам. Это приводило к фрагментации: одни и те же интеграции приходилось делать заново для каждого AI-клиента.",
+    "whyMcpP2": "MCP решает эту проблему, предоставляя единый стандарт. Теперь достаточно написать MCP-сервер один раз, и он будет работать с любым MCP-совместимым клиентом: Claude Desktop, Cursor, Continue, Cline и многими другими.",
+    "howMcpTitle": "Как работает MCP?",
+    "architectureTitle": "Архитектура MCP",
+    "archServer": "MCP Сервер — предоставляет инструменты, ресурсы и промпты",
+    "archClient": "MCP Клиент — AI-приложение, которое подключается к серверам",
+    "archTransport": "Транспорт — stdio, SSE (Server-Sent Events) или HTTP",
+    "capabilitiesIntro": "MCP-сервер может предоставлять три типа возможностей:",
+    "capTools": "Tools (Инструменты) — функции, которые AI может вызывать для выполнения действий (поиск, запись данных, отправка сообщений)",
+    "capResources": "Resources (Ресурсы) — данные, которые AI может читать (файлы, базы данных, API-ответы)",
+    "capPrompts": "Prompts (Промпты) — готовые шаблоны запросов для типовых задач",
+    "examplesTitle": "Примеры использования",
+    "exampleDbTitle": "🗄️ Доступ к базе данных",
+    "exampleDbDesc": "AI может выполнять SQL-запросы, получать схемы таблиц и анализировать данные без прямого доступа к БД.",
+    "exampleDocsTitle": "🔍 Поиск по документации",
+    "exampleDocsDesc": "AI получает доступ к внутренней документации компании и может отвечать на вопросы на основе актуальных данных.",
+    "exampleInfraTitle": "🛠️ Управление инфраструктурой",
+    "exampleInfraDesc": "AI может читать логи, перезапускать сервисы, проверять метрики через интеграцию с Kubernetes, AWS, Docker.",
+    "exampleFilesTitle": "📁 Работа с файлами",
+    "exampleFilesDesc": "AI может читать, создавать и редактировать файлы в проекте через файловую систему MCP-сервера.",
+    "securityTitle": "Безопасность",
+    "securityIntro": "MCP разработан с учётом безопасности:",
+    "secConfirm": "Каждый инструмент требует явного подтверждения пользователя",
+    "secGranular": "Гранулярные разрешения на уровне ресурсов",
+    "secAuth": "Поддержка аутентификации (OAuth, API keys)",
+    "secIsolation": "Изоляция контекста между разными серверами",
+    "startTitle": "Начните использовать MCP",
+    "startCtaPrefix": "Ознакомьтесь с нашим",
+    "startCtaGuideLink": "гайдом по использованию",
+    "startCtaMiddle": "или посмотрите",
+    "startCtaCatalogLink": "каталог MCP серверов"
+  },
+  "ServerDetail": {
+    "checkoutSuccess": "Оплата прошла успешно.",
+    "checkoutTierActivated": "Статус «{tier}» активирован на 30 дней.",
+    "tierFeatured": "Featured",
+    "tierSponsored": "Sponsored",
+    "checkoutCancel": "Оплата была отменена. Если у вас возникли вопросы, свяжитесь с нами.",
+    "badgeOfficial": "Официальный",
+    "badgeSponsor": "спонсор",
+    "featuredUntil": "Featured до",
+    "claimAuthor": "Я автор",
+    "authorLabel": "Автор:",
+    "starsLabel": "stars",
+    "forksLabel": "forks",
+    "quickStart": "Quick start",
+    "remoteEndpoint": "Remote endpoint",
+    "verifiedPublisher": "Verified publisher",
+    "communityRating": "Рейтинг сообщества",
+    "viewOnGitHub": "View on GitHub",
+    "relatedServers": "Похожие серверы"
+  },
+  "TimeAgo": {
+    "justNow": "только что",
+    "secondsAgo": "{n} сек. назад",
+    "minutesAgo": "{n} мин. назад",
+    "hoursAgo": "{n} ч. назад",
+    "daysAgo": "{n} дн. назад",
+    "monthsAgo": "{n} мес. назад",
+    "yearsAgo": "{n} г. назад"
+  },
+  "BrandSvg": {
+    "catalogTitle": "Каталог MCP‑серверов",
+    "catalogSubtitle": "поиск, рейтинги и интеграции для вашего AI‑стека",
+    "findServer": "Найдите MCP‑сервер",
+    "catalogIntegrations": "каталог интеграций, клиентов и remote endpoints",
+    "openCatalog": "Открыть каталог",
+    "addServer": "Добавить сервер",
+    "findLine1": "Найдите",
+    "findLine2": "MCP‑сервер",
+    "integrationsLine1": "каталог интеграций, клиентов",
+    "integrationsLine2": "и remote endpoints"
+  },
+  "Emails": {
+    "htmlLang": "ru",
+    "footerAutoMessage": "Это автоматическое сообщение от",
+    "footerReason": "Вы получили это письмо, потому что связаны с нашим каталогом MCP серверов.",
+    "newSubmission": "Новая отправка MCP-сервера",
+    "name": "Название",
+    "description": "Описание",
+    "category": "Категория",
+    "premiumYes": "✅ Да",
+    "premiumNo": "❌ Нет",
+    "goToAdmin": "Перейти в админку",
+    "approved": "одобрена",
+    "rejected": "отклонена",
+    "yourSubmissionStatus": "Ваша отправка сервера {name} была {status}.",
+    "yourSubmissionTitle": "Ваша отправка {name} {status}",
+    "thanksForContributing": "Спасибо за участие в развитии экосистемы MCP!",
+    "weeklyDigest": "Еженедельный дайджест MCP серверов{categoryTitle}",
+    "newServersThisWeek": "Новые MCP серверы за неделю{categoryTitle}:",
+    "viewAllServers": "Посмотреть все серверы →",
+    "subjectNewSubmission": "Новая отправка MCP-сервера: {name}",
+    "subjectYourSubmissionStatus": "Ваша отправка MCP-сервера {name} {status}",
+    "subjectWeeklyDigest": "Еженедельный дайджест MCP серверов{categoryTitle}"
+  },
+  "Feed": {
+    "description": "Коллекция серверов для Model Context Protocol",
+    "language": "ru",
+    "categoryTitleInCategory": " категории \"{category}\""
+  },
+  "Help": {
+    "title": "Горячие клавиши",
+    "ariaLabel": "Горячие клавиши",
+    "searchAction": "Поиск серверов",
+    "homeScope": "Главная",
+    "escapeAction": "Закрыть модалку / поиск",
+    "everywhereScope": "Везде",
+    "helpAction": "Помощь (это окно)",
+    "allAction": "Все серверы",
+    "submitAction": "Отправить сервер",
+    "helpAltAction": "Это окно помощи"
+  },
+  "Install": {
+    "button": "Установить",
+    "title": "Установка {name}",
+    "claudeTitle": "Claude Desktop",
+    "claudeStep0": "Откройте Claude Desktop",
+    "claudeStep1": "Нажмите Cmd/Ctrl + , для настроек",
+    "claudeStep2": "Откройте «Developer» → «Edit Config»",
+    "claudeStep3": "Вставьте конфиг в файл",
+    "claudeStep4": "Перезапустите Claude Desktop",
+    "cursorTitle": "Cursor",
+    "cursorStep0": "Откройте Cursor",
+    "cursorStep1": "Настройки → MCP",
+    "cursorStep2": "Нажмите «Add MCP Server»",
+    "cursorStep3": "Вставьте конфиг",
+    "cursorStep4": "Сохраните и перезапустите",
+    "continueTitle": "Continue",
+    "continueStep0": "Откройте VS Code с Continue",
+    "continueStep1": "Откройте настройки Continue",
+    "continueStep2": "Добавьте MCP server в config.json",
+    "continueStep3": "Перезапустите VS Code",
+    "quickInstall": "Быстрая установка через npx:"
+  },
+  "Share": {
+    "label": "Поделиться:",
+    "shareIn": "Поделиться в {name}"
+  },
+  "Keyboard": {
+    "searchPlaceholder": "Поиск"
+  },
+  "Sponsored": {
+    "title": "Спонсорские серверы",
+    "adBadge": "Реклама"
+  },
+  "RemoteCard": {
+    "official": "Официальный 🌟",
+    "copied": "Скопировано!",
+    "copyUrl": "Копировать URL",
+    "connect": "Подключить",
+    "configure": "Настроить"
+  },
+  "OftenUsed": {
+    "title": "Часто используют вместе"
+  },
+  "Usage": {
+    "title": "Примеры использования"
+  },
+  "PullRefresh": {
+    "refreshing": "Обновление...",
+    "releaseToRefresh": "Отпустите для обновления",
+    "pullToRefresh": "Потяните для обновления"
+  },
+  "A2HS": {
+    "installApp": "Установите приложение",
+    "quickAccess": "Быстрый доступ к каталогу MCP",
+    "install": "Установить"
+  },
+  "Health": {
+    "title": "История доступности",
+    "checkNow": "Проверить сейчас",
+    "noData": "Нет данных о доступности",
+    "startMonitoring": "Нажмите «Проверить сейчас» чтобы начать мониторинг"
+  },
+  "Readme": {
+    "readme": "README",
+    "openGithub": "Открыть на GitHub →",
+    "collapse": "Свернуть",
+    "showFull": "Показать полностью ({lineCount} строк)"
+  },
+  "Releases": {
+    "title": "Последние обновления",
+    "noReleases": "Нет информации о релизах. Возможно, репозиторий не использует GitHub Releases.",
+    "collapse": "Свернуть",
+    "more": "Подробнее",
+    "allReleases": "Все релизы на GitHub →"
+  },
+  "SearchBar": {
+    "placeholder": "Поиск..."
+  },
+  "AdvancedSearch": {
+    "title": "Расширенный поиск",
+    "subtitle": "Найдите MCP серверы с точными фильтрами",
+    "categories": "Категории",
+    "minStars": "Мин. звёзд",
+    "maxStars": "Макс. звёзд",
+    "minRating": "Мин. рейтинг",
+    "languages": "Языки",
+    "onlyRemote": "Только remote (SSE/HTTP)",
+    "onlyOfficial": "Только официальные",
+    "hasEndpoint": "Есть endpoint",
+    "search": "Поиск",
+    "reset": "Сбросить",
+    "foundServers": "Найдено {count} серверов",
+    "configureFilters": "Настройте фильтры и нажмите «Поиск»",
+    "filters": "Фильтры"
+  },
+  "Sort": {
+    "sortPlaceholder": "Сортировка",
+    "featured": "Рекомендуемые",
+    "newest": "Новые",
+    "stars": "По звёздам",
+    "alphabetical": "По алфавиту",
+    "trending": "В тренде"
+  },
+  "SearchGaps": {
+    "title": "Аналитика поиска",
+    "totalSearches": "Всего поисков (30д)",
+    "withResults": "С результатами",
+    "withoutResults": "Без результатов",
+    "notFoundRate": "Процент «не найдено»",
+    "searchGaps": "Поисковые дыры (0 результатов)",
+    "allGood": "Все запросы возвращают результаты. Отлично!",
+    "times": "{count} раз",
+    "topSearches": "Топ поисковых запросов",
+    "avgResults": "~{count} результатов"
+  },
+  "Bookmarks": {
+    "title": "Мои закладки",
+    "bookmarked": "В закладках",
+    "addBookmark": "В закладки",
+    "pageTitle": "Мои закладки",
+    "emptyState": "У вас пока нет закладок. Нажмите \"В закладки\" на карточке сервера, чтобы сохранить его.",
+    "selected": "Выбрано: {count}",
+    "compare": "Сравнить",
+    "clearSelection": "Очистить",
+    "selectMin": "Выберите хотя бы 2 сервера для сравнения"
+  },
+  "Collections": {
+    "title": "Мои коллекции",
+    "newCollection": "Новая коллекция",
+    "emptyState": "У вас пока нет коллекций. Создайте первую, чтобы группировать серверы.",
+    "createTitle": "Создать коллекцию",
+    "namePlaceholder": "Название",
+    "descriptionPlaceholder": "Описание (необязательно)",
+    "create": "Создать",
+    "editTitle": "Настройки коллекции",
+    "nameLabel": "Название коллекции",
+    "descriptionLabel": "Описание коллекции",
+    "publicLabel": "Публичная коллекция",
+    "shareLink": "Ссылка: mcpservers.org/{locale}/collections/{slug}",
+    "save": "Сохранить",
+    "public": "Публичная",
+    "serverCount": "{count} серверов",
+    "settings": "Настроить",
+    "share": "Поделиться",
+    "deleteLabel": "Удалить",
+    "deleteConfirm": "Удалить коллекцию?",
+    "publicCollection": "Публичная коллекция",
+    "downloadConfig": "Скачать конфигурацию для Claude Desktop"
+  },
+  "History": {
+    "clearConfirm": "Очистить всю историю просмотров?",
+    "clearing": "Очистка...",
+    "clearHistory": "Очистить историю"
+  },
+  "Comments": {
+    "title": "Комментарии",
+    "placeholder": "Напишите комментарий...",
+    "submitting": "Отправка...",
+    "submit": "Отправить",
+    "signIn": "Войдите",
+    "toComment": "чтобы оставить комментарий",
+    "anonymous": "Аноним",
+    "commentFrom": "Комментарий от",
+    "delete": "Удалить",
+    "addError": "Ошибка при добавлении комментария"
+  },
+  "Reviews": {
+    "title": "Отзывы",
+    "placeholder": "Напишите подробный отзыв об опыте использования этого сервера...",
+    "submitting": "Отправка...",
+    "submit": "Оставить отзыв",
+    "signIn": "Войдите",
+    "toReview": "чтобы оставить отзыв",
+    "anonymous": "Аноним",
+    "verifiedAuthor": "✓ Автор",
+    "helpful": "Полезно",
+    "notHelpful": "Не полезно",
+    "reviewFrom": "Отзыв от",
+    "delete": "Удалить",
+    "addError": "Ошибка при добавлении отзыва"
+  },
+  "Rating": {
+    "yourRating": "Ваша оценка"
+  },
+  "Reports": {
+    "report": "Пожаловаться",
+    "title": "Пожаловаться",
+    "thanks": "Спасибо! Жалоба отправлена администратору.",
+    "target": "Объект",
+    "reasonPlaceholder": "Опишите причину жалобы...",
+    "submitting": "Отправка...",
+    "submit": "Отправить жалобу"
+  },
+  "UserDropdown": {
+    "defaultUser": "Пользователь",
+    "profile": "Профиль",
+    "myBookmarks": "Мои закладки",
+    "settings": "Настройки",
+    "signOut": "Выйти"
+  },
+  "ViewHistory": {
+    "title": "Недавно просмотренные",
+    "empty": "Нет недавно просмотренных серверов",
+    "clear": "Очистить историю"
+  },
+  "Health": {
+    "healthy": "Работает",
+    "degraded": "Деградация",
+    "down": "Недоступен",
+    "unknown": "Неизвестно",
+    "checkButton": "Проверить"
+  },
+  "TrendingSearches": {
+    "title": "Популярные запросы"
+  },
+  "Digest": {
+    "title": "Будьте в курсе",
+    "description": "Получайте обновления о новых MCP серверах",
+    "subscribe": "Подписаться",
+    "unsubscribe": "Отписаться",
+    "daily": "Ежедневно",
+    "weekly": "Еженедельно",
+    "monthly": "Ежемесячно",
+    "category": "Категория",
+    "updateFrequency": "Изменить частоту",
+    "subscribed": "Вы подписаны"
   }
 }

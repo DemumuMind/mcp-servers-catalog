@@ -5,7 +5,7 @@ async function main() {
   const dbPath = path.resolve(process.cwd(), '.pglite')
   const client = new PGlite(dbPath)
 
-  console.log('Creating HealthCheck table...')
+  process.stdout.write('Creating HealthCheck table...\n')
   await client.query(`
     CREATE TABLE IF NOT EXISTS "HealthCheck" (
       id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
@@ -17,10 +17,10 @@ async function main() {
     )
   `)
 
-  console.log('Creating indexes...')
+  process.stdout.write('Creating indexes...\n')
   await client.query(`CREATE INDEX IF NOT EXISTS "HealthCheck_serverId_createdAt_idx" ON "HealthCheck"("serverId", "createdAt")`)
 
-  console.log('Migration completed successfully!')
+  process.stdout.write('Migration completed successfully!\n')
   await client.close()
 }
 

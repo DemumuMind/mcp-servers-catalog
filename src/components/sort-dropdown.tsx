@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import {
   Select,
   SelectContent,
@@ -9,16 +10,17 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-const sortOptions = [
-  { value: 'featured', label: 'Рекомендуемые' },
-  { value: 'newest', label: 'Новые' },
-  { value: 'stars', label: 'По звёздам' },
-  { value: 'alphabetical', label: 'По алфавиту' },
-  { value: 'trending', label: 'В тренде' },
+const sortOptionKeys = [
+  { value: 'featured', key: 'featured' },
+  { value: 'newest', key: 'newest' },
+  { value: 'stars', key: 'stars' },
+  { value: 'alphabetical', key: 'alphabetical' },
+  { value: 'trending', key: 'trending' },
 ]
 
 export function SortDropdown({ currentSort, locale }: { currentSort: string; locale: string }) {
   const router = useRouter()
+  const t = useTranslations('Sort')
 
   const handleChange = (value: string | null) => {
     if (!value) return
@@ -30,12 +32,12 @@ export function SortDropdown({ currentSort, locale }: { currentSort: string; loc
   return (
     <Select value={currentSort} onValueChange={handleChange}>
       <SelectTrigger className="w-48">
-        <SelectValue placeholder="Сортировка" />
+        <SelectValue placeholder={t('sortPlaceholder')} />
       </SelectTrigger>
       <SelectContent>
-        {sortOptions.map((option) => (
+        {sortOptionKeys.map((option) => (
           <SelectItem key={option.value} value={option.value}>
-            {option.label}
+            {t(option.key)}
           </SelectItem>
         ))}
       </SelectContent>

@@ -13,8 +13,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import { createServer, updateServer } from '@/app/actions/servers'
 
 const serverSchema = z.object({
@@ -34,6 +33,32 @@ const serverSchema = z.object({
 })
 
 type ServerFormData = z.infer<typeof serverSchema>
+
+interface FormCheckboxProps {
+  name: string
+  label: string
+  control: any
+}
+
+function FormCheckbox({ name, label, control }: FormCheckboxProps) {
+  const labelId = `label-sf-${name}`
+  return (
+    <label id={labelId} className="flex items-center gap-2">
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Checkbox
+            aria-labelledby={labelId}
+            checked={field.value}
+            onCheckedChange={field.onChange}
+          />
+        )}
+      />
+      {label}
+    </label>
+  )
+}
 
 interface ServerFormProps {
   mode: 'create' | 'edit'
@@ -89,99 +114,51 @@ export function ServerForm({ mode, server }: ServerFormProps) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium">Name</label>
-              <Input {...form.register('name')} />
+              <label htmlFor="sf-name" className="text-sm font-medium">Name</label>
+              <Input id="sf-name" {...form.register('name')} />
             </div>
             <div>
-              <label className="text-sm font-medium">Category</label>
-              <Input {...form.register('category')} />
+              <label htmlFor="sf-category" className="text-sm font-medium">Category</label>
+              <Input id="sf-category" {...form.register('category')} />
             </div>
           </div>
           <div>
-            <label className="text-sm font-medium">Description</label>
-            <Textarea {...form.register('description')} />
+            <label htmlFor="sf-description" className="text-sm font-medium">Description</label>
+            <Textarea id="sf-description" {...form.register('description')} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium">Owner</label>
-              <Input {...form.register('owner')} />
+              <label htmlFor="sf-owner" className="text-sm font-medium">Owner</label>
+              <Input id="sf-owner" {...form.register('owner')} />
             </div>
             <div>
-              <label className="text-sm font-medium">Repo</label>
-              <Input {...form.register('repo')} />
+              <label htmlFor="sf-repo" className="text-sm font-medium">Repo</label>
+              <Input id="sf-repo" {...form.register('repo')} />
             </div>
           </div>
           <div>
-            <label className="text-sm font-medium">GitHub URL</label>
-            <Input {...form.register('githubUrl')} />
+            <label htmlFor="sf-githubUrl" className="text-sm font-medium">GitHub URL</label>
+            <Input id="sf-githubUrl" {...form.register('githubUrl')} />
           </div>
           <div>
-            <label className="text-sm font-medium">Tags (comma separated)</label>
-            <Input {...form.register('tags')} />
+            <label htmlFor="sf-tags" className="text-sm font-medium">Tags (comma separated)</label>
+            <Input id="sf-tags" {...form.register('tags')} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium">Auth Type</label>
-              <Input {...form.register('authType')} placeholder="oauth, http, sse" />
+              <label htmlFor="sf-authType" className="text-sm font-medium">Auth Type</label>
+              <Input id="sf-authType" {...form.register('authType')} placeholder="oauth, http, sse" />
             </div>
             <div>
-              <label className="text-sm font-medium">Endpoint</label>
-              <Input {...form.register('endpoint')} />
+              <label htmlFor="sf-endpoint" className="text-sm font-medium">Endpoint</label>
+              <Input id="sf-endpoint" {...form.register('endpoint')} />
             </div>
           </div>
           <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-              <Controller
-                name="isOfficial"
-                control={form.control}
-                render={({ field }) => (
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                )}
-              />
-              Official
-            </label>
-            <label className="flex items-center gap-2">
-              <Controller
-                name="isSponsored"
-                control={form.control}
-                render={({ field }) => (
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                )}
-              />
-              Sponsored
-            </label>
-            <label className="flex items-center gap-2">
-              <Controller
-                name="isRemote"
-                control={form.control}
-                render={({ field }) => (
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                )}
-              />
-              Remote
-            </label>
-            <label className="flex items-center gap-2">
-              <Controller
-                name="featured"
-                control={form.control}
-                render={({ field }) => (
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                )}
-              />
-              Featured
-            </label>
+            <FormCheckbox name="isOfficial" label="Official" control={form.control} />
+            <FormCheckbox name="isSponsored" label="Sponsored" control={form.control} />
+            <FormCheckbox name="isRemote" label="Remote" control={form.control} />
+            <FormCheckbox name="featured" label="Featured" control={form.control} />
           </div>
           <Button type="submit" className="w-full">
             {mode === 'create' ? 'Create Server' : 'Update Server'}

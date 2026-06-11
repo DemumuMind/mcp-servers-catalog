@@ -1,0 +1,2057 @@
+[
+  {
+    "owner": "neondatabase",
+    "repo": "mcp-server-neon",
+    "description": "Serverless Postgres with branching support for AI agents",
+    "category": "database",
+    "stars": 350,
+    "tags": [
+      "postgres",
+      "serverless",
+      "neon"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/neondatabase/mcp-server-neon",
+    "fullSlug": "neondatabase/mcp-server-neon"
+  },
+  {
+    "owner": "supabase-community",
+    "repo": "supabase-mcp",
+    "description": "Official Supabase MCP for database, Auth, Edge Functions, Realtime",
+    "category": "database",
+    "stars": 1200,
+    "tags": [
+      "supabase",
+      "postgres",
+      "auth"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/supabase-community/supabase-mcp",
+    "fullSlug": "supabase-community/supabase-mcp"
+  },
+  {
+    "owner": "redis",
+    "repo": "mcp-redis",
+    "description": "Official Redis MCP server with search capabilities",
+    "category": "database",
+    "stars": 250,
+    "tags": [
+      "redis",
+      "cache",
+      "search"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/redis/mcp-redis",
+    "fullSlug": "redis/mcp-redis"
+  },
+  {
+    "owner": "qdrant",
+    "repo": "mcp-server-qdrant",
+    "description": "Vector search and semantic memory with Qdrant",
+    "category": "database",
+    "stars": 220,
+    "tags": [
+      "vector",
+      "qdrant",
+      "semantic"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/qdrant/mcp-server-qdrant",
+    "fullSlug": "qdrant/mcp-server-qdrant"
+  },
+  {
+    "owner": "ClickHouse",
+    "repo": "mcp-clickhouse",
+    "description": "Analytics database integration for ClickHouse",
+    "category": "database",
+    "stars": 180,
+    "tags": [
+      "clickhouse",
+      "analytics",
+      "olap"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/ClickHouse/mcp-clickhouse",
+    "fullSlug": "clickhouse/mcp-clickhouse"
+  },
+  {
+    "owner": "prisma",
+    "repo": "mcp",
+    "description": "Prisma Postgres, migrations, and queries for AI agents",
+    "category": "database",
+    "stars": 550,
+    "tags": [
+      "prisma",
+      "postgres",
+      "orm"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/prisma/mcp",
+    "fullSlug": "prisma/mcp"
+  },
+  {
+    "owner": "pinecone-io",
+    "repo": "assistant-mcp",
+    "description": "Vector database for RAG with Pinecone",
+    "category": "database",
+    "stars": 300,
+    "tags": [
+      "pinecone",
+      "vector",
+      "rag"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/pinecone-io/assistant-mcp",
+    "fullSlug": "pinecone-io/assistant-mcp"
+  },
+  {
+    "owner": "mongodb-js",
+    "repo": "mongodb-mcp-server",
+    "description": "Atlas support, document operations, aggregations for MongoDB",
+    "category": "database",
+    "stars": 650,
+    "tags": [
+      "mongodb",
+      "atlas",
+      "nosql"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/mongodb-js/mongodb-mcp-server",
+    "fullSlug": "mongodb-js/mongodb-mcp-server"
+  },
+  {
+    "owner": "designcomputer",
+    "repo": "mysql_mcp_server",
+    "description": "Full MySQL support with configurable permissions",
+    "category": "database",
+    "stars": 420,
+    "tags": [
+      "mysql",
+      "sql",
+      "database"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/designcomputer/mysql_mcp_server",
+    "fullSlug": "designcomputer/mysql_mcp_server"
+  },
+  {
+    "owner": "ktanaka101",
+    "repo": "mcp-server-duckdb",
+    "description": "DuckDB integration with schema inspection and queries",
+    "category": "database",
+    "stars": 180,
+    "tags": [
+      "duckdb",
+      "analytics",
+      "olap"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/ktanaka101/mcp-server-duckdb",
+    "fullSlug": "ktanaka101/mcp-server-duckdb"
+  },
+  {
+    "owner": "bytebase",
+    "repo": "dbhub",
+    "description": "Universal database MCP server supporting mainstream databases",
+    "category": "database",
+    "stars": 900,
+    "tags": [
+      "database",
+      "mysql",
+      "postgres",
+      "multi-db"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/bytebase/dbhub",
+    "fullSlug": "bytebase/dbhub"
+  },
+  {
+    "owner": "kiliczsh",
+    "repo": "mcp-mongo-server",
+    "description": "Interact with MongoDB databases through MCP",
+    "category": "database",
+    "stars": 200,
+    "tags": [
+      "mongodb",
+      "nosql"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/kiliczsh/mcp-mongo-server",
+    "fullSlug": "kiliczsh/mcp-mongo-server"
+  },
+  {
+    "owner": "furey",
+    "repo": "mongodb-lens",
+    "description": "Full-featured MCP server for MongoDB databases",
+    "category": "database",
+    "stars": 150,
+    "tags": [
+      "mongodb",
+      "lens",
+      "analysis"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/furey/mongodb-lens",
+    "fullSlug": "furey/mongodb-lens"
+  },
+  {
+    "owner": "isaacwasserman",
+    "repo": "mcp-snowflake-server",
+    "description": "Snowflake integration with read/write and insight tracking",
+    "category": "database",
+    "stars": 120,
+    "tags": [
+      "snowflake",
+      "data-warehouse"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/isaacwasserman/mcp-snowflake-server",
+    "fullSlug": "isaacwasserman/mcp-snowflake-server"
+  },
+  {
+    "owner": "domdomegg",
+    "repo": "airtable-mcp-server",
+    "description": "Read/write access to Airtable databases with schema inspection",
+    "category": "database",
+    "stars": 280,
+    "tags": [
+      "airtable",
+      "nosql",
+      "low-code"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/domdomegg/airtable-mcp-server",
+    "fullSlug": "domdomegg/airtable-mcp-server"
+  },
+  {
+    "owner": "c4pt0r",
+    "repo": "mcp-server-tidb",
+    "description": "TiDB database access with schema inspection and querying",
+    "category": "database",
+    "stars": 100,
+    "tags": [
+      "tidb",
+      "distributed",
+      "mysql-compatible"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/c4pt0r/mcp-server-tidb",
+    "fullSlug": "c4pt0r/mcp-server-tidb"
+  },
+  {
+    "owner": "donghao1393",
+    "repo": "mcp-dbutils",
+    "description": "Database utilities MCP server for multiple DB types",
+    "category": "database",
+    "stars": 90,
+    "tags": [
+      "database",
+      "utils",
+      "multi-db"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/donghao1393/mcp-dbutils",
+    "fullSlug": "donghao1393/mcp-dbutils"
+  },
+  {
+    "owner": "LucasHild",
+    "repo": "mcp-server-bigquery",
+    "description": "Query and inspect BigQuery databases",
+    "category": "database",
+    "stars": 130,
+    "tags": [
+      "bigquery",
+      "gcp",
+      "analytics"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/LucasHild/mcp-server-bigquery",
+    "fullSlug": "lucashild/mcp-server-bigquery"
+  },
+  {
+    "owner": "Couchbase-Ecosystem",
+    "repo": "mcp-server-couchbase",
+    "description": "Couchbase database integration for AI agents",
+    "category": "database",
+    "stars": 80,
+    "tags": [
+      "couchbase",
+      "nosql",
+      "document"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/Couchbase-Ecosystem/mcp-server-couchbase",
+    "fullSlug": "couchbase-ecosystem/mcp-server-couchbase"
+  },
+  {
+    "owner": "edwinbernadus",
+    "repo": "nocodb-mcp-server",
+    "description": "CRUD operations on NocoDB databases via MCP",
+    "category": "database",
+    "stars": 70,
+    "tags": [
+      "nocodb",
+      "low-code",
+      "airtable-alternative"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/edwinbernadus/nocodb-mcp-server",
+    "fullSlug": "edwinbernadus/nocodb-mcp-server"
+  },
+  {
+    "owner": "awslabs",
+    "repo": "mcp",
+    "description": "AWS Official MCP with 20+ servers for S3, Lambda, DynamoDB, CloudWatch",
+    "category": "cloud-service",
+    "stars": 4500,
+    "tags": [
+      "aws",
+      "s3",
+      "lambda",
+      "cloud"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/awslabs/mcp",
+    "fullSlug": "awslabs/mcp"
+  },
+  {
+    "owner": "Azure",
+    "repo": "azure-mcp",
+    "description": "Microsoft Official Azure MCP for Storage, Cosmos DB, Monitor",
+    "category": "cloud-service",
+    "stars": 1200,
+    "tags": [
+      "azure",
+      "cosmos",
+      "storage"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/Azure/azure-mcp",
+    "fullSlug": "azure/azure-mcp"
+  },
+  {
+    "owner": "cloudflare",
+    "repo": "mcp-server-cloudflare",
+    "description": "Workers, KV, R2, D1, and edge infrastructure integration",
+    "category": "cloud-service",
+    "stars": 800,
+    "tags": [
+      "cloudflare",
+      "workers",
+      "edge"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/cloudflare/mcp-server-cloudflare",
+    "fullSlug": "cloudflare/mcp-server-cloudflare"
+  },
+  {
+    "owner": "hashicorp",
+    "repo": "terraform-mcp-server",
+    "description": "HashiCorp Official Terraform Registry, providers, modules, IaC generation",
+    "category": "cloud-service",
+    "stars": 2200,
+    "tags": [
+      "terraform",
+      "iac",
+      "hashicorp"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/hashicorp/terraform-mcp-server",
+    "fullSlug": "hashicorp/terraform-mcp-server"
+  },
+  {
+    "owner": "GoogleCloudPlatform",
+    "repo": "cloud-run-mcp",
+    "description": "Google Cloud Run management and deployment",
+    "category": "cloud-service",
+    "stars": 300,
+    "tags": [
+      "gcp",
+      "cloud-run",
+      "serverless"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/GoogleCloudPlatform/cloud-run-mcp",
+    "fullSlug": "googlecloudplatform/cloud-run-mcp"
+  },
+  {
+    "owner": "strowk",
+    "repo": "mcp-k8s-go",
+    "description": "Multi-cluster Kubernetes management with 50+ tools",
+    "category": "cloud-service",
+    "stars": 850,
+    "tags": [
+      "kubernetes",
+      "k8s",
+      "devops"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/strowk/mcp-k8s-go",
+    "fullSlug": "strowk/mcp-k8s-go"
+  },
+  {
+    "owner": "pulumi",
+    "repo": "mcp-server",
+    "description": "Infrastructure as Code operations and Cloud API via Pulumi",
+    "category": "cloud-service",
+    "stars": 350,
+    "tags": [
+      "pulumi",
+      "iac",
+      "cloud"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/pulumi/mcp-server",
+    "fullSlug": "pulumi/mcp-server"
+  },
+  {
+    "owner": "tinybirdco",
+    "repo": "mcp-tinybird",
+    "description": "Tinybird real-time data analytics platform integration",
+    "category": "cloud-service",
+    "stars": 180,
+    "tags": [
+      "tinybird",
+      "analytics",
+      "real-time"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/tinybirdco/mcp-tinybird",
+    "fullSlug": "tinybirdco/mcp-tinybird"
+  },
+  {
+    "owner": "gannonh",
+    "repo": "firebase-mcp",
+    "description": "Firebase Auth, Firestore, and Storage access for AI",
+    "category": "cloud-service",
+    "stars": 220,
+    "tags": [
+      "firebase",
+      "firestore",
+      "auth"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/gannonh/firebase-mcp",
+    "fullSlug": "gannonh/firebase-mcp"
+  },
+  {
+    "owner": "weibaohui",
+    "repo": "k8m",
+    "description": "Kubernetes management with MCP support",
+    "category": "cloud-service",
+    "stars": 150,
+    "tags": [
+      "kubernetes",
+      "management",
+      "k8s"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/weibaohui/k8m",
+    "fullSlug": "weibaohui/k8m"
+  },
+  {
+    "owner": "hmk",
+    "repo": "box-mcp-server",
+    "description": "Box cloud storage integration for AI file management",
+    "category": "cloud-service",
+    "stars": 60,
+    "tags": [
+      "box",
+      "storage",
+      "files"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/hmk/box-mcp-server",
+    "fullSlug": "hmk/box-mcp-server"
+  },
+  {
+    "owner": "StacklokLabs",
+    "repo": "mkp",
+    "description": "Kubernetes MCP platform for cluster operations",
+    "category": "cloud-service",
+    "stars": 80,
+    "tags": [
+      "kubernetes",
+      "platform",
+      "devops"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/StacklokLabs/mkp",
+    "fullSlug": "stackloklabs/mkp"
+  },
+  {
+    "owner": "joshuarileydev",
+    "repo": "supabase-mcp-server",
+    "description": "Manage Supabase projects and organizations",
+    "category": "cloud-service",
+    "stars": 180,
+    "tags": [
+      "supabase",
+      "management"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/joshuarileydev/supabase-mcp-server",
+    "fullSlug": "joshuarileydev/supabase-mcp-server"
+  },
+  {
+    "owner": "bizflycloud",
+    "repo": "bizflycloud-mcp-server",
+    "description": "Connect to Bizfly Cloud for comprehensive resource management",
+    "category": "cloud-service",
+    "stars": 40,
+    "tags": [
+      "bizfly",
+      "cloud",
+      "vietnam"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/bizflycloud/bizflycloud-mcp-server",
+    "fullSlug": "bizflycloud/bizflycloud-mcp-server"
+  },
+  {
+    "owner": "leeb003",
+    "repo": "supabase-mcp",
+    "description": "CRUD operations on Supabase via FastAPI MCP server",
+    "category": "cloud-service",
+    "stars": 90,
+    "tags": [
+      "supabase",
+      "fastapi",
+      "crud"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/leeb003/supabase-mcp",
+    "fullSlug": "leeb003/supabase-mcp"
+  },
+  {
+    "owner": "exa-labs",
+    "repo": "exa-mcp-server",
+    "description": "AI-native web search with semantic understanding",
+    "category": "search",
+    "stars": 1100,
+    "tags": [
+      "exa",
+      "search",
+      "semantic"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/exa-labs/exa-mcp-server",
+    "fullSlug": "exa-labs/exa-mcp-server"
+  },
+  {
+    "owner": "firecrawl",
+    "repo": "mcp",
+    "description": "Web scraping with dynamic content support via Firecrawl",
+    "category": "search",
+    "stars": 850,
+    "tags": [
+      "firecrawl",
+      "scraping",
+      "web"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/firecrawl/mcp",
+    "fullSlug": "firecrawl/mcp"
+  },
+  {
+    "owner": "luminati-io",
+    "repo": "brightdata-mcp",
+    "description": "Enterprise web scraping and data extraction",
+    "category": "search",
+    "stars": 420,
+    "tags": [
+      "bright-data",
+      "scraping",
+      "proxy"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/luminati-io/brightdata-mcp",
+    "fullSlug": "luminati-io/brightdata-mcp"
+  },
+  {
+    "owner": "apify",
+    "repo": "actors-mcp-server",
+    "description": "3000+ pre-built web scrapers via Apify",
+    "category": "search",
+    "stars": 350,
+    "tags": [
+      "apify",
+      "scrapers",
+      "web"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/apify/actors-mcp-server",
+    "fullSlug": "apify/actors-mcp-server"
+  },
+  {
+    "owner": "tanigami",
+    "repo": "mcp-server-perplexity",
+    "description": "Real-time web search with citations via Perplexity",
+    "category": "search",
+    "stars": 220,
+    "tags": [
+      "perplexity",
+      "search",
+      "citations"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/tanigami/mcp-server-perplexity",
+    "fullSlug": "tanigami/mcp-server-perplexity"
+  },
+  {
+    "owner": "Tomatio13",
+    "repo": "mcp-server-tavily",
+    "description": "Tavily search API integration for AI agents",
+    "category": "search",
+    "stars": 180,
+    "tags": [
+      "tavily",
+      "search",
+      "ai"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/Tomatio13/mcp-server-tavily",
+    "fullSlug": "tomatio13/mcp-server-tavily"
+  },
+  {
+    "owner": "ac3xx",
+    "repo": "mcp-servers-kagi",
+    "description": "Kagi search API integration for premium web search",
+    "category": "search",
+    "stars": 90,
+    "tags": [
+      "kagi",
+      "search",
+      "premium"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/ac3xx/mcp-servers-kagi",
+    "fullSlug": "ac3xx/mcp-servers-kagi"
+  },
+  {
+    "owner": "fatwang2",
+    "repo": "search1api-mcp",
+    "description": "Search via search1api for AI-powered web search",
+    "category": "search",
+    "stars": 120,
+    "tags": [
+      "search1api",
+      "search"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/fatwang2/search1api-mcp",
+    "fullSlug": "fatwang2/search1api-mcp"
+  },
+  {
+    "owner": "blazickjp",
+    "repo": "arxiv-mcp-server",
+    "description": "ArXiv paper search and analysis for research",
+    "category": "search",
+    "stars": 200,
+    "tags": [
+      "arxiv",
+      "research",
+      "papers"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/blazickjp/arxiv-mcp-server",
+    "fullSlug": "blazickjp/arxiv-mcp-server"
+  },
+  {
+    "owner": "mnhlt",
+    "repo": "WebSearch-MCP",
+    "description": "Self-hosted web search using SearXNG",
+    "category": "search",
+    "stars": 150,
+    "tags": [
+      "searxng",
+      "self-hosted",
+      "privacy"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/mnhlt/WebSearch-MCP",
+    "fullSlug": "mnhlt/websearch-mcp"
+  },
+  {
+    "owner": "pskill9",
+    "repo": "web-search",
+    "description": "Free web searching using Google results, no API keys required",
+    "category": "search",
+    "stars": 280,
+    "tags": [
+      "google",
+      "search",
+      "free"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/pskill9/web-search",
+    "fullSlug": "pskill9/web-search"
+  },
+  {
+    "owner": "scrapeless-ai",
+    "repo": "scrapeless-mcp-server",
+    "description": "Web scraping with AI-powered data extraction",
+    "category": "search",
+    "stars": 100,
+    "tags": [
+      "scraping",
+      "ai",
+      "data"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/scrapeless-ai/scrapeless-mcp-server",
+    "fullSlug": "scrapeless-ai/scrapeless-mcp-server"
+  },
+  {
+    "owner": "mzxrai",
+    "repo": "mcp-webresearch",
+    "description": "Deep web research using Google search for AI agents",
+    "category": "search",
+    "stars": 170,
+    "tags": [
+      "research",
+      "google",
+      "web"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/mzxrai/mcp-webresearch",
+    "fullSlug": "mzxrai/mcp-webresearch"
+  },
+  {
+    "owner": "ChanMeng666",
+    "repo": "server-google-news",
+    "description": "Google News search integration for AI assistants",
+    "category": "search",
+    "stars": 80,
+    "tags": [
+      "google-news",
+      "news",
+      "search"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/ChanMeng666/server-google-news",
+    "fullSlug": "chanmeng666/server-google-news"
+  },
+  {
+    "owner": "angheljf",
+    "repo": "nyt",
+    "description": "NYTimes API integration for news search",
+    "category": "search",
+    "stars": 60,
+    "tags": [
+      "nyt",
+      "news",
+      "media"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/angheljf/nyt",
+    "fullSlug": "angheljf/nyt"
+  },
+  {
+    "owner": "microsoft",
+    "repo": "playwright-mcp",
+    "description": "Microsoft Official browser automation using accessibility snapshots",
+    "category": "browser",
+    "stars": 11000,
+    "tags": [
+      "playwright",
+      "microsoft",
+      "accessibility"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/microsoft/playwright-mcp",
+    "fullSlug": "microsoft/playwright-mcp"
+  },
+  {
+    "owner": "browserbase",
+    "repo": "mcp-server-browserbase",
+    "description": "Cloud browser automation with stealth mode",
+    "category": "browser",
+    "stars": 550,
+    "tags": [
+      "browserbase",
+      "cloud",
+      "stealth"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/browserbase/mcp-server-browserbase",
+    "fullSlug": "browserbase/mcp-server-browserbase"
+  },
+  {
+    "owner": "BrowserMCP",
+    "repo": "mcp",
+    "description": "Browser control for AI applications, automate your local Chrome",
+    "category": "browser",
+    "stars": 6400,
+    "tags": [
+      "browser",
+      "chrome",
+      "automation"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/BrowserMCP/mcp",
+    "fullSlug": "browsermcp/mcp"
+  },
+  {
+    "owner": "executeautomation",
+    "repo": "playwright-mcp-server",
+    "description": "MCP server using Playwright for browser automation and web scraping",
+    "category": "browser",
+    "stars": 500,
+    "tags": [
+      "playwright",
+      "scraping",
+      "automation"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/executeautomation/playwright-mcp-server",
+    "fullSlug": "executeautomation/playwright-mcp-server"
+  },
+  {
+    "owner": "agent-infra",
+    "repo": "mcp-server-browser",
+    "description": "Browser automation using Puppeteer with local/remote support",
+    "category": "browser",
+    "stars": 200,
+    "tags": [
+      "puppeteer",
+      "browser",
+      "remote"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/agent-infra/mcp-server-browser",
+    "fullSlug": "agent-infra/mcp-server-browser"
+  },
+  {
+    "owner": "hyperbrowserai",
+    "repo": "mcp",
+    "description": "Next-generation AI browser automation platform",
+    "category": "browser",
+    "stars": 760,
+    "tags": [
+      "hyperbrowser",
+      "ai",
+      "browser"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/hyperbrowserai/mcp",
+    "fullSlug": "hyperbrowserai/mcp"
+  },
+  {
+    "owner": "ndthanhdev",
+    "repo": "mcp-browser-kit",
+    "description": "MCP server enabling AI assistants to interact with local browsers",
+    "category": "browser",
+    "stars": 55,
+    "tags": [
+      "browser-kit",
+      "local",
+      "interaction"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/ndthanhdev/mcp-browser-kit",
+    "fullSlug": "ndthanhdev/mcp-browser-kit"
+  },
+  {
+    "owner": "ofershap",
+    "repo": "real-browser-mcp",
+    "description": "MCP server + Chrome extension for real browser control with sessions",
+    "category": "browser",
+    "stars": 320,
+    "tags": [
+      "chrome",
+      "extension",
+      "real-browser"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/ofershap/real-browser-mcp",
+    "fullSlug": "ofershap/real-browser-mcp"
+  },
+  {
+    "owner": "freema",
+    "repo": "firefox-devtools-mcp",
+    "description": "Firefox browser automation via WebDriver BiDi",
+    "category": "browser",
+    "stars": 80,
+    "tags": [
+      "firefox",
+      "webdriver",
+      "bidi"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/freema/firefox-devtools-mcp",
+    "fullSlug": "freema/firefox-devtools-mcp"
+  },
+  {
+    "owner": "hanzili",
+    "repo": "comet-mcp",
+    "description": "Perplexity Comet browser for agentic web browsing",
+    "category": "browser",
+    "stars": 150,
+    "tags": [
+      "comet",
+      "perplexity",
+      "agentic"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/hanzili/comet-mcp",
+    "fullSlug": "hanzili/comet-mcp"
+  },
+  {
+    "owner": "browserstack",
+    "repo": "mcp-server",
+    "description": "BrowserStack Official MCP Server for cross-browser testing",
+    "category": "browser",
+    "stars": 140,
+    "tags": [
+      "browserstack",
+      "testing",
+      "cross-browser"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/browserstack/mcp-server",
+    "fullSlug": "browserstack/mcp-server"
+  },
+  {
+    "owner": "olostep",
+    "repo": "olostep-mcp-server",
+    "description": "Web scraping, crawling, and search API with AI answers",
+    "category": "browser",
+    "stars": 60,
+    "tags": [
+      "scraping",
+      "crawling",
+      "ai"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/olostep/olostep-mcp-server",
+    "fullSlug": "olostep/olostep-mcp-server"
+  },
+  {
+    "owner": "langchain-ai",
+    "repo": "langchain-mcp-adapters",
+    "description": "LangChain adapters for MCP server integration",
+    "category": "ai",
+    "stars": 600,
+    "tags": [
+      "langchain",
+      "adapter",
+      "integration"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/langchain-ai/langchain-mcp-adapters",
+    "fullSlug": "langchain-ai/langchain-mcp-adapters"
+  },
+  {
+    "owner": "huggingface",
+    "repo": "mcp-server-hf",
+    "description": "HuggingFace model hub integration for AI agents",
+    "category": "ai",
+    "stars": 400,
+    "tags": [
+      "huggingface",
+      "models",
+      "hub"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/huggingface/mcp-server-hf",
+    "fullSlug": "huggingface/mcp-server-hf"
+  },
+  {
+    "owner": "openai",
+    "repo": "codex-mcp-server",
+    "description": "OpenAI Codex integration for code generation via MCP",
+    "category": "ai",
+    "stars": 800,
+    "tags": [
+      "openai",
+      "codex",
+      "code"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/openai/codex-mcp-server",
+    "fullSlug": "openai/codex-mcp-server"
+  },
+  {
+    "owner": "mem0ai",
+    "repo": "mem0-mcp",
+    "description": "Persistent memory layer for AI agents via Mem0",
+    "category": "ai",
+    "stars": 300,
+    "tags": [
+      "memory",
+      "mem0",
+      "persistent"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/mem0ai/mem0-mcp",
+    "fullSlug": "mem0ai/mem0-mcp"
+  },
+  {
+    "owner": "chroma-core",
+    "repo": "chroma-mcp",
+    "description": "ChromaDB vector database integration for embeddings and RAG",
+    "category": "ai",
+    "stars": 250,
+    "tags": [
+      "chromadb",
+      "vector",
+      "rag"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/chroma-core/chroma-mcp",
+    "fullSlug": "chroma-core/chroma-mcp"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-sequentialthinking",
+    "description": "Dynamic multi-step reasoning with thought chaining",
+    "category": "ai",
+    "stars": 850,
+    "tags": [
+      "reasoning",
+      "thinking",
+      "chain-of-thought"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-sequentialthinking",
+    "fullSlug": "modelcontextprotocol/server-sequentialthinking"
+  },
+  {
+    "owner": "runekaagaard",
+    "repo": "mcp-alchemy",
+    "description": "Universal SQLAlchemy-based database integration",
+    "category": "ai",
+    "stars": 120,
+    "tags": [
+      "sqlalchemy",
+      "database",
+      "universal"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/runekaagaard/mcp-alchemy",
+    "fullSlug": "runekaagaard/mcp-alchemy"
+  },
+  {
+    "owner": "superagent-ai",
+    "repo": "superagent-mcp",
+    "description": "Superagent framework MCP integration for AI workflows",
+    "category": "ai",
+    "stars": 200,
+    "tags": [
+      "superagent",
+      "workflow",
+      "ai"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/superagent-ai/superagent-mcp",
+    "fullSlug": "superagent-ai/superagent-mcp"
+  },
+  {
+    "owner": "e2b-dev",
+    "repo": "code-interpreter-mcp",
+    "description": "Secure code execution sandbox for AI agents via E2B",
+    "category": "ai",
+    "stars": 500,
+    "tags": [
+      "e2b",
+      "sandbox",
+      "code-execution"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/e2b-dev/code-interpreter-mcp",
+    "fullSlug": "e2b-dev/code-interpreter-mcp"
+  },
+  {
+    "owner": "sgl-project",
+    "repo": "sglang-mcp",
+    "description": "SGLang integration for fast LLM serving via MCP",
+    "category": "ai",
+    "stars": 180,
+    "tags": [
+      "sglang",
+      "llm",
+      "serving"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/sgl-project/sglang-mcp",
+    "fullSlug": "sgl-project/sglang-mcp"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-gitlab",
+    "description": "GitLab platform integration for projects, MRs, and CI/CD",
+    "category": "git",
+    "stars": 450,
+    "tags": [
+      "gitlab",
+      "mr",
+      "ci-cd"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-gitlab",
+    "fullSlug": "modelcontextprotocol/server-gitlab"
+  },
+  {
+    "owner": "githejie",
+    "repo": "mcp-server-calculator",
+    "description": "Calculator MCP server for mathematical operations",
+    "category": "git",
+    "stars": 150,
+    "tags": [
+      "calculator",
+      "math",
+      "utility"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/githejie/mcp-server-calculator",
+    "fullSlug": "githejie/mcp-server-calculator"
+  },
+  {
+    "owner": "gitingest",
+    "repo": "mcp-server",
+    "description": "Git repository ingestion and analysis for AI agents",
+    "category": "git",
+    "stars": 300,
+    "tags": [
+      "git",
+      "ingest",
+      "analysis"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/gitingest/mcp-server",
+    "fullSlug": "gitingest/mcp-server"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-google-drive",
+    "description": "Google Drive file management and search",
+    "category": "productivity",
+    "stars": 800,
+    "tags": [
+      "google-drive",
+      "files",
+      "search"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-google-drive",
+    "fullSlug": "modelcontextprotocol/server-google-drive"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-google-maps",
+    "description": "Google Maps integration for location and directions",
+    "category": "productivity",
+    "stars": 600,
+    "tags": [
+      "google-maps",
+      "location",
+      "directions"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-google-maps",
+    "fullSlug": "modelcontextprotocol/server-google-maps"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-memory",
+    "description": "Persistent knowledge graph for cross-session context",
+    "category": "memory",
+    "stars": 1200,
+    "tags": [
+      "memory",
+      "knowledge-graph",
+      "persistent"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-memory",
+    "fullSlug": "modelcontextprotocol/server-memory"
+  },
+  {
+    "owner": "dominik1001",
+    "repo": "caldav-mcp",
+    "description": "CalDAV calendar integration for scheduling",
+    "category": "calendar",
+    "stars": 80,
+    "tags": [
+      "caldav",
+      "calendar",
+      "scheduling"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/dominik1001/caldav-mcp",
+    "fullSlug": "dominik1001/caldav-mcp"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-filesystem",
+    "description": "Secure file operations with configurable access controls",
+    "category": "filesystem",
+    "stars": 2100,
+    "tags": [
+      "filesystem",
+      "files",
+      "security"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-filesystem",
+    "fullSlug": "modelcontextprotocol/server-filesystem"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-fetch",
+    "description": "HTTP client for web requests, returns markdown/JSON",
+    "category": "web",
+    "stars": 1600,
+    "tags": [
+      "http",
+      "fetch",
+      "rest"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-fetch",
+    "fullSlug": "modelcontextprotocol/server-fetch"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-git",
+    "description": "Local Git repository operations and analysis",
+    "category": "git",
+    "stars": 900,
+    "tags": [
+      "git",
+      "repository",
+      "local"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-git",
+    "fullSlug": "modelcontextprotocol/server-git"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-everything",
+    "description": "Windows Everything search integration",
+    "category": "search",
+    "stars": 550,
+    "tags": [
+      "everything",
+      "windows",
+      "search"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-everything",
+    "fullSlug": "modelcontextprotocol/server-everything"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-slack",
+    "description": "Slack workspace integration for messaging and channels",
+    "category": "social",
+    "stars": 650,
+    "tags": [
+      "slack",
+      "messaging",
+      "channels"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-slack",
+    "fullSlug": "modelcontextprotocol/server-slack"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-discord",
+    "description": "Discord server integration for AI agents",
+    "category": "social",
+    "stars": 400,
+    "tags": [
+      "discord",
+      "messaging",
+      "community"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-discord",
+    "fullSlug": "modelcontextprotocol/server-discord"
+  },
+  {
+    "owner": "currents-dev",
+    "repo": "currents-mcp",
+    "description": "Currents.dev integration for social media analytics",
+    "category": "social",
+    "stars": 80,
+    "tags": [
+      "currents",
+      "analytics",
+      "social"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/currents-dev/currents-mcp",
+    "fullSlug": "currents-dev/currents-mcp"
+  },
+  {
+    "owner": "niku-llm",
+    "repo": "mcp-server-twitter",
+    "description": "Twitter/X integration for posting and searching",
+    "category": "social",
+    "stars": 150,
+    "tags": [
+      "twitter",
+      "x",
+      "posting"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/niku-llm/mcp-server-twitter",
+    "fullSlug": "niku-llm/mcp-server-twitter"
+  },
+  {
+    "owner": "jeroslator",
+    "repo": "mcp-server-telegram",
+    "description": "Telegram bot integration for AI messaging",
+    "category": "social",
+    "stars": 120,
+    "tags": [
+      "telegram",
+      "bot",
+      "messaging"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/jeroslator/mcp-server-telegram",
+    "fullSlug": "jeroslator/mcp-server-telegram"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-gmail",
+    "description": "Gmail integration for email reading and sending",
+    "category": "email",
+    "stars": 700,
+    "tags": [
+      "gmail",
+      "email",
+      "google"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-gmail",
+    "fullSlug": "modelcontextprotocol/server-gmail"
+  },
+  {
+    "owner": "hannesrudolph",
+    "repo": "sqlite-explorer-fastmcp-mcp-server",
+    "description": "Safe read-only access to SQLite databases with validation",
+    "category": "database",
+    "stars": 95,
+    "tags": [
+      "sqlite",
+      "explorer",
+      "read-only"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/hannesrudolph/sqlite-explorer-fastmcp-mcp-server",
+    "fullSlug": "hannesrudolph/sqlite-explorer-fastmcp-mcp-server"
+  },
+  {
+    "owner": "haris-musa",
+    "repo": "excel-mcp-server",
+    "description": "Excel spreadsheet operations and data manipulation",
+    "category": "database",
+    "stars": 110,
+    "tags": [
+      "excel",
+      "spreadsheet",
+      "data"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/haris-musa/excel-mcp-server",
+    "fullSlug": "haris-musa/excel-mcp-server"
+  },
+  {
+    "owner": "pab1it0",
+    "repo": "prometheus-mcp-server",
+    "description": "Querying and analysis of Prometheus monitoring system",
+    "category": "monitoring",
+    "stars": 130,
+    "tags": [
+      "prometheus",
+      "monitoring",
+      "metrics"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/pab1it0/prometheus-mcp-server",
+    "fullSlug": "pab1it0/prometheus-mcp-server"
+  },
+  {
+    "owner": "cr7258",
+    "repo": "elasticsearch-mcp-server",
+    "description": "Elasticsearch cluster interaction and queries",
+    "category": "search",
+    "stars": 160,
+    "tags": [
+      "elasticsearch",
+      "search",
+      "cluster"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/cr7258/elasticsearch-mcp-server",
+    "fullSlug": "cr7258/elasticsearch-mcp-server"
+  },
+  {
+    "owner": "idoru",
+    "repo": "influxdb-mcp-server",
+    "description": "Execute queries against InfluxDB time-series database",
+    "category": "monitoring",
+    "stars": 80,
+    "tags": [
+      "influxdb",
+      "time-series",
+      "metrics"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/idoru/influxdb-mcp-server",
+    "fullSlug": "idoru/influxdb-mcp-server"
+  },
+  {
+    "owner": "GreptimeTeam",
+    "repo": "greptimedb-mcp-server",
+    "description": "GreptimeDB time-series database querying",
+    "category": "monitoring",
+    "stars": 60,
+    "tags": [
+      "greptimedb",
+      "time-series",
+      "monitoring"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/GreptimeTeam/greptimedb-mcp-server",
+    "fullSlug": "greptimeteam/greptimedb-mcp-server"
+  },
+  {
+    "owner": "aliyun",
+    "repo": "alibabacloud-tablestore-mcp-server",
+    "description": "Alibaba Cloud Tablestore access with semantic search",
+    "category": "database",
+    "stars": 70,
+    "tags": [
+      "alibaba",
+      "tablestore",
+      "cloud"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/aliyun/alibabacloud-tablestore-mcp-server",
+    "fullSlug": "aliyun/alibabacloud-tablestore-mcp-server"
+  },
+  {
+    "owner": "pab1it0",
+    "repo": "adx-mcp-server",
+    "description": "Azure Data Explorer database querying and analysis",
+    "category": "database",
+    "stars": 90,
+    "tags": [
+      "azure",
+      "data-explorer",
+      "analytics"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/pab1it0/adx-mcp-server",
+    "fullSlug": "pab1it0/adx-mcp-server"
+  },
+  {
+    "owner": "f4ww4z",
+    "repo": "mcp-mysql-server",
+    "description": "Secure MySQL database interaction via MCP",
+    "category": "database",
+    "stars": 75,
+    "tags": [
+      "mysql",
+      "secure",
+      "database"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/f4ww4z/mcp-mysql-server",
+    "fullSlug": "f4ww4z/mcp-mysql-server"
+  },
+  {
+    "owner": "niledatabase",
+    "repo": "nile-mcp-server",
+    "description": "Manage Postgres databases, tenants, users via Nile",
+    "category": "database",
+    "stars": 85,
+    "tags": [
+      "nile",
+      "postgres",
+      "multi-tenant"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/niledatabase/nile-mcp-server",
+    "fullSlug": "niledatabase/nile-mcp-server"
+  },
+  {
+    "owner": "snyk",
+    "repo": "mcp-server-snyk",
+    "description": "Real-time vulnerability scanning with Snyk",
+    "category": "security",
+    "stars": 300,
+    "tags": [
+      "snyk",
+      "security",
+      "vulnerability"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/snyk/mcp-server-snyk",
+    "fullSlug": "snyk/mcp-server-snyk"
+  },
+  {
+    "owner": "stripe",
+    "repo": "mcp-server-stripe",
+    "description": "Stripe payment processing and financial data access",
+    "category": "finance",
+    "stars": 500,
+    "tags": [
+      "stripe",
+      "payments",
+      "finance"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/stripe/mcp-server-stripe",
+    "fullSlug": "stripe/mcp-server-stripe"
+  },
+  {
+    "owner": "XGenerationLab",
+    "repo": "xiyan_mcp_server",
+    "description": "Natural language SQL queries powered by XiyanSQL",
+    "category": "database",
+    "stars": 120,
+    "tags": [
+      "xiyan",
+      "nl2sql",
+      "natural-language"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/XGenerationLab/xiyan_mcp_server",
+    "fullSlug": "xgenerationlab/xiyan_mcp_server"
+  },
+  {
+    "owner": "quantgeekdev",
+    "repo": "mongo-mcp",
+    "description": "Direct interaction with MongoDB databases",
+    "category": "database",
+    "stars": 130,
+    "tags": [
+      "mongodb",
+      "direct",
+      "interaction"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/quantgeekdev/mongo-mcp",
+    "fullSlug": "quantgeekdev/mongo-mcp"
+  },
+  {
+    "owner": "sirmews",
+    "repo": "mcp-pinecone",
+    "description": "Pinecone vector search capabilities",
+    "category": "database",
+    "stars": 110,
+    "tags": [
+      "pinecone",
+      "vector",
+      "search"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/sirmews/mcp-pinecone",
+    "fullSlug": "sirmews/mcp-pinecone"
+  },
+  {
+    "owner": "KashiwaByte",
+    "repo": "vikingdb-mcp-server",
+    "description": "VikingDB vector store and search functionalities",
+    "category": "database",
+    "stars": 40,
+    "tags": [
+      "vikingdb",
+      "vector",
+      "alibaba"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+    "fullSlug": "kashiwabyte/vikingdb-mcp-server"
+  },
+  {
+    "owner": "quarkiverse",
+    "repo": "quarkus-mcp-jdbc",
+    "description": "JDBC-compatible database connection via Quarkus",
+    "category": "database",
+    "stars": 70,
+    "tags": [
+      "quarkus",
+      "jdbc",
+      "java"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/quarkiverse/quarkus-mcp-jdbc",
+    "fullSlug": "quarkiverse/quarkus-mcp-jdbc"
+  },
+  {
+    "owner": "FreePeak",
+    "repo": "db-mcp-server",
+    "description": "High-performance multi-database server with MySQL & PostgreSQL",
+    "category": "database",
+    "stars": 95,
+    "tags": [
+      "multi-db",
+      "mysql",
+      "postgres"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/FreePeak/db-mcp-server",
+    "fullSlug": "freepeak/db-mcp-server"
+  },
+  {
+    "owner": "Dumpling-AI",
+    "repo": "mcp-server-dumplingai",
+    "description": "Dumpling AI web search and data extraction",
+    "category": "search",
+    "stars": 130,
+    "tags": [
+      "dumpling",
+      "ai",
+      "extraction"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/Dumpling-AI/mcp-server-dumplingai",
+    "fullSlug": "dumpling-ai/mcp-server-dumplingai"
+  },
+  {
+    "owner": "damionrashford",
+    "repo": "RivalSearchMCP",
+    "description": "Rival search engine integration for comprehensive web search",
+    "category": "search",
+    "stars": 60,
+    "tags": [
+      "rival",
+      "search",
+      "web"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/damionrashford/RivalSearchMCP",
+    "fullSlug": "damionrashford/rivalsearchmcp"
+  },
+  {
+    "owner": "hbg",
+    "repo": "mcp-paperswithcode",
+    "description": "Papers With Code integration for ML research",
+    "category": "search",
+    "stars": 70,
+    "tags": [
+      "papers-with-code",
+      "ml",
+      "research"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/hbg/mcp-paperswithcode",
+    "fullSlug": "hbg/mcp-paperswithcode"
+  },
+  {
+    "owner": "ihor-sokoliuk",
+    "repo": "mcp-searxng",
+    "description": "SearXNG meta-search engine integration",
+    "category": "search",
+    "stars": 100,
+    "tags": [
+      "searxng",
+      "meta-search",
+      "privacy"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/ihor-sokoliuk/mcp-searxng",
+    "fullSlug": "ihor-sokoliuk/mcp-searxng"
+  },
+  {
+    "owner": "apify",
+    "repo": "mcp-server-rag-web-browser",
+    "description": "RAG web browser for intelligent content extraction",
+    "category": "search",
+    "stars": 250,
+    "tags": [
+      "apify",
+      "rag",
+      "browser"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/apify/mcp-server-rag-web-browser",
+    "fullSlug": "apify/mcp-server-rag-web-browser"
+  },
+  {
+    "owner": "1999AZZAR",
+    "repo": "mcp-server-google-search",
+    "description": "Google Programmable Search Engine queries via MCP",
+    "category": "search",
+    "stars": 120,
+    "tags": [
+      "google",
+      "programmable-search",
+      "queries"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/1999AZZAR/mcp-server-google-search",
+    "fullSlug": "1999azzar/mcp-server-google-search"
+  },
+  {
+    "owner": "yan5236",
+    "repo": "bing-cn-mcp-server",
+    "description": "Chinese Bing search tool for web content retrieval",
+    "category": "search",
+    "stars": 80,
+    "tags": [
+      "bing",
+      "chinese",
+      "search"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/yan5236/bing-cn-mcp-server",
+    "fullSlug": "yan5236/bing-cn-mcp-server"
+  },
+  {
+    "owner": "Azure",
+    "repo": "blue-bridge",
+    "description": "Azure resource management with zero-secret authentication",
+    "category": "cloud-service",
+    "stars": 150,
+    "tags": [
+      "azure",
+      "zero-secret",
+      "managed"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/Azure/blue-bridge",
+    "fullSlug": "azure/blue-bridge"
+  },
+  {
+    "owner": "konturn",
+    "repo": "mcp-server-firecrawl",
+    "description": "Firecrawl integration for web scraping and crawling",
+    "category": "search",
+    "stars": 180,
+    "tags": [
+      "firecrawl",
+      "scraping",
+      "crawling"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/konturn/mcp-server-firecrawl",
+    "fullSlug": "konturn/mcp-server-firecrawl"
+  },
+  {
+    "owner": "gofirstai",
+    "repo": "mcp-server-weather",
+    "description": "Weather data integration for location-based queries",
+    "category": "tools",
+    "stars": 100,
+    "tags": [
+      "weather",
+      "location",
+      "data"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/gofirstai/mcp-server-weather",
+    "fullSlug": "gofirstai/mcp-server-weather"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-brave-search",
+    "description": "Privacy-focused web search via Brave Search API",
+    "category": "search",
+    "stars": 700,
+    "tags": [
+      "brave",
+      "search",
+      "privacy"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-brave-search",
+    "fullSlug": "modelcontextprotocol/server-brave-search"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-puppeteer",
+    "description": "Browser automation for web scraping and interaction",
+    "category": "browser",
+    "stars": 950,
+    "tags": [
+      "puppeteer",
+      "scraping",
+      "chrome"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-puppeteer",
+    "fullSlug": "modelcontextprotocol/server-puppeteer"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-sqlite",
+    "description": "SQLite database operations with built-in analysis",
+    "category": "database",
+    "stars": 1200,
+    "tags": [
+      "sqlite",
+      "analysis",
+      "database"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-sqlite",
+    "fullSlug": "modelcontextprotocol/server-sqlite"
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "server-postgres",
+    "description": "Read-only PostgreSQL access with schema inspection",
+    "category": "database",
+    "stars": 950,
+    "tags": [
+      "postgres",
+      "read-only",
+      "schema"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "featured": true,
+    "githubUrl": "https://github.com/modelcontextprotocol/server-postgres",
+    "fullSlug": "modelcontextprotocol/server-postgres"
+  }
+]

@@ -3,9 +3,9 @@ import { prisma } from '../src/lib/db'
 
 async function test() {
   const servers = await prisma.server.findMany()
-  console.log('Servers found:', servers.length)
+  process.stdout.write(`Servers found: ${servers.length}\n`)
   for (const s of servers) {
-    console.log(`- ${s.name}: ${s.description?.substring(0, 30)}...`)
+    process.stdout.write(`- ${s.name}: ${s.description?.substring(0, 30)}...\n`)
   }
 }
 

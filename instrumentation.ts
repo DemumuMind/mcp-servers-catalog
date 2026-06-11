@@ -1,12 +1,6 @@
-import * as Sentry from '@sentry/nextjs'
-
 export async function register() {
-  const dsn = process.env.SENTRY_DSN
-  if (!dsn) return
-
-  if (process.env.NEXT_RUNTIME === 'nodejs') {
-    await import('./sentry.server.config')
-  }
+  // Sentry disabled — no SENTRY_DSN configured
+  // Re-enable by installing @sentry/nextjs and adding SENTRY_DSN to .env
 }
 
-export const onRequestError = Sentry.captureRequestError
+export const onRequestError = () => {}

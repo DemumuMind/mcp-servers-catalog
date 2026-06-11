@@ -2,18 +2,19 @@ import { test as setup, expect } from '@playwright/test'
 
 const authFile = 'e2e/.auth/user.json'
 
+const ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL || 'admin@example.com'
+const ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD || 'admin123'
+
 setup('authenticate', async ({ page, request }) => {
   setup.setTimeout(60000)
-  // Step 1: Get CSRF token
   const csrfResponse = await request.get('/api/auth/csrf')
   const csrfData = await csrfResponse.json()
   const csrfToken = csrfData.csrfToken
 
-  // Step 2: Sign in via credentials callback directly
   const loginResponse = await request.post('/api/auth/callback/credentials', {
     form: {
-      email: 'admin@example.com',
-      password: 'admin123',
+      email: ADMIN_EMAIL,
+      password: ADMIN_PASSWORD,
       csrfToken,
       callbackUrl: '/',
       json: 'true',
@@ -23,24 +24,20 @@ setup('authenticate', async ({ page, request }) => {
     },
   })
 
-  // If API login succeeded, visit profile to set cookies in browser context
   if (loginResponse.ok()) {
     const cookies = await request.storageState()
     await page.context().addCookies(cookies.cookies)
   } else {
-    // Fallback: try UI login
     await page.goto('/ru/login')
-    await page.getByPlaceholder('you@example.com').fill('admin@example.com')
-    await page.locator('input[type="password"]').fill('admin123')
+    await page.getByPlaceholder('you@example.com').fill(ADMIN_EMAIL)
+    await page.locator('input[type="password"]').fill(ADMIN_PASSWORD)
     await page.locator('form button[type="submit"]').click()
     await page.waitForTimeout(3000)
   }
 
-  // Verify logged in
   await page.goto('/ru/profile')
   await page.waitForLoadState('networkidle')
   await expect(page.getByText(/Пользователь|admin/).first()).toBeVisible({ timeout: 10000 })
 
-  // Save auth state
   await page.context().storageState({ path: authFile })
 })

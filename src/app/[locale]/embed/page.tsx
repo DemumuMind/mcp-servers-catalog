@@ -1,8 +1,13 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: 'Embed виджет',
-  description: 'Встраивайте карточки MCP серверов на свой сайт',
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Embed' })
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
 export const dynamic = 'force-dynamic'
@@ -13,6 +18,7 @@ export default async function EmbedPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Embed' })
   const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
 
   const exampleCode = `<iframe
@@ -32,39 +38,39 @@ export default async function EmbedPage({
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-4">Embed виджет</h1>
+      <h1 className="font-heading text-4xl font-semibold tracking-[-0.06em] mb-4">{t('title')}</h1>
       <p className="text-muted-foreground mb-8">
-        Встраивайте карточки MCP серверов на свои сайты, блоги и документацию.
+        {t('description')}
       </p>
 
       <div className="space-y-8">
         <section>
-          <h2 className="text-xl font-semibold mb-3">Способ 1: iframe</h2>
+          <h2 className="text-xl font-semibold mb-3">{t('method1Iframe')}</h2>
           <p className="text-sm text-muted-foreground mb-3">
-            Простой и надёжный способ. Замените SERVER_ID на ID сервера из URL.
+            {t('method1Desc')}
           </p>
-          <div className="bg-muted rounded-lg p-4">
+          <div className="rounded-2xl bg-muted/70 border border-border/60 p-4">
             <code className="text-sm font-mono block whitespace-pre">{exampleCode}</code>
           </div>
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold mb-3">Способ 2: JavaScript</h2>
+          <h2 className="text-xl font-semibold mb-3">{t('method2Js')}</h2>
           <p className="text-sm text-muted-foreground mb-3">
-            Автоматическая адаптация размеров и ленивая загрузка.
+            {t('method2Desc')}
           </p>
-          <div className="bg-muted rounded-lg p-4">
+          <div className="rounded-2xl bg-muted/70 border border-border/60 p-4">
             <code className="text-sm font-mono block whitespace-pre">{scriptCode}</code>
           </div>
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold mb-3">Где взять ID сервера?</h2>
+          <h2 className="text-xl font-semibold mb-3">{t('whereId')}</h2>
           <p className="text-muted-foreground">
-            Откройте страницу сервера и скопируйте часть URL после{' '}
-            <code>/servers/</code>. Например, для{' '}
+            {t('whereIdDescPrefix')}{' '}
+            <code>/servers/</code>. {t('whereIdDescMiddle')}{' '}
             <code>mcpservers.org/ru/servers/anthropics/anthropic</code>
-            {' '}ID сервера можно найти в админ-панели или через API.
+            {' '}{t('whereIdDescSuffix')}
           </p>
         </section>
       </div>

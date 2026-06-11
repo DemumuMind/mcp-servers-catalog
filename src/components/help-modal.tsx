@@ -6,21 +6,22 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import { Keyboard } from 'lucide-react'
-
-const shortcuts = [
-  { key: '/', action: 'Поиск серверов', scope: 'Главная' },
-  { key: 'Esc', action: 'Закрыть модалку / поиск', scope: 'Везде' },
-  { key: 'Ctrl + H', action: 'Помощь (это окно)', scope: 'Везде' },
-  { key: 'Ctrl + A', action: 'Все серверы', scope: 'Везде' },
-  { key: 'Ctrl + S', action: 'Отправить сервер', scope: 'Везде' },
-  { key: '?', action: 'Это окно помощи', scope: 'Везде' },
-]
+import { useTranslations } from 'next-intl'
 
 export function HelpModal() {
+  const t = useTranslations('Help')
   const [open, setOpen] = useState(false)
+
+  const shortcuts = [
+    { key: '/', action: t('searchAction'), scope: t('homeScope') },
+    { key: 'Esc', action: t('escapeAction'), scope: t('everywhereScope') },
+    { key: 'Ctrl + H', action: t('helpAction'), scope: t('everywhereScope') },
+    { key: 'Ctrl + A', action: t('allAction'), scope: t('everywhereScope') },
+    { key: 'Ctrl + S', action: t('submitAction'), scope: t('everywhereScope') },
+    { key: '?', action: t('helpAltAction'), scope: t('everywhereScope') },
+  ]
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -43,7 +44,7 @@ export function HelpModal() {
       <button
         onClick={() => setOpen(true)}
         className="fixed bottom-4 right-4 z-50 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:opacity-90 transition-opacity"
-        aria-label="Keyboard shortcuts"
+        aria-label={t('ariaLabel')}
       >
         <Keyboard className="h-5 w-5" />
       </button>
@@ -51,7 +52,7 @@ export function HelpModal() {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Keyboard className="h-5 w-5" />
-            Горячие клавиши
+            {t('title')}
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-3">

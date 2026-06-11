@@ -4,9 +4,9 @@ async function main() {
   const servers = await prisma.server.findMany({
     select: { id: true, name: true, owner: true, repo: true, fullSlug: true }
   })
-  console.log('Servers in DB:')
+  process.stdout.write('Servers in DB:\n')
   for (const s of servers) {
-    console.log(' -', s.id, s.name, s.fullSlug)
+    process.stdout.write(` - ${s.id} ${s.name} ${s.fullSlug}\n`)
   }
 }
 

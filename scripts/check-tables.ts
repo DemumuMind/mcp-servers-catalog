@@ -8,9 +8,9 @@ async function main() {
     WHERE table_schema = 'public'
     ORDER BY table_name
   `)
-  console.log('Tables in .pglite:')
+  process.stdout.write('Tables in .pglite:\n')
   for (const row of result.rows as { table_name: string }[]) {
-    console.log(' -', row.table_name)
+    process.stdout.write(` - ${row.table_name}\n`)
   }
   await pglite.close()
 }

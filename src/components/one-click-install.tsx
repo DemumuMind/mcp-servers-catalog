@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Copy, Check, Terminal, Download } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface InstallButtonProps {
   server: {
@@ -24,92 +25,47 @@ type ClientType = 'claude' | 'cursor' | 'continue'
 
 function generateConfig(client: ClientType, server: InstallButtonProps['server']) {
   const serverName = server.name.toLowerCase().replace(/\s+/g, '-')
-  
+  const mcpServerEntry = {
+    command: 'npx',
+    args: ['-y', `@${server.owner}/${server.repo}`],
+  }
+
   switch (client) {
     case 'claude':
-      return JSON.stringify({
-        mcpServers: {
-          [serverName]: {
-            command: 'npx',
-            args: [
-              '-y',
-              `@${server.owner}/${server.repo}`,
-            ],
-          },
-        },
-      }, null, 2)
-    
     case 'cursor':
-      return JSON.stringify({
-        mcpServers: {
-          [serverName]: {
-            command: 'npx',
-            args: [
-              '-y',
-              `@${server.owner}/${server.repo}`,
-            ],
-          },
-        },
-      }, null, 2)
-    
+      return JSON.stringify({ mcpServers: { [serverName]: mcpServerEntry } }, null, 2)
+
     case 'continue':
-      return JSON.stringify({
-        server: {
-          name: serverName,
-          command: 'npx',
-          args: [
-            '-y',
-            `@${server.owner}/${server.repo}`,
-          ],
-        },
-      }, null, 2)
-    
+      return JSON.stringify({ server: { name: serverName, ...mcpServerEntry } }, null, 2)
+
     default:
       return ''
   }
 }
 
-function getClientInstructions(client: ClientType): { title: string; path: string; steps: string[] } {
-  switch (client) {
-    case 'claude':
-      return {
-        title: 'Claude Desktop',
-        path: '~/Library/Application Support/Claude/claude_desktop_config.json',
-        steps: [
-          'Откройте Claude Desktop',
-          'Нажмите Cmd/Ctrl + , для настроек',
-          'Откройте «Developer» → «Edit Config»',
-          'Вставьте конфиг в файл',
-          'Перезапустите Claude Desktop',
-        ],
-      }
-    case 'cursor':
-      return {
-        title: 'Cursor',
-        path: '~/.cursor/mcp.json',
-        steps: [
-          'Откройте Cursor',
-          'Настройки → MCP',
-          'Нажмите «Add MCP Server»',
-          'Вставьте конфиг',
-          'Сохраните и перезапустите',
-        ],
-      }
-    case 'continue':
-      return {
-        title: 'Continue',
-        path: '~/.continue/config.json',
-        steps: [
-          'Откройте VS Code с Continue',
-          'Откройте настройки Continue',
-          'Добавьте MCP server в config.json',
-          'Перезапустите VS Code',
-        ],
-      }
+function getClientInstructions(client: ClientType, t: ReturnType<typeof useTranslations>) {
+  const instructionsMap: Record<ClientType, { title: string; path: string; steps: string[] }> = {
+    claude: {
+      title: t('claudeTitle'),
+      path: '~/Library/Application Support/Claude/claude_desktop_config.json',
+      steps: [t('claudeStep0'), t('claudeStep1'), t('claudeStep2'), t('claudeStep3'), t('claudeStep4')],
+    },
+    cursor: {
+      title: t('cursorTitle'),
+      path: '~/.cursor/mcp.json',
+      steps: [t('cursorStep0'), t('cursorStep1'), t('cursorStep2'), t('cursorStep3'), t('cursorStep4')],
+    },
+    continue: {
+      title: t('continueTitle'),
+      path: '~/.continue/config.json',
+      steps: [t('continueStep0'), t('continueStep1'), t('continueStep2'), t('continueStep3')],
+    },
   }
+  return instructionsMap[client]
 }
 
 export function OneClickInstall({ server }: InstallButtonProps) {
+  const t = useTranslations('Install')
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState<ClientType | null>(null)
   const [selectedClient, setSelectedClient] = useState<ClientType>('claude')
@@ -121,18 +77,18 @@ export function OneClickInstall({ server }: InstallButtonProps) {
     setTimeout(() => setCopied(null), 2000)
   }
 
-  const instructions = getClientInstructions(selectedClient)
+  const instructions = getClientInstructions(selectedClient, t)
   const config = generateConfig(selectedClient, server)
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button variant="outline" className="gap-2" type="button" onClick={() => setOpen(true)}>
         <Download className="w-4 h-4" />
-        Установить
+        {t('button')}
       </Button>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Установка {server.name}</DialogTitle>
+          <DialogTitle>{t('title', { name: server.name })}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -189,7 +145,7 @@ export function OneClickInstall({ server }: InstallButtonProps) {
 
           {/* Quick npx command */}
           <div className="border-t pt-4">
-            <p className="text-sm font-medium mb-2">Быстрая установка через npx:</p>
+            <p className="text-sm font-medium mb-2">{t('quickInstall')}</p>
             <code className="text-xs bg-muted px-2 py-1 rounded font-mono block">
               npx -y @{server.owner}/{server.repo}
             </code>

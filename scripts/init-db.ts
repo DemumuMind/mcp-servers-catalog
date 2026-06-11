@@ -1,17 +1,10 @@
 import 'dotenv/config'
-import { PGlite } from '@electric-sql/pglite'
-import { readFileSync } from 'fs'
-import { join } from 'path'
-
-const dataDir = process.env.DATABASE_DIR || '.pglite3'
+import { execSync } from 'child_process'
 
 async function run() {
-  const db = new PGlite({ dataDir })
-  const sql = readFileSync(join(process.cwd(), 'prisma', 'full-schema.sql'), 'utf-8')
-  console.log('Applying full schema...')
-  await db.exec(sql)
-  console.log('Schema applied successfully')
-  await db.close()
+  process.stdout.write('Pushing schema via drizzle-kit...\n')
+  execSync('npx drizzle-kit push', { stdio: 'inherit' })
+  process.stdout.write('Schema applied successfully\n')
 }
 
 run().catch((e) => {

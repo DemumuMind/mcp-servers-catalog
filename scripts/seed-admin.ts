@@ -1,13 +1,30 @@
+import { readFileSync } from 'fs'
+import path from 'path'
 import { PGlite } from '@electric-sql/pglite'
 import { hash } from 'bcryptjs'
 
+interface ServerSeed {
+  name: string
+  description: string
+  githubUrl: string
+  category: string
+  owner: string
+  repo: string
+  fullSlug: string
+  isOfficial: boolean
+  featured: boolean
+  isRemote: boolean
+}
+
+const serversPath = path.resolve(__dirname, 'seed-data', 'admin-servers.json')
+const SERVERS: ServerSeed[] = JSON.parse(readFileSync(serversPath, 'utf-8'))
+
 async function main() {
   const dataDir = process.env.DATABASE_DIR || '.pglite3'
-  console.log(`Seeding ${dataDir}...`)
+  process.stdout.write(`Seeding ${dataDir}...\n`)
   
   const pglite = new PGlite({ dataDir })
   
-  // Create admin user
   const hashedPassword = await hash('admin123', 10)
   
   await pglite.query(`
@@ -27,18 +44,18 @@ async function main() {
       role = EXCLUDED.role
   `, [hashedPassword])
   
-  console.log('Admin user created/updated: admin@example.com / admin123')
+  process.stdout.write('Admin user created/updated: admin@example.com / admin123\n')
   
-  // Also add some sample servers
-  await pglite.query(`
-    INSERT INTO "Server" (id, name, description, "githubUrl", category, owner, repo, "fullSlug", "isOfficial", featured, "isRemote", "createdAt", "updatedAt")
-    VALUES 
-      (gen_random_uuid(), 'Brave Search', 'MCP server for Brave Search API', 'https://github.com/modelcontextprotocol/servers', 'search', 'modelcontextprotocol', 'servers', 'modelcontextprotocol/servers', true, true, false, NOW(), NOW()),
-      (gen_random_uuid(), 'Cloudflare', 'Cloudflare MCP server', 'https://github.com/cloudflare/mcp-server-cloudflare', 'cloud-service', 'cloudflare', 'mcp-server-cloudflare', 'cloudflare/mcp-server-cloudflare', true, false, false, NOW(), NOW())
-    ON CONFLICT ("fullSlug") DO NOTHING
-  `)
+  // Insert sample servers from JSON data
+  for (const server of SERVERS) {
+    await pglite.query(`
+      INSERT INTO "Server" (id, name, description, "githubUrl", category, owner, repo, "fullSlug", "isOfficial", featured, "isRemote", "createdAt", "updatedAt")
+      VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
+      ON CONFLICT ("fullSlug") DO NOTHING
+    `, [server.name, server.description, server.githubUrl, server.category, server.owner, server.repo, server.fullSlug, server.isOfficial, server.featured, server.isRemote])
+  }
   
-  console.log('Sample servers added')
+  process.stdout.write('Sample servers added\n')
   await pglite.close()
 }
 

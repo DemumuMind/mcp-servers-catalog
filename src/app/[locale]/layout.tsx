@@ -1,7 +1,6 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { PullToRefresh } from "@/components/pull-to-refresh";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";

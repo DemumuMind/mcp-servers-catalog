@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Copy, Check } from 'lucide-react'
 
@@ -14,12 +15,15 @@ interface CopyButtonProps {
 
 export function CopyButton({
   text,
-  label = 'Копировать',
+  label,
   size = 'sm',
   variant = 'outline',
   className,
 }: CopyButtonProps) {
+  const t = useTranslations('CopyButton')
   const [copied, setCopied] = useState(false)
+
+  const displayLabel = label || t('copy')
 
   const handleCopy = useCallback(async () => {
     try {
@@ -37,15 +41,15 @@ export function CopyButton({
       size={size}
       onClick={handleCopy}
       className={className}
-      title={copied ? 'Скопировано!' : label}
+      title={copied ? t('copied') : displayLabel}
     >
       {copied ? (
         <Check className="h-4 w-4" />
       ) : (
         <Copy className="h-4 w-4" />
       )}
-      {label && !copied && <span className="ml-1">{label}</span>}
-      {copied && <span className="ml-1">Готово!</span>}
+      {displayLabel && !copied && <span className="ml-1">{displayLabel}</span>}
+      {copied && <span className="ml-1">{t('done')}</span>}
     </Button>
   )
 }

@@ -2,28 +2,31 @@
 
 import { useState, useEffect } from 'react'
 import { useTheme } from '@/components/theme-provider'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Moon, Sun, Monitor } from 'lucide-react'
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const t = useTranslations('ThemeToggle')
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Render a placeholder on server / before mount to avoid hydration mismatch
+  const wrapperClass = 'inline-flex items-center gap-1 rounded-2xl border border-border/70 bg-card/58 p-1 shadow-[var(--shadow-soft)] backdrop-blur-xl'
+
   if (!mounted) {
     return (
-      <div className="flex items-center gap-1 rounded-lg border p-1">
-        <Button variant="ghost" size="icon" className="h-8 w-8" disabled aria-label="Светлая тема">
+      <div className={wrapperClass}>
+        <Button variant="ghost" size="icon-sm" disabled aria-label={t('light')}>
           <Sun className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8" disabled aria-label="Системная тема">
+        <Button variant="ghost" size="icon-sm" disabled aria-label={t('system')}>
           <Monitor className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8" disabled aria-label="Тёмная тема">
+        <Button variant="ghost" size="icon-sm" disabled aria-label={t('dark')}>
           <Moon className="h-4 w-4" />
         </Button>
       </div>
@@ -31,34 +34,31 @@ export function ThemeToggle() {
   }
 
   return (
-    <div className="flex items-center gap-1 rounded-lg border p-1">
+    <div className={wrapperClass}>
       <Button
-        variant={theme === 'light' ? 'secondary' : 'ghost'}
-        size="icon"
-        className="h-8 w-8"
+        variant={theme === 'light' ? 'default' : 'ghost'}
+        size="icon-sm"
         onClick={() => setTheme('light')}
-        title="Светлая тема"
-        aria-label="Светлая тема"
+        title={t('light')}
+        aria-label={t('light')}
       >
         <Sun className="h-4 w-4" />
       </Button>
       <Button
-        variant={theme === 'system' ? 'secondary' : 'ghost'}
-        size="icon"
-        className="h-8 w-8"
+        variant={theme === 'system' ? 'default' : 'ghost'}
+        size="icon-sm"
         onClick={() => setTheme('system')}
-        title="Системная тема"
-        aria-label="Системная тема"
+        title={t('system')}
+        aria-label={t('system')}
       >
         <Monitor className="h-4 w-4" />
       </Button>
       <Button
-        variant={theme === 'dark' ? 'secondary' : 'ghost'}
-        size="icon"
-        className="h-8 w-8"
+        variant={theme === 'dark' ? 'default' : 'ghost'}
+        size="icon-sm"
         onClick={() => setTheme('dark')}
-        title="Тёмная тема"
-        aria-label="Тёмная тема"
+        title={t('dark')}
+        aria-label={t('dark')}
       >
         <Moon className="h-4 w-4" />
       </Button>

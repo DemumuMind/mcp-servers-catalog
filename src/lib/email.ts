@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer'
 import { submissionNotificationTemplate, statusUpdateTemplate, digestTemplate } from './email-templates'
 
+type Locale = 'ru' | 'en'
+
 let _transporter: nodemailer.Transporter | null = null
 
 function getTransporter(): nodemailer.Transporter {
@@ -32,10 +34,30 @@ export async function sendEmail(to: string, subject: string, html: string) {
 
   try {
     await getTransporter().sendMail(mailOptions)
-    console.log('Email sent successfully')
   } catch (error) {
     console.error('Failed to send email:', error)
   }
+}
+
+const subjectStrings = {
+  ru: {
+    newSubmission: 'Новая отправка MCP-сервера: {name}',
+    yourSubmissionStatus: 'Ваша отправка MCP-сервера {name} {status}',
+    weeklyDigest: 'Еженедельный дайджест MCP серверов{categoryTitle}',
+    approved: 'одобрена',
+    rejected: 'отклонена',
+  },
+  en: {
+    newSubmission: 'New MCP Server Submission: {name}',
+    yourSubmissionStatus: 'Your MCP server submission {name} {status}',
+    weeklyDigest: 'Weekly MCP Servers Digest{categoryTitle}',
+    approved: 'approved',
+    rejected: 'rejected',
+  },
+} as const
+
+function subjectT(locale: Locale) {
+  return subjectStrings[locale] ?? subjectStrings.ru
 }
 
 export async function sendSubmissionNotification(submission: {
@@ -45,17 +67,18 @@ export async function sendSubmissionNotification(submission: {
   url: string
   category: string
   premium: boolean
-}) {
+}, locale: Locale = 'ru') {
+  const s = subjectT(locale)
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com'
+  const safeName = submission.name.replace(/[\r\n]/g, ' ')
 
   try {
     await getTransporter().sendMail({
       from: process.env.SMTP_USER || 'noreply@mcpservers.org',
       to: adminEmail,
-      subject: `Новая отправка MCP-сервера: ${submission.name.replace(/[\r\n]/g, ' ')}`,
-      html: submissionNotificationTemplate(submission),
+      subject: s.newSubmission.replace('{name}', safeName),
+      html: submissionNotificationTemplate(submission, locale),
     })
-    console.log('Email notification sent successfully')
   } catch (error) {
     console.error('Failed to send email notification:', error)
   }
@@ -65,17 +88,18 @@ export async function sendStatusUpdateNotification(submission: {
   name: string
   email: string
   status: string
-}) {
-  const statusText = submission.status === 'approved' ? 'одобрена' : 'отклонена'
+}, locale: Locale = 'ru') {
+  const s = subjectT(locale)
+  const statusText = submission.status === 'approved' ? s.approved : s.rejected
+  const safeName = submission.name.replace(/[\r\n]/g, ' ')
 
   try {
     await getTransporter().sendMail({
       from: process.env.SMTP_USER || 'noreply@mcpservers.org',
       to: submission.email,
-      subject: `Ваша отправка MCP-сервера ${submission.name.replace(/[\r\n]/g, ' ')} ${statusText}`,
-      html: statusUpdateTemplate(submission),
+      subject: s.yourSubmissionStatus.replace('{name}', safeName).replace('{status}', statusText),
+      html: statusUpdateTemplate(submission, locale),
     })
-    console.log('Status update email sent successfully')
   } catch (error) {
     console.error('Failed to send status update email:', error)
   }
@@ -84,16 +108,17 @@ export async function sendStatusUpdateNotification(submission: {
 export async function sendDigestEmail(
   to: string,
   categoryTitle: string,
-  servers: Array<{ name: string; description: string }>
+  servers: Array<{ name: string; description: string }>,
+  locale: Locale = 'ru'
 ) {
+  const s = subjectT(locale)
   try {
     await getTransporter().sendMail({
       from: process.env.SMTP_USER || 'noreply@mcpservers.org',
       to,
-      subject: `Еженедельный дайджест MCP серверов${categoryTitle}`,
-      html: digestTemplate(categoryTitle, servers),
+      subject: s.weeklyDigest.replace('{categoryTitle}', categoryTitle),
+      html: digestTemplate(categoryTitle, servers, locale),
     })
-    console.log('Digest email sent to', to)
   } catch (error) {
     console.error('Failed to send digest email:', error)
   }

@@ -5,13 +5,13 @@ async function main() {
   const dbPath = path.resolve(process.cwd(), '.pglite')
   const client = new PGlite(dbPath)
 
-  console.log('Adding category column to DigestSubscription table...')
+  process.stdout.write('Adding category column to DigestSubscription table...\n')
   await client.query(`
     ALTER TABLE "DigestSubscription" 
     ADD COLUMN IF NOT EXISTS category TEXT
   `)
 
-  console.log('Migration completed successfully!')
+  process.stdout.write('Migration completed successfully!\n')
   await client.close()
 }
 

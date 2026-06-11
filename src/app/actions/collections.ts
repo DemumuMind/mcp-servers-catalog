@@ -1,19 +1,20 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, collections, bookmarks, servers, users } from '@/lib/db'
+import { eq, and, desc } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
-import { redirect } from 'next/navigation'
 import crypto from 'crypto'
 
 export async function getUserCollections(userId: string) {
-  return prisma.collection.findMany({
-    where: { userId },
-    include: {
+  // Use relational query API for nested includes
+  return db.query.collections.findMany({
+    where: eq(collections.userId, userId),
+    with: {
       bookmarks: {
-        include: {
+        with: {
           server: {
-            select: {
+            columns: {
               id: true,
               name: true,
               owner: true,
@@ -25,21 +26,21 @@ export async function getUserCollections(userId: string) {
         },
       },
     },
-    orderBy: { updatedAt: 'desc' },
+    orderBy: desc(collections.updatedAt),
   })
 }
 
 export async function getPublicCollection(shareSlug: string) {
-  return prisma.collection.findUnique({
-    where: { shareSlug, isPublic: true },
-    include: {
+  return db.query.collections.findFirst({
+    where: and(eq(collections.shareSlug, shareSlug), eq(collections.isPublic, true)),
+    with: {
       user: {
-        select: { name: true, email: true },
+        columns: { name: true, email: true },
       },
       bookmarks: {
-        include: {
+        with: {
           server: {
-            select: {
+            columns: {
               id: true,
               name: true,
               owner: true,
@@ -69,14 +70,15 @@ export async function createCollection(name: string, description?: string) {
 
   const shareSlug = generateShareSlug()
 
-  const collection = await prisma.collection.create({
-    data: {
+  const [collection] = await db
+    .insert(collections)
+    .values({
       userId,
       name,
       description: description || null,
       shareSlug,
-    },
-  })
+    })
+    .returning()
 
   revalidatePath('/ru/profile')
   return collection
@@ -90,20 +92,24 @@ export async function updateCollection(
   const userId = session?.user?.id
   if (!userId) throw new Error('Unauthorized')
 
-  const collection = await prisma.collection.findUnique({
-    where: { id },
-    select: { userId: true },
-  })
-  if (collection?.userId !== userId) throw new Error('Unauthorized')
+  const existing = await db
+    .select({ userId: collections.userId })
+    .from(collections)
+    .where(eq(collections.id, id))
+    .limit(1)
 
-  const updated = await prisma.collection.update({
-    where: { id },
-    data: {
-      ...(data.name && { name: data.name }),
-      ...(data.description !== undefined && { description: data.description }),
-      ...(data.isPublic !== undefined && { isPublic: data.isPublic }),
-    },
-  })
+  if (existing[0]?.userId !== userId) throw new Error('Unauthorized')
+
+  const updateData: Record<string, any> = {}
+  if (data.name) updateData.name = data.name
+  if (data.description !== undefined) updateData.description = data.description
+  if (data.isPublic !== undefined) updateData.isPublic = data.isPublic
+
+  const [updated] = await db
+    .update(collections)
+    .set(updateData)
+    .where(eq(collections.id, id))
+    .returning()
 
   revalidatePath('/ru/profile')
   return updated
@@ -114,13 +120,15 @@ export async function deleteCollection(id: string) {
   const userId = session?.user?.id
   if (!userId) throw new Error('Unauthorized')
 
-  const collection = await prisma.collection.findUnique({
-    where: { id },
-    select: { userId: true },
-  })
-  if (collection?.userId !== userId) throw new Error('Unauthorized')
+  const existing = await db
+    .select({ userId: collections.userId })
+    .from(collections)
+    .where(eq(collections.id, id))
+    .limit(1)
 
-  await prisma.collection.delete({ where: { id } })
+  if (existing[0]?.userId !== userId) throw new Error('Unauthorized')
+
+  await db.delete(collections).where(eq(collections.id, id))
   revalidatePath('/ru/profile')
 }
 
@@ -129,32 +137,31 @@ export async function addServerToCollection(collectionId: string, serverId: stri
   const userId = session?.user?.id
   if (!userId) throw new Error('Unauthorized')
 
-  const collection = await prisma.collection.findUnique({
-    where: { id: collectionId },
-    select: { userId: true },
-  })
-  if (collection?.userId !== userId) throw new Error('Unauthorized')
+  const collectionRows = await db
+    .select({ userId: collections.userId })
+    .from(collections)
+    .where(eq(collections.id, collectionId))
+    .limit(1)
+
+  if (collectionRows[0]?.userId !== userId) throw new Error('Unauthorized')
 
   // Check if bookmark already exists for this user+server
-  const existing = await prisma.bookmark.findUnique({
-    where: {
-      userId_serverId: { userId, serverId },
-    },
-  })
+  const existing = await db
+    .select({ id: bookmarks.id })
+    .from(bookmarks)
+    .where(and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId)))
+    .limit(1)
 
-  if (existing) {
-    // Update collectionId
-    await prisma.bookmark.update({
-      where: { id: existing.id },
-      data: { collectionId },
-    })
+  if (existing.length > 0) {
+    await db
+      .update(bookmarks)
+      .set({ collectionId })
+      .where(eq(bookmarks.id, existing[0].id))
   } else {
-    await prisma.bookmark.create({
-      data: {
-        userId,
-        serverId,
-        collectionId,
-      },
+    await db.insert(bookmarks).values({
+      userId,
+      serverId,
+      collectionId,
     })
   }
 
@@ -166,12 +173,20 @@ export async function removeServerFromCollection(collectionId: string, serverId:
   const userId = session?.user?.id
   if (!userId) throw new Error('Unauthorized')
 
-  const bookmark = await prisma.bookmark.findFirst({
-    where: { userId, serverId, collectionId },
-  })
+  const bookmarkRows = await db
+    .select({ id: bookmarks.id })
+    .from(bookmarks)
+    .where(
+      and(
+        eq(bookmarks.userId, userId),
+        eq(bookmarks.serverId, serverId),
+        eq(bookmarks.collectionId, collectionId)
+      )
+    )
+    .limit(1)
 
-  if (bookmark) {
-    await prisma.bookmark.delete({ where: { id: bookmark.id } })
+  if (bookmarkRows.length > 0) {
+    await db.delete(bookmarks).where(eq(bookmarks.id, bookmarkRows[0].id))
   }
 
   revalidatePath('/ru/profile')
@@ -185,12 +200,30 @@ export async function exportCollectionConfig(collectionId: string) {
   const session = await auth()
   const userId = session?.user?.id
 
-  const collection = await prisma.collection.findUnique({
-    where: { id: collectionId },
-    include: {
+  // Use relational query for nested includes
+  const collection = await db.query.collections.findFirst({
+    where: eq(collections.id, collectionId),
+    with: {
       bookmarks: {
-        include: {
-          server: true,
+        with: {
+          server: {
+            columns: {
+              id: true,
+              name: true,
+              owner: true,
+              repo: true,
+              isRemote: true,
+              endpoint: true,
+              description: true,
+              githubUrl: true,
+              isOfficial: true,
+              isSponsored: true,
+              tags: true,
+              category: true,
+              stars: true,
+              forks: true,
+            },
+          },
         },
       },
     },

@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
+import { useTransition } from "react";
 import { useRouter } from 'next/navigation'
-import { getSubmissions, approveSubmission, rejectSubmission, deleteSubmission } from '@/app/actions/submissions'
+import { approveSubmission, rejectSubmission, deleteSubmission } from "@/app/actions/submissions";
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -42,14 +43,14 @@ interface SubmissionsPageProps {
   searchQuery: string
 }
 
-function getStatusBadge(status: string) {
+function getStatusBadge(status: string, t: (key: string) => string) {
   switch (status) {
     case 'approved':
-      return <Badge className="bg-green-500 text-white">Одобрено</Badge>
+      return <Badge className="bg-green-500 text-white">{t('approved')}</Badge>
     case 'rejected':
-      return <Badge className="bg-red-500 text-white">Отклонено</Badge>
+      return <Badge className="bg-red-500 text-white">{t('rejected')}</Badge>
     default:
-      return <Badge className="bg-yellow-500 text-white">На рассмотрении</Badge>
+      return <Badge className="bg-yellow-500 text-white">{t('pending')}</Badge>
   }
 }
 
@@ -58,6 +59,7 @@ export default function SubmissionsPageClient({
   statusFilter,
   searchQuery,
 }: SubmissionsPageProps) {
+  const t = useTranslations('Admin.submissions')
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -74,7 +76,7 @@ export default function SubmissionsPageClient({
         router.refresh()
       } catch (err) {
         console.error('Action error:', err)
-        alert('Ошибка при выполнении действия')
+        alert(t('errorAction'))
       }
     })
   }
@@ -82,12 +84,12 @@ export default function SubmissionsPageClient({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Отправки MCP-серверов</h1>
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Фильтры</CardTitle>
+          <CardTitle>{t('filters')}</CardTitle>
         </CardHeader>
         <CardContent>
           <form
@@ -104,32 +106,32 @@ export default function SubmissionsPageClient({
             }}
           >
             <div className="flex-1">
-              <label className="text-sm font-medium mb-2 block">Поиск</label>
+              <label htmlFor="submissions-search" className="text-sm font-medium mb-2 block">{t('search')}</label>
               <Input
                 name="q"
-                placeholder="Поиск по названию, описанию или email..."
+                placeholder={t('searchPlaceholder')}
                 defaultValue={searchQuery}
               />
             </div>
             <div className="w-48">
-              <label className="text-sm font-medium mb-2 block">Статус</label>
+              <label htmlFor="submissions-status" className="text-sm font-medium mb-2 block">{t('status')}</label>
               <Select
                 name="status"
                 defaultValue={statusFilter}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Все статусы" />
+                  <SelectValue placeholder={t('allStatuses')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Все</SelectItem>
-                  <SelectItem value="pending">На рассмотрении</SelectItem>
-                  <SelectItem value="approved">Одобрено</SelectItem>
-                  <SelectItem value="rejected">Отклонено</SelectItem>
+                  <SelectItem value="all">{t('all')}</SelectItem>
+                  <SelectItem value="pending">{t('pending')}</SelectItem>
+                  <SelectItem value="approved">{t('approved')}</SelectItem>
+                  <SelectItem value="rejected">{t('rejected')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <Button type="submit" disabled={isPending}>
-              Применить
+              {t('apply')}
             </Button>
           </form>
         </CardContent>
@@ -139,19 +141,19 @@ export default function SubmissionsPageClient({
         <CardContent className="pt-6">
           {submissions.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              Нет отправок для отображения
+              {t('noSubmissions')}
             </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Название</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Категория</TableHead>
-                  <TableHead>Premium</TableHead>
-                  <TableHead>Статус</TableHead>
-                  <TableHead>Дата</TableHead>
-                  <TableHead className="text-right">Действия</TableHead>
+                  <TableHead>{t('table.name')}</TableHead>
+                  <TableHead>{t('table.email')}</TableHead>
+                  <TableHead>{t('table.category')}</TableHead>
+                  <TableHead>{t('table.premium')}</TableHead>
+                  <TableHead>{t('table.status')}</TableHead>
+                  <TableHead>{t('table.date')}</TableHead>
+                  <TableHead className="text-right">{t('table.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -167,14 +169,14 @@ export default function SubmissionsPageClient({
                     <TableCell className="capitalize">{sub.category}</TableCell>
                     <TableCell>
                       {sub.premium ? (
-                        <Badge className="bg-amber-500 text-white">Premium</Badge>
+                        <Badge className="bg-amber-500 text-white">{t('premium')}</Badge>
                       ) : (
                         <span className="text-muted-foreground">—</span>
                       )}
                     </TableCell>
-                    <TableCell>{getStatusBadge(sub.status)}</TableCell>
+                    <TableCell>{getStatusBadge(sub.status, t)}</TableCell>
                     <TableCell>
-                      {new Date(sub.createdAt).toLocaleDateString('ru-RU')}
+                      {new Date(sub.createdAt).toLocaleDateString('en-US')}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
@@ -192,7 +194,7 @@ export default function SubmissionsPageClient({
                               variant="outline"
                               size="icon"
                               className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                              title="Одобрить"
+                              title={t('buttonTitle.approve')}
                               onClick={() => handleAction('approve', sub.id)}
                               disabled={isPending}
                             >
@@ -202,7 +204,7 @@ export default function SubmissionsPageClient({
                               variant="outline"
                               size="icon"
                               className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                              title="Отклонить"
+                              title={t('buttonTitle.reject')}
                               onClick={() => handleAction('reject', sub.id)}
                               disabled={isPending}
                             >
@@ -214,7 +216,7 @@ export default function SubmissionsPageClient({
                           variant="outline"
                           size="icon"
                           className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                          title="Удалить"
+                          title={t('buttonTitle.delete')}
                           onClick={() => handleAction('delete', sub.id)}
                           disabled={isPending}
                         >

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ServerCard } from '@/components/server-card'
@@ -44,6 +44,7 @@ interface PublicCollectionViewProps {
 }
 
 export function PublicCollectionView({ collection, locale }: PublicCollectionViewProps) {
+  const t = useTranslations('Collections')
   const handleExport = useCallback(async () => {
     const config = await exportCollectionConfig(collection.id)
     const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' })
@@ -58,7 +59,7 @@ export function PublicCollectionView({ collection, locale }: PublicCollectionVie
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Folder className="h-4 w-4" />
-          <span>Публичная коллекция</span>
+          <span>{t('publicCollection')}</span>
         </div>
         <h1 className="text-2xl font-bold">{collection.name}</h1>
         {collection.description && (
@@ -73,15 +74,15 @@ export function PublicCollectionView({ collection, locale }: PublicCollectionVie
           )}
           <span className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            {new Date(collection.createdAt).toLocaleDateString('ru-RU')}
+            {new Date(collection.createdAt).toLocaleDateString(locale)}
           </span>
-          <Badge variant="secondary">{collection.bookmarks.length} серверов</Badge>
+          <Badge variant="secondary">{t('serverCount', { count: collection.bookmarks.length })}</Badge>
         </div>
       </div>
 
       <Button onClick={handleExport} variant="outline" className="gap-2">
         <Download className="h-4 w-4" />
-        Скачать конфигурацию для Claude Desktop
+        {t('downloadConfig')}
       </Button>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

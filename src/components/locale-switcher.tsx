@@ -1,14 +1,14 @@
 'use client'
 
-import { useLocale, useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from 'next/navigation'
 import { Globe } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function LocaleSwitcher() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
-  const t = useTranslations('Common')
 
   function switchLocale(newLocale: string) {
     const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`)
@@ -16,21 +16,20 @@ export function LocaleSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-1 text-sm">
-      <Globe className="h-3.5 w-3.5 text-muted-foreground" />
-      <button
-        onClick={() => switchLocale('ru')}
-        className={`px-1.5 py-0.5 rounded ${locale === 'ru' ? 'bg-accent font-medium' : 'text-muted-foreground hover:text-foreground'}`}
-      >
-        RU
-      </button>
-      <span className="text-muted-foreground">|</span>
-      <button
-        onClick={() => switchLocale('en')}
-        className={`px-1.5 py-0.5 rounded ${locale === 'en' ? 'bg-accent font-medium' : 'text-muted-foreground hover:text-foreground'}`}
-      >
-        EN
-      </button>
+    <div className="inline-flex items-center gap-1 rounded-2xl border border-border/70 bg-card/58 p-1 text-sm shadow-[var(--shadow-soft)] backdrop-blur-xl">
+      <Globe className="ml-1 size-3.5 text-muted-foreground" />
+      {(['ru', 'en'] as const).map((item) => (
+        <button
+          key={item}
+          onClick={() => switchLocale(item)}
+          className={cn(
+            'rounded-xl px-2 py-1 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.08em] transition-all hover:bg-muted hover:text-foreground focus-ring',
+            locale === item ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground'
+          )}
+        >
+          {item}
+        </button>
+      ))}
     </div>
   )
 }

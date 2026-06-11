@@ -26,8 +26,8 @@ function loadEnv() {
         process.env[key] = value
       }
     }
-  } catch {
-    // ignore
+  } catch (_err) {
+    // .env file is optional — skip if missing
   }
 }
 loadEnv()
@@ -39,7 +39,7 @@ function getDataDir(): string {
 
 function createPrisma() {
   const dataDir = getDataDir()
-  console.log(`Using database directory: ${dataDir}`)
+  process.stdout.write(`Using database directory: ${dataDir}\n`)
   const pglite = new PGlite({ dataDir })
   const adapter = new PrismaPGlite(pglite)
   return { prisma: new PrismaClient({ adapter }), pglite }
@@ -80,7 +80,6 @@ function randInt(min: number, max: number): number {
 }
 
 async function main() {
-  // Create demo users
   const users: Array<{ id: string; email: string; name: string }> = []
   for (const u of DEMO_USERS) {
     const password = await hash('demo123', 10)
@@ -96,19 +95,17 @@ async function main() {
       },
     })
     users.push({ id: user.id, email: user.email, name: user.name || '' })
-    console.log(`Created user: ${user.email} (${user.id})`)
+    process.stdout.write(`Created user: ${user.email} (${user.id})\n`)
   }
 
-  // Get all servers
   const servers = await prisma.server.findMany({ select: { id: true, name: true } })
-  console.log(`Found ${servers.length} servers to seed`)
+  process.stdout.write(`Found ${servers.length} servers to seed\n`)
 
   let commentsCreated = 0
   let ratingsCreated = 0
   let bookmarksCreated = 0
 
   for (const server of servers) {
-    // 0-2 comments per server
     const commentCount = randInt(0, 2)
     for (const user of sample(users, commentCount)) {
       const content = sample(COMMENT_TEMPLATES, 1)[0]
@@ -121,12 +118,11 @@ async function main() {
           },
         })
         commentsCreated++
-      } catch (e) {
-        // ignore duplicates etc
+      } catch (_e) {
+        // duplicate key — expected when re-seeding
       }
     }
 
-    // 0-2 ratings per server
     const ratingCount = randInt(0, 2)
     for (const user of sample(users, ratingCount)) {
       try {
@@ -138,16 +134,12 @@ async function main() {
           },
         })
         ratingsCreated++
-      } catch (e) {
-        // ignore duplicates
+      } catch (_e) {
+        // duplicate key — expected when re-seeding
       }
     }
-
-    // Each user bookmarks 5-10 random servers
-    // We'll do this globally after
   }
 
-  // Bookmarks: each user gets 5-10 random servers
   for (const user of users) {
     const bookmarkServers = sample(servers, randInt(5, 10))
     for (const server of bookmarkServers) {
@@ -159,17 +151,17 @@ async function main() {
           },
         })
         bookmarksCreated++
-      } catch (e) {
-        // ignore duplicates
+      } catch (_e) {
+        // duplicate key — expected when re-seeding
       }
     }
   }
 
-  console.log('\n--- Demo data seeded ---')
-  console.log(`Users:     ${users.length}`)
-  console.log(`Comments:  ${commentsCreated}`)
-  console.log(`Ratings:   ${ratingsCreated}`)
-  console.log(`Bookmarks: ${bookmarksCreated}`)
+  process.stdout.write('\n--- Demo data seeded ---\n')
+  process.stdout.write(`Users:     ${users.length}\n`)
+  process.stdout.write(`Comments:  ${commentsCreated}\n`)
+  process.stdout.write(`Ratings:   ${ratingsCreated}\n`)
+  process.stdout.write(`Bookmarks: ${bookmarksCreated}\n`)
 
   await prisma.$disconnect()
   await pglite.close()

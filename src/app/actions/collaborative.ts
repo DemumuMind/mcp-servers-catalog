@@ -1,27 +1,24 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, bookmarks, servers } from '@/lib/db'
+import { eq, inArray, ne, and } from 'drizzle-orm'
 
 export async function getOftenUsedTogether(serverId: string, limit: number = 5) {
   // Find users who bookmarked this server
-  const userBookmarks = await prisma.bookmark.findMany({
-    where: { serverId },
-    select: { userId: true },
-  })
+  const userBookmarks = await db.select({ userId: bookmarks.userId }).from(bookmarks).where(eq(bookmarks.serverId, serverId))
 
-  const userIds = userBookmarks.map((b) => b.userId)
+  const userIds = userBookmarks.map((b: any) => b.userId)
   if (userIds.length === 0) return []
 
   // Find other servers bookmarked by same users
-  const otherBookmarks = await prisma.bookmark.findMany({
-    where: {
-      userId: { in: userIds },
-      serverId: { not: serverId },
-    },
-    select: {
-      serverId: true,
-    },
-  })
+  const otherBookmarks = await db.select({
+    serverId: bookmarks.serverId,
+  }).from(bookmarks).where(
+    and(
+      inArray(bookmarks.userId, userIds),
+      ne(bookmarks.serverId, serverId)
+    )
+  )
 
   // Count frequency
   const freq: Record<string, number> = {}
@@ -37,26 +34,22 @@ export async function getOftenUsedTogether(serverId: string, limit: number = 5) 
 
   if (sorted.length === 0) return []
 
-  // Fetch server details
-  const servers = await prisma.server.findMany({
-    where: { id: { in: sorted } },
-    select: {
-      id: true,
-      name: true,
-      owner: true,
-      repo: true,
-      description: true,
-      isOfficial: true,
-      isSponsored: true,
-      tags: true,
-      category: true,
-      stars: true,
-      forks: true,
-    },
-  })
+  const serverResults = await db.select({
+    id: servers.id,
+    name: servers.name,
+    owner: servers.owner,
+    repo: servers.repo,
+    description: servers.description,
+    isOfficial: servers.isOfficial,
+    isSponsored: servers.isSponsored,
+    tags: servers.tags,
+    category: servers.category,
+    stars: servers.stars,
+    forks: servers.forks,
+  }).from(servers).where(inArray(servers.id, sorted))
 
   // Add frequency score
-  return servers.map((s) => ({
+  return serverResults.map((s: any) => ({
     ...s,
     togetherCount: freq[s.id],
   }))

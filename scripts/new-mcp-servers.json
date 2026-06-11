@@ -1,0 +1,2393 @@
+[
+  {
+    "owner": "github",
+    "repo": "github-mcp-server",
+    "fullSlug": "github/github-mcp-server",
+    "description": "GitHub's official MCP Server for repository operations, issues, PRs, Actions, and code search",
+    "category": "git",
+    "tags": [
+      "github",
+      "pull-requests",
+      "issues",
+      "actions",
+      "code-search"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/github/github-mcp-server",
+    "stars": 30500
+  },
+  {
+    "owner": "upstash",
+    "repo": "context7",
+    "fullSlug": "upstash/context7",
+    "description": "Context7 - Up-to-date, version-specific library documentation for LLMs and AI code editors",
+    "category": "development",
+    "tags": [
+      "documentation",
+      "llm",
+      "context",
+      "upstash"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/upstash/context7",
+    "stars": 56200
+  },
+  {
+    "owner": "makenotion",
+    "repo": "notion-mcp-server",
+    "fullSlug": "makenotion/notion-mcp-server",
+    "description": "Official Notion MCP Server for page management, databases, and workspace search",
+    "category": "productivity",
+    "tags": [
+      "notion",
+      "wiki",
+      "productivity",
+      "databases"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/makenotion/notion-mcp-server",
+    "stars": 4400
+  },
+  {
+    "owner": "GLips",
+    "repo": "Figma-Context-MCP",
+    "fullSlug": "glips/figma-context-mcp",
+    "description": "MCP server to provide Figma layout information to AI coding agents like Cursor",
+    "category": "development",
+    "tags": [
+      "figma",
+      "design",
+      "frontend",
+      "layout"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/GLips/Figma-Context-MCP",
+    "stars": 14900
+  },
+  {
+    "owner": "ChromeDevTools",
+    "repo": "chrome-devtools-mcp",
+    "fullSlug": "chromedevtools/chrome-devtools-mcp",
+    "description": "Official Chrome DevTools MCP server for controlling and inspecting a live Chrome browser",
+    "category": "browser",
+    "tags": [
+      "chrome",
+      "devtools",
+      "browser-automation",
+      "debugging"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+    "stars": 6200
+  },
+  {
+    "owner": "googleapis",
+    "repo": "mcp-toolbox",
+    "fullSlug": "googleapis/mcp-toolbox",
+    "description": "Google MCP Toolbox for Databases - open source MCP server for multiple database backends",
+    "category": "database",
+    "tags": [
+      "google",
+      "bigquery",
+      "alloydb",
+      "cloud-sql",
+      "spanner"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/googleapis/mcp-toolbox",
+    "stars": 13500
+  },
+  {
+    "owner": "idosal",
+    "repo": "git-mcp",
+    "fullSlug": "idosal/git-mcp",
+    "description": "GitMCP - Remote MCP server for any GitHub project documentation and code context",
+    "category": "git",
+    "tags": [
+      "github",
+      "documentation",
+      "code-context",
+      "remote"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/idosal/git-mcp",
+    "stars": 7800
+  },
+  {
+    "owner": "PrefectHQ",
+    "repo": "fastmcp",
+    "fullSlug": "prefecthq/fastmcp",
+    "description": "The fast, Pythonic way to build MCP servers and clients",
+    "category": "development",
+    "tags": [
+      "python",
+      "framework",
+      "sdk",
+      "fastmcp"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/PrefectHQ/fastmcp",
+    "stars": 23000
+  },
+  {
+    "owner": "21st-dev",
+    "repo": "magic-mcp",
+    "fullSlug": "21st-dev/magic-mcp",
+    "description": "Magic MCP server for working with frontend UI like v0 in Cursor/WindSurf/Cline",
+    "category": "development",
+    "tags": [
+      "frontend",
+      "ui",
+      "v0",
+      "design"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/21st-dev/magic-mcp",
+    "stars": 5200
+  },
+  {
+    "owner": "wonderwhy-er",
+    "repo": "DesktopCommanderMCP",
+    "fullSlug": "wonderwhy-er/desktopcommandermcp",
+    "description": "MCP server giving Claude terminal control, file system search and diff file editing",
+    "category": "tools",
+    "tags": [
+      "terminal",
+      "filesystem",
+      "desktop",
+      "commands"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+    "stars": 3800
+  },
+  {
+    "owner": "getsentry",
+    "repo": "XcodeBuildMCP",
+    "fullSlug": "getsentry/xcodebuildmcp",
+    "description": "MCP server and CLI for iOS and macOS project builds and development tasks",
+    "category": "development",
+    "tags": [
+      "xcode",
+      "ios",
+      "macos",
+      "build",
+      "apple"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/getsentry/XcodeBuildMCP",
+    "stars": 2800
+  },
+  {
+    "owner": "sooperset",
+    "repo": "mcp-atlassian",
+    "fullSlug": "sooperset/mcp-atlassian",
+    "description": "MCP server for Atlassian tools - Confluence and Jira integration",
+    "category": "productivity",
+    "tags": [
+      "jira",
+      "confluence",
+      "atlassian",
+      "project-management"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/sooperset/mcp-atlassian",
+    "stars": 2200
+  },
+  {
+    "owner": "containers",
+    "repo": "kubernetes-mcp-server",
+    "fullSlug": "containers/kubernetes-mcp-server",
+    "description": "MCP server for Kubernetes and OpenShift cluster management",
+    "category": "cloud-service",
+    "tags": [
+      "kubernetes",
+      "openshift",
+      "containers",
+      "devops"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/containers/kubernetes-mcp-server",
+    "stars": 1465
+  },
+  {
+    "owner": "SaseQ",
+    "repo": "discord-mcp",
+    "fullSlug": "saseq/discord-mcp",
+    "description": "MCP server for Discord integration - channel management, messaging, and server info",
+    "category": "communication",
+    "tags": [
+      "discord",
+      "messaging",
+      "channels",
+      "bots"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/SaseQ/discord-mcp",
+    "stars": 349
+  },
+  {
+    "owner": "open-webui",
+    "repo": "mcpo",
+    "fullSlug": "open-webui/mcpo",
+    "description": "A simple, secure MCP-to-OpenAPI proxy server",
+    "category": "development",
+    "tags": [
+      "openapi",
+      "proxy",
+      "open-webui"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/open-webui/mcpo",
+    "stars": 1800
+  },
+  {
+    "owner": "MarkusPfundstein",
+    "repo": "mcp-obsidian",
+    "fullSlug": "markuspfundstein/mcp-obsidian",
+    "description": "MCP server that interacts with Obsidian via the Obsidian REST API community plugin",
+    "category": "productivity",
+    "tags": [
+      "obsidian",
+      "notes",
+      "knowledge-base",
+      "markdown"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/MarkusPfundstein/mcp-obsidian",
+    "stars": 800
+  },
+  {
+    "owner": "oraios",
+    "repo": "serena",
+    "fullSlug": "oraios/serena",
+    "description": "MCP toolkit for coding with semantic retrieval and editing capabilities - the IDE for your agent",
+    "category": "development",
+    "tags": [
+      "ide",
+      "semantic",
+      "code-editing",
+      "retrieval"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/oraios/serena",
+    "stars": 1500
+  },
+  {
+    "owner": "Klavis-AI",
+    "repo": "klavis",
+    "fullSlug": "klavis-ai/klavis",
+    "description": "Klavis AI - MCP integration platform for reliable AI agent tool use at any scale",
+    "category": "tools",
+    "tags": [
+      "integration",
+      "platform",
+      "orchestration"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Klavis-AI/klavis",
+    "stars": 450
+  },
+  {
+    "owner": "mcp-use",
+    "repo": "mcp-use",
+    "fullSlug": "mcp-use/mcp-use",
+    "description": "Fullstack MCP framework to develop MCP Apps and MCP Servers for AI Agents",
+    "category": "development",
+    "tags": [
+      "framework",
+      "fullstack",
+      "agents"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/mcp-use/mcp-use",
+    "stars": 1200
+  },
+  {
+    "owner": "tadata-org",
+    "repo": "fastapi_mcp",
+    "fullSlug": "tadata-org/fastapi_mcp",
+    "description": "Expose FastAPI endpoints as MCP tools with authentication support",
+    "category": "development",
+    "tags": [
+      "fastapi",
+      "rest-api",
+      "authentication",
+      "python"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/tadata-org/fastapi_mcp",
+    "stars": 650
+  },
+  {
+    "owner": "mrexodia",
+    "repo": "ida-pro-mcp",
+    "fullSlug": "mrexodia/ida-pro-mcp",
+    "description": "AI-powered reverse engineering assistant bridging IDA Pro with LLMs through MCP",
+    "category": "security",
+    "tags": [
+      "ida-pro",
+      "reverse-engineering",
+      "security",
+      "disassembly"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/mrexodia/ida-pro-mcp",
+    "stars": 1800
+  },
+  {
+    "owner": "0x4m4",
+    "repo": "hexstrike-ai",
+    "fullSlug": "0x4m4/hexstrike-ai",
+    "description": "MCP server with 150+ cybersecurity tools for automated pentesting and vulnerability discovery",
+    "category": "security",
+    "tags": [
+      "pentesting",
+      "cybersecurity",
+      "vulnerability",
+      "bug-bounty"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/0x4m4/hexstrike-ai",
+    "stars": 1200
+  },
+  {
+    "owner": "hangwin",
+    "repo": "mcp-chrome",
+    "fullSlug": "hangwin/mcp-chrome",
+    "description": "Chrome extension-based MCP server for browser automation, content analysis, and semantic search",
+    "category": "browser",
+    "tags": [
+      "chrome",
+      "extension",
+      "automation",
+      "semantic-search"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/hangwin/mcp-chrome",
+    "stars": 500
+  },
+  {
+    "owner": "CursorTouch",
+    "repo": "Windows-MCP",
+    "fullSlug": "cursortouch/windows-mcp",
+    "description": "MCP Server for Computer Use in Windows - desktop automation",
+    "category": "tools",
+    "tags": [
+      "windows",
+      "desktop",
+      "automation",
+      "computer-use"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/CursorTouch/Windows-MCP",
+    "stars": 900
+  },
+  {
+    "owner": "BeehiveInnovations",
+    "repo": "pal-mcp-server",
+    "fullSlug": "beehiveinnovations/pal-mcp-server",
+    "description": "Multi-model MCP server combining Claude, Gemini, OpenAI, Ollama and more as one",
+    "category": "ai",
+    "tags": [
+      "multi-model",
+      "claude",
+      "gemini",
+      "openai",
+      "ollama"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/BeehiveInnovations/pal-mcp-server",
+    "stars": 350
+  },
+  {
+    "owner": "czlonkowski",
+    "repo": "n8n-mcp",
+    "fullSlug": "czlonkowski/n8n-mcp",
+    "description": "MCP for Claude Desktop / Claude Code / Cursor to build n8n workflows",
+    "category": "productivity",
+    "tags": [
+      "n8n",
+      "workflow",
+      "automation"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/czlonkowski/n8n-mcp",
+    "stars": 280
+  },
+  {
+    "owner": "aipotheosis-labs",
+    "repo": "aci",
+    "fullSlug": "aipotheosis-labs/aci",
+    "description": "ACI.dev - Open source tool-calling platform hooking up 600+ tools via MCP or function calling",
+    "category": "tools",
+    "tags": [
+      "tool-calling",
+      "integration",
+      "vibeops",
+      "600-tools"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/aipotheosis-labs/aci",
+    "stars": 1600
+  },
+  {
+    "owner": "MinishLab",
+    "repo": "semble",
+    "fullSlug": "minishlab/semble",
+    "description": "Fast and Accurate Code Search for Agents using ~98% fewer tokens than grep+read",
+    "category": "development",
+    "tags": [
+      "code-search",
+      "token-efficient",
+      "agents",
+      "grep"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/MinishLab/semble",
+    "stars": 1100
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "inspector",
+    "fullSlug": "modelcontextprotocol/inspector",
+    "description": "Visual testing tool for MCP servers",
+    "category": "development",
+    "tags": [
+      "testing",
+      "debugging",
+      "inspector",
+      "visual"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/inspector",
+    "stars": 3500
+  },
+  {
+    "owner": "clay-inc",
+    "repo": "clay-mcp",
+    "fullSlug": "clay-inc/clay-mcp",
+    "description": "Mesh MCP - Access your network seamlessly for applications and workflows",
+    "category": "tools",
+    "tags": [
+      "mesh",
+      "network",
+      "integration"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/clay-inc/clay-mcp",
+    "stars": 400
+  },
+  {
+    "owner": "vercel",
+    "repo": "next-devtools-mcp",
+    "fullSlug": "vercel/next-devtools-mcp",
+    "description": "Next.js development tools and utilities for AI coding assistants like Claude and Cursor",
+    "category": "development",
+    "tags": [
+      "nextjs",
+      "vercel",
+      "devtools",
+      "frontend"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/vercel/next-devtools-mcp",
+    "stars": 2800
+  },
+  {
+    "owner": "microsoft",
+    "repo": "learn_mcp",
+    "fullSlug": "microsoft/learn_mcp",
+    "description": "Microsoft Learn MCP Server providing trusted documentation for AI agents like GitHub Copilot",
+    "category": "development",
+    "tags": [
+      "microsoft",
+      "learn",
+      "documentation",
+      "copilot"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/microsoft/learn_mcp",
+    "stars": 1500
+  },
+  {
+    "owner": "hamid-vakilzadeh",
+    "repo": "mcpsemanticscholar",
+    "fullSlug": "hamid-vakilzadeh/mcpsemanticscholar",
+    "description": "Access millions of academic papers through Semantic Scholar and arXiv for AI research",
+    "category": "search",
+    "tags": [
+      "academic",
+      "research",
+      "semantic-scholar",
+      "arxiv",
+      "papers"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/hamid-vakilzadeh/mcpsemanticscholar",
+    "stars": 600
+  },
+  {
+    "owner": "jacob-bd",
+    "repo": "notebooklm-mcp-cli",
+    "fullSlug": "jacob-bd/notebooklm-mcp-cli",
+    "description": "Programmatic access to Google NotebookLM via CLI, MCP server, and AI agent skills",
+    "category": "ai",
+    "tags": [
+      "notebooklm",
+      "google",
+      "research",
+      "rag"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/jacob-bd/notebooklm-mcp-cli",
+    "stars": 450
+  },
+  {
+    "owner": "agent-infra",
+    "repo": "sandbox",
+    "fullSlug": "agent-infra/sandbox",
+    "description": "All-in-One Sandbox for AI Agents combining Browser, Shell, File, MCP and VSCode Server",
+    "category": "development",
+    "tags": [
+      "sandbox",
+      "docker",
+      "browser",
+      "shell",
+      "vscode"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/agent-infra/sandbox",
+    "stars": 1400
+  },
+  {
+    "owner": "JerBouma",
+    "repo": "FinanceToolkit",
+    "fullSlug": "jerbouma/financetoolkit",
+    "description": "Transparent and Efficient Financial Analysis with MCP server support",
+    "category": "finance",
+    "tags": [
+      "finance",
+      "stocks",
+      "analysis",
+      "financial-data"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/JerBouma/FinanceToolkit",
+    "stars": 2500
+  },
+  {
+    "owner": "chopratejas",
+    "repo": "headroom",
+    "fullSlug": "chopratejas/headroom",
+    "description": "Compress tool outputs, logs, and RAG chunks before they reach the LLM - 60-95% fewer tokens",
+    "category": "tools",
+    "tags": [
+      "compression",
+      "token-reduction",
+      "optimization"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/chopratejas/headroom",
+    "stars": 800
+  },
+  {
+    "owner": "nzrsky",
+    "repo": "lsp-mcp-server",
+    "fullSlug": "nzrsky/lsp-mcp-server",
+    "description": "LSP-MCP bridge server in Zig connecting Language Server Protocol to MCP clients for AI assistants",
+    "category": "development",
+    "tags": [
+      "lsp",
+      "zig",
+      "language-server",
+      "bridge"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/nzrsky/lsp-mcp-server",
+    "stars": 10
+  },
+  {
+    "owner": "tuannvm",
+    "repo": "gemini-mcp-server",
+    "fullSlug": "tuannvm/gemini-mcp-server",
+    "description": "MCP server connecting AI assistants with Google Gemini CLI for large file analysis",
+    "category": "ai",
+    "tags": [
+      "gemini",
+      "google",
+      "cli",
+      "large-files"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/tuannvm/gemini-mcp-server",
+    "stars": 34
+  },
+  {
+    "owner": "Swih",
+    "repo": "mistral-mcp",
+    "fullSlug": "swih/mistral-mcp",
+    "description": "Full Mistral AI MCP server - OCR, Voxtral audio, Codestral FIM, workflows, document extraction",
+    "category": "ai",
+    "tags": [
+      "mistral",
+      "ocr",
+      "audio",
+      "codestral",
+      "workflows"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Swih/mistral-mcp",
+    "stars": 9
+  },
+  {
+    "owner": "brave",
+    "repo": "brave-search-mcp-server",
+    "fullSlug": "brave/brave-search-mcp-server",
+    "description": "Official Brave Search MCP server for web and local search using Brave's Search API",
+    "category": "search",
+    "tags": [
+      "brave",
+      "search",
+      "web-search",
+      "local-search"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/brave/brave-search-mcp-server",
+    "stars": 1200
+  },
+  {
+    "owner": "linear",
+    "repo": "linear-mcp",
+    "fullSlug": "linear/linear-mcp",
+    "description": "Official Linear MCP server for issue tracking and project management",
+    "category": "productivity",
+    "tags": [
+      "linear",
+      "issue-tracking",
+      "project-management"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/linear/linear-mcp",
+    "stars": 800
+  },
+  {
+    "owner": "firebase",
+    "repo": "mcp",
+    "fullSlug": "firebase/mcp",
+    "description": "Firebase's experimental MCP Server to power AI tools with Firestore, Auth, and Storage",
+    "category": "cloud-service",
+    "tags": [
+      "firebase",
+      "firestore",
+      "auth",
+      "storage",
+      "gcp"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/firebase/mcp",
+    "stars": 4377
+  },
+  {
+    "owner": "PipedreamHQ",
+    "repo": "pipedream",
+    "fullSlug": "pipedreamhq/pipedream",
+    "description": "Connect with 2,500 APIs with 8,000+ prebuilt tools via MCP server",
+    "category": "tools",
+    "tags": [
+      "api",
+      "integration",
+      "2500-apis",
+      "automation"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/PipedreamHQ/pipedream",
+    "stars": 11200
+  },
+  {
+    "owner": "mcpjungle",
+    "repo": "MCPJungle",
+    "fullSlug": "mcpjungle/mcpjungle",
+    "description": "Self-hosted MCP Server registry for enterprise AI Agents",
+    "category": "tools",
+    "tags": [
+      "registry",
+      "enterprise",
+      "self-hosted"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/mcpjungle/MCPJungle",
+    "stars": 1100
+  },
+  {
+    "owner": "juspay",
+    "repo": "neurolink",
+    "fullSlug": "juspay/neurolink",
+    "description": "Enterprise infrastructure platform unifying 12 providers and 100+ models",
+    "category": "ai",
+    "tags": [
+      "enterprise",
+      "multi-provider",
+      "models",
+      "infrastructure"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/juspay/neurolink",
+    "stars": 97
+  },
+  {
+    "owner": "mindsdb",
+    "repo": "mindsdb",
+    "fullSlug": "mindsdb/mindsdb",
+    "description": "Connect and unify data across various platforms and databases as a single MCP server",
+    "category": "database",
+    "tags": [
+      "data-unification",
+      "ml",
+      "multi-database",
+      "ai"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/mindsdb/mindsdb",
+    "stars": 39000
+  },
+  {
+    "owner": "mcp-app",
+    "repo": "agent",
+    "fullSlug": "mcp-app/agent",
+    "description": "Unified MCP server implementation aggregating multiple MCP servers into one",
+    "category": "tools",
+    "tags": [
+      "aggregation",
+      "unified",
+      "multi-server"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/mcp-app/agent",
+    "stars": 450
+  },
+  {
+    "owner": "Zipstack",
+    "repo": "unstract",
+    "fullSlug": "zipstack/unstract",
+    "description": "LLM-Driven Extraction of Unstructured Data for API Deployments and ETL Workflows",
+    "category": "tools",
+    "tags": [
+      "extraction",
+      "etl",
+      "unstructured-data",
+      "llm"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Zipstack/unstract",
+    "stars": 900
+  },
+  {
+    "owner": "julien040",
+    "repo": "anyquery",
+    "fullSlug": "julien040/anyquery",
+    "description": "Query more than 40 apps with one binary using SQL - also connects to PostgreSQL, MySQL, SQLite",
+    "category": "database",
+    "tags": [
+      "sql",
+      "multi-app",
+      "query",
+      "database"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/julien040/anyquery",
+    "stars": 1700
+  },
+  {
+    "owner": "google",
+    "repo": "mcp",
+    "fullSlug": "google/mcp",
+    "description": "Collection of Google's official MCP servers for various Google services",
+    "category": "cloud-service",
+    "tags": [
+      "google",
+      "gcp",
+      "official",
+      "multi-service"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/google/mcp",
+    "stars": 3200
+  },
+  {
+    "owner": "devin",
+    "repo": "deepwiki",
+    "fullSlug": "devin/deepwiki",
+    "description": "Remote, no-auth MCP server providing AI-powered codebase context and answers",
+    "category": "development",
+    "tags": [
+      "codebase",
+      "context",
+      "remote",
+      "no-auth"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/devin/deepwiki",
+    "stars": 2500
+  },
+  {
+    "owner": "e2b-dev",
+    "repo": "mcp-server",
+    "fullSlug": "e2b-dev/mcp-server",
+    "description": "Run code in secure sandboxes hosted by E2B",
+    "category": "development",
+    "tags": [
+      "sandbox",
+      "code-execution",
+      "e2b",
+      "cloud"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/e2b-dev/mcp-server",
+    "stars": 900
+  },
+  {
+    "owner": "anthropic",
+    "repo": "mcp-servers-creative-tools",
+    "fullSlug": "anthropic/mcp-servers-creative-tools",
+    "description": "Anthropic's creative tool connectors for MCP - image generation, music, and more",
+    "category": "ai",
+    "tags": [
+      "anthropic",
+      "creative",
+      "image-generation",
+      "music"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/anthropic/mcp-servers-creative-tools",
+    "stars": 500
+  },
+  {
+    "owner": "starecz",
+    "repo": "karea-mcp",
+    "fullSlug": "starecz/karea-mcp",
+    "description": "MCP tools for dev task management - create, edit, close, recap tasks with Jira linking",
+    "category": "productivity",
+    "tags": [
+      "task-management",
+      "jira",
+      "dev-tasks"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/starecz/karea-mcp",
+    "stars": 50
+  },
+  {
+    "owner": "sikamikanikobg",
+    "repo": "homelab-monitor",
+    "fullSlug": "sikamikanikobg/homelab-monitor",
+    "description": "Read-only MCP server for self-hosted homelab dashboard - hosts, Docker, GPU, services",
+    "category": "monitoring",
+    "tags": [
+      "homelab",
+      "docker",
+      "monitoring",
+      "gpu",
+      "self-hosted"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/sikamikanikobg/homelab-monitor",
+    "stars": 30
+  },
+  {
+    "owner": "geekflare",
+    "repo": "geekflare-api-mcp",
+    "fullSlug": "geekflare/geekflare-api-mcp",
+    "description": "MCP client access to scraping, web search, site performance analysis via Geekflare API",
+    "category": "search",
+    "tags": [
+      "geekflare",
+      "scraping",
+      "performance",
+      "web-search"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/geekflare/geekflare-api-mcp",
+    "stars": 40
+  },
+  {
+    "owner": "aliasunder",
+    "repo": "vault-cortex",
+    "fullSlug": "aliasunder/vault-cortex",
+    "description": "MCP server for Obsidian vaults - search, memory, link graph, 23 tools, OAuth-protected",
+    "category": "productivity",
+    "tags": [
+      "obsidian",
+      "vault",
+      "memory",
+      "link-graph"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/aliasunder/vault-cortex",
+    "stars": 60
+  },
+  {
+    "owner": "epiral",
+    "repo": "bb-browser",
+    "fullSlug": "epiral/bb-browser",
+    "description": "CLI + MCP server for AI agents to control Chrome with your login state",
+    "category": "browser",
+    "tags": [
+      "chrome",
+      "browser-control",
+      "login-state",
+      "cli"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/epiral/bb-browser",
+    "stars": 200
+  },
+  {
+    "owner": "lightningfaucet",
+    "repo": "lightning-wallet-mcp",
+    "fullSlug": "lightningfaucet/lightning-wallet-mcp",
+    "description": "Bitcoin Lightning wallet MCP server for invoices, budgets, and L402 payments",
+    "category": "finance",
+    "tags": [
+      "bitcoin",
+      "lightning",
+      "wallet",
+      "l402",
+      "crypto"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/lightningfaucet/lightning-wallet-mcp",
+    "stars": 80
+  },
+  {
+    "owner": "kevthetech143",
+    "repo": "chain-signer",
+    "fullSlug": "kevthetech143/chain-signer",
+    "description": "Pre-signature security suite for AI agents - flags wallet drains and risky EVM actions",
+    "category": "security",
+    "tags": [
+      "evm",
+      "wallet-security",
+      "crypto",
+      "phishing"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/kevthetech143/chain-signer",
+    "stars": 30
+  },
+  {
+    "owner": "namixai",
+    "repo": "signer-mcp",
+    "fullSlug": "namixai/signer-mcp",
+    "description": "Keyless CEX/DEX signing for AI agents with AWS Nitro Enclave-protected API keys",
+    "category": "finance",
+    "tags": [
+      "cex",
+      "dex",
+      "aws-nitro",
+      "keyless",
+      "trading"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/namixai/signer-mcp",
+    "stars": 50
+  },
+  {
+    "owner": "devopam",
+    "repo": "mcpg",
+    "fullSlug": "devopam/mcpg",
+    "description": "Production-grade PostgreSQL MCP Server safe-by-default for AI agents",
+    "category": "database",
+    "tags": [
+      "postgresql",
+      "production",
+      "safe-defaults"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/devopam/mcpg",
+    "stars": 40
+  },
+  {
+    "owner": "pleaseprompto",
+    "repo": "notebooklm-mcp",
+    "fullSlug": "pleaseprompto/notebooklm-mcp",
+    "description": "MCP server for chatting with Google NotebookLM for zero-hallucination answers",
+    "category": "ai",
+    "tags": [
+      "notebooklm",
+      "google",
+      "rag",
+      "zero-hallucination"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/pleaseprompto/notebooklm-mcp",
+    "stars": 350
+  },
+  {
+    "owner": "zencoderai",
+    "repo": "slack-mcp-server",
+    "fullSlug": "zencoderai/slack-mcp-server",
+    "description": "Official Slack MCP server for channel management and messaging, maintained by Zencoder",
+    "category": "communication",
+    "tags": [
+      "slack",
+      "messaging",
+      "channels",
+      "official"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/zencoderai/slack-mcp-server",
+    "stars": 600
+  },
+  {
+    "owner": "Pimzino",
+    "repo": "spec-workflow-mcp",
+    "fullSlug": "pimzino/spec-workflow-mcp",
+    "description": "Structured spec-driven development workflow tools with real-time web dashboard",
+    "category": "development",
+    "tags": [
+      "spec-driven",
+      "workflow",
+      "dashboard",
+      "development"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Pimzino/spec-workflow-mcp",
+    "stars": 150
+  },
+  {
+    "owner": "google-labs-code",
+    "repo": "stitch-skills",
+    "fullSlug": "google-labs-code/stitch-skills",
+    "description": "Agent Skills library for Stitch MCP server following the Agent Skills open standard",
+    "category": "development",
+    "tags": [
+      "stitch",
+      "agent-skills",
+      "google-labs",
+      "open-standard"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/google-labs-code/stitch-skills",
+    "stars": 400
+  },
+  {
+    "owner": "Vooster-AI",
+    "repo": "github-fetcher-mcp",
+    "fullSlug": "vooster-ai/github-fetcher-mcp",
+    "description": "MCP server for fetching GitHub repository files and directory trees",
+    "category": "git",
+    "tags": [
+      "github",
+      "file-fetching",
+      "directory-tree",
+      "code"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Vooster-AI/github-fetcher-mcp",
+    "stars": 200
+  },
+  {
+    "owner": "calcom",
+    "repo": "calcom-mcp",
+    "fullSlug": "calcom/calcom-mcp",
+    "description": "Connect AI clients to Cal.com scheduling through MCP - hosted or local",
+    "category": "calendar",
+    "tags": [
+      "cal.com",
+      "scheduling",
+      "calendar",
+      "hosted"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/calcom/calcom-mcp",
+    "stars": 300
+  },
+  {
+    "owner": "meru-fin-tech",
+    "repo": "hellobooks-mcp-public",
+    "fullSlug": "meru-fin-tech/hellobooks-mcp-public",
+    "description": "AI agents for automated bookkeeping and financial close for SMBs",
+    "category": "finance",
+    "tags": [
+      "bookkeeping",
+      "financial-close",
+      "smb",
+      "automation"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/meru-fin-tech/hellobooks-mcp-public",
+    "stars": 30
+  },
+  {
+    "owner": "tradeparadex",
+    "repo": "mcp-paradex-py",
+    "fullSlug": "tradeparadex/mcp-paradex-py",
+    "description": "MCP server for Paradex perpetual futures trading - market data, orders, positions",
+    "category": "finance",
+    "tags": [
+      "trading",
+      "perpetual-futures",
+      "defi",
+      "paradex"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/tradeparadex/mcp-paradex-py",
+    "stars": 200
+  },
+  {
+    "owner": "onesignal",
+    "repo": "onesignal",
+    "fullSlug": "onesignal/onesignal",
+    "description": "OneSignal MCP server for push notifications, email, SMS, and in-app messaging",
+    "category": "communication",
+    "tags": [
+      "push-notifications",
+      "email",
+      "sms",
+      "messaging"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/onesignal/onesignal",
+    "stars": 500
+  },
+  {
+    "owner": "useorgx",
+    "repo": "orgx-mcp",
+    "fullSlug": "useorgx/orgx-mcp",
+    "description": "OrgX - coordination infrastructure for AI-native teams with persistent context",
+    "category": "productivity",
+    "tags": [
+      "coordination",
+      "teams",
+      "persistent-context",
+      "ai-native"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/useorgx/orgx-mcp",
+    "stars": 150
+  },
+  {
+    "owner": "theagenttimes",
+    "repo": "news",
+    "fullSlug": "theagenttimes/news",
+    "description": "Agent News - verified, sourced, real-time information feed for AI agents",
+    "category": "search",
+    "tags": [
+      "news",
+      "real-time",
+      "verified",
+      "agents"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/theagenttimes/news",
+    "stars": 100
+  },
+  {
+    "owner": "massed-compute",
+    "repo": "massed-compute-mcp",
+    "fullSlug": "massed-compute/massed-compute-mcp",
+    "description": "Browse GPU inventory, launch and manage VMs on Massed Compute platform",
+    "category": "cloud-service",
+    "tags": [
+      "gpu",
+      "vm",
+      "compute",
+      "cloud"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/massed-compute/massed-compute-mcp",
+    "stars": 50
+  },
+  {
+    "owner": "cameroncooke",
+    "repo": "xcodebuildmcp",
+    "fullSlug": "cameroncooke/xcodebuildmcp",
+    "description": "MCP server and CLI for iOS and macOS project builds and Xcode operations",
+    "category": "development",
+    "tags": [
+      "xcode",
+      "ios",
+      "macos",
+      "build"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/cameroncooke/xcodebuildmcp",
+    "stars": 600
+  },
+  {
+    "owner": "minimax-ai",
+    "repo": "minimax-mcp",
+    "fullSlug": "minimax-ai/minimax-mcp",
+    "description": "Official MiniMax MCP server for Text-to-Speech, image, and video generation APIs",
+    "category": "ai",
+    "tags": [
+      "minimax",
+      "tts",
+      "image-generation",
+      "video-generation"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/minimax-ai/minimax-mcp",
+    "stars": 400
+  },
+  {
+    "owner": "granola-mcp",
+    "repo": "granola-mcp-server",
+    "fullSlug": "granola-mcp/granola-mcp-server",
+    "description": "Connect AI tools to Granola meeting notes - query notes, search transcripts, get insights",
+    "category": "productivity",
+    "tags": [
+      "granola",
+      "meetings",
+      "transcripts",
+      "notes"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/granola-mcp/granola-mcp-server",
+    "stars": 300
+  },
+  {
+    "owner": "superlist",
+    "repo": "superlist-mcp",
+    "fullSlug": "superlist/superlist-mcp",
+    "description": "Superlist MCP server for task management - to-do lists, notes, and projects",
+    "category": "productivity",
+    "tags": [
+      "superlist",
+      "tasks",
+      "todo",
+      "projects"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/superlist/superlist-mcp",
+    "stars": 200
+  },
+  {
+    "owner": "zernio",
+    "repo": "zernio-mcp",
+    "fullSlug": "zernio/zernio-mcp",
+    "description": "Social media scheduling platform for managing and publishing content across platforms",
+    "category": "social",
+    "tags": [
+      "social-media",
+      "scheduling",
+      "publishing",
+      "content"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/zernio/zernio-mcp",
+    "stars": 150
+  },
+  {
+    "owner": "proxyman",
+    "repo": "proxyman-mcp",
+    "fullSlug": "proxyman/proxyman-mcp",
+    "description": "Proxyman MCP for inspecting HTTP traffic, creating debugging rules, and controlling Proxyman",
+    "category": "development",
+    "tags": [
+      "proxyman",
+      "http",
+      "debugging",
+      "traffic"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/proxyman/proxyman-mcp",
+    "stars": 300
+  },
+  {
+    "owner": "chipp-mcp",
+    "repo": "chipp-mcp-server",
+    "fullSlug": "chipp-mcp/chipp-mcp-server",
+    "description": "Chipp MCP for building, deploying, and monetizing AI agents",
+    "category": "ai",
+    "tags": [
+      "chipp",
+      "agents",
+      "monetization",
+      "deployment"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/chipp-mcp/chipp-mcp-server",
+    "stars": 100
+  },
+  {
+    "owner": "anki-mcp",
+    "repo": "anki-mcp-desktop",
+    "fullSlug": "anki-mcp/anki-mcp-desktop",
+    "description": "MCP server for AI assistants to interact with Anki spaced repetition flashcard app",
+    "category": "productivity",
+    "tags": [
+      "anki",
+      "flashcards",
+      "spaced-repetition",
+      "learning"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/anki-mcp/anki-mcp-desktop",
+    "stars": 200
+  },
+  {
+    "owner": "infaton",
+    "repo": "mcp35",
+    "fullSlug": "infaton/mcp35",
+    "description": "MCP server for 1C:Enterprise ERP with 51 tools for metadata, documents, and catalogs",
+    "category": "tools",
+    "tags": [
+      "1c",
+      "erp",
+      "russian",
+      "metadata"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/infaton/mcp35",
+    "stars": 30
+  },
+  {
+    "owner": "aayushmdesai14",
+    "repo": "mcp-dotnet-diagnostics",
+    "fullSlug": "aayushmdesai14/mcp-dotnet-diagnostics",
+    "description": "MCP server for .NET runtime diagnostics - memory, GC, threads, and more",
+    "category": "monitoring",
+    "tags": [
+      "dotnet",
+      "diagnostics",
+      "memory",
+      "gc",
+      "threads"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/aayushmdesai14/mcp-dotnet-diagnostics",
+    "stars": 40
+  },
+  {
+    "owner": "lyonzin",
+    "repo": "knowledge-rag",
+    "fullSlug": "lyonzin/knowledge-rag",
+    "description": "Drop docs, search instantly from Claude Code - 12 MCP tools, 20 format parsers, hybrid search",
+    "category": "search",
+    "tags": [
+      "rag",
+      "knowledge",
+      "hybrid-search",
+      "parsers"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/lyonzin/knowledge-rag",
+    "stars": 91
+  },
+  {
+    "owner": "letta-ai",
+    "repo": "letta-mcp",
+    "fullSlug": "letta-ai/letta-mcp",
+    "description": "Letta MCP server for agent state framework and persistent memory",
+    "category": "memory",
+    "tags": [
+      "letta",
+      "agent-state",
+      "persistent-memory",
+      "framework"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/letta-ai/letta-mcp",
+    "stars": 12000
+  },
+  {
+    "owner": "cyanheads",
+    "repo": "git-mcp-server",
+    "fullSlug": "cyanheads/git-mcp-server",
+    "description": "Enhanced Git MCP server with extended operations beyond the reference implementation",
+    "category": "git",
+    "tags": [
+      "git",
+      "extended-operations",
+      "version-control"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/cyanheads/git-mcp-server",
+    "stars": 300
+  },
+  {
+    "owner": "tools-mcp",
+    "repo": "codemap-mcp",
+    "fullSlug": "tools-mcp/codemap-mcp",
+    "description": "Semantic code navigation and mapping MCP server for AI agents",
+    "category": "development",
+    "tags": [
+      "code-navigation",
+      "semantic",
+      "mapping",
+      "agents"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/tools-mcp/codemap-mcp",
+    "stars": 400
+  },
+  {
+    "owner": "tolkonepiu",
+    "repo": "best-of-mcp-servers",
+    "fullSlug": "tolkonepiu/best-of-mcp-servers",
+    "description": "A ranked list of 400 awesome MCP servers with project-quality scores, updated weekly",
+    "category": "tools",
+    "tags": [
+      "ranking",
+      "curated",
+      "best-of",
+      "quality-scores"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/tolkonepiu/best-of-mcp-servers",
+    "stars": 89
+  },
+  {
+    "owner": "modelcontextprotocol",
+    "repo": "servers-archived",
+    "fullSlug": "modelcontextprotocol/servers-archived",
+    "description": "Archived MCP reference servers - AWS KB, Brave Search, EverArt, GitHub, GitLab, GDrive, Maps, Postgres, Puppeteer, Redis, Sentry, Slack, SQLite",
+    "category": "tools",
+    "tags": [
+      "archived",
+      "reference",
+      "anthropic"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/modelcontextprotocol/servers-archived",
+    "stars": 5000
+  },
+  {
+    "owner": "vercel",
+    "repo": "grep",
+    "fullSlug": "vercel/grep",
+    "description": "Search millions of public GitHub repositories for real-world code patterns and API implementations",
+    "category": "search",
+    "tags": [
+      "code-search",
+      "github",
+      "patterns",
+      "api"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": true,
+    "githubUrl": "https://github.com/vercel/grep",
+    "stars": 1940
+  },
+  {
+    "owner": "jina-ai",
+    "repo": "mcp-server",
+    "fullSlug": "jina-ai/mcp-server",
+    "description": "Jina AI MCP server for web search, page reading, and structured data extraction",
+    "category": "search",
+    "tags": [
+      "jina",
+      "search",
+      "web-reading",
+      "extraction"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/jina-ai/mcp-server",
+    "stars": 585
+  },
+  {
+    "owner": "parallel",
+    "repo": "search",
+    "fullSlug": "parallel/search",
+    "description": "Parallel Web Search - highest accuracy web search optimized for AIs",
+    "category": "search",
+    "tags": [
+      "web-search",
+      "accuracy",
+      "ai-optimized"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/parallel/search",
+    "stars": 348
+  },
+  {
+    "owner": "Teleomorph",
+    "repo": "pinako-mcp",
+    "fullSlug": "teleomorph/pinako-mcp",
+    "description": "Pinako AI Bridge connecting browser tabs, bookmarks, libraries and notes to AI agents",
+    "category": "productivity",
+    "tags": [
+      "browser",
+      "bookmarks",
+      "notes",
+      "bridge"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Teleomorph/pinako-mcp",
+    "stars": 25
+  },
+  {
+    "owner": "sambel",
+    "repo": "expired-domains-skill",
+    "fullSlug": "sambel/expired-domains-skill",
+    "description": "Find and qualify expired, dropping, and auction domains using SEO metrics",
+    "category": "search",
+    "tags": [
+      "domains",
+      "seo",
+      "expired",
+      "auction"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/sambel/expired-domains-skill",
+    "stars": 20
+  },
+  {
+    "owner": "yonro",
+    "repo": "memory-os-cli",
+    "fullSlug": "yonro/memory-os-cli",
+    "description": "XMemo - user-owned memory for AI agents over remote MCP with save, search, recall, update",
+    "category": "memory",
+    "tags": [
+      "memory",
+      "user-owned",
+      "remote",
+      "agents"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/yonro/memory-os-cli",
+    "stars": 45
+  },
+  {
+    "owner": "red-panda-dev",
+    "repo": "tokenbel-landing",
+    "fullSlug": "red-panda-dev/tokenbel-landing",
+    "description": "Read-only MCP server providing access to Belarusian securities data",
+    "category": "finance",
+    "tags": [
+      "securities",
+      "belarus",
+      "financial-data"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/red-panda-dev/tokenbel-landing",
+    "stars": 10
+  },
+  {
+    "owner": "petrkindlmann",
+    "repo": "qa-skills",
+    "fullSlug": "petrkindlmann/qa-skills",
+    "description": "43 QA and test-automation skills for Claude Code, Codex, Cursor, and Agent Skills Standard",
+    "category": "development",
+    "tags": [
+      "qa",
+      "testing",
+      "automation",
+      "skills"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/petrkindlmann/qa-skills",
+    "stars": 35
+  },
+  {
+    "owner": "sapuyou45-bit",
+    "repo": "ai-divination-skills",
+    "fullSlug": "sapuyou45-bit/ai-divination-skills",
+    "description": "Audited tarot, I Ching, and Xiao Liu Ren divination MCP server with local seeded entropy",
+    "category": "tools",
+    "tags": [
+      "tarot",
+      "i-ching",
+      "divination",
+      "entropy"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/sapuyou45-bit/ai-divination-skills",
+    "stars": 15
+  },
+  {
+    "owner": "spowers42",
+    "repo": "mt_washington_obs_mcp",
+    "fullSlug": "spowers42/mt_washington_obs_mcp",
+    "description": "Weather data from the Mt Washington weather observatory in New Hampshire",
+    "category": "tools",
+    "tags": [
+      "weather",
+      "mt-washington",
+      "observatory"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/spowers42/mt_washington_obs_mcp",
+    "stars": 5
+  },
+  {
+    "owner": "vectoralix",
+    "repo": "healthy-food-mcp",
+    "fullSlug": "vectoralix/healthy-food-mcp",
+    "description": "Structured recipe content MCP server for agents - calorie categories, diet groups, recipe search",
+    "category": "tools",
+    "tags": [
+      "recipes",
+      "food",
+      "calories",
+      "diet"
+    ],
+    "isOfficial": false,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/vectoralix/healthy-food-mcp",
+    "stars": 10
+  },
+  {
+    "owner": "datadog",
+    "repo": "mcp-server-datadog",
+    "fullSlug": "datadog/mcp-server-datadog",
+    "description": "Datadog MCP server for metrics, logs, traces, and monitoring data access",
+    "category": "monitoring",
+    "tags": [
+      "datadog",
+      "monitoring",
+      "metrics",
+      "logs",
+      "traces"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/DataDog/mcp-server-datadog",
+    "stars": 350
+  },
+  {
+    "owner": "grafana",
+    "repo": "mcp-server-grafana",
+    "fullSlug": "grafana/mcp-server-grafana",
+    "description": "Grafana MCP server for dashboards, data sources, and observability data",
+    "category": "monitoring",
+    "tags": [
+      "grafana",
+      "dashboards",
+      "observability",
+      "monitoring"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/grafana/mcp-server-grafana",
+    "stars": 400
+  },
+  {
+    "owner": "posthog",
+    "repo": "mcp-server-posthog",
+    "fullSlug": "posthog/mcp-server-posthog",
+    "description": "PostHog MCP server for product analytics, feature flags, and event tracking",
+    "category": "monitoring",
+    "tags": [
+      "posthog",
+      "analytics",
+      "feature-flags",
+      "events"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/PostHog/mcp-server-posthog",
+    "stars": 250
+  },
+  {
+    "owner": "resend",
+    "repo": "mcp-server-resend",
+    "fullSlug": "resend/mcp-server-resend",
+    "description": "Resend MCP server for sending emails via the Resend API",
+    "category": "email",
+    "tags": [
+      "resend",
+      "email",
+      "sending",
+      "api"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/resend/mcp-server-resend",
+    "stars": 200
+  },
+  {
+    "owner": "twilio",
+    "repo": "mcp-server-twilio",
+    "fullSlug": "twilio/mcp-server-twilio",
+    "description": "Twilio MCP server for SMS, voice calls, and communication APIs",
+    "category": "communication",
+    "tags": [
+      "twilio",
+      "sms",
+      "voice",
+      "communication"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/twilio/mcp-server-twilio",
+    "stars": 300
+  },
+  {
+    "owner": "expo",
+    "repo": "mcp-server-expo",
+    "fullSlug": "expo/mcp-server-expo",
+    "description": "Expo MCP server for React Native development and EAS build/deploy",
+    "category": "development",
+    "tags": [
+      "expo",
+      "react-native",
+      "eas",
+      "mobile"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/expo/mcp-server-expo",
+    "stars": 500
+  },
+  {
+    "owner": "figma",
+    "repo": "mcp-server-figma",
+    "fullSlug": "figma/mcp-server-figma",
+    "description": "Official Figma MCP server for design file access and component management",
+    "category": "development",
+    "tags": [
+      "figma",
+      "design",
+      "components",
+      "official"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/figma/mcp-server-figma",
+    "stars": 2500
+  },
+  {
+    "owner": "docker",
+    "repo": "mcp-server-docker",
+    "fullSlug": "docker/mcp-server-docker",
+    "description": "Docker MCP server for container management, image operations, and Docker Compose",
+    "category": "cloud-service",
+    "tags": [
+      "docker",
+      "containers",
+      "compose",
+      "devops"
+    ],
+    "isOfficial": true,
+    "isRemote": false,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/docker/mcp-server-docker",
+    "stars": 800
+  },
+  {
+    "owner": "sendgrid",
+    "repo": "mcp-server-sendgrid",
+    "fullSlug": "sendgrid/mcp-server-sendgrid",
+    "description": "SendGrid MCP server for email delivery and management",
+    "category": "email",
+    "tags": [
+      "sendgrid",
+      "email",
+      "delivery",
+      "marketing"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/sendgrid/mcp-server-sendgrid",
+    "stars": 150
+  },
+  {
+    "owner": "vercel",
+    "repo": "mcp-server-vercel",
+    "fullSlug": "vercel/mcp-server-vercel",
+    "description": "Vercel MCP server for deployments, projects, and infrastructure management",
+    "category": "cloud-service",
+    "tags": [
+      "vercel",
+      "deployments",
+      "serverless",
+      "infrastructure"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/vercel/mcp-server-vercel",
+    "stars": 600
+  },
+  {
+    "owner": "stripe",
+    "repo": "mcp-server-stripe-official",
+    "fullSlug": "stripe/mcp-server-stripe-official",
+    "description": "Official Stripe MCP server for payment processing and financial operations",
+    "category": "finance",
+    "tags": [
+      "stripe",
+      "payments",
+      "subscriptions",
+      "official"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/stripe/mcp-server-stripe-official",
+    "stars": 400
+  },
+  {
+    "owner": "sentry",
+    "repo": "mcp-server-sentry-official",
+    "fullSlug": "sentry/mcp-server-sentry-official",
+    "description": "Official Sentry MCP server for error tracking and issue analysis",
+    "category": "monitoring",
+    "tags": [
+      "sentry",
+      "error-tracking",
+      "issues",
+      "monitoring"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/getsentry/mcp-server-sentry",
+    "stars": 500
+  },
+  {
+    "owner": "pagerduty",
+    "repo": "mcp-server-pagerduty",
+    "fullSlug": "pagerduty/mcp-server-pagerduty",
+    "description": "PagerDuty MCP server for incident management and on-call scheduling",
+    "category": "monitoring",
+    "tags": [
+      "pagerduty",
+      "incidents",
+      "on-call",
+      "alerting"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/PagerDuty/mcp-server-pagerduty",
+    "stars": 200
+  },
+  {
+    "owner": "postman",
+    "repo": "mcp-server-postman",
+    "fullSlug": "postman/mcp-server-postman",
+    "description": "Postman MCP server for API testing, collections, and environment management",
+    "category": "development",
+    "tags": [
+      "postman",
+      "api-testing",
+      "collections",
+      "environments"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/postmanlabs/mcp-server-postman",
+    "stars": 300
+  },
+  {
+    "owner": "airbyte",
+    "repo": "mcp-server-airbyte",
+    "fullSlug": "airbyte/mcp-server-airbyte",
+    "description": "Airbyte MCP server for ELT data pipeline management and connection orchestration",
+    "category": "database",
+    "tags": [
+      "airbyte",
+      "elt",
+      "data-pipeline",
+      "integration"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/airbytehq/mcp-server-airbyte",
+    "stars": 200
+  },
+  {
+    "owner": "databricks",
+    "repo": "mcp-server-databricks",
+    "fullSlug": "databricks/mcp-server-databricks",
+    "description": "Databricks MCP server for notebooks, clusters, jobs, and SQL warehouse access",
+    "category": "database",
+    "tags": [
+      "databricks",
+      "spark",
+      "notebooks",
+      "clusters"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/databricks/mcp-server-databricks",
+    "stars": 300
+  },
+  {
+    "owner": "snowflake",
+    "repo": "mcp-server-snowflake",
+    "fullSlug": "snowflake/mcp-server-snowflake",
+    "description": "Snowflake MCP server for data warehouse queries and warehouse management",
+    "category": "database",
+    "tags": [
+      "snowflake",
+      "data-warehouse",
+      "sql",
+      "analytics"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Snowflake-Labs/mcp-server-snowflake",
+    "stars": 250
+  },
+  {
+    "owner": "airtable",
+    "repo": "mcp-server-airtable",
+    "fullSlug": "airtable/mcp-server-airtable",
+    "description": "Airtable MCP server for structured data management - bases, schema, records",
+    "category": "database",
+    "tags": [
+      "airtable",
+      "bases",
+      "schema",
+      "records"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Airtable/mcp-server-airtable",
+    "stars": 350
+  },
+  {
+    "owner": "linear",
+    "repo": "mcp",
+    "fullSlug": "linearapp/mcp",
+    "description": "Linear MCP server for issue tracking, project management, and team workflows",
+    "category": "productivity",
+    "tags": [
+      "linear",
+      "issues",
+      "projects",
+      "teams"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/linear-app/mcp",
+    "stars": 600
+  },
+  {
+    "owner": "asana",
+    "repo": "mcp-server-asana",
+    "fullSlug": "asana/mcp-server-asana",
+    "description": "Asana MCP server for project and task management workflows",
+    "category": "productivity",
+    "tags": [
+      "asana",
+      "tasks",
+      "projects",
+      "workflows"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/Asana/mcp-server-asana",
+    "stars": 200
+  },
+  {
+    "owner": "todoist",
+    "repo": "mcp-server-todoist",
+    "fullSlug": "todoist/mcp-server-todoist",
+    "description": "Todoist MCP server for task management and to-do list operations",
+    "category": "productivity",
+    "tags": [
+      "todoist",
+      "tasks",
+      "todo",
+      "lists"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/todoist/mcp-server-todoist",
+    "stars": 150
+  },
+  {
+    "owner": "wolframalpha",
+    "repo": "mcp-server-wolfram",
+    "fullSlug": "wolframalpha/mcp-server-wolfram",
+    "description": "Wolfram Alpha MCP server for computational knowledge and mathematical queries",
+    "category": "ai",
+    "tags": [
+      "wolfram",
+      "math",
+      "computation",
+      "knowledge"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/wolframalpha/mcp-server-wolfram",
+    "stars": 300
+  },
+  {
+    "owner": "huggingface",
+    "repo": "mcp-server-hf-extended",
+    "fullSlug": "huggingface/mcp-server-hf-extended",
+    "description": "Extended Hugging Face MCP server for model inference, datasets, and Spaces",
+    "category": "ai",
+    "tags": [
+      "huggingface",
+      "models",
+      "datasets",
+      "inference"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/huggingface/mcp-server-hf-extended",
+    "stars": 600
+  },
+  {
+    "owner": "openai",
+    "repo": "codex-mcp-server-extended",
+    "fullSlug": "openai/codex-mcp-server-extended",
+    "description": "Extended OpenAI Codex MCP server for AI-powered code analysis and generation",
+    "category": "ai",
+    "tags": [
+      "openai",
+      "codex",
+      "code-analysis",
+      "generation"
+    ],
+    "isOfficial": true,
+    "isRemote": true,
+    "isSponsored": false,
+    "featured": false,
+    "githubUrl": "https://github.com/openai/codex-mcp-server-extended",
+    "stars": 500
+  }
+]

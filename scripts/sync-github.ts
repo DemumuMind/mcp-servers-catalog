@@ -1,9 +1,9 @@
 import { syncGitHubStats } from '../src/app/actions/sync'
 
 async function main() {
-  console.log('Starting GitHub stats sync for existing servers...')
+  process.stdout.write('Starting GitHub stats sync for existing servers...\n')
   const result = await syncGitHubStats()
-  console.log('Sync complete:', result)
+  process.stdout.write(`Sync complete: ${result}\n`)
 }
 
 main().catch(console.error)

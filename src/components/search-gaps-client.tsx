@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AlertTriangle, Search, TrendingUp } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface SearchGap {
   query: string
@@ -30,32 +31,33 @@ interface SearchGapsClientProps {
 }
 
 export function SearchGapsClient({ gaps, topSearches, stats }: SearchGapsClientProps) {
+  const t = useTranslations('SearchGaps')
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Аналитика поиска</h1>
+      <h1 className="text-2xl font-bold">{t('title')}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4">
-            <div className="text-sm text-muted-foreground">Всего поисков (30д)</div>
+            <div className="text-sm text-muted-foreground">{t('totalSearches')}</div>
             <div className="text-2xl font-bold">{stats.total}</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="text-sm text-muted-foreground">С результатами</div>
+            <div className="text-sm text-muted-foreground">{t('withResults')}</div>
             <div className="text-2xl font-bold text-green-600">{stats.withResults}</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="text-sm text-muted-foreground">Без результатов</div>
+            <div className="text-sm text-muted-foreground">{t('withoutResults')}</div>
             <div className="text-2xl font-bold text-red-600">{stats.withoutResults}</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="text-sm text-muted-foreground">Процент "не найдено"</div>
+            <div className="text-sm text-muted-foreground">{t('notFoundRate')}</div>
             <div className="text-2xl font-bold">{(stats.gapRate * 100).toFixed(1)}%</div>
           </CardContent>
         </Card>
@@ -66,12 +68,12 @@ export function SearchGapsClient({ gaps, topSearches, stats }: SearchGapsClientP
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-500" />
-              Поисковые дыры (0 результатов)
+              {t('searchGaps')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             {gaps.length === 0 ? (
-              <p className="text-muted-foreground">Все запросы возвращают результаты. Отлично!</p>
+              <p className="text-muted-foreground">{t('allGood')}</p>
             ) : (
               <div className="space-y-3">
                 {gaps.map((gap) => (
@@ -80,7 +82,7 @@ export function SearchGapsClient({ gaps, topSearches, stats }: SearchGapsClientP
                       <Search className="h-4 w-4 text-muted-foreground" />
                       <span className="font-medium">{gap.query}</span>
                       <Badge variant="secondary" className="text-xs">
-                        {gap.count} раз
+                        {t('times', { count: gap.count })}
                       </Badge>
                     </div>
                     <span className="text-xs text-muted-foreground">
@@ -97,7 +99,7 @@ export function SearchGapsClient({ gaps, topSearches, stats }: SearchGapsClientP
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-blue-500" />
-              Топ поисковых запросов
+              {t('topSearches')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -110,10 +112,10 @@ export function SearchGapsClient({ gaps, topSearches, stats }: SearchGapsClientP
                   </div>
                   <div className="flex items-center gap-3">
                     <Badge variant="secondary" className="text-xs">
-                      {search.count} раз
+                      {t('times', { count: search.count })}
                     </Badge>
                     <span className="text-xs text-muted-foreground">
-                      ~{Math.round(search.avgResults)} результатов
+                      {t('avgResults', { count: Math.round(search.avgResults) })}
                     </span>
                   </div>
                 </div>

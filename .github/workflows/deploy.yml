@@ -26,11 +26,17 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        env:
+          # postinstall runs `prisma generate`, so provide install-time Prisma env.
+          # The fallback keeps this verification step usable when production DB
+          # secrets live only in Vercel and are not duplicated in GitHub Actions.
+          DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgresql://localhost:5432/test' }}
+          DATABASE_DIR: ${{ secrets.DATABASE_DIR || '.pglite' }}
 
       - name: Generate Prisma client
         run: npx prisma generate
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgresql://localhost:5432/test' }}
           DATABASE_DIR: ${{ secrets.DATABASE_DIR || '.pglite' }}
 
       - name: Build
@@ -38,7 +44,7 @@ jobs:
         env:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgresql://localhost:5432/test' }}
           DATABASE_DIR: ${{ secrets.DATABASE_DIR || '.pglite' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}

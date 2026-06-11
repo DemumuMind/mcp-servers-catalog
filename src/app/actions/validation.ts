@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
 
 export interface ValidationResult {
   valid: boolean
@@ -11,28 +11,24 @@ export interface ValidationResult {
   }[]
 }
 
-export async function validateServer(url: string, isRemote: boolean = false, endpoint?: string): Promise<ValidationResult> {
-  const checks: ValidationResult['checks'] = []
+type ValidationCheck = ValidationResult['checks'][0]
 
-  // 1. Check if URL is valid GitHub repo
-  const githubRegex = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/?$/
-  const githubMatch = url.match(githubRegex)
-  checks.push({
-    name: 'GitHub URL',
-    passed: !!githubMatch,
-    message: githubMatch ? 'Valid GitHub repository URL' : 'URL must be https://github.com/owner/repo',
-  })
-
-  if (!githubMatch) {
-    return { valid: false, checks }
+function checkGitHubUrl(url: string): { match: RegExpMatchArray | null; check: ValidationCheck } {
+  const githubRegex = /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/
+  const match = url.match(githubRegex)
+  return {
+    match,
+    check: {
+      name: 'GitHub URL',
+      passed: !!match,
+      message: match ? 'Valid GitHub repository URL' : 'URL must be https://github.com/owner/repo',
+    },
   }
+}
 
-  const [owner, repo] = [githubMatch[1], githubMatch[2]]
-
-  // 2. Check if repo exists via GitHub API
-  let repoExists = false
+async function checkRepositoryExists(owner: string, repo: string): Promise<{ checks: ValidationCheck[] }> {
+  const checks: ValidationCheck[] = []
   let hasPackageJson = false
-  let hasReadme = false
   let hasMcpKeyword = false
 
   try {
@@ -44,7 +40,7 @@ export async function validateServer(url: string, isRemote: boolean = false, end
     }
 
     const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers })
-    repoExists = repoRes.ok
+    const repoExists = repoRes.ok
 
     if (repoExists) {
       const data = await repoRes.json()
@@ -54,7 +50,6 @@ export async function validateServer(url: string, isRemote: boolean = false, end
         message: `Found: ${data.full_name}`,
       })
 
-      // 3. Check package.json
       const pkgRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/package.json`, { headers })
       hasPackageJson = pkgRes.ok
       if (hasPackageJson) {
@@ -85,7 +80,11 @@ export async function validateServer(url: string, isRemote: boolean = false, end
       : 'No package.json found',
   })
 
-  // 4. Check README
+  return { checks }
+}
+
+async function checkReadmeExists(owner: string, repo: string): Promise<ValidationCheck> {
+  let hasReadme = false
   try {
     const readmeRes = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`)
     hasReadme = readmeRes.ok
@@ -97,28 +96,55 @@ export async function validateServer(url: string, isRemote: boolean = false, end
     hasReadme = false
   }
 
-  checks.push({
+  return {
     name: 'README',
     passed: hasReadme,
     message: hasReadme ? 'README found' : 'No README.md found',
-  })
+  }
+}
+
+async function checkRemoteEndpoint(endpoint: string): Promise<ValidationCheck> {
+  try {
+    const endpointRes = await fetch(endpoint, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
+    return {
+      name: 'Remote endpoint',
+      passed: endpointRes.ok,
+      message: endpointRes.ok ? 'Endpoint is reachable' : `Endpoint returned ${endpointRes.status}`,
+    }
+  } catch {
+    return {
+      name: 'Remote endpoint',
+      passed: false,
+      message: 'Endpoint is not reachable',
+    }
+  }
+}
+
+export async function validateServer(url: string, isRemote: boolean = false, endpoint?: string): Promise<ValidationResult> {
+  const checks: ValidationResult['checks'] = []
+
+  // 1. Check if URL is valid GitHub repo
+  const { match: githubMatch, check: urlCheck } = checkGitHubUrl(url)
+  checks.push(urlCheck)
+
+  if (!githubMatch) {
+    return { valid: false, checks }
+  }
+
+  const [owner, repo] = [githubMatch[1], githubMatch[2]]
+
+  // 2 & 3. Check repository exists and package.json
+  const repoResult = await checkRepositoryExists(owner, repo)
+  checks.push(...repoResult.checks)
+
+  // 4. Check README
+  const readmeCheck = await checkReadmeExists(owner, repo)
+  checks.push(readmeCheck)
 
   // 5. Remote endpoint check
   if (isRemote && endpoint) {
-    try {
-      const endpointRes = await fetch(endpoint, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
-      checks.push({
-        name: 'Remote endpoint',
-        passed: endpointRes.ok,
-        message: endpointRes.ok ? 'Endpoint is reachable' : `Endpoint returned ${endpointRes.status}`,
-      })
-    } catch {
-      checks.push({
-        name: 'Remote endpoint',
-        passed: false,
-        message: 'Endpoint is not reachable',
-      })
-    }
+    const endpointCheck = await checkRemoteEndpoint(endpoint)
+    checks.push(endpointCheck)
   }
 
   const valid = checks.every((c) => c.passed)
@@ -126,13 +152,16 @@ export async function validateServer(url: string, isRemote: boolean = false, end
 }
 
 export async function validateAllServers() {
-  const servers = await prisma.server.findMany({
-    select: { id: true, githubUrl: true, isRemote: true, endpoint: true },
-  })
+  const serverList = await db.select({
+    id: servers.id,
+    githubUrl: servers.githubUrl,
+    isRemote: servers.isRemote,
+    endpoint: servers.endpoint,
+  }).from(servers)
 
   const results: Array<{ id: string; name: string; result: ValidationResult }> = []
 
-  for (const server of servers.slice(0, 10)) { // Validate first 10 to avoid rate limits
+  for (const server of serverList.slice(0, 10)) { // Validate first 10 to avoid rate limits
     try {
       const result = await validateServer(server.githubUrl, server.isRemote, server.endpoint || undefined)
       results.push({ id: server.id, name: server.githubUrl, result })

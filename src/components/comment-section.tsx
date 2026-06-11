@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -28,6 +30,8 @@ export function CommentSection({
   userId?: string
   initialComments: Comment[]
 }) {
+  const t = useTranslations('Comments')
+  const locale = useLocale()
   const [comments, setComments] = useState<Comment[]>(initialComments)
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
@@ -45,7 +49,7 @@ export function CommentSection({
       setComments((prev) => [newComment as Comment, ...prev])
       setContent('')
     } catch (err: any) {
-      setError(err.message || 'Ошибка при добавлении комментария')
+      setError(err.message || t('addError'))
     } finally {
       setLoading(false)
     }
@@ -59,12 +63,12 @@ export function CommentSection({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Комментарии ({comments.length})</h2>
+      <h2 className="text-2xl font-bold">{t('title')} ({comments.length})</h2>
 
       {userId ? (
         <form onSubmit={handleSubmit} className="space-y-3">
           <Textarea
-            placeholder="Напишите комментарий..."
+            placeholder={t('placeholder')}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={3}
@@ -72,15 +76,15 @@ export function CommentSection({
           />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <Button type="submit" disabled={loading || !content.trim()}>
-            {loading ? 'Отправка...' : 'Отправить'}
+            {loading ? t('submitting') : t('submit')}
           </Button>
         </form>
       ) : (
         <p className="text-sm text-muted-foreground">
-          <a href="/api/auth/signin" className="text-primary hover:underline">
-            Войдите
-          </a>{' '}
-          чтобы оставить комментарий
+          <Link href="/api/auth/signin" className="text-primary hover:underline">
+            {t('signIn')}
+          </Link>{' '}
+          {t('toComment')}
         </p>
       )}
 
@@ -93,9 +97,9 @@ export function CommentSection({
             </Avatar>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
-                <span className="font-medium text-sm">{comment.user.name || 'Аноним'}</span>
+                <span className="font-medium text-sm">{comment.user.name || t('anonymous')}</span>
                 <span className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(comment.createdAt))}
+                  {formatDistanceToNow(new Date(comment.createdAt), locale)}
                 </span>
               </div>
               <p className="text-sm mt-1">{comment.content}</p>
@@ -103,14 +107,14 @@ export function CommentSection({
                 <ReportButton
                   targetType="comment"
                   targetId={comment.id}
-                  targetName={`Комментарий от ${comment.user.name || 'Аноним'}`}
+                  targetName={`${t('commentFrom')} ${comment.user.name || t('anonymous')}`}
                 />
                 {userId === comment.userId && (
                   <button
                     onClick={() => handleDelete(comment.id, comment.userId)}
                     className="text-xs text-red-500 hover:underline"
                   >
-                    Удалить
+                    {t('delete')}
                   </button>
                 )}
               </div>

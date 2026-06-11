@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { getServerHealthHistory } from '@/app/actions/health-checks'
-import { checkServerStatus } from '@/app/actions/health'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { getServerHealthHistory } from '@/app/actions/health'
+import { checkServerHealth } from '@/app/actions/health'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -14,6 +15,7 @@ interface HealthHistoryProps {
 }
 
 export function HealthHistory({ serverId, isRemote }: HealthHistoryProps) {
+  const t = useTranslations('Health')
   const [history, setHistory] = useState<Array<{
     date: string
     online: number
@@ -23,123 +25,102 @@ export function HealthHistory({ serverId, isRemote }: HealthHistoryProps) {
     avgLatency: number | null
     uptime: number
   }>>([])
-  const [latest, setLatest] = useState<{
+  const [_latest, setLatest] = useState<{
     status: string
     latency: number | null
     createdAt: Date
   } | null>(null)
   const [loading, setLoading] = useState(false)
 
-  async function loadHistory() {
+  const loadHistory = useCallback(async () => {
     const data = await getServerHealthHistory(serverId, 7)
     setHistory(data)
-  }
+    if (data.length > 0) {
+      setLatest({
+        status: data[0].online > 0 ? 'online' : data[0].degraded > 0 ? 'degraded' : 'offline',
+        latency: data[0].avgLatency,
+        createdAt: new Date(data[0].date),
+      })
+    }
+  }, [serverId])
 
   async function checkNow() {
     setLoading(true)
-    await checkServerStatus(serverId)
+    await checkServerHealth(serverId)
     await loadHistory()
     setLoading(false)
   }
 
+  const loadHistoryRef = useRef(loadHistory)
+  loadHistoryRef.current = loadHistory
+
   useEffect(() => {
     if (isRemote) {
-      loadHistory()
+      loadHistoryRef.current()
     }
-  }, [isRemote, serverId])
+  }, [isRemote])
 
   if (!isRemote) return null
 
-  const statusColors: Record<string, string> = {
-    online: 'bg-green-500',
-    degraded: 'bg-yellow-500',
-    offline: 'bg-red-500',
-    timeout: 'bg-orange-500',
-  }
+  const hasHistory = history.length > 0
 
   return (
     <Card>
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg flex items-center gap-2">
             <Activity className="w-5 h-5" />
-            Доступность сервера
+            {t('title')}
           </CardTitle>
           <Button
             variant="ghost"
             size="sm"
             onClick={checkNow}
             disabled={loading}
+            className="gap-1.5"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            {t('checkNow')}
           </Button>
         </div>
-        {latest && (
-          <div className="flex items-center gap-2 text-sm">
-            <Badge className={statusColors[latest.status] || 'bg-gray-500'}>
-              {latest.status}
-            </Badge>
-            {latest.latency && (
-              <span className="text-muted-foreground">{latest.latency}ms</span>
-            )}
-          </div>
-        )}
       </CardHeader>
       <CardContent>
-        {history.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            Пока нет данных о проверках. Нажмите обновить для первой проверки.
-          </p>
+        {!hasHistory ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <Activity className="h-10 w-10 text-muted-foreground/30 mb-3" />
+            <p className="text-sm text-muted-foreground">{t('noData')}</p>
+            <p className="text-xs text-muted-foreground/60 mt-1">{t('startMonitoring')}</p>
+          </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {history.map((day) => (
-              <div key={day.date} className="flex items-center gap-3">
-                <span className="text-sm w-24">{day.date}</span>
-                <div className="flex-1 h-6 bg-muted rounded-full overflow-hidden flex">
+              <div key={day.date} className="flex items-center gap-3 text-sm">
+                <span className="w-20 text-muted-foreground shrink-0">
+                  {new Date(day.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}
+                </span>
+                <div className="flex-1 h-4 rounded-full bg-muted overflow-hidden flex">
                   {day.online > 0 && (
-                    <div
-                      className="bg-green-500 h-full"
-                      style={{ width: `${(day.online / day.total) * 100}%` }}
-                      title={`Online: ${day.online}`}
-                    />
+                    <div className="bg-green-500 h-full" style={{ width: `${(day.online / day.total) * 100}%` }} />
                   )}
                   {day.degraded > 0 && (
-                    <div
-                      className="bg-yellow-500 h-full"
-                      style={{ width: `${(day.degraded / day.total) * 100}%` }}
-                      title={`Degraded: ${day.degraded}`}
-                    />
+                    <div className="bg-yellow-500 h-full" style={{ width: `${(day.degraded / day.total) * 100}%` }} />
                   )}
                   {day.offline > 0 && (
-                    <div
-                      className="bg-red-500 h-full"
-                      style={{ width: `${(day.offline / day.total) * 100}%` }}
-                      title={`Offline: ${day.offline}`}
-                    />
+                    <div className="bg-red-500 h-full" style={{ width: `${(day.offline / day.total) * 100}%` }} />
                   )}
                 </div>
-                <span className="text-sm font-medium w-12">{day.uptime}%</span>
-                {day.avgLatency && (
-                  <span className="text-xs text-muted-foreground w-16">
-                    {day.avgLatency}ms
-                  </span>
-                )}
+                <div className="flex items-center gap-2 shrink-0">
+                  <Badge variant="outline" className="text-xs">
+                    {day.uptime.toFixed(1)}%
+                  </Badge>
+                  {day.avgLatency !== null && (
+                    <span className="text-xs text-muted-foreground">
+                      {day.avgLatency.toFixed(0)}ms
+                    </span>
+                  )}
+                </div>
               </div>
             ))}
-            <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t">
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-500 rounded-full" />
-                Online
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-yellow-500 rounded-full" />
-                Degraded
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-red-500 rounded-full" />
-                Offline
-              </span>
-            </div>
           </div>
         )}
       </CardContent>

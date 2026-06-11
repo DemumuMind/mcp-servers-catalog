@@ -21,7 +21,7 @@ async function migrate() {
       END $$;
     `)
 
-    console.log('Stars/Forks columns added successfully!')
+    process.stdout.write('Stars/Forks columns added successfully!\n')
   } catch (error) {
     console.error('Migration error:', error)
   } finally {

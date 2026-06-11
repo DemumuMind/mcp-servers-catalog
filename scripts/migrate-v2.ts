@@ -28,7 +28,6 @@ async function migrate() {
       END $$;
     `)
 
-    // Create Bookmark table
     await db.query(`
       CREATE TABLE IF NOT EXISTS "Bookmark" (
         "id" TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
@@ -41,7 +40,6 @@ async function migrate() {
       )
     `)
 
-    // Create Rating table
     await db.query(`
       CREATE TABLE IF NOT EXISTS "Rating" (
         "id" TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
@@ -56,7 +54,6 @@ async function migrate() {
       )
     `)
 
-    // Create Comment table
     await db.query(`
       CREATE TABLE IF NOT EXISTS "Comment" (
         "id" TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
@@ -70,7 +67,7 @@ async function migrate() {
       )
     `)
 
-    console.log('Migration completed successfully!')
+    process.stdout.write('Migration completed successfully!\n')
   } catch (error) {
     console.error('Migration error:', error)
   } finally {

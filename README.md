@@ -112,6 +112,22 @@ npm run validate
 npm run test:e2e
 ```
 
+## 🎨 Брендовые ассеты
+
+Логотип, PWA-иконки, favicon, OG-изображение и manifest screenshots генерируются из единого SVG-источника:
+
+- `src/lib/brand-svg.ts` — геометрия логотипа и SVG-шаблоны
+- `scripts/generate-brand-assets.ts` — генерация PNG/SVG/ICO файлов
+- `scripts/check-brand-assets.ts` — проверка ссылок и размеров из `public/manifest.json`
+
+```bash
+# Перегенерировать все брендовые файлы
+npm run brand:assets
+
+# Проверить, что manifest assets существуют и имеют верные размеры
+npm run brand:check
+```
+
 ## 📄 Лицензия
 
 MIT

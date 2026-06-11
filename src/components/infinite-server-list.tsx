@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import { getServersPublic } from '@/app/actions/public'
 import { ServerCard } from '@/components/server-card'
 import { Loader2 } from 'lucide-react'
 
-interface ServerWithRating {
+export interface ServerWithRating {
   id: string
   name: string
   description: string
@@ -44,6 +45,7 @@ export function InfiniteServerList({
   onlyRemote,
   sortBy = 'featured',
 }: InfiniteServerListProps) {
+  const t = useTranslations('InfiniteList')
   const [servers, setServers] = useState<ServerWithRating[]>(initialServers)
   const [page, setPage] = useState(initialPage)
   const [loading, setLoading] = useState(false)
@@ -69,7 +71,11 @@ export function InfiniteServerList({
       )
 
       if (result.servers.length > 0) {
-        setServers((prev) => [...prev, ...result.servers as ServerWithRating[]])
+        setServers((prev) => {
+          const existingIds = new Set(prev.map(s => s.id))
+          const unique = (result.servers as ServerWithRating[]).filter(s => !existingIds.has(s.id))
+          return [...prev, ...unique]
+        })
         setPage(nextPage)
         setHasMore(nextPage < result.pages)
       } else {
@@ -107,8 +113,8 @@ export function InfiniteServerList({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {servers.map((server) => (
-          <ServerCard key={server.id} server={server} locale={locale} />
+        {servers.map((server, index) => (
+          <ServerCard key={`${server.id}-${index}`} server={server} locale={locale} />
         ))}
       </div>
 
@@ -120,7 +126,7 @@ export function InfiniteServerList({
           {loading && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Загрузка...</span>
+              <span>{t('loading')}</span>
             </div>
           )}
         </div>
@@ -128,7 +134,7 @@ export function InfiniteServerList({
 
       {!hasMore && servers.length > 0 && (
         <p className="text-center text-muted-foreground py-8 text-sm">
-          Все серверы загружены
+          {t('allLoaded')}
         </p>
       )}
     </div>

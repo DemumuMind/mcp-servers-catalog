@@ -1,6 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, apiKeys } from '@/lib/db'
+import { eq, and, desc } from 'drizzle-orm'
 import { randomBytes, createHash } from 'crypto'
 import { revalidatePath } from 'next/cache'
 
@@ -22,15 +23,13 @@ export async function createApiKey(
     const keyHash = hashKey(key)
     const keyPrefix = key.slice(0, 8)
 
-    const apiKey = await prisma.apiKey.create({
-      data: {
-        userId,
-        name,
-        keyHash,
-        keyPrefix,
-        permissions,
-      },
-    })
+    const apiKey = await db.insert(apiKeys).values({
+      userId,
+      name,
+      keyHash,
+      keyPrefix,
+      permissions,
+    }).returning().then((r: any) => r[0])
 
     revalidatePath('/profile/api-keys')
 
@@ -61,19 +60,15 @@ export async function listApiKeys(userId: string): Promise<Array<{
   revoked: boolean
 }>> {
   try {
-    const keys = await prisma.apiKey.findMany({
-      where: { userId, revoked: false },
-      orderBy: { createdAt: 'desc' },
-      select: {
-        id: true,
-        name: true,
-        keyPrefix: true,
-        permissions: true,
-        lastUsedAt: true,
-        createdAt: true,
-        revoked: true,
-      },
-    })
+    const keys = await db.select({
+      id: apiKeys.id,
+      name: apiKeys.name,
+      keyPrefix: apiKeys.keyPrefix,
+      permissions: apiKeys.permissions,
+      lastUsedAt: apiKeys.lastUsedAt,
+      createdAt: apiKeys.createdAt,
+      revoked: apiKeys.revoked,
+    }).from(apiKeys).where(and(eq(apiKeys.userId, userId), eq(apiKeys.revoked, false))).orderBy(desc(apiKeys.createdAt))
 
     return keys
   } catch (error) {
@@ -84,10 +79,7 @@ export async function listApiKeys(userId: string): Promise<Array<{
 
 export async function revokeApiKey(userId: string, keyId: string): Promise<{ success: boolean }> {
   try {
-    await prisma.apiKey.updateMany({
-      where: { id: keyId, userId },
-      data: { revoked: true },
-    })
+    await db.update(apiKeys).set({ revoked: true }).where(and(eq(apiKeys.id, keyId), eq(apiKeys.userId, userId)))
 
     revalidatePath('/profile/api-keys')
     return { success: true }
@@ -108,15 +100,12 @@ export async function validateApiKey(
   try {
     const keyHash = hashKey(key)
 
-    const apiKey = await prisma.apiKey.findUnique({
-      where: { keyHash, revoked: false },
-    })
+    const apiKey = await db.select().from(apiKeys).where(and(eq(apiKeys.keyHash, keyHash), eq(apiKeys.revoked, false))).limit(1).then((r: any) => r[0])
 
     if (!apiKey) {
       return { valid: false }
     }
 
-    // Check expiration
     if (apiKey.expiresAt && apiKey.expiresAt < new Date()) {
       return { valid: false }
     }
@@ -131,11 +120,7 @@ export async function validateApiKey(
       }
     }
 
-    // Update last used
-    await prisma.apiKey.update({
-      where: { id: apiKey.id },
-      data: { lastUsedAt: new Date() },
-    })
+    await db.update(apiKeys).set({ lastUsedAt: new Date() }).where(eq(apiKeys.id, apiKey.id))
 
     return {
       valid: true,

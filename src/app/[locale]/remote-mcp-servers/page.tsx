@@ -1,6 +1,9 @@
 import { getServers } from '@/app/actions/servers'
 import { ServerCard } from '@/components/server-card'
 import { SearchBar } from '@/components/search-bar'
+import { EmptyState, PageHero, PageShell } from '@/components/page-components'
+import { RadioTower } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,26 +18,26 @@ export default async function RemoteServersPage({
   const sp = await searchParams
   const servers = await getServers({ isRemote: true, search: sp.q })
 
+  const t = await getTranslations({ locale, namespace: 'RemoteServers' })
+
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="text-center py-8">
-        <h1 className="text-3xl font-bold mb-4">Remote MCP серверы</h1>
-        <p className="text-muted-foreground mb-4">
-          Удаленные серверы с авторизацией по API
-        </p>
-        <div className="flex justify-center">
-          <SearchBar />
-        </div>
-      </div>
+    <PageShell className="space-y-8">
+      <PageHero
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
+      >
+        <SearchBar />
+      </PageHero>
       {servers.length === 0 ? (
-        <p className="text-center text-muted-foreground py-8">Нет удаленных серверов</p>
+        <EmptyState icon={RadioTower} title={t('emptyTitle')} description={t('emptyDescription')} />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {servers.map((server) => (
-            <ServerCard key={server.id} server={server} locale={locale} />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:gap-5">
+          {servers.map((server: any) => (
+            <ServerCard key={`remote-${server.id}`} server={server} locale={locale} />
           ))}
         </div>
       )}
-    </div>
+    </PageShell>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from "react";
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -15,17 +16,18 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { createClient, updateClient } from '@/app/actions/clients'
-import React from 'react'
 
-const clientFormSchema = z.object({
-  name: z.string().min(1, 'Введите название'),
-  description: z.string().min(1, 'Введите описание'),
-  url: z.string().url('Введите корректный URL'),
-  icon: z.string().optional(),
-  featured: z.boolean(),
-})
+function getClientFormSchema(t: (key: string) => string) {
+  return z.object({
+    name: z.string().min(1, t('validation.nameRequired')),
+    description: z.string().min(1, t('validation.descriptionRequired')),
+    url: z.string().url(t('validation.urlInvalid')),
+    icon: z.string().optional(),
+    featured: z.boolean(),
+  })
+}
 
-type ClientFormData = z.infer<typeof clientFormSchema>
+type ClientFormData = z.infer<ReturnType<typeof getClientFormSchema>>
 
 interface ClientFormDialogProps {
   client?: {
@@ -41,11 +43,13 @@ interface ClientFormDialogProps {
 }
 
 export function ClientFormDialog({ client, children, onSuccess }: ClientFormDialogProps) {
+  const t = useTranslations('Admin.clients.form')
+  const tc = useTranslations('Admin.clients')
   const [open, setOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<ClientFormData>({
-    resolver: zodResolver(clientFormSchema),
+    resolver: zodResolver(getClientFormSchema(t)),
     defaultValues: client
       ? {
           ...client,
@@ -74,16 +78,16 @@ export function ClientFormDialog({ client, children, onSuccess }: ClientFormDial
       onSuccess?.()
     } catch (err) {
       console.error('Client form error:', err)
-      alert('Ошибка при сохранении клиента')
+      alert(t('errorSaving'))
     } finally {
       setIsSubmitting(false)
     }
   }
 
   const trigger = (
-    <span onClick={() => setOpen(true)} style={{ display: 'inline-block' }} role="button" tabIndex={0}>
+    <button onClick={() => setOpen(true)} type="button" className="inline-flex items-center">
       {children}
-    </span>
+    </button>
   )
 
   return (
@@ -91,53 +95,55 @@ export function ClientFormDialog({ client, children, onSuccess }: ClientFormDial
       {trigger}
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>{client ? 'Редактировать клиент' : 'Добавить клиент'}</DialogTitle>
+          <DialogTitle>{client ? tc('editClient') : tc('addClient')}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Название</label>
-            <Input {...form.register('name')} />
+            <label htmlFor="name" className="text-sm font-medium">{t('name')}</label>
+            <Input id="name" {...form.register('name')} />
             {form.formState.errors.name && (
               <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Описание</label>
-            <Textarea {...form.register('description')} />
+            <label htmlFor="description" className="text-sm font-medium">{t('description')}</label>
+            <Textarea id="description" {...form.register('description')} />
             {form.formState.errors.description && (
               <p className="text-sm text-red-500">{form.formState.errors.description.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">URL</label>
-            <Input {...form.register('url')} />
+            <label htmlFor="url" className="text-sm font-medium">{t('url')}</label>
+            <Input id="url" {...form.register('url')} />
             {form.formState.errors.url && (
               <p className="text-sm text-red-500">{form.formState.errors.url.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Icon URL (опционально)</label>
-            <Input {...form.register('icon')} />
+            <label htmlFor="icon" className="text-sm font-medium">{t('iconUrl')}</label>
+            <Input id="icon" {...form.register('icon')} />
           </div>
 
-          <label className="flex items-center gap-2">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label id="label-cli-featured" className="flex items-center gap-2">
             <Checkbox
+              aria-labelledby="label-cli-featured"
               checked={form.watch('featured')}
               onCheckedChange={(checked) => form.setValue('featured', checked as boolean)}
             />
-            <span className="text-sm">Featured</span>
+            <span className="text-sm">{t('featured')}</span>
           </label>
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-              Отмена
+              {t('cancel')}
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Сохранение...' : client ? 'Сохранить' : 'Создать'}
+              {isSubmitting ? t('saving') : client ? t('save') : t('create')}
             </Button>
           </div>
         </form>

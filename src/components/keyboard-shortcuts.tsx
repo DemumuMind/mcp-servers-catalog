@@ -2,8 +2,10 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export function KeyboardShortcuts({ locale }: { locale: string }) {
+  const t = useTranslations('Keyboard')
   const router = useRouter()
 
   useEffect(() => {
@@ -16,7 +18,10 @@ export function KeyboardShortcuts({ locale }: { locale: string }) {
       switch (e.key) {
         case '/':
           e.preventDefault()
-          const searchInput = document.querySelector('input[type="search"], input[placeholder*="Поиск"], input[placeholder*="Search"]') as HTMLInputElement
+          const searchPlaceholder = t('searchPlaceholder')
+          const searchInput = document.querySelector(
+            `input[type="search"], input[placeholder*="${searchPlaceholder}"]`
+          ) as HTMLInputElement
           searchInput?.focus()
           break
         case 'Escape':
@@ -46,7 +51,7 @@ export function KeyboardShortcuts({ locale }: { locale: string }) {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [router, locale])
+  }, [router, locale, t])
 
   return null
 }

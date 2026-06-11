@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { MessageSquare, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { formatDistanceToNow } from '@/lib/date-utils'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +14,7 @@ export default async function ProfileCommentsPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'ProfileComments' })
   const session = await auth()
 
   if (!session?.user?.id) {
@@ -25,20 +27,20 @@ export default async function ProfileCommentsPage({
     <div className="space-y-6">
       <div className="flex items-center gap-2">
         <MessageSquare className="h-5 w-5" />
-        <h1 className="text-xl font-bold">Мои комментарии</h1>
+        <h1 className="text-xl font-bold">{t('title')}</h1>
         <span className="text-sm text-muted-foreground">({comments.length})</span>
       </div>
 
       {comments.length === 0 ? (
         <p className="text-muted-foreground text-center py-16">
-          Вы пока не оставили ни одного комментария.
+          {t('empty')}
         </p>
       ) : (
         <div className="space-y-4">
-          {comments.map((comment) => (
+          {comments.map((comment: any) => (
             <div
               key={comment.id}
-              className="p-4 rounded-lg border hover:bg-accent/50 transition-colors"
+              className="p-4 rounded-2xl border border-border/70 bg-card/70 shadow-[var(--shadow-soft)] hover:bg-accent/50 transition-colors"
             >
               <div className="flex items-center justify-between mb-2">
                 <Link
@@ -49,7 +51,7 @@ export default async function ProfileCommentsPage({
                   <ExternalLink className="h-3 w-3" />
                 </Link>
                 <span className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(comment.createdAt)}
+                  {formatDistanceToNow(new Date(comment.createdAt), locale)}
                 </span>
               </div>
               <p className="text-sm text-muted-foreground">{comment.content}</p>

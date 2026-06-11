@@ -1,11 +1,13 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
 import { syncGitHubStats } from '@/app/actions/sync'
 
 export function SyncGithubButton() {
+  const t = useTranslations('Admin.syncGithub')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<{ updated: number; failed: number; total: number } | null>(null)
   const [error, setError] = useState('')
@@ -19,7 +21,7 @@ export function SyncGithubButton() {
       const res = await syncGitHubStats()
       setResult(res)
     } catch (err: any) {
-      setError(err.message || 'Ошибка синхронизации')
+      setError(err.message || t('syncError'))
     } finally {
       setLoading(false)
     }
@@ -38,13 +40,13 @@ export function SyncGithubButton() {
         ) : (
           <RefreshCw className="h-4 w-4 mr-2" />
         )}
-        {loading ? 'Синхронизация...' : 'Синхронизировать GitHub'}
+        {loading ? t('syncing') : t('syncGithub')}
       </Button>
 
       {result && (
         <div className="flex items-center gap-1 text-xs text-green-600">
           <CheckCircle className="h-3 w-3" />
-          Обновлено: {result.updated}, Ошибок: {result.failed}
+          {t('updatedErrors', { updated: result.updated, failed: result.failed })}
         </div>
       )}
       {error && (

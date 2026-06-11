@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { servers, healthChecks, notifications } from '@/lib/db/schema'
+import { eq, and, gte, isNotNull, sql } from 'drizzle-orm'
 import { createNotification } from '@/app/actions/notifications'
 
 function verifyCronAuth(req: NextRequest | Request): NextResponse | null {
@@ -27,23 +29,32 @@ export async function GET(req: NextRequest) {
 
   try {
     // Find servers with health checks that have been offline for 3+ days
-    const offlineServers = await prisma.$queryRaw<Array<{ serverId: string; name: string; authorId: string | null }>>`
-      SELECT s.id as "serverId", s.name, s."authorId"
-      FROM "Server" s
-      WHERE s."isRemote" = true
-        AND s."authorId" IS NOT NULL
-        AND NOT EXISTS (
-          SELECT 1 FROM "HealthCheck" hc
-          WHERE hc."serverId" = s.id
-            AND hc.status = 'online'
-            AND hc."createdAt" >= ${threeDaysAgo}
+    const offlineServers = await db
+      .select({
+        serverId: servers.id,
+        name: servers.name,
+        authorId: servers.authorId,
+      })
+      .from(servers)
+      .where(
+        and(
+          eq(servers.isRemote, true),
+          isNotNull(servers.authorId),
+          // NOT EXISTS: no online health check in last 3 days
+          sql`NOT EXISTS (
+            SELECT 1 FROM health_checks hc
+            WHERE hc.server_id = ${servers.id}
+              AND hc.status = 'online'
+              AND hc.created_at >= ${threeDaysAgo}
+          )`,
+          // EXISTS: some health check exists in last 3 days
+          sql`EXISTS (
+            SELECT 1 FROM health_checks hc
+            WHERE hc.server_id = ${servers.id}
+              AND hc.created_at >= ${threeDaysAgo}
+          )`
         )
-        AND EXISTS (
-          SELECT 1 FROM "HealthCheck" hc
-          WHERE hc."serverId" = s.id
-            AND hc."createdAt" >= ${threeDaysAgo}
-        )
-    `
+      )
 
     let notificationsSent = 0
 
@@ -51,25 +62,27 @@ export async function GET(req: NextRequest) {
       if (!server.authorId) continue
 
       // Check if we already sent notification today
-      const existing = await prisma.notification.findFirst({
-        where: {
-          userId: server.authorId,
-          type: 'health_alert',
-          link: `/servers/${server.serverId}`,
-          createdAt: {
-            gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          },
-        },
-      })
+      const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
+      const existing = await db.select()
+        .from(notifications)
+        .where(
+          and(
+            eq(notifications.userId, server.authorId),
+            eq(notifications.type, 'health_alert'),
+            eq(notifications.link, `/servers/${server.serverId}`),
+            gte(notifications.createdAt, oneDayAgo)
+          )
+        )
+        .get()
 
       if (existing) continue
 
       await createNotification({
         userId: server.authorId,
         type: 'health_alert',
-        title: 'Сервер не отвечает',
-        message: `Ваш сервер "${server.name}" не отвечает более 3 дней. Проверьте endpoint.`,
-        link: `/ru/servers/${server.serverId}`,
+        title: 'Server offline',
+        message: `Your server "${server.name}" has been offline for 3+ days. Please check the endpoint.`,
+        link: `/servers/${server.serverId}`,
       })
 
       notificationsSent++

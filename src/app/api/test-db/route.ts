@@ -1,4 +1,5 @@
-import { prisma } from '@/lib/db'
+import { db, users } from '@/lib/db'
+import { eq } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -7,15 +8,17 @@ export async function GET() {
   }
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { email: 'admin@example.com' },
-      select: { id: true, email: true, role: true, password: true }
-    })
+    const user = await db.select({
+      id: users.id,
+      email: users.email,
+      role: users.role,
+      password: users.password,
+    }).from(users).where(eq(users.email, 'admin@example.com')).get()
     
     return NextResponse.json({
       found: !!user,
       user: user ? { id: user.id, email: user.email, role: user.role, hasPassword: !!user.password } : null,
-      prismaInitialized: !!prisma.user,
+      dbInitialized: true,
     })
   } catch (err: any) {
     return NextResponse.json({

@@ -2,10 +2,11 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { ServerCard } from '@/components/server-card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Bookmark, Download, FileJson, FileSpreadsheet, Scale } from 'lucide-react'
+import { Bookmark, FileJson, FileSpreadsheet, Scale } from "lucide-react";
 
 interface BookmarkWithServer {
   id: string
@@ -33,6 +34,7 @@ interface BookmarksClientProps {
 }
 
 export function BookmarksClient({ bookmarks, locale, userId }: BookmarksClientProps) {
+  const t = useTranslations('Bookmarks')
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const router = useRouter()
 
@@ -48,7 +50,7 @@ export function BookmarksClient({ bookmarks, locale, userId }: BookmarksClientPr
 
   const handleCompare = () => {
     if (selected.size < 2) {
-      alert('Выберите хотя бы 2 сервера для сравнения')
+      alert(t('selectMin'))
       return
     }
     const ids = Array.from(selected)
@@ -80,11 +82,11 @@ export function BookmarksClient({ bookmarks, locale, userId }: BookmarksClientPr
       <div className="space-y-6">
         <div className="flex items-center gap-2">
           <Bookmark className="h-5 w-5" />
-          <h1 className="text-xl font-bold">Мои закладки</h1>
+          <h1 className="text-xl font-bold">{t('title')}</h1>
           <span className="text-sm text-muted-foreground">(0)</span>
         </div>
         <p className="text-muted-foreground text-center py-16">
-          У вас пока нет закладок. Нажмите "В закладки" на карточке сервера, чтобы сохранить его.
+          {t('emptyState')}
         </p>
       </div>
     )
@@ -95,7 +97,7 @@ export function BookmarksClient({ bookmarks, locale, userId }: BookmarksClientPr
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center gap-2">
           <Bookmark className="h-5 w-5" />
-          <h1 className="text-xl font-bold">Мои закладки</h1>
+          <h1 className="text-xl font-bold">{t('title')}</h1>
           <span className="text-sm text-muted-foreground">({bookmarks.length})</span>
         </div>
         
@@ -114,13 +116,13 @@ export function BookmarksClient({ bookmarks, locale, userId }: BookmarksClientPr
       {/* Compare bar */}
       {selected.size > 0 && (
         <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-          <span className="text-sm text-muted-foreground">Выбрано: {selected.size}</span>
+          <span className="text-sm text-muted-foreground">{t('selected', { count: selected.size })}</span>
           <Button size="sm" onClick={handleCompare} disabled={selected.size < 2}>
             <Scale className="h-4 w-4 mr-1" />
-            Сравнить
+            {t('compare')}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => setSelected(new Set())}>
-            Очистить
+            {t('clearSelection')}
           </Button>
         </div>
       )}

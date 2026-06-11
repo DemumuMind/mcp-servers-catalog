@@ -21,9 +21,10 @@ export default async function ProfileBookmarksPage({
 
   return (
     <BookmarksClient
-      bookmarks={bookmarks.map((s) => ({ id: s.id, server: s }))}
+      bookmarks={bookmarks.map((s: any) => ({ id: s.id, server: s }))}
       locale={locale}
       userId={session.user.id}
     />
   )
 }
+

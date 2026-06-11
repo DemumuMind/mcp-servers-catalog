@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Card, CardContent } from '@/components/ui/card'
 import { Pencil, Trash2, Download } from 'lucide-react'
 import { ClientFormDialog } from '@/components/admin/client-form-dialog'
 import { exportClientsToCSV } from '@/app/actions/export'
@@ -22,6 +21,7 @@ interface Client {
   name: string
   description: string
   url: string
+  icon: string | null
   featured: boolean
 }
 
@@ -54,7 +54,7 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
   }
 
   const handleBulkDelete = () => {
-    if (!confirm(`Удалить ${selected.size} клиентов?`)) return
+    if (!confirm(`Delete ${selected.size} clients?`)) return
     startTransition(async () => {
       await deleteAction(Array.from(selected))
       setSelected(new Set())
@@ -73,12 +73,12 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="premium-panel flex flex-wrap items-center justify-between gap-3 p-4">
         <div className="flex items-center gap-2">
           {selected.size > 0 && (
             <>
               <span className="text-sm text-muted-foreground">
-                Выбрано: {selected.size}
+                Selected: {selected.size}
               </span>
               <Button
                 variant="destructive"
@@ -87,20 +87,18 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
                 disabled={isPending}
               >
                 <Trash2 className="h-4 w-4 mr-1" />
-                Удалить
+                Delete
               </Button>
             </>
           )}
         </div>
         <Button variant="outline" size="sm" onClick={handleExport}>
           <Download className="h-4 w-4 mr-1" />
-          Экспорт CSV
+          Export CSV
         </Button>
       </div>
 
-      <Card>
-        <CardContent className="pt-6">
-          <Table>
+      <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">
@@ -109,10 +107,10 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
                     onCheckedChange={toggleAll}
                   />
                 </TableHead>
-                <TableHead>Название</TableHead>
+                <TableHead>Name</TableHead>
                 <TableHead>URL</TableHead>
                 <TableHead>Featured</TableHead>
-                <TableHead className="text-right">Действия</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -132,17 +130,17 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
                   <TableCell>{client.featured ? '✅' : '—'}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <ClientFormDialog client={client as any}>
-                        <Button variant="outline" size="icon" type="button" aria-label="Редактировать клиент">
+                      <ClientFormDialog client={client}>
+                        <Button variant="outline" size="icon" type="button" aria-label="Edit client">
                           <Pencil className="h-4 w-4" />
                         </Button>
                       </ClientFormDialog>
                       <Button
                         variant="outline"
                         size="icon"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                         onClick={() => {
-                          if (confirm('Удалить клиент?')) {
+                          if (confirm('Delete client?')) {
                             startTransition(async () => {
                               await deleteAction([client.id])
                               router.refresh()
@@ -150,7 +148,7 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
                           }
                         }}
                         disabled={isPending}
-                        aria-label="Удалить клиент"
+                        aria-label="Delete client"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -160,8 +158,7 @@ export function BulkClientTable({ clients, deleteAction }: BulkClientTableProps)
               ))}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
     </div>
   )
 }
+

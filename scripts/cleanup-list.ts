@@ -1,7 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 
-// Load .env manually
 function loadEnv() {
   try {
     const envPath = path.resolve(process.cwd(), '.env')
@@ -38,8 +37,9 @@ async function checkRepoExists(owner: string, repo: string): Promise<boolean> {
   }
   if (GITHUB_TOKEN) headers.Authorization = `token ${GITHUB_TOKEN}`
 
+  const GITHUB_API_BASE = process.env.GITHUB_API_URL || 'https://api.github.com'
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers })
+    const res = await fetch(`${GITHUB_API_BASE}/repos/${owner}/${repo}`, { headers })
     return res.ok
   } catch {
     return false
@@ -62,12 +62,12 @@ async function main() {
       if (seen.has(slug)) continue
       seen.add(slug)
       deduped.push(url)
-    } catch {
-      console.warn(`Invalid URL skipped: ${url}`)
+    } catch (err) {
+      console.warn(`Invalid URL skipped: ${url}`, err)
     }
   }
 
-  console.log(`Starting validation of ${deduped.length} unique URLs...`)
+  process.stdout.write(`Starting validation of ${deduped.length} unique URLs...\n`)
 
   const valid: string[] = []
   let checked = 0
@@ -83,7 +83,7 @@ async function main() {
     const fullSlug = `${owner}/${repo}`.toLowerCase()
 
     if (SKIP_REPOS.has(fullSlug)) {
-      console.log(`[${i + 1}/${deduped.length}] Skipping list repo: ${fullSlug}`)
+      process.stdout.write(`[${i + 1}/${deduped.length}] Skipping list repo: ${fullSlug}\n`)
       skipped++
       continue
     }
@@ -91,9 +91,9 @@ async function main() {
     const exists = await checkRepoExists(owner, repo)
     if (exists) {
       valid.push(url)
-      console.log(`[${i + 1}/${deduped.length}] ✓ Valid: ${fullSlug}`)
+      process.stdout.write(`[${i + 1}/${deduped.length}] ✓ Valid: ${fullSlug}\n`)
     } else {
-      console.log(`[${i + 1}/${deduped.length}] ✗ Not found: ${fullSlug}`)
+      process.stdout.write(`[${i + 1}/${deduped.length}] ✗ Not found: ${fullSlug}\n`)
       failed++
     }
     checked++
@@ -104,15 +104,14 @@ async function main() {
     }
   }
 
-  // Write back cleaned list
   writeFileSync(filePath, JSON.stringify(valid, null, 2) + '\n', 'utf-8')
 
-  console.log('\n--- Cleanup complete ---')
-  console.log(`Checked: ${checked}`)
-  console.log(`Valid:   ${valid.length}`)
-  console.log(`Failed:  ${failed}`)
-  console.log(`Skipped: ${skipped}`)
-  console.log(`Cleaned list written to scripts/mcp-servers-list.json`)
+  process.stdout.write('\n--- Cleanup complete ---\n')
+  process.stdout.write(`Checked: ${checked}\n`)
+  process.stdout.write(`Valid:   ${valid.length}\n`)
+  process.stdout.write(`Failed:  ${failed}\n`)
+  process.stdout.write(`Skipped: ${skipped}\n`)
+  process.stdout.write(`Cleaned list written to scripts/mcp-servers-list.json\n`)
 }
 
 main().catch((err) => {

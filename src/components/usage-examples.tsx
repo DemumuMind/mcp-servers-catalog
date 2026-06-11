@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { CopyButton } from '@/components/copy-button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Code2, FileCode, Terminal } from 'lucide-react'
 
 interface UsageExamplesProps {
@@ -15,113 +14,104 @@ interface UsageExamplesProps {
   endpoint?: string | null
 }
 
+type TabKey = 'typescript' | 'python' | 'claude'
+
 export function UsageExamples({ owner, repo, name, isRemote, endpoint }: UsageExamplesProps) {
+  const t = useTranslations('Usage')
+  const [activeTab, setActiveTab] = useState<TabKey>('typescript')
+
   const npmPackage = `@${owner}/${repo}`
 
-  const typescriptExample = `import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+  const typescriptExample = [
+    'import { Client } from "@modelcontextprotocol/sdk/client/index.js";',
+    'import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";',
+    '',
+    'const transport = new StdioClientTransport({',
+    '  command: "npx",',
+    '  args: ["-y", "' + npmPackage + '"]',
+    '});',
+    '',
+    'const client = new Client({ name: "my-app", version: "1.0.0" });',
+    'await client.connect(transport);',
+    '',
+    'const tools = await client.listTools();',
+  ].join('\n')
 
-const transport = new StdioClientTransport({
-  command: "npx",
-  args: ["-y", "${npmPackage}"]
-});
+  const pythonExample = [
+    'from mcp import ClientSession, StdioServerParameters',
+    'from mcp.client.stdio import stdio_client',
+    '',
+    'server_params = StdioServerParameters(',
+    '    command="npx",',
+    '    args=["-y", "' + npmPackage + '"]',
+    ')',
+    '',
+    'async with stdio_client(server_params) as (read, write):',
+    '    async with ClientSession(read, write) as session:',
+    '        await session.initialize()',
+    '        tools = await session.list_tools()',
+    '        print(tools)',
+  ].join('\n')
 
-const client = new Client({ name: "my-app", version: "1.0.0" });
-await client.connect(transport);
+  const serverKey = name.toLowerCase().replace(/\s+/g, '-')
 
-// List available tools/resources
-const tools = await client.listTools();
-console.log(tools);`
+  const claudeConfig = isRemote && endpoint
+    ? JSON.stringify({ mcpServers: { [serverKey]: { url: endpoint } } }, null, 2)
+    : JSON.stringify({ mcpServers: { [serverKey]: { command: 'npx', args: ['-y', npmPackage] } } }, null, 2)
 
-  const pythonExample = `from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
-
-server_params = StdioServerParameters(
-    command="npx",
-    args=["-y", "${npmPackage}"]
-)
-
-async with stdio_client(server_params) as (read, write):
-    async with ClientSession(read, write) as session:
-        await session.initialize()
-        
-        # List available tools
-        tools = await session.list_tools()
-        print(tools)`
-
-  const claudeConfig = isRemote && endpoint ? `{
-  "mcpServers": {
-    "${name.toLowerCase().replace(/\\s+/g, '-')}": {
-      "url": "${endpoint}"
-    }
-  }
-}` : `{
-  "mcpServers": {
-    "${name.toLowerCase().replace(/\\s+/g, '-')}": {
-      "command": "npx",
-      "args": ["-y", "${npmPackage}"]
-    }
-  }
-}`
+  const tabs: { key: TabKey; label: string; icon: React.ReactNode; content: string; copyLabel: string }[] = [
+    { key: 'typescript', label: 'TypeScript', icon: <FileCode className="h-4 w-4" />, content: typescriptExample, copyLabel: 'TS' },
+    { key: 'python', label: 'Python', icon: <Terminal className="h-4 w-4" />, content: pythonExample, copyLabel: 'PY' },
+    { key: 'claude', label: 'Claude Config', icon: <Code2 className="h-4 w-4" />, content: claudeConfig, copyLabel: 'JSON' },
+  ]
 
   return (
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
           <Code2 className="w-5 h-5" />
-          Примеры использования
+          {t('title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="typescript">
-          <TabsList className="mb-4">
-            <TabsTrigger value="typescript" className="gap-1.5">
-              <FileCode className="h-4 w-4" />
-              TypeScript
-            </TabsTrigger>
-            <TabsTrigger value="python" className="gap-1.5">
-              <Terminal className="h-4 w-4" />
-              Python
-            </TabsTrigger>
-            <TabsTrigger value="claude" className="gap-1.5">
-              <Code2 className="h-4 w-4" />
-              Claude Config
-            </TabsTrigger>
-          </TabsList>
+        <div className="mb-4 inline-flex items-center justify-center rounded-2xl border border-border/70 bg-muted/60 p-1 shadow-[inset_0_1px_0_oklch(1_0_0_/_0.25)]">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-xl border px-3 py-1 text-sm font-semibold whitespace-nowrap transition-all ${
+                activeTab === tab.key
+                  ? 'border-border/70 bg-background/78 text-foreground shadow-[var(--shadow-soft)]'
+                  : 'border-transparent text-foreground/60 hover:text-foreground'
+              }`}
+              role="tab"
+              aria-selected={activeTab === tab.key}
+            >
+              {tab.icon}
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          <TabsContent value="typescript" className="mt-0">
-            <div className="relative">
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm font-mono">
-                <code>{typescriptExample}</code>
-              </pre>
-              <div className="absolute top-2 right-2">
-                <CopyButton text={typescriptExample} label="TS" size="sm" variant="ghost" />
+        {tabs.map((tab) => (
+          <div
+            key={tab.key}
+            role="tabpanel"
+            hidden={activeTab !== tab.key}
+            className="mt-0"
+          >
+            {activeTab === tab.key && (
+              <div className="relative">
+                <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm font-mono">
+                  <code>{tab.content}</code>
+                </pre>
+                <div className="absolute top-2 right-2">
+                  <CopyButton text={tab.content} label={tab.copyLabel} size="sm" variant="ghost" />
+                </div>
               </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="python" className="mt-0">
-            <div className="relative">
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm font-mono">
-                <code>{pythonExample}</code>
-              </pre>
-              <div className="absolute top-2 right-2">
-                <CopyButton text={pythonExample} label="PY" size="sm" variant="ghost" />
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="claude" className="mt-0">
-            <div className="relative">
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm font-mono">
-                <code>{claudeConfig}</code>
-              </pre>
-              <div className="absolute top-2 right-2">
-                <CopyButton text={claudeConfig} label="JSON" size="sm" variant="ghost" />
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
+            )}
+          </div>
+        ))}
       </CardContent>
     </Card>
   )

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { eq, and, or, like, desc, count, sql } from 'drizzle-orm'
 import { validateApiKey } from '@/app/actions/api-keys'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 
@@ -35,13 +36,13 @@ export async function GET(request: NextRequest) {
 
   // Check API key if provided
   const authHeader = request.headers.get('authorization')
-  let apiKeyUser = null
+  let _apiKeyUser = null
   
   if (authHeader?.startsWith('Bearer ')) {
     const key = authHeader.slice(7)
     const result = await validateApiKey(key)
     if (result.valid) {
-      apiKeyUser = result.userId
+      _apiKeyUser = result.userId
     } else {
       return NextResponse.json({ error: 'Invalid API key' }, { status: 401 })
     }
@@ -58,45 +59,58 @@ export async function GET(request: NextRequest) {
   }
 
   const { page, limit, q: search, category, tag, official } = parsed.data
-  const skip = (page - 1) * limit
+  const offset = (page - 1) * limit
 
-  const where: any = {}
+  const conditions = []
+
   if (search) {
-    where.OR = [
-      { name: { contains: search, mode: 'insensitive' } },
-      { description: { contains: search, mode: 'insensitive' } },
-      { owner: { contains: search, mode: 'insensitive' } },
-    ]
+    const searchPattern = `%${search}%`
+    conditions.push(
+      or(
+        like(servers.name, searchPattern),
+        like(servers.description, searchPattern),
+        like(servers.owner, searchPattern),
+      )!
+    )
   }
-  if (category) where.category = category
-  if (tag) where.tags = { has: tag }
-  if (official === 'true') where.isOfficial = true
+  if (category) conditions.push(eq(servers.category, category))
+  if (tag) {
+    // Tags is a JSON array — use json_each for robust tag matching in SQLite
+    conditions.push(
+      sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value = ${tag})`
+    )
+  }
+  if (official === 'true') conditions.push(eq(servers.isOfficial, true))
 
-  const [servers, total] = await Promise.all([
-    prisma.server.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      skip,
-      take: limit,
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        owner: true,
-        repo: true,
-        category: true,
-        tags: true,
-        isOfficial: true,
-        stars: true,
-        forks: true,
-        githubUrl: true,
-        createdAt: true,
-      },
-    }),
-    prisma.server.count({ where }),
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined
+
+  const [serverList, totalResult] = await Promise.all([
+    db.select({
+      id: servers.id,
+      name: servers.name,
+      description: servers.description,
+      owner: servers.owner,
+      repo: servers.repo,
+      category: servers.category,
+      tags: servers.tags,
+      isOfficial: servers.isOfficial,
+      stars: servers.stars,
+      forks: servers.forks,
+      githubUrl: servers.githubUrl,
+      createdAt: servers.createdAt,
+    }).from(servers)
+      .where(whereClause)
+      .orderBy(desc(servers.createdAt))
+      .limit(limit)
+      .offset(offset),
+    db.select({ total: count() }).from(servers)
+      .where(whereClause)
+      .get(),
   ])
 
-  return apiResponse(servers, {
+  const total = totalResult?.total ?? 0
+
+  return apiResponse(serverList, {
     total,
     page,
     limit,

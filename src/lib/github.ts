@@ -1,4 +1,4 @@
-const GITHUB_API_BASE = 'https://api.github.com'
+const GITHUB_API_BASE = process.env.GITHUB_API_URL || 'https://api.github.com'
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || ''
 
 interface GitHubRepoData {
@@ -9,6 +9,8 @@ interface GitHubRepoData {
   topics: string[]
   license: string | null
   language: string | null
+  homepage: string | null
+  isArchived: boolean
   updatedAt: string
   htmlUrl: string
   owner: string
@@ -51,7 +53,9 @@ export async function fetchGitHubRepo(repoUrl: string): Promise<GitHubRepoData> 
     forks: data.forks_count || 0,
     topics: data.topics || [],
     license: data.license?.spdx_id || null,
-    language: data.language,
+    language: data.language || null,
+    homepage: data.homepage || null,
+    isArchived: data.archived || false,
     updatedAt: data.updated_at,
     htmlUrl: data.html_url,
     owner,

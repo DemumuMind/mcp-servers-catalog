@@ -12,16 +12,16 @@ async function main() {
       VALUES ($1, 'legacy@example.com', '', 'user', false, true, NOW(), NOW())
       ON CONFLICT (id) DO NOTHING
     `, [oldUserId])
-    console.log('Added legacy user to .pglite2 successfully')
+    process.stdout.write('Added legacy user to .pglite2 successfully\n')
   } catch (e) {
     console.error('Error adding legacy user:', e)
   }
   
   // Verify
   const result = await pglite.query('SELECT id, email, role FROM "User"')
-  console.log('Users in .pglite2:')
+  process.stdout.write('Users in .pglite2:\n')
   for (const row of result.rows as { id: string; email: string; role: string }[]) {
-    console.log(' -', row.id, row.email, row.role)
+    process.stdout.write(` - ${row.id} ${row.email} ${row.role}\n`)
   }
   
   await pglite.close()

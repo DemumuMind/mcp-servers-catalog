@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, XCircle, Trash2, ExternalLink, Download } from 'lucide-react'
 import { exportSubmissionsToCSV } from '@/app/actions/export'
@@ -40,11 +39,11 @@ interface BulkSubmissionsTableProps {
 function getStatusBadge(status: string) {
   switch (status) {
     case 'approved':
-      return <Badge className="bg-green-500 text-white">Одобрено</Badge>
+      return <Badge className="bg-green-500 text-white">Approved</Badge>
     case 'rejected':
-      return <Badge className="bg-red-500 text-white">Отклонено</Badge>
+      return <Badge className="bg-red-500 text-white">Rejected</Badge>
     default:
-      return <Badge className="bg-yellow-500 text-white">На рассмотрении</Badge>
+      return <Badge className="bg-yellow-500 text-white">Pending</Badge>
   }
 }
 
@@ -78,7 +77,7 @@ export function BulkSubmissionsTable({
   }
 
   const handleBulkDelete = () => {
-    if (!confirm(`Удалить ${selected.size} отправок?`)) return
+    if (!confirm(`Delete ${selected.size} submissions?`)) return
     startTransition(async () => {
       await deleteAction(Array.from(selected))
       setSelected(new Set())
@@ -88,7 +87,7 @@ export function BulkSubmissionsTable({
 
   const handleBulkApprove = () => {
     if (!bulkApproveAction) return
-    if (!confirm(`Одобрить ${selected.size} отправок?`)) return
+    if (!confirm(`Approve ${selected.size} submissions?`)) return
     startTransition(async () => {
       await bulkApproveAction(Array.from(selected))
       setSelected(new Set())
@@ -109,7 +108,7 @@ export function BulkSubmissionsTable({
         router.refresh()
       } catch (err) {
         console.error('Action error:', err)
-        alert('Ошибка при выполнении действия')
+        alert('Error performing action')
       }
     })
   }
@@ -125,12 +124,12 @@ export function BulkSubmissionsTable({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="premium-panel flex flex-wrap items-center justify-between gap-3 p-4">
         <div className="flex items-center gap-2">
           {selected.size > 0 && (
             <>
               <span className="text-sm text-muted-foreground">
-                Выбрано: {selected.size}
+                Selected: {selected.size}
               </span>
           {bulkApproveAction && (
             <Button
@@ -141,7 +140,7 @@ export function BulkSubmissionsTable({
               className="bg-green-600 hover:bg-green-700"
             >
               <CheckCircle className="h-4 w-4 mr-1" />
-              Одобрить
+              Approve
             </Button>
           )}
           <Button
@@ -151,20 +150,18 @@ export function BulkSubmissionsTable({
             disabled={isPending}
           >
             <Trash2 className="h-4 w-4 mr-1" />
-            Удалить
+            Delete
           </Button>
             </>
           )}
         </div>
         <Button variant="outline" size="sm" onClick={handleExport}>
           <Download className="h-4 w-4 mr-1" />
-          Экспорт CSV
+          Export CSV
         </Button>
       </div>
 
-      <Card>
-        <CardContent className="pt-6">
-          <Table>
+      <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">
@@ -173,13 +170,13 @@ export function BulkSubmissionsTable({
                     onCheckedChange={toggleAll}
                   />
                 </TableHead>
-                <TableHead>Название</TableHead>
+                <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Категория</TableHead>
+                <TableHead>Category</TableHead>
                 <TableHead>Premium</TableHead>
-                <TableHead>Статус</TableHead>
-                <TableHead>Дата</TableHead>
-                <TableHead className="text-right">Действия</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -208,7 +205,7 @@ export function BulkSubmissionsTable({
                   </TableCell>
                   <TableCell>{getStatusBadge(sub.status)}</TableCell>
                   <TableCell>
-                    {new Date(sub.createdAt).toLocaleDateString('ru-RU')}
+                    {new Date(sub.createdAt).toLocaleDateString('en-US')}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
@@ -226,7 +223,7 @@ export function BulkSubmissionsTable({
                             variant="outline"
                             size="icon"
                             className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                            title="Одобрить"
+                            title="Approve"
                             onClick={() => handleAction('approve', sub.id)}
                             disabled={isPending}
                           >
@@ -235,8 +232,8 @@ export function BulkSubmissionsTable({
                           <Button
                             variant="outline"
                             size="icon"
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                            title="Отклонить"
+                            className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+                            title="Reject"
                             onClick={() => handleAction('reject', sub.id)}
                             disabled={isPending}
                           >
@@ -247,8 +244,8 @@ export function BulkSubmissionsTable({
                       <Button
                         variant="outline"
                         size="icon"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                        title="Удалить"
+                        className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+                        title="Delete"
                         onClick={() => handleAction('delete', sub.id)}
                         disabled={isPending}
                       >
@@ -260,8 +257,7 @@ export function BulkSubmissionsTable({
               ))}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
     </div>
   )
 }
+

@@ -54,3 +54,4 @@ export function ClientDataTable({ data }: ClientDataTableProps) {
     </Table>
   )
 }
+

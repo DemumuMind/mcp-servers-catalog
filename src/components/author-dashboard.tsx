@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import {
   AreaChart,
   Area,
@@ -54,15 +54,17 @@ interface AuthorDashboardProps {
 }
 
 export function AuthorDashboard({ analytics }: AuthorDashboardProps) {
-  const [metric, setMetric] = useState<'views' | 'bookmarks'>('views')
+  const t = useTranslations('AuthorDashboard')
+
+  // Metric toggle reserved for future implementation
 
   const stats = [
-    { label: 'Просмотры (30д)', value: analytics.views30d, icon: Eye },
-    { label: 'Закладки', value: analytics.bookmarks, icon: Bookmark },
-    { label: 'Средний рейтинг', value: analytics.avgRating.toFixed(1), icon: ThumbsUp },
-    { label: 'Оценок', value: analytics.ratingsCount, icon: Star },
-    { label: 'Комментариев', value: analytics.comments, icon: MessageCircle },
-    { label: 'GitHub Stars', value: analytics.server.stars, icon: TrendingUp },
+    { label: t('views30d'), value: analytics.views30d, icon: Eye },
+    { label: t('bookmarks'), value: analytics.bookmarks, icon: Bookmark },
+    { label: t('avgRating'), value: analytics.avgRating.toFixed(1), icon: ThumbsUp },
+    { label: t('ratings'), value: analytics.ratingsCount, icon: Star },
+    { label: t('comments'), value: analytics.comments, icon: MessageCircle },
+    { label: t('gitHubStars'), value: analytics.server.stars, icon: TrendingUp },
   ]
 
   return (
@@ -86,7 +88,7 @@ export function AuthorDashboard({ analytics }: AuthorDashboardProps) {
       {analytics.dailyViews.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Просмотры по дням</CardTitle>
+            <CardTitle className="text-base">{t('dailyViews')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
@@ -101,7 +103,7 @@ export function AuthorDashboard({ analytics }: AuthorDashboardProps) {
                   stroke="hsl(var(--primary))"
                   fill="hsl(var(--primary))"
                   fillOpacity={0.2}
-                  name="Просмотры"
+                  name={t('views')}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -113,7 +115,7 @@ export function AuthorDashboard({ analytics }: AuthorDashboardProps) {
       {analytics.similar.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Сравнение с похожими серверами</CardTitle>
+            <CardTitle className="text-base">{t('comparisonTitle')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
@@ -151,7 +153,7 @@ export function AuthorDashboard({ analytics }: AuthorDashboardProps) {
       {analytics.recommendations.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Рекомендации</CardTitle>
+            <CardTitle className="text-base">{t('recommendations')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">

@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 export function PullToRefresh() {
+  const t = useTranslations('PullRefresh')
   const [pullDistance, setPullDistance] = useState(0)
   const [refreshing, setRefreshing] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -23,7 +25,7 @@ export function PullToRefresh() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
+  const handleTouchStart = useCallback((_e: TouchEvent) => {
     if (window.scrollY === 0) {
       setPullDistance(0)
     }
@@ -78,7 +80,7 @@ export function PullToRefresh() {
         {refreshing ? (
           <>
             <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm">Обновление...</span>
+            <span className="text-sm">{t('refreshing')}</span>
           </>
         ) : (
           <>
@@ -87,7 +89,7 @@ export function PullToRefresh() {
               style={{ transform: `rotate(${pullDistance * 3}deg)` }}
             />
             <span className="text-sm text-muted-foreground">
-              {pullDistance > threshold ? 'Отпустите для обновления' : 'Потяните для обновления'}
+              {pullDistance > threshold ? t('releaseToRefresh') : t('pullToRefresh')}
             </span>
           </>
         )}

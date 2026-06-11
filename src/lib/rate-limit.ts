@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/db'
 import { writeFileSync, readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
@@ -83,7 +82,6 @@ export async function rateLimit(
   }
 }
 
-// Clean up expired entries periodically
 setInterval(() => {
   const now = Date.now()
   for (const [key, entry] of memoryStore.entries()) {

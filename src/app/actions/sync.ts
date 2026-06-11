@@ -1,27 +1,24 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { eq, like } from 'drizzle-orm'
 import { fetchGitHubRepo, fetchRepoReadme } from '@/lib/github'
 import { analyzeReadme, mergeTags } from '@/lib/readme-analysis'
 
 export async function syncGitHubStats() {
-  const servers = await prisma.server.findMany({
-    where: {
-      githubUrl: {
-        startsWith: 'https://github.com/',
-      },
-    },
-  })
+  const serverList = await db
+    .select()
+    .from(servers)
+    .where(like(servers.githubUrl, 'https://github.com/%'))
 
   let updated = 0
   let failed = 0
   let enriched = 0
 
-  for (const server of servers) {
+  for (const server of serverList) {
     try {
       const data = await fetchGitHubRepo(server.githubUrl)
       
-      // Fetch README for analysis
       let readmeAnalysis = null
       try {
         const readme = await fetchRepoReadme(server.githubUrl)
@@ -36,16 +33,16 @@ export async function syncGitHubStats() {
         ? mergeTags(server.tags, data.topics || [], readmeAnalysis.suggestedTags)
         : mergeTags(server.tags, data.topics || [], [])
 
-      await prisma.server.update({
-        where: { id: server.id },
-        data: {
+      await db
+        .update(servers)
+        .set({
           stars: data.stars,
           forks: data.forks,
           description: data.description || server.description,
           name: data.name || server.name,
           tags: newTags,
-        },
-      })
+        })
+        .where(eq(servers.id, server.id))
       updated++
       if (readmeAnalysis) enriched++
       
@@ -57,13 +54,17 @@ export async function syncGitHubStats() {
     }
   }
 
-  return { updated, failed, enriched, total: servers.length }
+  return { updated, failed, enriched, total: serverList.length }
 }
 
 export async function analyzeServerReadme(serverId: string) {
-  const server = await prisma.server.findUnique({
-    where: { id: serverId },
-  })
+  const rows = await db
+    .select()
+    .from(servers)
+    .where(eq(servers.id, serverId))
+    .limit(1)
+
+  const server = rows[0]
   if (!server) return null
 
   const readme = await fetchRepoReadme(server.githubUrl)
@@ -74,10 +75,10 @@ export async function analyzeServerReadme(serverId: string) {
   // Update tags with suggested ones if not already present
   const newTags = mergeTags(server.tags, [], analysis.suggestedTags)
   if (newTags.length > server.tags.length) {
-    await prisma.server.update({
-      where: { id: serverId },
-      data: { tags: newTags },
-    })
+    await db
+      .update(servers)
+      .set({ tags: newTags })
+      .where(eq(servers.id, serverId))
   }
 
   return { analysis, tagsUpdated: newTags.length > server.tags.length, newTags }

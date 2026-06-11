@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { createSponsorship } from '@/app/actions/sponsorships'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -23,6 +24,7 @@ interface Server {
 export function SponsorshipForm({ servers }: { servers: Server[] }) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const t = useTranslations('Admin.sponsorships.form')
 
   async function handleSubmit(formData: FormData) {
     setLoading(true)
@@ -49,7 +51,7 @@ export function SponsorshipForm({ servers }: { servers: Server[] }) {
   if (servers.length === 0) {
     return (
       <p className="text-muted-foreground">
-        Нет доступных серверов для спонсорства. Все серверы уже спонсируются.
+        {t('noServersAvailable')}
       </p>
     )
   }
@@ -58,10 +60,10 @@ export function SponsorshipForm({ servers }: { servers: Server[] }) {
     <form action={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="serverId">Сервер</Label>
+          <Label htmlFor="serverId">{t('server')}</Label>
           <Select name="serverId" required>
             <SelectTrigger>
-              <SelectValue placeholder="Выберите сервер" />
+              <SelectValue placeholder={t('selectServer')} />
             </SelectTrigger>
             <SelectContent>
               {servers.map((server) => (
@@ -74,49 +76,49 @@ export function SponsorshipForm({ servers }: { servers: Server[] }) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="sponsorName">Название спонсора</Label>
+          <Label htmlFor="sponsorName">{t('sponsorName')}</Label>
           <Input
             id="sponsorName"
             name="sponsorName"
-            placeholder="Компания-спонсор"
+            placeholder={t('sponsorNamePlaceholder')}
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="sponsorUrl">URL спонсора</Label>
+          <Label htmlFor="sponsorUrl">{t('sponsorUrl')}</Label>
           <Input
             id="sponsorUrl"
             name="sponsorUrl"
             type="url"
-            placeholder="https://sponsor.example.com"
+            placeholder={t('sponsorUrlPlaceholder')}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="amount">Сумма (USD)</Label>
+          <Label htmlFor="amount">{t('amount')}</Label>
           <Input
             id="amount"
             name="amount"
             type="number"
             step="0.01"
             min="0"
-            placeholder="0.00"
+            placeholder={t('amountPlaceholder')}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="endDate">Дата окончания</Label>
+          <Label htmlFor="endDate">{t('endDate')}</Label>
           <Input id="endDate" name="endDate" type="date" />
         </div>
       </div>
 
       <div className="flex items-center gap-4">
         <Button type="submit" disabled={loading}>
-          {loading ? 'Создание...' : 'Создать спонсорство'}
+          {loading ? t('creating') : t('createSponsorship')}
         </Button>
         {success && (
-          <span className="text-sm text-green-600">Спонсорство создано!</span>
+          <span className="text-sm text-green-600">{t('sponsorshipCreated')}</span>
         )}
       </div>
     </form>

@@ -56,3 +56,4 @@ export function DataTable({ data }: DataTableProps) {
     </Table>
   )
 }
+

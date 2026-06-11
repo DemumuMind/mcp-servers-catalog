@@ -1,6 +1,9 @@
 'use client'
 
+import { logger } from '@/lib/logger'
+
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { X, Download } from 'lucide-react'
 
@@ -10,6 +13,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export function A2HSBanner() {
+  const t = useTranslations('A2HS')
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [isInstalled, setIsInstalled] = useState(false)
@@ -24,7 +28,6 @@ export function A2HSBanner() {
       return
     }
 
-    // Check dismissal
     const dismissed = localStorage.getItem('a2hs-dismissed')
     if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) {
       setIsDismissed(true)
@@ -58,7 +61,7 @@ export function A2HSBanner() {
     const { outcome } = await deferredPrompt.userChoice
     
     if (outcome === 'accepted') {
-      console.log('User accepted A2HS prompt')
+      logger.info('User accepted A2HS prompt')
     }
     
     setDeferredPrompt(null)
@@ -86,13 +89,13 @@ export function A2HSBanner() {
             <Download className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <p className="font-medium text-sm">Установите приложение</p>
-            <p className="text-xs text-muted-foreground">Быстрый доступ к каталогу MCP</p>
+            <p className="font-medium text-sm">{t('installApp')}</p>
+            <p className="text-xs text-muted-foreground">{t('quickAccess')}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" onClick={handleInstall}>
-            Установить
+            {t('install')}
           </Button>
           <Button size="sm" variant="ghost" onClick={handleDismiss}>
             <X className="w-4 h-4" />

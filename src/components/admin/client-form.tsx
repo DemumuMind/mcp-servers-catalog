@@ -13,8 +13,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import { createClient, updateClient } from '@/app/actions/clients'
 
 const clientSchema = z.object({
@@ -63,23 +62,25 @@ export function ClientForm({ mode, client }: ClientFormProps) {
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="text-sm font-medium">Name</label>
-            <Input {...form.register('name')} />
+            <label htmlFor="cf-name" className="text-sm font-medium">Name</label>
+            <Input id="cf-name" {...form.register('name')} />
           </div>
           <div>
-            <label className="text-sm font-medium">Description</label>
-            <Textarea {...form.register('description')} />
+            <label htmlFor="cf-description" className="text-sm font-medium">Description</label>
+            <Textarea id="cf-description" {...form.register('description')} />
           </div>
           <div>
-            <label className="text-sm font-medium">URL</label>
-            <Input {...form.register('url')} type="url" />
+            <label htmlFor="cf-url" className="text-sm font-medium">URL</label>
+            <Input id="cf-url" {...form.register('url')} type="url" />
           </div>
           <div>
-            <label className="text-sm font-medium">Icon (emoji or text)</label>
-            <Input {...form.register('icon')} placeholder="e.g. 🖥️" />
+            <label htmlFor="cf-icon" className="text-sm font-medium">Icon (emoji or text)</label>
+            <Input id="cf-icon" {...form.register('icon')} placeholder="e.g. 🖥️" />
           </div>
-          <label className="flex items-center gap-2">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label id="label-cf-featured" className="flex items-center gap-2">
             <Checkbox
+              aria-labelledby="label-cf-featured"
               checked={form.watch('featured')}
               onCheckedChange={(checked) => form.setValue('featured', checked as boolean)}
             />

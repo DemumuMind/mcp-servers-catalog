@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware'
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from "next/server"
+import { logger } from "@/lib/logger"
 
 const intlMiddleware = createMiddleware({
   locales: ['en', 'ru'],
@@ -15,7 +15,7 @@ function logRequest(request: NextRequest, response: NextResponse, startTime: num
   const status = response.status
 
   // Log to console (can be replaced with structured logging service)
-  console.log(`[${new Date().toISOString()}] ${method} ${url} status=${status} duration=${duration}ms ip=${ip}`)
+  logger.info(`[${new Date().toISOString()}] ${method} ${url} status=${status} duration=${duration}ms ip=${ip}`)
 }
 
 function generateRandomHex(length: number): string {
@@ -28,6 +28,18 @@ function getCsrfToken(request: NextRequest): string {
   const existing = request.cookies.get('csrf-token')?.value
   if (existing && existing.length === 64) return existing
   return generateRandomHex(32)
+}
+
+function applyMiddleware(request: NextRequest, response: NextResponse, csrfToken: string, startTime: number) {
+  response.cookies.set('csrf-token', csrfToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 24,
+  })
+  assignABVariant(request, response)
+  logRequest(request, response, startTime)
+  return response
 }
 
 function assignABVariant(request: NextRequest, response: NextResponse) {
@@ -73,69 +85,29 @@ export default function middleware(request: NextRequest) {
 
   if (redirects[pathname]) {
     const response = NextResponse.redirect(new URL(redirects[pathname], request.url))
-    response.cookies.set('csrf-token', csrfToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 24, // 1 day
-    })
-    assignABVariant(request, response)
-    logRequest(request, response, startTime)
-    return response
+    return applyMiddleware(request, response, csrfToken, startTime)
   }
 
   // Profile subpaths
   if (pathname.startsWith('/profile/')) {
     const response = NextResponse.redirect(new URL(`/ru${pathname}`, request.url))
-    response.cookies.set('csrf-token', csrfToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 24,
-    })
-    assignABVariant(request, response)
-    logRequest(request, response, startTime)
-    return response
+    return applyMiddleware(request, response, csrfToken, startTime)
   }
 
   // Server detail pages
-  if (pathname.match(/^\/servers\/[^\/]+\/[^\/]+$/)) {
+  if (pathname.match(/^\/servers\/[^/]+\/[^/]+$/)) {
     const response = NextResponse.redirect(new URL(`/ru${pathname}`, request.url))
-    response.cookies.set('csrf-token', csrfToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 24,
-    })
-    assignABVariant(request, response)
-    logRequest(request, response, startTime)
-    return response
+    return applyMiddleware(request, response, csrfToken, startTime)
   }
 
   // Skip locale middleware for admin routes (they are locale-free)
   if (pathname.startsWith('/admin')) {
     const response = NextResponse.next()
-    response.cookies.set('csrf-token', csrfToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 24,
-    })
-    assignABVariant(request, response)
-    logRequest(request, response, startTime)
-    return response
+    return applyMiddleware(request, response, csrfToken, startTime)
   }
 
   const response = intlMiddleware(request)
-  response.cookies.set('csrf-token', csrfToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 60 * 60 * 24,
-  })
-  assignABVariant(request, response as NextResponse)
-  logRequest(request, response as NextResponse, startTime)
-  return response
+  return applyMiddleware(request, response as NextResponse, csrfToken, startTime)
 }
 
 export const config = {

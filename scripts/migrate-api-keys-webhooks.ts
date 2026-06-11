@@ -5,7 +5,7 @@ async function main() {
   const dbPath = path.resolve(process.cwd(), '.pglite')
   const client = new PGlite(dbPath)
 
-  console.log('Creating ApiKey table...')
+  process.stdout.write('Creating ApiKey table...\n')
   await client.query(`
     CREATE TABLE IF NOT EXISTS "ApiKey" (
       id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
@@ -21,7 +21,7 @@ async function main() {
     )
   `)
 
-  console.log('Creating Webhook table...')
+  process.stdout.write('Creating Webhook table...\n')
   await client.query(`
     CREATE TABLE IF NOT EXISTS "Webhook" (
       id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
@@ -36,12 +36,12 @@ async function main() {
     )
   `)
 
-  console.log('Creating indexes...')
+  process.stdout.write('Creating indexes...\n')
   await client.query(`CREATE INDEX IF NOT EXISTS "ApiKey_userId_idx" ON "ApiKey"("userId")`)
   await client.query(`CREATE INDEX IF NOT EXISTS "ApiKey_keyHash_idx" ON "ApiKey"("keyHash")`)
   await client.query(`CREATE INDEX IF NOT EXISTS "Webhook_userId_idx" ON "Webhook"("userId")`)
 
-  console.log('Migration completed successfully!')
+  process.stdout.write('Migration completed successfully!\n')
   await client.close()
 }
 

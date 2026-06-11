@@ -42,7 +42,7 @@ function getDataDir(): string {
 
 function createPrisma() {
   const dataDir = getDataDir()
-  console.log(`Using database directory: ${dataDir}`)
+  process.stdout.write(`Using database directory: ${dataDir}\n`)
   const pglite = new PGlite({ dataDir })
   const adapter = new PrismaPGlite(pglite)
   return { prisma: new PrismaClient({ adapter }), pglite }
@@ -200,7 +200,8 @@ async function githubSearch(
   }
   if (GITHUB_TOKEN) headers.Authorization = `token ${GITHUB_TOKEN}`
 
-  const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=${perPage}&page=${page}`
+  const GITHUB_API_BASE = process.env.GITHUB_API_URL || 'https://api.github.com'
+  const url = `${GITHUB_API_BASE}/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=${perPage}&page=${page}`
   const res = await fetch(url, { headers })
   if (!res.ok) {
     const text = await res.text()
@@ -218,85 +219,104 @@ async function githubSearch(
   }))
 }
 
+interface SearchCounters {
+  created: number
+  skipped: number
+  failed: number
+  enriched: number
+}
+
+async function processSearchResult(
+  result: { owner: string; repo: string; htmlUrl: string; fullName: string },
+  index: number,
+  total: number,
+  existingSlugs: Set<string>,
+  counters: SearchCounters
+): Promise<void> {
+  const fullSlug = `${result.owner}/${result.repo}`.toLowerCase()
+
+  if (existingSlugs.has(fullSlug)) {
+    process.stdout.write(`[${index + 1}/${total}] Skipping existing: ${fullSlug}\n`)
+    counters.skipped++
+    return
+  }
+
+  process.stdout.write(`[${index + 1}/${total}] Processing ${fullSlug}...\n`)
+
+  try {
+    const repoData = await fetchGitHubRepo(result.htmlUrl)
+
+    let readmeAnalysis = null
+    try {
+      const readme = await fetchRepoReadme(result.htmlUrl)
+      if (readme) {
+        readmeAnalysis = analyzeReadme(readme)
+        counters.enriched++
+      }
+    } catch (readmeErr) {
+      console.warn(`  ⚠️ Failed to fetch README for ${fullSlug}:`, (readmeErr as Error).message)
+    }
+
+    const category = detectCategory(
+      repoData.topics || [],
+      readmeAnalysis?.suggestedTags || [],
+      repoData.name,
+      repoData.description
+    )
+
+    const tags = readmeAnalysis
+      ? mergeTags([], repoData.topics || [], readmeAnalysis.suggestedTags)
+      : mergeTags([], repoData.topics || [], [])
+
+    await prisma.server.create({
+      data: {
+        name: repoData.name,
+        description: repoData.description || `${repoData.name} MCP server`,
+        owner: result.owner,
+        repo: result.repo,
+        fullSlug,
+        category,
+        githubUrl: result.htmlUrl,
+        tags,
+        stars: repoData.stars,
+        forks: repoData.forks,
+        isOfficial: false,
+        isRemote: false,
+        featured: false,
+      },
+    })
+
+    counters.created++
+    process.stdout.write(`  ✓ Created ${fullSlug} (${category}, ${repoData.stars}⭐)\n`)
+  } catch (err) {
+    console.error(`  ✗ Failed ${fullSlug}:`, (err as Error).message)
+    counters.failed++
+  }
+}
+
+function printSearchSummary(totalResults: number, counters: SearchCounters) {
+  process.stdout.write('\n--- GitHub search import complete ---\n')
+  process.stdout.write(`Total search results: ${totalResults}\n`)
+  process.stdout.write(`Created:              ${counters.created}\n`)
+  process.stdout.write(`Skipped (existing):   ${counters.skipped}\n`)
+  process.stdout.write(`Failed:               ${counters.failed}\n`)
+  process.stdout.write(`README enriched:      ${counters.enriched}\n`)
+}
+
 async function main() {
-  console.log('Fetching MCP servers from GitHub Search API...')
+  process.stdout.write('Fetching MCP servers from GitHub Search API...\n')
 
-  // Fetch up to 100 results from search
   const searchResults = await githubSearch('topic:mcp-server', 100, 1)
-  console.log(`GitHub search returned ${searchResults.length} repositories`)
+  process.stdout.write(`GitHub search returned ${searchResults.length} repositories\n`)
 
-  // Get existing slugs from DB
   const existingServers = await prisma.server.findMany({ select: { fullSlug: true } })
   const existingSlugs = new Set(existingServers.map((s) => s.fullSlug.toLowerCase()))
-  console.log(`Already in database: ${existingSlugs.size} servers`)
+  process.stdout.write(`Already in database: ${existingSlugs.size} servers\n`)
 
-  let created = 0
-  let skipped = 0
-  let failed = 0
-  let enriched = 0
+  const counters: SearchCounters = { created: 0, skipped: 0, failed: 0, enriched: 0 }
 
   for (let i = 0; i < searchResults.length; i++) {
-    const result = searchResults[i]
-    const fullSlug = `${result.owner}/${result.repo}`.toLowerCase()
-
-    if (existingSlugs.has(fullSlug)) {
-      console.log(`[${i + 1}/${searchResults.length}] Skipping existing: ${fullSlug}`)
-      skipped++
-      continue
-    }
-
-    console.log(`[${i + 1}/${searchResults.length}] Processing ${fullSlug}...`)
-
-    try {
-      const repoData = await fetchGitHubRepo(result.htmlUrl)
-
-      // Fetch and analyze README
-      let readmeAnalysis = null
-      try {
-        const readme = await fetchRepoReadme(result.htmlUrl)
-        if (readme) {
-          readmeAnalysis = analyzeReadme(readme)
-          enriched++
-        }
-      } catch (readmeErr) {
-        console.warn(`  ⚠️ Failed to fetch README for ${fullSlug}:`, (readmeErr as Error).message)
-      }
-
-      const category = detectCategory(
-        repoData.topics || [],
-        readmeAnalysis?.suggestedTags || [],
-        repoData.name,
-        repoData.description
-      )
-
-      const tags = readmeAnalysis
-        ? mergeTags([], repoData.topics || [], readmeAnalysis.suggestedTags)
-        : mergeTags([], repoData.topics || [], [])
-
-      await prisma.server.create({
-        data: {
-          name: repoData.name,
-          description: repoData.description || `${repoData.name} MCP server`,
-          owner: result.owner,
-          repo: result.repo,
-          fullSlug,
-          category,
-          githubUrl: result.htmlUrl,
-          tags,
-          stars: repoData.stars,
-          forks: repoData.forks,
-          isOfficial: false,
-          isRemote: false,
-          featured: false,
-        },
-      })
-
-      created++
-      console.log(`  ✓ Created ${fullSlug} (${category}, ${repoData.stars}⭐)`)
-    } catch (err) {
-      console.error(`  ✗ Failed ${fullSlug}:`, (err as Error).message)
-      failed++
-    }
+    await processSearchResult(searchResults[i], i, searchResults.length, existingSlugs, counters)
 
     // Sleep to respect rate limits
     if (i < searchResults.length - 1) {
@@ -304,12 +324,7 @@ async function main() {
     }
   }
 
-  console.log('\n--- GitHub search import complete ---')
-  console.log(`Total search results: ${searchResults.length}`)
-  console.log(`Created:              ${created}`)
-  console.log(`Skipped (existing):   ${skipped}`)
-  console.log(`Failed:               ${failed}`)
-  console.log(`README enriched:      ${enriched}`)
+  printSearchSummary(searchResults.length, counters)
 
   await prisma.$disconnect()
   await pglite.close()

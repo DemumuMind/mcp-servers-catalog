@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Card, CardContent } from '@/components/ui/card'
 import { Pencil, Trash2, Download } from 'lucide-react'
 import { ServerFormDialog } from '@/components/admin/server-form-dialog'
 import { exportServersToCSV } from '@/app/actions/export'
@@ -20,13 +19,21 @@ import { exportServersToCSV } from '@/app/actions/export'
 interface Server {
   id: string
   name: string
+  description: string
+  owner: string
+  repo: string
   fullSlug: string
   category: string
+  githubUrl: string
+  tags: string[]
   isOfficial: boolean
+  isSponsored: boolean
+  isRemote: boolean
   featured: boolean
   featuredUntil: Date | null
-  isSponsored: boolean
   sponsoredUntil: Date | null
+  authType: string | null
+  endpoint: string | null
 }
 
 interface BulkServerTableProps {
@@ -62,7 +69,7 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
   }
 
   const handleBulkDelete = () => {
-    if (!confirm(`Удалить ${selected.size} серверов?`)) return
+    if (!confirm(`Delete ${selected.size} servers?`)) return
     startTransition(async () => {
       await deleteAction(Array.from(selected))
       setSelected(new Set())
@@ -81,12 +88,12 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="premium-panel flex flex-wrap items-center justify-between gap-3 p-4">
         <div className="flex items-center gap-2">
           {selected.size > 0 && (
             <>
               <span className="text-sm text-muted-foreground">
-                Выбрано: {selected.size}
+                Selected: {selected.size}
               </span>
               <Button
                 variant="destructive"
@@ -95,20 +102,18 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
                 disabled={isPending}
               >
                 <Trash2 className="h-4 w-4 mr-1" />
-                Удалить
+                Delete
               </Button>
             </>
           )}
         </div>
         <Button variant="outline" size="sm" onClick={handleExport}>
           <Download className="h-4 w-4 mr-1" />
-          Экспорт CSV
+          Export CSV
         </Button>
       </div>
 
-      <Card>
-        <CardContent className="pt-6">
-          <Table>
+      <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">
@@ -117,13 +122,13 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
                     onCheckedChange={toggleAll}
                   />
                 </TableHead>
-                <TableHead>Название</TableHead>
-                <TableHead>Категория</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Category</TableHead>
                 <TableHead>Official</TableHead>
                 <TableHead>Featured</TableHead>
-                <TableHead>Featured до</TableHead>
-                <TableHead>Sponsored до</TableHead>
-                <TableHead className="text-right">Действия</TableHead>
+                <TableHead>Featured until</TableHead>
+                <TableHead>Sponsored until</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -165,29 +170,29 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
                   </TableCell>
                   <TableCell>
                     {server.featuredUntil
-                      ? new Date(server.featuredUntil).toLocaleDateString('ru-RU')
+                      ? new Date(server.featuredUntil).toLocaleDateString('en-US')
                       : '—'}
                   </TableCell>
                   <TableCell>
                     {server.isSponsored
                       ? server.sponsoredUntil
-                        ? new Date(server.sponsoredUntil).toLocaleDateString('ru-RU')
+                        ? new Date(server.sponsoredUntil).toLocaleDateString('en-US')
                         : '✅'
                       : '—'}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <ServerFormDialog server={server as any}>
-                        <Button variant="outline" size="icon" type="button" aria-label="Редактировать сервер">
+                      <ServerFormDialog server={server}>
+                        <Button variant="outline" size="icon" type="button" aria-label="Edit server">
                           <Pencil className="h-4 w-4" />
                         </Button>
                       </ServerFormDialog>
                       <Button
                         variant="outline"
                         size="icon"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                         onClick={() => {
-                          if (confirm('Удалить сервер?')) {
+                          if (confirm('Delete server?')) {
                             startTransition(async () => {
                               await deleteAction([server.id])
                               router.refresh()
@@ -195,7 +200,7 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
                           }
                         }}
                         disabled={isPending}
-                        aria-label="Удалить сервер"
+                        aria-label="Delete server"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -205,8 +210,7 @@ export function BulkServerTable({ servers, deleteAction, toggleFeaturedAction }:
               ))}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
     </div>
   )
 }
+

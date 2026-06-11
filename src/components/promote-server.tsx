@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -33,29 +34,30 @@ export function PromoteServer({
   const [isPendingFeatured, startTransitionFeatured] = useTransition()
   const [isPendingSponsored, startTransitionSponsored] = useTransition()
   const stripeEnabled = isStripeEnabled()
+  const t = useTranslations('Admin.promoteServer')
 
   const formatDate = (date: Date | null) => {
     if (!date) return null
-    return new Date(date).toLocaleDateString('ru-RU')
+    return new Date(date).toLocaleDateString()
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button variant="outline" size="sm" className="gap-1" type="button" onClick={() => setOpen(true)}>
         <Sparkles className="h-4 w-4" />
-        Продвигать
+        {t('promote')}
       </Button>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Продвижение сервера</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>
-            Выберите тариф для повышения видимости вашего сервера
+            {t('description')}
           </DialogDescription>
         </DialogHeader>
 
         {!stripeEnabled && (
           <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md text-amber-800 text-sm">
-            ⚠️ Платежная система временно недоступна. Для активации обратитесь к администратору.
+            ⚠️ {t('paymentUnavailable')}
           </div>
         )}
 
@@ -67,14 +69,14 @@ export function PromoteServer({
                 <Sparkles className="h-5 w-5 text-yellow-500" />
                 <span className="font-semibold">Featured</span>
               </div>
-              <Badge variant="secondary">$29 / 30 дней</Badge>
+              <Badge variant="secondary">{t('featuredPrice')}</Badge>
             </div>
             <p className="text-sm text-muted-foreground">
-              Ваш сервер будет выделен на главной странице в блоке рекомендуемых
+              {t('featuredDescription')}
             </p>
             {featured && featuredUntil && (
               <p className="text-xs text-green-600">
-                Активно до {formatDate(featuredUntil)}
+                {t('activeUntil')} {formatDate(featuredUntil)}
               </p>
             )}
             <form
@@ -92,7 +94,7 @@ export function PromoteServer({
                 {isPendingFeatured && (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 )}
-                {featured ? 'Продлить Featured' : 'Купить Featured'}
+                {featured ? t('renewFeatured') : t('buyFeatured')}
               </Button>
             </form>
           </div>
@@ -104,14 +106,14 @@ export function PromoteServer({
                 <Crown className="h-5 w-5 text-amber-500" />
                 <span className="font-semibold">Sponsored</span>
               </div>
-              <Badge variant="secondary">$99 / 30 дней</Badge>
+              <Badge variant="secondary">{t('sponsoredPrice')}</Badge>
             </div>
             <p className="text-sm text-muted-foreground">
-              Премиальное размещение с бейджем спонсора на карточке сервера
+              {t('sponsoredDescription')}
             </p>
             {isSponsored && sponsoredUntil && (
               <p className="text-xs text-green-600">
-                Активно до {formatDate(sponsoredUntil)}
+                {t('activeUntil')} {formatDate(sponsoredUntil)}
               </p>
             )}
             <form
@@ -130,7 +132,7 @@ export function PromoteServer({
                 {isPendingSponsored && (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 )}
-                {isSponsored ? 'Продлить Sponsored' : 'Купить Sponsored'}
+                {isSponsored ? t('renewSponsored') : t('buySponsored')}
               </Button>
             </form>
           </div>

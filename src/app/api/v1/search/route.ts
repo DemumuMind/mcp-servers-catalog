@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { or, like, desc, sql } from 'drizzle-orm'
 import { validateApiKey } from '@/app/actions/api-keys'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 
@@ -50,19 +51,21 @@ export async function GET(request: NextRequest) {
   }
 
   const { q: query, limit } = parsed.data
+  const searchPattern = `%${query}%`
+  const lowerQuery = query.toLowerCase()
 
-  const servers = await prisma.server.findMany({
-    where: {
-      OR: [
-        { name: { contains: query, mode: 'insensitive' } },
-        { description: { contains: query, mode: 'insensitive' } },
-        { owner: { contains: query, mode: 'insensitive' } },
-        { tags: { has: query.toLowerCase() } },
-      ],
-    },
-    take: limit,
-    orderBy: { stars: 'desc' },
-  })
+  const serverList = await db.select().from(servers)
+    .where(
+      or(
+        like(servers.name, searchPattern),
+        like(servers.description, searchPattern),
+        like(servers.owner, searchPattern),
+        // Tags is a JSON array — use json_each for robust tag matching in SQLite
+        sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value LIKE ${`%${lowerQuery}%`})`,
+      )
+    )
+    .orderBy(desc(servers.stars))
+    .limit(limit)
 
-  return apiResponse(servers)
+  return apiResponse(serverList)
 }

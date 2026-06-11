@@ -1,55 +1,55 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, bookmarks, servers } from '@/lib/db'
+import { eq, desc } from 'drizzle-orm'
 
 export async function exportBookmarksJSON(userId: string): Promise<string> {
-  const bookmarks = await prisma.bookmark.findMany({
-    where: { userId },
-    include: { server: true },
-    orderBy: { createdAt: 'desc' },
-  })
+  const userBookmarks = await db.select({
+    id: servers.id,
+    name: servers.name,
+    description: servers.description,
+    owner: servers.owner,
+    repo: servers.repo,
+    category: servers.category,
+    githubUrl: servers.githubUrl,
+    tags: servers.tags,
+    stars: servers.stars,
+    bookmarkedAt: bookmarks.createdAt,
+  }).from(bookmarks).innerJoin(servers, eq(bookmarks.serverId, servers.id)).where(eq(bookmarks.userId, userId)).orderBy(desc(bookmarks.createdAt))
 
-  return JSON.stringify(
-    bookmarks.map((b) => ({
-      id: b.server.id,
-      name: b.server.name,
-      description: b.server.description,
-      owner: b.server.owner,
-      repo: b.server.repo,
-      category: b.server.category,
-      githubUrl: b.server.githubUrl,
-      tags: b.server.tags,
-      stars: b.server.stars,
-      bookmarkedAt: b.createdAt,
-    })),
-    null,
-    2
-  )
+  return JSON.stringify(userBookmarks, null, 2)
 }
 
 export async function exportBookmarksCSV(userId: string): Promise<string> {
-  const bookmarks = await prisma.bookmark.findMany({
-    where: { userId },
-    include: { server: true },
-    orderBy: { createdAt: 'desc' },
-  })
+  const userBookmarks = await db.select({
+    id: servers.id,
+    name: servers.name,
+    description: servers.description,
+    owner: servers.owner,
+    repo: servers.repo,
+    category: servers.category,
+    githubUrl: servers.githubUrl,
+    tags: servers.tags,
+    stars: servers.stars,
+    bookmarkedAt: bookmarks.createdAt,
+  }).from(bookmarks).innerJoin(servers, eq(bookmarks.serverId, servers.id)).where(eq(bookmarks.userId, userId)).orderBy(desc(bookmarks.createdAt))
 
   const headers = ['Name', 'Owner', 'Repo', 'Category', 'Stars', 'Tags', 'GitHub URL', 'Bookmarked At']
-  const rows = bookmarks.map((b) => [
-    b.server.name,
-    b.server.owner,
-    b.server.repo,
-    b.server.category,
-    b.server.stars.toString(),
-    b.server.tags.join(', '),
-    b.server.githubUrl,
-    new Date(b.createdAt).toISOString(),
+  const rows = userBookmarks.map((b: any) => [
+    b.name,
+    b.owner,
+    b.repo,
+    b.category,
+    b.stars.toString(),
+    b.tags.join(', '),
+    b.githubUrl,
+    new Date(b.bookmarkedAt).toISOString(),
   ])
 
   return [headers, ...rows]
     .map((row) =>
       row
-        .map((cell) => {
+        .map((cell: any) => {
           const str = String(cell).replace(/"/g, '""')
           return str.includes(',') || str.includes('"') ? `"${str}"` : str
         })

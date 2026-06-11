@@ -4,7 +4,7 @@ import { join } from 'path'
 
 async function main() {
   const dataDir = process.env.DATABASE_DIR || '.pglite'
-  console.log(`Initializing PGlite in ${dataDir}...`)
+  process.stdout.write(`Initializing PGlite in ${dataDir}...\n`)
   
   const pglite = new PGlite({ dataDir })
   
@@ -16,12 +16,12 @@ async function main() {
   
   for (const dir of dirs) {
     const sqlPath = join(migrationsDir, dir, 'migration.sql')
-    console.log(`Applying ${dir}...`)
+    process.stdout.write(`Applying ${dir}...\n`)
     const sql = readFileSync(sqlPath, 'utf-8')
     await pglite.exec(sql)
   }
   
-  console.log('Migrations applied successfully!')
+  process.stdout.write('Migrations applied successfully!\n')
   await pglite.close()
 }
 

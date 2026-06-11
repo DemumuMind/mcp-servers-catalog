@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { updateProfile, updatePassword, updateSettings } from '@/app/actions/profile'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,7 @@ interface SettingsPageProps {
 }
 
 export default function SettingsPageClient({ user }: SettingsPageProps) {
+  const t = useTranslations('Settings')
   const [name, setName] = useState(user.name || '')
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -33,9 +35,9 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
     setError('')
     try {
       await updateProfile(user.id, { name })
-      setMessage('Имя обновлено')
-    } catch (err) {
-      setError('Ошибка обновления имени')
+      setMessage(t('profileUpdated'))
+    } catch (_err) {
+      setError(t('profileUpdateError'))
     }
     setLoading(false)
   }
@@ -45,22 +47,22 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
     setMessage('')
     setError('')
     if (newPassword !== confirmPassword) {
-      setError('Пароли не совпадают')
+      setError(t('passwordsMismatch'))
       return
     }
     if (newPassword.length < 6) {
-      setError('Пароль должен быть не менее 6 символов')
+      setError(t('passwordTooShort'))
       return
     }
     setLoading(true)
     try {
       await updatePassword(user.id, currentPassword, newPassword)
-      setMessage('Пароль изменён')
+      setMessage(t('passwordChanged'))
       setCurrentPassword('')
       setNewPassword('')
       setConfirmPassword('')
     } catch (err: any) {
-      setError(err.message || 'Ошибка смены пароля')
+      setError(err.message || t('passwordChangeError'))
     }
     setLoading(false)
   }
@@ -72,9 +74,9 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
     setError('')
     try {
       await updateSettings(user.id, { emailNotifications })
-      setMessage('Настройки сохранены')
-    } catch (err) {
-      setError('Ошибка сохранения настроек')
+      setMessage(t('settingsSaved'))
+    } catch (_err) {
+      setError(t('settingsSaveError'))
     }
     setLoading(false)
   }
@@ -83,7 +85,7 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
     <div className="space-y-8">
       <div className="flex items-center gap-2">
         <Settings className="h-5 w-5" />
-        <h1 className="text-xl font-bold">Настройки</h1>
+        <h1 className="text-xl font-bold">{t('title')}</h1>
       </div>
 
       {message && (
@@ -100,19 +102,19 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
       <section className="space-y-4">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <User className="h-4 w-4" />
-          Профиль
+          {t('profileSection')}
         </h2>
         <form onSubmit={handleUpdateProfile} className="space-y-3 max-w-md">
           <div>
-            <label className="text-sm font-medium mb-1 block">Email</label>
-            <Input value={user.email} disabled className="bg-muted" />
+            <label htmlFor="settings-email" className="text-sm font-medium mb-1 block">Email</label>
+            <Input id="settings-email" value={user.email} disabled className="bg-muted" />
           </div>
           <div>
-            <label className="text-sm font-medium mb-1 block">Имя</label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <label htmlFor="user-name" className="text-sm font-medium mb-1 block">{t('nameLabel')}</label>
+            <Input id="user-name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <Button type="submit" disabled={loading}>
-            {loading ? 'Сохранение...' : 'Сохранить имя'}
+            {loading ? t('saving') : t('saveName')}
           </Button>
         </form>
       </section>
@@ -121,35 +123,38 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
       <section className="space-y-4">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <Lock className="h-4 w-4" />
-          Смена пароля
+          {t('passwordSection')}
         </h2>
         <form onSubmit={handleUpdatePassword} className="space-y-3 max-w-md">
           <div>
-            <label className="text-sm font-medium mb-1 block">Текущий пароль</label>
+            <label htmlFor="current-password" className="text-sm font-medium mb-1 block">{t('currentPassword')}</label>
             <Input
+              id="current-password"
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
             />
           </div>
           <div>
-            <label className="text-sm font-medium mb-1 block">Новый пароль</label>
+            <label htmlFor="new-password" className="text-sm font-medium mb-1 block">{t('newPassword')}</label>
             <Input
+              id="new-password"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
           <div>
-            <label className="text-sm font-medium mb-1 block">Подтвердите новый пароль</label>
+            <label htmlFor="confirm-password" className="text-sm font-medium mb-1 block">{t('confirmPassword')}</label>
             <Input
+              id="confirm-password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <Button type="submit" disabled={loading}>
-            {loading ? 'Смена...' : 'Сменить пароль'}
+            {loading ? t('changing') : t('changePassword')}
           </Button>
         </form>
       </section>
@@ -158,25 +163,27 @@ export default function SettingsPageClient({ user }: SettingsPageProps) {
       <section className="space-y-4">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <Bell className="h-4 w-4" />
-          Уведомления
+          {t('notificationsSection')}
         </h2>
         <form onSubmit={handleUpdateSettings} className="space-y-3">
-          <label className="flex items-center gap-3 cursor-pointer">
+          <label htmlFor="email-notifications" aria-label={t('emailNotifications')} className="flex items-center gap-3 cursor-pointer">
             <input
+              id="email-notifications"
               type="checkbox"
+              aria-label={t('emailNotifications')}
               checked={emailNotifications}
               onChange={(e) => setEmailNotifications(e.target.checked)}
               className="h-4 w-4 rounded border-gray-300"
             />
             <div>
-              <div className="text-sm font-medium">Email-уведомления</div>
+              <div className="text-sm font-medium">{t('emailNotifications')}</div>
               <div className="text-xs text-muted-foreground">
-                Получать уведомления о статусе заявок и ответах на комментарии
+                {t('emailNotificationsDescription')}
               </div>
             </div>
           </label>
           <Button type="submit" disabled={loading}>
-            {loading ? 'Сохранение...' : 'Сохранить настройки'}
+            {loading ? t('saving') : t('saveSettings')}
           </Button>
         </form>
       </section>

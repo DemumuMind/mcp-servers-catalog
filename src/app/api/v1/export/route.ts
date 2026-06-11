@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db, servers, clients } from '@/lib/db'
+import { desc } from 'drizzle-orm'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 
 export async function GET(request: Request) {
@@ -15,29 +16,30 @@ export async function GET(request: Request) {
 
     switch (table) {
       case 'servers':
-        data = await prisma.server.findMany({
-          select: {
-            id: true,
-            name: true,
-            description: true,
-            owner: true,
-            repo: true,
-            category: true,
-            tags: true,
-            stars: true,
-            forks: true,
-            isOfficial: true,
-            isRemote: true,
-            createdAt: true,
-          },
-          orderBy: { createdAt: 'desc' },
-        })
+        data = await db.select({
+          id: servers.id,
+          name: servers.name,
+          description: servers.description,
+          owner: servers.owner,
+          repo: servers.repo,
+          category: servers.category,
+          tags: servers.tags,
+          stars: servers.stars,
+          forks: servers.forks,
+          isOfficial: servers.isOfficial,
+          isRemote: servers.isRemote,
+          createdAt: servers.createdAt,
+        }).from(servers).orderBy(desc(servers.createdAt))
         break
       case 'clients':
-        data = await prisma.client.findMany({
-          select: { id: true, name: true, description: true, url: true, featured: true, createdAt: true },
-          orderBy: { createdAt: 'desc' },
-        })
+        data = await db.select({
+          id: clients.id,
+          name: clients.name,
+          description: clients.description,
+          url: clients.url,
+          featured: clients.featured,
+          createdAt: clients.createdAt,
+        }).from(clients).orderBy(desc(clients.createdAt))
         break
       default:
         return NextResponse.json({ error: 'Invalid table. Allowed: servers, clients' }, { status: 400 })

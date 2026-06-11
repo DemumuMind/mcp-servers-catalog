@@ -1,96 +1,265 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, reviews, reviewVotes, users, ratings } from '@/lib/db'
+import { eq, and, desc, sql, inArray } from 'drizzle-orm'
 import { rateLimit } from '@/lib/rate-limit'
 import { sanitizeUserHtml } from '@/lib/sanitize'
 
-export async function getServerReviews(serverId: string) {
-  return prisma.review.findMany({
-    where: { serverId },
-    include: {
-      user: { select: { id: true, name: true, image: true, isVerifiedAuthor: true } },
-      votes: { select: { userId: true, helpful: true } },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
-}
-
-export async function createReview(userId: string, serverId: string, content: string) {
-  const rateLimitResult = await rateLimit(`review:${userId}`, 5, 60 * 60 * 1000) // 5 per hour
+// ─── Submit Review ────────────────────────────────────────────────────────────
+export async function submitReview(
+  userId: string,
+  serverId: string,
+  content: string
+): Promise<{ success: boolean; reviewId?: string; error?: string }> {
+  const rateLimitResult = await rateLimit(`review:${userId}`, 5, 60 * 60 * 1000)
   if (!rateLimitResult.success) {
-    throw new Error('Слишком много отзывов. Попробуйте позже.')
+    return { success: false, error: 'RATE_LIMIT_REVIEWS' }
   }
 
   const sanitized = sanitizeUserHtml(content)
 
   // Check if user already reviewed this server
-  const existing = await prisma.review.findUnique({
-    where: { userId_serverId: { userId, serverId } },
-  })
+  const existing = await db
+    .select({ id: reviews.id })
+    .from(reviews)
+    .where(and(eq(reviews.userId, userId), eq(reviews.serverId, serverId)))
+    .limit(1)
+    .then((r: any) => r[0] ?? null)
 
   if (existing) {
-    throw new Error('Вы уже оставили отзыв на этот сервер.')
+    // Update existing review
+    await db
+      .update(reviews)
+      .set({ content: sanitized, updatedAt: new Date() })
+      .where(eq(reviews.id, existing.id))
+    return { success: true, reviewId: existing.id }
   }
 
-  const review = await prisma.review.create({
-    data: { userId, serverId, content: sanitized },
-    include: {
-      user: { select: { id: true, name: true, image: true, isVerifiedAuthor: true } },
-      votes: { select: { userId: true, helpful: true } },
-    },
-  })
+  const result = await db
+    .insert(reviews)
+    .values({ userId, serverId, content: sanitized })
+    .returning({ id: reviews.id })
+    .then((r: any) => r[0])
 
-  return review
+  return { success: true, reviewId: result?.id }
 }
 
-export async function voteReview(userId: string, reviewId: string, helpful: boolean) {
-  const existing = await prisma.reviewVote.findUnique({
-    where: { userId_reviewId: { userId, reviewId } },
+// ─── Get Server Reviews ───────────────────────────────────────────────────────
+export async function getServerReviews(serverId: string) {
+  const reviewRows = await db
+    .select({
+      id: reviews.id,
+      userId: reviews.userId,
+      serverId: reviews.serverId,
+      content: reviews.content,
+      helpfulCount: reviews.helpfulCount,
+      notHelpfulCount: reviews.notHelpfulCount,
+      isModerated: reviews.isModerated,
+      createdAt: reviews.createdAt,
+      updatedAt: reviews.updatedAt,
+      userName: users.name,
+      userImage: users.image,
+      userIsVerifiedAuthor: users.isVerifiedAuthor,
+    })
+    .from(reviews)
+    .innerJoin(users, eq(reviews.userId, users.id))
+    .where(eq(reviews.serverId, serverId))
+    .orderBy(desc(reviews.createdAt))
+
+  // Fetch votes for these reviews
+  const reviewIds = reviewRows.map((r: any) => r.id)
+  const voteRows =
+    reviewIds.length > 0
+      ? await db
+          .select({
+            reviewId: reviewVotes.reviewId,
+            userId: reviewVotes.userId,
+            helpful: reviewVotes.helpful,
+          })
+          .from(reviewVotes)
+          .where(inArray(reviewVotes.reviewId, reviewIds))
+      : []
+
+  const votesByReview = new Map<
+    string,
+    Array<{ userId: string; helpful: boolean }>
+  >()
+  voteRows.forEach((v: any) => {
+    const arr = votesByReview.get(v.reviewId) || []
+    arr.push({ userId: v.userId, helpful: v.helpful })
+    votesByReview.set(v.reviewId, arr)
   })
 
+  return reviewRows.map((r: any) => ({
+    id: r.id,
+    userId: r.userId,
+    serverId: r.serverId,
+    content: r.content,
+    helpfulCount: r.helpfulCount,
+    notHelpfulCount: r.notHelpfulCount,
+    isModerated: r.isModerated,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    user: {
+      id: r.userId,
+      name: r.userName,
+      image: r.userImage,
+      isVerifiedAuthor: r.userIsVerifiedAuthor,
+    },
+    votes: votesByReview.get(r.id) || [],
+  }))
+}
+
+// ─── Rate Server ──────────────────────────────────────────────────────────────
+export async function rateServer(
+  userId: string,
+  serverId: string,
+  value: number
+): Promise<{ success: boolean }> {
+  const clamped = Math.min(5, Math.max(1, Math.round(value)))
+
+  // Upsert: insert or update
+  const existing = await db
+    .select({ id: ratings.id })
+    .from(ratings)
+    .where(and(eq(ratings.userId, userId), eq(ratings.serverId, serverId)))
+    .limit(1)
+    .then((r: any) => r[0] ?? null)
+
   if (existing) {
-    // Toggle vote
+    await db
+      .update(ratings)
+      .set({ value: clamped, updatedAt: new Date() })
+      .where(eq(ratings.id, existing.id))
+  } else {
+    await db.insert(ratings).values({ userId, serverId, value: clamped })
+  }
+
+  return { success: true }
+}
+
+// ─── Get Server Rating ────────────────────────────────────────────────────────
+export async function getServerRating(serverId: string): Promise<{
+  average: number
+  count: number
+}> {
+  const result = await db
+    .select({
+      average: sql<number>`coalesce(avg(${ratings.value}), 0)`,
+      count: sql<number>`count(*)`,
+    })
+    .from(ratings)
+    .where(eq(ratings.serverId, serverId))
+    .then((r: any) => r[0] ?? { average: 0, count: 0 })
+
+  return { average: Number(result.average), count: Number(result.count) }
+}
+
+// ─── Vote Review ──────────────────────────────────────────────────────────────
+export async function voteReview(
+  userId: string,
+  reviewId: string,
+  helpful: boolean
+): Promise<{ success: boolean }> {
+  // Check existing vote
+  const existing = await db
+    .select({ id: reviewVotes.id, helpful: reviewVotes.helpful })
+    .from(reviewVotes)
+    .where(and(eq(reviewVotes.userId, userId), eq(reviewVotes.reviewId, reviewId)))
+    .limit(1)
+    .then((r: any) => r[0] ?? null)
+
+  if (existing) {
     if (existing.helpful === helpful) {
-      // Remove vote
-      await prisma.reviewVote.delete({ where: { id: existing.id } })
-      await prisma.review.update({
-        where: { id: reviewId },
-        data: { [helpful ? 'helpfulCount' : 'notHelpfulCount']: { decrement: 1 } },
-      })
-      return { action: 'removed' as const }
+      // Same vote — remove it (toggle off)
+      await db.delete(reviewVotes).where(eq(reviewVotes.id, existing.id))
+      // Adjust counters
+      if (helpful) {
+        await db
+          .update(reviews)
+          .set({ helpfulCount: sql`${reviews.helpfulCount} - 1` })
+          .where(eq(reviews.id, reviewId))
+      } else {
+        await db
+          .update(reviews)
+          .set({ notHelpfulCount: sql`${reviews.notHelpfulCount} - 1` })
+          .where(eq(reviews.id, reviewId))
+      }
     } else {
-      // Change vote
-      await prisma.reviewVote.update({
-        where: { id: existing.id },
-        data: { helpful },
-      })
-      await prisma.review.update({
-        where: { id: reviewId },
-        data: {
-          helpfulCount: { [helpful ? 'increment' : 'decrement']: 1 },
-          notHelpfulCount: { [helpful ? 'decrement' : 'increment']: 1 },
-        },
-      })
-      return { action: 'changed' as const }
+      // Switch vote
+      await db
+        .update(reviewVotes)
+        .set({ helpful })
+        .where(eq(reviewVotes.id, existing.id))
+      if (helpful) {
+        await db
+          .update(reviews)
+          .set({
+            helpfulCount: sql`${reviews.helpfulCount} + 1`,
+            notHelpfulCount: sql`${reviews.notHelpfulCount} - 1`,
+          })
+          .where(eq(reviews.id, reviewId))
+      } else {
+        await db
+          .update(reviews)
+          .set({
+            helpfulCount: sql`${reviews.helpfulCount} - 1`,
+            notHelpfulCount: sql`${reviews.notHelpfulCount} + 1`,
+          })
+          .where(eq(reviews.id, reviewId))
+      }
+    }
+  } else {
+    // New vote
+    await db.insert(reviewVotes).values({ userId, reviewId, helpful })
+    if (helpful) {
+      await db
+        .update(reviews)
+        .set({ helpfulCount: sql`${reviews.helpfulCount} + 1` })
+        .where(eq(reviews.id, reviewId))
+    } else {
+      await db
+        .update(reviews)
+        .set({ notHelpfulCount: sql`${reviews.notHelpfulCount} + 1` })
+        .where(eq(reviews.id, reviewId))
     }
   }
 
-  // New vote
-  await prisma.reviewVote.create({
-    data: { userId, reviewId, helpful },
-  })
-  await prisma.review.update({
-    where: { id: reviewId },
-    data: { [helpful ? 'helpfulCount' : 'notHelpfulCount']: { increment: 1 } },
-  })
-
-  return { action: 'added' as const }
+  return { success: true }
 }
 
-export async function deleteReview(id: string, userId: string) {
-  const review = await prisma.review.findUnique({ where: { id } })
+// ─── Get User Review ──────────────────────────────────────────────────────────
+export async function getUserReview(
+  userId: string,
+  serverId: string
+): Promise<typeof reviews.$inferSelect | null> {
+  return db
+    .select()
+    .from(reviews)
+    .where(and(eq(reviews.userId, userId), eq(reviews.serverId, serverId)))
+    .limit(1)
+    .then((r: any) => r[0] ?? null)
+}
+
+// ─── Delete Review ────────────────────────────────────────────────────────────
+export async function deleteReview(
+  userId: string,
+  reviewId: string
+): Promise<{ success: boolean }> {
+  const review = await db
+    .select({ userId: reviews.userId })
+    .from(reviews)
+    .where(eq(reviews.id, reviewId))
+    .limit(1)
+    .then((r: any) => r[0] ?? null)
+
   if (!review || review.userId !== userId) {
-    throw new Error('Unauthorized')
+    return { success: false }
   }
-  await prisma.review.delete({ where: { id } })
+
+  // Delete votes first (FK constraint)
+  await db.delete(reviewVotes).where(eq(reviewVotes.reviewId, reviewId))
+  await db.delete(reviews).where(eq(reviews.id, reviewId))
+
+  return { success: true }
 }

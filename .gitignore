@@ -78,3 +78,21 @@ console-errors.log
 
 # E2E test auth sessions (contain tokens)
 e2e/.auth/
+
+# Drizzle/Turso local DB
+.turso/
+
+# Hermes agent
+.hermes/
+
+# AI lint tools
+.aislop/
+
+# Dev server logs
+.dev-*.log
+
+# Stale Prisma backup
+prisma.old/
+
+# Temp i18n agent files
+i18n-agent*.json

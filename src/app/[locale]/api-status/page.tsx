@@ -1,10 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Activity, Zap, Shield, Globe } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ApiStatusPage() {
+export default async function ApiStatusPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'ApiStatus' })
   const endpoints = [
     { name: 'REST API v1', path: '/api/v1/servers', status: 'operational', latency: '<100ms' },
     { name: 'GraphQL API', path: '/api/graphql', status: 'operational', latency: '<150ms' },
@@ -19,9 +26,9 @@ export default async function ApiStatusPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold">API Status</h1>
+        <h1 className="font-heading text-4xl font-semibold tracking-[-0.06em]">{t('title')}</h1>
         <p className="text-muted-foreground">
-          Публичный статус API endpoints и информация об использовании
+          {t('subtitle')}
         </p>
       </div>
 
@@ -33,8 +40,8 @@ export default async function ApiStatusPage() {
                 <Activity className="h-5 w-5 text-green-600" />
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Статус</div>
-                <div className="text-lg font-semibold text-green-600">Все системы работают</div>
+                <div className="text-sm text-muted-foreground">{t('statusLabel')}</div>
+                <div className="text-lg font-semibold text-green-600">{t('allSystemsOk')}</div>
               </div>
             </div>
           </CardContent>
@@ -61,7 +68,7 @@ export default async function ApiStatusPage() {
                 <Shield className="h-5 w-5 text-purple-600" />
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Аутентификация</div>
+                <div className="text-sm text-muted-foreground">{t('auth')}</div>
                 <div className="text-lg font-semibold">API Key / Bearer</div>
               </div>
             </div>
@@ -79,7 +86,7 @@ export default async function ApiStatusPage() {
         <CardContent>
           <div className="space-y-3">
             {endpoints.map((ep) => (
-              <div key={ep.path} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+              <div key={ep.path} className="flex items-center justify-between p-3 rounded-2xl bg-muted/70 border border-border/60">
                 <div className="flex items-center gap-3">
                   <Badge variant="outline" className="font-mono text-xs">
                     GET
@@ -100,17 +107,17 @@ export default async function ApiStatusPage() {
       </Card>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Использование API</h2>
+        <h2 className="text-xl font-semibold">{t('apiUsage')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">REST API</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
-              <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/servers</code> — список серверов</p>
-              <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/servers/:id</code> — детали сервера</p>
-              <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/search?q=query</code> — поиск</p>
-              <p className="text-muted-foreground mt-2">Заголовок: <code className="bg-muted px-1 py-0.5 rounded">Authorization: Bearer YOUR_API_KEY</code></p>
+              <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/servers</code> — {t('serversList')}</p>
+              <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/servers/:id</code> — {t('serverDetails')}</p>
+              <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/search?q=query</code> — {t('search')}</p>
+              <p className="text-muted-foreground mt-2">{t('header')} <code className="bg-muted px-1 py-0.5 rounded">Authorization: Bearer YOUR_API_KEY</code></p>
             </CardContent>
           </Card>
 
@@ -120,7 +127,7 @@ export default async function ApiStatusPage() {
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p><code className="bg-muted px-1 py-0.5 rounded">POST /api/graphql</code></p>
-              <p className="text-muted-foreground">Playground доступен по тому же адресу (GET)</p>
+              <p className="text-muted-foreground">{t('graphqlPlayground')}</p>
               <p className="text-muted-foreground mt-2">Rate limit: 60 requests/minute</p>
             </CardContent>
           </Card>

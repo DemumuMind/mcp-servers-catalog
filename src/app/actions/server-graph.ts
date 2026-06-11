@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
 
 interface GraphNode {
   id: string
@@ -18,19 +18,17 @@ interface GraphLink {
 }
 
 export async function getServerGraphData() {
-  const servers = await prisma.server.findMany({
-    select: {
-      id: true,
-      name: true,
-      category: true,
-      tags: true,
-      stars: true,
-      owner: true,
-      repo: true,
-    },
-  })
+  const serverList = await db.select({
+    id: servers.id,
+    name: servers.name,
+    category: servers.category,
+    tags: servers.tags,
+    stars: servers.stars,
+    owner: servers.owner,
+    repo: servers.repo,
+  }).from(servers)
 
-  const nodes: GraphNode[] = servers.map((s) => ({
+  const nodes: GraphNode[] = serverList.map((s: any) => ({
     id: s.id,
     name: s.name,
     category: s.category,
@@ -42,12 +40,11 @@ export async function getServerGraphData() {
   const links: GraphLink[] = []
   const linkSet = new Set<string>()
 
-  // Create links based on shared tags
-  for (let i = 0; i < servers.length; i++) {
-    for (let j = i + 1; j < servers.length; j++) {
-      const a = servers[i]
-      const b = servers[j]
-      const sharedTags = a.tags.filter((t) => b.tags.includes(t))
+  for (let i = 0; i < serverList.length; i++) {
+    for (let j = i + 1; j < serverList.length; j++) {
+      const a = serverList[i]
+      const b = serverList[j]
+      const sharedTags = a.tags.filter((t: any) => b.tags.includes(t))
       const sameCategory = a.category === b.category
 
       if (sharedTags.length > 0 || sameCategory) {

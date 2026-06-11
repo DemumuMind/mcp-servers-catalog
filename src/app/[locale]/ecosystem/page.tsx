@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Network } from 'lucide-react'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,6 +13,7 @@ export default async function EcosystemPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Ecosystem' })
   const { nodes, links } = await getServerGraphData()
 
   // Group links by source server
@@ -33,35 +35,35 @@ export default async function EcosystemPage({
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="page-shell">
       <div className="flex items-center gap-3 mb-8">
         <Network className="h-6 w-6 text-primary" />
-        <h1 className="text-3xl font-bold">Экосистема MCP</h1>
+        <h1 className="font-heading text-4xl font-semibold tracking-[-0.06em]">{t('title')}</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Всего серверов</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalServers')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{nodes.length}</div>
+            <div className="font-heading text-3xl font-semibold tracking-[-0.05em]">{nodes.length}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Связей по тегам</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('tagLinks')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{links.length}</div>
+            <div className="font-heading text-3xl font-semibold tracking-[-0.05em]">{links.length}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Средняя связность</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('avgConnectivity')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="font-heading text-3xl font-semibold tracking-[-0.05em]">
               {nodes.length > 0 ? (links.length / nodes.length).toFixed(1) : '0'}
             </div>
           </CardContent>
@@ -71,12 +73,12 @@ export default async function EcosystemPage({
       {/* Simple SVG Graph Visualization */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle>Визуализация связей</CardTitle>
+          <CardTitle>{t('connectionViz')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-auto">
             <svg
-              viewBox={`0 0 ${Math.min(nodes.length * 30, 800)} ${Math.min(nodes.length * 20, 600)}`}
+              viewBox={`0 0 ${Math.max(400, Math.min(nodes.length * 30, 800))} ${Math.max(300, Math.min(nodes.length * 20, 600))}`}
               className="w-full h-auto border rounded-lg bg-muted/30"
               style={{ minHeight: '400px' }}
             >
@@ -86,10 +88,17 @@ export default async function EcosystemPage({
                 const targetIdx = nodes.findIndex((n) => n.id === link.target)
                 if (sourceIdx === -1 || targetIdx === -1) return null
                 
-                const sx = 50 + (sourceIdx % 10) * 70
-                const sy = 50 + Math.floor(sourceIdx / 10) * 60
-                const tx = 50 + (targetIdx % 10) * 70
-                const ty = 50 + Math.floor(targetIdx / 10) * 60
+                // Circular layout for better centering
+                const total = nodes.length
+                const angle1 = (2 * Math.PI * sourceIdx) / total - Math.PI / 2
+                const angle2 = (2 * Math.PI * targetIdx) / total - Math.PI / 2
+                const cx = 400
+                const cy = 300
+                const radius = Math.min(200, total * 8)
+                const sx = cx + Math.cos(angle1) * radius
+                const sy = cy + Math.sin(angle1) * radius
+                const tx = cx + Math.cos(angle2) * radius
+                const ty = cy + Math.sin(angle2) * radius
                 
                 return (
                   <line
@@ -107,8 +116,13 @@ export default async function EcosystemPage({
               
               {/* Nodes */}
               {nodes.map((node, i) => {
-                const x = 50 + (i % 10) * 70
-                const y = 50 + Math.floor(i / 10) * 60
+                const total = nodes.length
+                const angle = (2 * Math.PI * i) / total - Math.PI / 2
+                const cx = 400
+                const cy = 300
+                const radius = Math.min(200, total * 8)
+                const x = cx + Math.cos(angle) * radius
+                const y = cy + Math.sin(angle) * radius
                 const r = Math.max(4, Math.min(12, node.val))
                 
                 return (
@@ -140,7 +154,7 @@ export default async function EcosystemPage({
 
       {/* Connections Table */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold">Связи по тегам и категориям</h2>
+        <h2 className="text-xl font-bold">{t('tagCategoryLinks')}</h2>
         {Array.from(connectionsByServer.entries())
           .sort((a, b) => b[1].length - a[1].length)
           .slice(0, 20)
@@ -158,7 +172,7 @@ export default async function EcosystemPage({
                       {server.name}
                     </Link>
                     <Badge variant="outline" className="ml-2 text-xs">
-                      {connections.length} связей
+                      {t('connections', { count: connections.length })}
                     </Badge>
                   </CardTitle>
                 </CardHeader>
@@ -174,7 +188,7 @@ export default async function EcosystemPage({
                     ))}
                     {connections.length > 10 && (
                       <Badge variant="outline" className="text-xs">
-                        +{connections.length - 10} ещё
+                        {t('more', { count: connections.length - 10 })}
                       </Badge>
                     )}
                   </div>

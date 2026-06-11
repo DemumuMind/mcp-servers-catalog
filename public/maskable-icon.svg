@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="mask-bg-a" cx="0" cy="0" r="1" gradientTransform="matrix(358.4 225.28 -225.28 358.4 92.16 61.44)" gradientUnits="userSpaceOnUse"><stop stop-color="#F3CB7D" stop-opacity="0.34"/><stop offset="0.55" stop-color="#DDA558" stop-opacity="0.12"/><stop offset="1" stop-color="#F8F1E1" stop-opacity="0"/></radialGradient>
+    <radialGradient id="mask-bg-b" cx="0" cy="0" r="1" gradientTransform="matrix(281.6 174.08 -174.08 281.6 419.84 440.32)" gradientUnits="userSpaceOnUse"><stop stop-color="#5B3614" stop-opacity="0.16"/><stop offset="1" stop-color="#F8F1E1" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="#F8F1E1"/><rect width="512" height="512" fill="url(#mask-bg-a)"/><rect width="512" height="512" fill="url(#mask-bg-b)"/>
+  <g transform="translate(79.36 79.36) scale(5.52)">
+  <defs>
+    <linearGradient id="mcp-brand-shell" x1="8" y1="5" x2="58" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#3A2516"/><stop offset="0.5" stop-color="#1C120C"/><stop offset="1" stop-color="#080706"/></linearGradient>
+    <linearGradient id="mcp-brand-plate" x1="11" y1="8" x2="52" y2="55" gradientUnits="userSpaceOnUse"><stop stop-color="#C88632"/><stop offset="0.45" stop-color="#6E3F17"/><stop offset="1" stop-color="#201208"/></linearGradient>
+    <radialGradient id="mcp-brand-ambient" cx="0" cy="0" r="1" gradientTransform="matrix(26 -24 27 29 18 12)" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE4AA" stop-opacity="0.45"/><stop offset="0.48" stop-color="#C88632" stop-opacity="0.12"/><stop offset="1" stop-color="#080706" stop-opacity="0"/></radialGradient>
+    <linearGradient id="mcp-brand-line" x1="13" y1="42" x2="51" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1CB"/><stop offset="0.48" stop-color="#F0C579"/><stop offset="1" stop-color="#A56C29"/></linearGradient>
+  </defs>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="18.5" fill="url(#mcp-brand-shell)"/>
+  <rect x="4.5" y="4.5" width="55" height="55" rx="16" fill="url(#mcp-brand-plate)"/>
+  <rect x="4.5" y="4.5" width="55" height="55" rx="16" fill="url(#mcp-brand-ambient)"/>
+  <rect x="6.3" y="6.3" width="51.4" height="51.4" rx="14.4" fill="none" stroke="#F5D08F" stroke-opacity="0.32" stroke-width="1.15"/>
+  <rect x="10" y="10" width="44" height="44" rx="11.5" fill="#120B07" fill-opacity="0.18" stroke="#FFF2D2" stroke-opacity="0.08"/>
+  <path d="M14.8 41.2L22.8 22.8L32 39.8L41.2 22.8L49.2 41.2" fill="none" stroke="#070403" stroke-opacity="0.38" stroke-width="6.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14.8 41.2L22.8 22.8L32 39.8L41.2 22.8L49.2 41.2" fill="none" stroke="url(#mcp-brand-line)" stroke-width="3.45" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14.8 41.2H11.8M49.2 41.2H52.2M32 39.8V47.2M22.8 22.8V16.8M41.2 22.8V16.8" fill="none" stroke="#F0C579" stroke-width="1.45" stroke-linecap="round" opacity="0.68"/>
+  <circle cx="14.8" cy="41.2" r="3.8" fill="#F7D99B"/><circle cx="14.8" cy="41.2" r="1.71" fill="#27150B"/><circle cx="14.8" cy="41.2" r="0.684" fill="#FFF0C9" fill-opacity="0.55"/>
+  <circle cx="22.8" cy="22.8" r="3.65" fill="#F7D99B"/><circle cx="22.8" cy="22.8" r="1.6425" fill="#27150B"/><circle cx="22.8" cy="22.8" r="0.657" fill="#FFF0C9" fill-opacity="0.55"/>
+  <circle cx="32" cy="39.8" r="3.75" fill="#F7D99B"/><circle cx="32" cy="39.8" r="1.6875" fill="#27150B"/><circle cx="32" cy="39.8" r="0.675" fill="#FFF0C9" fill-opacity="0.55"/>
+  <circle cx="41.2" cy="22.8" r="3.65" fill="#F7D99B"/><circle cx="41.2" cy="22.8" r="1.6425" fill="#27150B"/><circle cx="41.2" cy="22.8" r="0.657" fill="#FFF0C9" fill-opacity="0.55"/>
+  <circle cx="49.2" cy="41.2" r="3.8" fill="#F7D99B"/><circle cx="49.2" cy="41.2" r="1.71" fill="#27150B"/><circle cx="49.2" cy="41.2" r="0.684" fill="#FFF0C9" fill-opacity="0.55"/>
+  <rect x="18.9" y="11.6" width="7.8" height="6" rx="2.2" fill="#23140B" stroke="#F7D99B" stroke-width="1.12"/>
+  <rect x="37.3" y="11.6" width="7.8" height="6" rx="2.2" fill="#23140B" stroke="#F7D99B" stroke-width="1.12"/>
+  <rect x="28" y="47" width="8" height="5.6" rx="2" fill="#23140B" stroke="#DDA558" stroke-width="1.08" opacity="0.9"/>
+</g>
+</svg>

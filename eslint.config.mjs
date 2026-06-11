@@ -1,4 +1,4 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+// ESLint config
 import storybook from "eslint-plugin-storybook";
 
 import { defineConfig, globalIgnores } from "eslint/config";
@@ -23,7 +23,6 @@ const eslintConfig = defineConfig([
   ...storybook.configs["flat/recommended"],
   {
     rules: {
-      // Keep the new lint gate usable while legacy debt is paid down incrementally.
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-require-imports": "warn",
       "@next/next/no-html-link-for-pages": "warn",
@@ -33,6 +32,14 @@ const eslintConfig = defineConfig([
       "storybook/no-renderer-packages": "warn",
       "storybook/no-uninstalled-addons": "warn",
       "prefer-const": "warn",
+      "jsx-a11y/label-has-associated-control": ["warn", { "assert": "either", "controlComponents": ["Checkbox"] }],
+      "jsx-a11y/control-has-associated-label": ["warn", { "ignoreElements": ["img", "a", "button"] }],
+    },
+  },
+  {
+    files: ["scripts/**", "prisma/**", "e2e/**"],
+    rules: {
+      "no-console": "off",
     },
   }
 ]);

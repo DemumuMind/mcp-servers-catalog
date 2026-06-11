@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { healthChecks, viewHistories } from '@/lib/db/schema'
+import { lt } from 'drizzle-orm'
 
 function verifyCronAuth(req: Request): NextResponse | null {
   const authHeader = req.headers.get('authorization')
@@ -25,20 +27,14 @@ export async function GET(request: Request) {
   const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
 
   try {
-    const [healthDeleted, viewDeleted] = await Promise.all([
-      prisma.healthCheck.deleteMany({
-        where: { createdAt: { lt: ninetyDaysAgo } },
-      }),
-      prisma.viewHistory.deleteMany({
-        where: { createdAt: { lt: ninetyDaysAgo } },
-      }),
-    ])
+    const healthDeleted = await db.delete(healthChecks).where(lt(healthChecks.createdAt, ninetyDaysAgo)).run()
+    const viewDeleted = await db.delete(viewHistories).where(lt(viewHistories.createdAt, ninetyDaysAgo)).run()
 
     return NextResponse.json({
       success: true,
       deleted: {
-        healthChecks: healthDeleted.count,
-        viewHistory: viewDeleted.count,
+        healthChecks: healthDeleted.rowsAffected,
+        viewHistory: viewDeleted.rowsAffected,
       },
       olderThan: ninetyDaysAgo.toISOString(),
     })

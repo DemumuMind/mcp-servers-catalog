@@ -1,91 +1,127 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, users, comments, ratings, servers, viewHistories, bookmarks } from '@/lib/db'
+import { eq, and, desc, count } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
 
 export async function getUserProfile(userId: string) {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      image: true,
-      createdAt: true,
-      emailNotifications: true,
-      _count: {
-        select: {
-          bookmarks: true,
-          comments: true,
-          ratings: true,
-        },
-      },
+  // Get user base data
+  const user = await db.select({
+    id: users.id,
+    name: users.name,
+    email: users.email,
+    image: users.image,
+    createdAt: users.createdAt,
+    emailNotifications: users.emailNotifications,
+  }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] ?? null)
+
+  if (!user) return null
+
+  // Get counts separately
+  const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
+    db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: any) => r[0]?.count ?? 0),
+    db.select({ count: count() }).from(comments).where(eq(comments.userId, userId)).then((r: any) => r[0]?.count ?? 0),
+    db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r: any) => r[0]?.count ?? 0),
+  ])
+
+  return {
+    ...user,
+    _count: {
+      bookmarks: bookmarkCount,
+      comments: commentCount,
+      ratings: ratingCount,
     },
-  })
-  return user
+  }
 }
 
 export async function getUserComments(userId: string) {
-  return prisma.comment.findMany({
-    where: { userId },
-    include: {
-      server: {
-        select: {
-          id: true,
-          name: true,
-          owner: true,
-          repo: true,
-        },
-      },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
+  const commentRows = await db.select({
+    ...comments,
+    serverId: comments.serverId,
+    serverId_col: servers.id,
+    serverName: servers.name,
+    serverOwner: servers.owner,
+    serverRepo: servers.repo,
+  }).from(comments)
+    .innerJoin(servers, eq(comments.serverId, servers.id))
+    .where(eq(comments.userId, userId))
+    .orderBy(desc(comments.createdAt))
+
+  // Map to include nested server object
+  return commentRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...commentData }: any) => ({
+    ...commentData,
+    server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
+  }))
 }
 
 export async function getUserRatings(userId: string) {
-  return prisma.rating.findMany({
-    where: { userId },
-    include: {
-      server: {
-        select: {
-          id: true,
-          name: true,
-          owner: true,
-          repo: true,
-        },
-      },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
+  const ratingRows = await db.select({
+    ...ratings,
+    serverId_col: servers.id,
+    serverName: servers.name,
+    serverOwner: servers.owner,
+    serverRepo: servers.repo,
+  }).from(ratings)
+    .innerJoin(servers, eq(ratings.serverId, servers.id))
+    .where(eq(ratings.userId, userId))
+    .orderBy(desc(ratings.createdAt))
+
+  // Map to include nested server object
+  return ratingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...ratingData }: any) => ({
+    ...ratingData,
+    server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
+  }))
 }
 
 export async function getUserHistory(userId: string, limit = 50) {
-  const history = await prisma.viewHistory.findMany({
-    where: { userId },
-    include: {
+  const historyRows = await db.select({
+    ...viewHistories,
+    serverId_col: servers.id,
+    serverName: servers.name,
+    serverDescription: servers.description,
+    serverOwner: servers.owner,
+    serverRepo: servers.repo,
+    serverCategory: servers.category,
+    serverStars: servers.stars,
+    serverForks: servers.forks,
+    serverIsOfficial: servers.isOfficial,
+    serverIsSponsored: servers.isSponsored,
+    serverTags: servers.tags,
+  }).from(viewHistories)
+    .innerJoin(servers, eq(viewHistories.serverId, servers.id))
+    .where(eq(viewHistories.userId, userId))
+    .orderBy(desc(viewHistories.createdAt))
+    .limit(limit)
+
+  // Map to include nested server object and deduplicate by server (keep most recent)
+  const mapped = historyRows.map((row: any) => {
+    const {
+      serverId_col, serverName, serverDescription, serverOwner, serverRepo,
+      serverCategory, serverStars, serverForks, serverIsOfficial, serverIsSponsored, serverTags,
+      ...historyData
+    } = row
+    return {
+      ...historyData,
       server: {
-        select: {
-          id: true,
-          name: true,
-          description: true,
-          owner: true,
-          repo: true,
-          category: true,
-          stars: true,
-          forks: true,
-          isOfficial: true,
-          isSponsored: true,
-          tags: true,
-        },
+        id: serverId_col,
+        name: serverName,
+        description: serverDescription,
+        owner: serverOwner,
+        repo: serverRepo,
+        category: serverCategory,
+        stars: serverStars,
+        forks: serverForks,
+        isOfficial: serverIsOfficial,
+        isSponsored: serverIsSponsored,
+        tags: serverTags,
       },
-    },
-    orderBy: { createdAt: 'desc' },
-    take: limit,
+    }
   })
+
   // Deduplicate by server (keep most recent)
   const seen = new Set<string>()
-  return history.filter((h) => {
+  return mapped.filter((h: any) => {
     if (seen.has(h.serverId)) return false
     seen.add(h.serverId)
     return true
@@ -94,23 +130,18 @@ export async function getUserHistory(userId: string, limit = 50) {
 
 export async function trackServerView(userId: string, serverId: string) {
   try {
-    await prisma.viewHistory.upsert({
-      where: {
-        userId_serverId: { userId, serverId },
-      },
-      update: { createdAt: new Date() },
-      create: { userId, serverId },
-    })
+    await db.insert(viewHistories).values({ userId, serverId })
+      .onConflictDoUpdate({
+        target: [viewHistories.userId, viewHistories.serverId],
+        set: { createdAt: new Date() },
+      })
   } catch {
     // Silently fail if server doesn't exist or other error
   }
 }
 
 export async function updateProfile(userId: string, data: { name: string }) {
-  const user = await prisma.user.update({
-    where: { id: userId },
-    data: { name: data.name },
-  })
+  const user = await db.update(users).set({ name: data.name }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
   revalidatePath('/ru/profile')
   return { success: true, user: { name: user.name, email: user.email } }
 }
@@ -120,25 +151,19 @@ export async function updatePassword(
   currentPassword: string,
   newPassword: string
 ) {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { password: true },
-  })
+  const user = await db.select({ password: users.password }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] ?? null)
 
   if (!user?.password) {
-    throw new Error('Невозможно сменить пароль для этого типа аккаунта')
+    throw new Error('CANNOT_CHANGE_PASSWORD')
   }
 
   const valid = await bcrypt.compare(currentPassword, user.password)
   if (!valid) {
-    throw new Error('Текущий пароль неверен')
+    throw new Error('INVALID_CURRENT_PASSWORD')
   }
 
   const hashed = await bcrypt.hash(newPassword, 12)
-  await prisma.user.update({
-    where: { id: userId },
-    data: { password: hashed },
-  })
+  await db.update(users).set({ password: hashed }).where(eq(users.id, userId))
 
   return { success: true }
 }
@@ -147,18 +172,13 @@ export async function updateSettings(
   userId: string,
   data: { emailNotifications: boolean }
 ) {
-  const user = await prisma.user.update({
-    where: { id: userId },
-    data: { emailNotifications: data.emailNotifications },
-  })
+  const user = await db.update(users).set({ emailNotifications: data.emailNotifications }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
   revalidatePath('/ru/profile/settings')
   return { success: true, emailNotifications: user.emailNotifications }
 }
 
 export async function clearHistory(userId: string) {
-  await prisma.viewHistory.deleteMany({
-    where: { userId },
-  })
+  await db.delete(viewHistories).where(eq(viewHistories.userId, userId))
   revalidatePath('/ru/profile/history')
   return { success: true }
 }

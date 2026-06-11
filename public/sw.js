@@ -1,10 +1,21 @@
-const CACHE_NAME = 'mcpservers-v1'
+const CACHE_NAME = 'mcpservers-v3'
 const STATIC_ASSETS = [
-  '/',
-  '/ru',
-  '/en',
-  '/offline',
+  '/ru/offline',
+  '/en/offline',
+  '/favicon.ico',
+  '/apple-icon.png',
+  '/icon.png',
+  '/icon.svg',
+  '/icon-192x192.png',
+  '/icon-512x512.png',
+  '/maskable-icon-192x192.png',
+  '/maskable-icon-512x512.png',
+  '/apple-touch-icon.png',
+  '/og-brand.png',
+  '/screenshot-wide.png',
+  '/screenshot-narrow.png',
 ]
+const CACHEABLE_PATHS = new Set(STATIC_ASSETS)
 
 // Install: cache static assets
 self.addEventListener('install', (event) => {
@@ -38,8 +49,32 @@ self.addEventListener('fetch', (event) => {
   // Only handle GET requests
   if (request.method !== 'GET') return
   
-  // Skip non-HTTP requests (like chrome-extension://)
+  // Skip non-HTTP and cross-origin requests. Opaque third-party responses
+  // are not useful for an app-shell cache and can break offline behavior.
   if (!request.url.startsWith('http')) return
+  const url = new URL(request.url)
+  if (url.origin !== self.location.origin) return
+
+  // Keep API responses and Next internals network-first. They are either
+  // user-specific or already managed by the framework's own caching layer.
+  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/_next/')) return
+
+  // Navigation requests can contain authenticated UI, so do not put them in
+  // the shared app-shell cache. Only fall back to the static offline page when
+  // the network is unavailable.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(() => {
+        const locale = url.pathname.startsWith('/en') ? 'en' : 'ru'
+        return caches.match(`/${locale}/offline`).then((offlineResponse) => {
+          return offlineResponse || caches.match('/ru/offline')
+        })
+      })
+    )
+    return
+  }
+
+  if (!CACHEABLE_PATHS.has(url.pathname)) return
   
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
@@ -58,11 +93,6 @@ self.addEventListener('fetch', (event) => {
           // Network failed: return cached version or offline fallback
           if (cachedResponse) {
             return cachedResponse
-          }
-          
-          // For navigation requests, return offline page
-          if (request.mode === 'navigate') {
-            return caches.match('/offline')
           }
           
           return new Response('Network error', { status: 408 })

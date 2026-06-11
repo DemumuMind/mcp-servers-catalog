@@ -1,9 +1,9 @@
 import { getServersPublic, getTrendingServers } from '@/app/actions/public'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { SectionHeader } from '@/components/section-header'
 import { ServerCard } from '@/components/server-card'
 import { Sparkles, TrendingUp, Clock, Star } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +13,7 @@ export default async function WhatsNewPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'WhatsNew' })
 
   const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 
@@ -30,11 +31,11 @@ export default async function WhatsNewPage({
     .slice(0, 6)
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-      <div className="text-center py-8">
-        <h1 className="text-4xl font-bold mb-4">Что нового?</h1>
+    <div className="page-shell">
+      <div className="premium-panel p-8 text-center">
+        <h1 className="text-4xl font-bold mb-4">{t('title')}</h1>
         <p className="text-lg text-muted-foreground">
-          Новые серверы, обновления и тренды за последнюю неделю
+          {t('subtitle')}
         </p>
       </div>
 
@@ -44,34 +45,34 @@ export default async function WhatsNewPage({
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-yellow-500" />
-              Новых серверов
+              {t('newServers')}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">{newThisWeek.length}</div>
-            <p className="text-xs text-muted-foreground">за последние 7 дней</p>
+            <div className="font-heading text-4xl font-semibold tracking-[-0.06em]">{newThisWeek.length}</div>
+            <p className="text-xs text-muted-foreground">{t('last7days')}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-green-500" />
-              В тренде
+              {t('trending')}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">{trending.length}</div>
+            <div className="font-heading text-4xl font-semibold tracking-[-0.06em]">{trending.length}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Star className="h-4 w-4 text-amber-500" />
-              Обновлённые
+              {t('updated')}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">{recentlyUpdated.length}</div>
+            <div className="font-heading text-4xl font-semibold tracking-[-0.06em]">{recentlyUpdated.length}</div>
           </CardContent>
         </Card>
       </div>
@@ -79,10 +80,10 @@ export default async function WhatsNewPage({
       {/* New servers */}
       {newThisWeek.length > 0 && (
         <section>
-          <SectionHeader title="Новые серверы" href={`/${locale}/all`} />
+          <SectionHeader title={t('newServersSection')} href={`/${locale}/all`} locale={locale} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {newThisWeek.map((server) => (
-              <ServerCard key={server.id} server={server} locale={locale} />
+              <ServerCard key={`new-${server.id}`} server={server} locale={locale} />
             ))}
           </div>
         </section>
@@ -91,10 +92,10 @@ export default async function WhatsNewPage({
       {/* Trending */}
       {trending.length > 0 && (
         <section>
-          <SectionHeader title="Сейчас в тренде" href={`/${locale}/all`} />
+          <SectionHeader title={t('trendingSection')} href={`/${locale}/all`} locale={locale} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {trending.map((server: any) => (
-              <ServerCard key={server.id} server={server} locale={locale} />
+              <ServerCard key={`new-${server.id}`} server={server} locale={locale} />
             ))}
           </div>
         </section>
@@ -103,10 +104,10 @@ export default async function WhatsNewPage({
       {/* Recently updated */}
       {recentlyUpdated.length > 0 && (
         <section>
-          <SectionHeader title="Недавно обновлённые" href={`/${locale}/all`} />
+          <SectionHeader title={t('recentlyUpdatedSection')} href={`/${locale}/all`} locale={locale} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {recentlyUpdated.map((server) => (
-              <ServerCard key={server.id} server={server} locale={locale} />
+              <ServerCard key={`new-${server.id}`} server={server} locale={locale} />
             ))}
           </div>
         </section>
@@ -115,8 +116,8 @@ export default async function WhatsNewPage({
       {newThisWeek.length === 0 && trending.length === 0 && recentlyUpdated.length === 0 && (
         <div className="text-center py-16">
           <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-lg text-muted-foreground">Пока ничего нового за эту неделю</p>
-          <p className="text-sm text-muted-foreground mt-2">Возвращайтесь позже!</p>
+          <p className="text-lg text-muted-foreground">{t('nothingNew')}</p>
+          <p className="text-sm text-muted-foreground mt-2">{t('comeBackLater')}</p>
         </div>
       )}
     </div>

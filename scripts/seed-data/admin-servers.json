@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Brave Search",
+    "description": "MCP server for Brave Search API",
+    "githubUrl": "https://github.com/modelcontextprotocol/servers",
+    "category": "search",
+    "owner": "modelcontextprotocol",
+    "repo": "servers",
+    "fullSlug": "modelcontextprotocol/servers",
+    "isOfficial": true,
+    "featured": true,
+    "isRemote": false
+  },
+  {
+    "name": "Cloudflare",
+    "description": "Cloudflare MCP server",
+    "githubUrl": "https://github.com/cloudflare/mcp-server-cloudflare",
+    "category": "cloud-service",
+    "owner": "cloudflare",
+    "repo": "mcp-server-cloudflare",
+    "fullSlug": "cloudflare/mcp-server-cloudflare",
+    "isOfficial": true,
+    "featured": false,
+    "isRemote": false
+  }
+]

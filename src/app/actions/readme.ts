@@ -1,6 +1,5 @@
 'use server'
 
-import { prisma } from '@/lib/db'
 
 export async function fetchServerReadme(owner: string, repo: string): Promise<string | null> {
   try {

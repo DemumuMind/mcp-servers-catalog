@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { servers } from '@/lib/db/schema'
+import { eq } from 'drizzle-orm'
 
 function generateBadgeSVG(
   label: string,
@@ -39,15 +41,12 @@ export async function GET(
 ) {
   const { owner, repo } = await params
 
-  const server = await prisma.server.findUnique({
-    where: { fullSlug: `${owner}/${repo}` },
-    select: {
-      name: true,
-      stars: true,
-      category: true,
-      isOfficial: true,
-    },
-  })
+  const server = await db.select({
+    name: servers.name,
+    stars: servers.stars,
+    category: servers.category,
+    isOfficial: servers.isOfficial,
+  }).from(servers).where(eq(servers.fullSlug, `${owner}/${repo}`)).get()
 
   if (!server) {
     return NextResponse.json({ error: 'Server not found' }, { status: 404 })

@@ -2,7 +2,9 @@ import type { DefaultSession } from "@auth/core/types"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
-import { prisma } from "./db"
+import { db, users } from "./db"
+import { eq } from "drizzle-orm"
+import { logger } from "./logger"
 
 declare module "@auth/core/types" {
   interface User {
@@ -39,9 +41,13 @@ export const {
         }
 
         try {
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email as string },
-          })
+          const result = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, credentials.email as string))
+            .limit(1)
+
+          const user = result[0]
 
           if (!user || !user.password) return null
 
@@ -53,10 +59,8 @@ export const {
           if (!isValid) return null
 
           if (process.env.NODE_ENV !== 'production') {
-            console.log('[AUTH] Login success:', credentials.email)
+            logger.info('[AUTH] Login success:', credentials.email)
           }
-
-          if (!isValid) return null
 
           return {
             id: user.id,

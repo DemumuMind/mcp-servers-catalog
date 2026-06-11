@@ -5,13 +5,13 @@ async function main() {
   const pglite = new PGlite({ dataDir })
 
   const totalRes = await pglite.query('SELECT COUNT(*) as total FROM "Server"')
-  console.log('Total servers:', totalRes.rows[0].total)
+  process.stdout.write(`Total servers: ${totalRes.rows[0].total}\n`)
 
   const catRes = await pglite.query('SELECT category, COUNT(*) as cnt FROM "Server" GROUP BY category ORDER BY cnt DESC')
-  console.log('Categories:', catRes.rows.map(r => `${r.category}:${r.cnt}`).join(', '))
+  process.stdout.write(`Categories: ${catRes.rows.map(r => `${r.category}:${r.cnt}`).join(', ')}\n`)
 
   const sample = await pglite.query('SELECT name, owner, repo, category, stars, tags FROM "Server" ORDER BY stars DESC LIMIT 10')
-  console.log('Top 10 by stars:', JSON.stringify(sample.rows, null, 2))
+  process.stdout.write(`Top 10 by stars: ${JSON.stringify(sample.rows, null, 2)}\n`)
 
   await pglite.close()
 }

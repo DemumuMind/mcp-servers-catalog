@@ -43,7 +43,7 @@ function getDataDir(): string {
 
 function createPrisma() {
   const dataDir = getDataDir()
-  console.log(`Using database directory: ${dataDir}`)
+  process.stdout.write(`Using database directory: ${dataDir}\n`)
   const pglite = new PGlite({ dataDir })
   const adapter = new PrismaPGlite(pglite)
   return { prisma: new PrismaClient({ adapter }), pglite }
@@ -213,16 +213,16 @@ async function validateMcpContent(
     return true
   }
 
-  // Check common manifest files for MCP references
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github.v3+json',
   }
   if (GITHUB_TOKEN) headers.Authorization = `token ${GITHUB_TOKEN}`
 
+  const GITHUB_API_BASE = process.env.GITHUB_API_URL || 'https://api.github.com'
   const files = ['package.json', 'pyproject.toml', 'setup.py', 'Cargo.toml', 'go.mod', 'requirements.txt']
   for (const file of files) {
     try {
-      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, { headers })
+      const res = await fetch(`${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${file}`, { headers })
       if (!res.ok) continue
       const data = await res.json()
       if (!data.content) continue
@@ -241,11 +241,15 @@ async function validateMcpContent(
   return false
 }
 
-async function main() {
-  const filePath = path.resolve(process.cwd(), 'scripts/mcp-servers-list.json')
-  const urls: string[] = JSON.parse(readFileSync(filePath, 'utf-8'))
+interface ImportCounters {
+  created: number
+  updated: number
+  skipped: number
+  failed: number
+  enriched: number
+}
 
-  // Deduplicate
+function deduplicateUrls(urls: string[]): string[] {
   const seen = new Set<string>()
   const uniqueUrls: string[] = []
   for (const url of urls) {
@@ -257,111 +261,130 @@ async function main() {
       if (seen.has(slug)) continue
       seen.add(slug)
       uniqueUrls.push(url)
-    } catch {
-      console.warn(`Invalid URL skipped: ${url}`)
+    } catch (err) {
+      console.warn(`Invalid URL skipped: ${url}`, err)
     }
   }
+  return uniqueUrls
+}
 
-  console.log(`Found ${urls.length} URLs, ${uniqueUrls.length} unique after dedup`)
+async function processSingleServer(
+  url: string,
+  index: number,
+  total: number,
+  counters: ImportCounters
+): Promise<void> {
+  const parsed = new URL(url)
+  const parts = parsed.pathname.split('/').filter(Boolean)
+  const owner = parts[0]
+  const repo = parts[1]
+  const fullSlug = `${owner}/${repo}`.toLowerCase()
 
-  let created = 0
-  let updated = 0
-  let skipped = 0
-  let failed = 0
-  let enriched = 0
+  if (SKIP_REPOS.has(fullSlug)) {
+    process.stdout.write(`[${index + 1}/${total}] Skipping list repo: ${fullSlug}\n`)
+    counters.skipped++
+    return
+  }
+
+  process.stdout.write(`[${index + 1}/${total}] Processing ${fullSlug}...\n`)
+
+  try {
+    const repoData = await fetchGitHubRepo(url)
+
+    const isMcp = await validateMcpContent(owner, repo, repoData.topics, repoData.description)
+    if (!isMcp) {
+      console.warn(`  ⚠️ No MCP keywords found in ${fullSlug}, importing anyway`)
+    }
+
+    let readmeAnalysis = null
+    try {
+      const readme = await fetchRepoReadme(url)
+      if (readme) {
+        readmeAnalysis = analyzeReadme(readme)
+        counters.enriched++
+      }
+    } catch (readmeErr) {
+      console.warn(`  ⚠️ Failed to fetch README for ${fullSlug}:`, (readmeErr as Error).message)
+    }
+
+    const category = detectCategory(
+      repoData.topics,
+      readmeAnalysis?.suggestedTags || [],
+      repoData.name,
+      repoData.description
+    )
+
+    const tags = readmeAnalysis
+      ? mergeTags([], repoData.topics || [], readmeAnalysis.suggestedTags)
+      : mergeTags([], repoData.topics || [], [])
+
+    const existing = await prisma.server.findUnique({ where: { fullSlug } })
+
+    await prisma.server.upsert({
+      where: { fullSlug },
+      update: {
+        name: repoData.name,
+        description: repoData.description || `${repoData.name} MCP server`,
+        owner,
+        repo,
+        category,
+        githubUrl: url,
+        tags,
+        stars: repoData.stars,
+        forks: repoData.forks,
+        updatedAt: new Date(),
+      },
+      create: {
+        name: repoData.name,
+        description: repoData.description || `${repoData.name} MCP server`,
+        owner,
+        repo,
+        fullSlug,
+        category,
+        githubUrl: url,
+        tags,
+        stars: repoData.stars,
+        forks: repoData.forks,
+        isOfficial: false,
+        isRemote: false,
+        featured: false,
+      },
+    })
+
+    if (existing) {
+      counters.updated++
+      process.stdout.write(`  ✓ Updated ${fullSlug} (${category}, ${repoData.stars}⭐)\n`)
+    } else {
+      counters.created++
+      process.stdout.write(`  ✓ Created ${fullSlug} (${category}, ${repoData.stars}⭐)\n`)
+    }
+  } catch (err) {
+    console.error(`  ✗ Failed ${fullSlug}:`, (err as Error).message)
+    counters.failed++
+  }
+}
+
+function printImportSummary(uniqueCount: number, counters: ImportCounters) {
+  process.stdout.write('\n--- Bulk import complete ---\n')
+  process.stdout.write(`Total unique:  ${uniqueCount}\n`)
+  process.stdout.write(`Created:       ${counters.created}\n`)
+  process.stdout.write(`Updated:       ${counters.updated}\n`)
+  process.stdout.write(`Failed:        ${counters.failed}\n`)
+  process.stdout.write(`Skipped:       ${counters.skipped}\n`)
+  process.stdout.write(`README enriched: ${counters.enriched}\n`)
+}
+
+async function main() {
+  const filePath = path.resolve(process.cwd(), 'scripts/mcp-servers-list.json')
+  const urls: string[] = JSON.parse(readFileSync(filePath, 'utf-8'))
+
+  const uniqueUrls = deduplicateUrls(urls)
+  process.stdout.write(`Found ${urls.length} URLs, ${uniqueUrls.length} unique after dedup\n`)
+
+  const counters: ImportCounters = { created: 0, updated: 0, skipped: 0, failed: 0, enriched: 0 }
 
   for (let i = 0; i < uniqueUrls.length; i++) {
-    const url = uniqueUrls[i]
-    const parsed = new URL(url)
-    const parts = parsed.pathname.split('/').filter(Boolean)
-    const owner = parts[0]
-    const repo = parts[1]
-    const fullSlug = `${owner}/${repo}`.toLowerCase()
-
-    if (SKIP_REPOS.has(fullSlug)) {
-      console.log(`[${i + 1}/${uniqueUrls.length}] Skipping list repo: ${fullSlug}`)
-      skipped++
-      continue
-    }
-
-    console.log(`[${i + 1}/${uniqueUrls.length}] Processing ${fullSlug}...`)
-
-    try {
-      const repoData = await fetchGitHubRepo(url)
-
-      // Validate MCP relevance
-      const isMcp = await validateMcpContent(owner, repo, repoData.topics, repoData.description)
-      if (!isMcp) {
-        console.warn(`  ⚠️ No MCP keywords found in ${fullSlug}, importing anyway`)
-      }
-
-      // Fetch and analyze README
-      let readmeAnalysis = null
-      try {
-        const readme = await fetchRepoReadme(url)
-        if (readme) {
-          readmeAnalysis = analyzeReadme(readme)
-          enriched++
-        }
-      } catch (readmeErr) {
-        console.warn(`  ⚠️ Failed to fetch README for ${fullSlug}:`, (readmeErr as Error).message)
-      }
-
-      const category = detectCategory(
-        repoData.topics,
-        readmeAnalysis?.suggestedTags || [],
-        repoData.name,
-        repoData.description
-      )
-
-      const tags = readmeAnalysis
-        ? mergeTags([], repoData.topics || [], readmeAnalysis.suggestedTags)
-        : mergeTags([], repoData.topics || [], [])
-
-      const existing = await prisma.server.findUnique({ where: { fullSlug } })
-
-      await prisma.server.upsert({
-        where: { fullSlug },
-        update: {
-          name: repoData.name,
-          description: repoData.description || `${repoData.name} MCP server`,
-          owner,
-          repo,
-          category,
-          githubUrl: url,
-          tags,
-          stars: repoData.stars,
-          forks: repoData.forks,
-          updatedAt: new Date(),
-        },
-        create: {
-          name: repoData.name,
-          description: repoData.description || `${repoData.name} MCP server`,
-          owner,
-          repo,
-          fullSlug,
-          category,
-          githubUrl: url,
-          tags,
-          stars: repoData.stars,
-          forks: repoData.forks,
-          isOfficial: false,
-          isRemote: false,
-          featured: false,
-        },
-      })
-
-      if (existing) {
-        updated++
-        console.log(`  ✓ Updated ${fullSlug} (${category}, ${repoData.stars}⭐)`)
-      } else {
-        created++
-        console.log(`  ✓ Created ${fullSlug} (${category}, ${repoData.stars}⭐)`)
-      }
-    } catch (err) {
-      console.error(`  ✗ Failed ${fullSlug}:`, (err as Error).message)
-      failed++
-    }
+    await processSingleServer(uniqueUrls[i], i, uniqueUrls.length, counters)
 
     // Rate limit sleep
     if (i < uniqueUrls.length - 1) {
@@ -369,13 +392,7 @@ async function main() {
     }
   }
 
-  console.log('\n--- Bulk import complete ---')
-  console.log(`Total unique:  ${uniqueUrls.length}`)
-  console.log(`Created:       ${created}`)
-  console.log(`Updated:       ${updated}`)
-  console.log(`Failed:        ${failed}`)
-  console.log(`Skipped:       ${skipped}`)
-  console.log(`README enriched: ${enriched}`)
+  printImportSummary(uniqueUrls.length, counters)
 
   await prisma.$disconnect()
   await pglite.close()

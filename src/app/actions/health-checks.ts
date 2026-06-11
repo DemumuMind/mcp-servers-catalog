@@ -1,6 +1,15 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, healthChecks } from '@/lib/db'
+import { eq, gte, lt, asc, desc, and } from 'drizzle-orm'
+
+interface DayStats {
+  online: number
+  degraded: number
+  offline: number
+  total: number
+  latencies: number[]
+}
 
 export async function recordHealthCheck(
   serverId: string,
@@ -8,14 +17,12 @@ export async function recordHealthCheck(
   latency?: number,
   error?: string
 ) {
-  return prisma.healthCheck.create({
-    data: {
-      serverId,
-      status,
-      latency,
-      error,
-    },
-  })
+  return db.insert(healthChecks).values({
+    serverId,
+    status,
+    latency,
+    error,
+  }).returning().then((r: any) => r[0])
 }
 
 export async function getServerHealthHistory(
@@ -24,16 +31,12 @@ export async function getServerHealthHistory(
 ) {
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000)
 
-  const checks = await prisma.healthCheck.findMany({
-    where: {
-      serverId,
-      createdAt: { gte: since },
-    },
-    orderBy: { createdAt: 'asc' },
-  })
+  const checks = await db.select().from(healthChecks).where(
+    and(eq(healthChecks.serverId, serverId), gte(healthChecks.createdAt, since))
+  ).orderBy(asc(healthChecks.createdAt))
 
   // Group by day and calculate stats
-  const grouped = checks.reduce((acc, check) => {
+  const grouped = checks.reduce((acc: any, check: any) => {
     const day = check.createdAt.toISOString().split('T')[0]
     if (!acc[day]) {
       acc[day] = { online: 0, degraded: 0, offline: 0, total: 0, latencies: [] as number[] }
@@ -42,9 +45,9 @@ export async function getServerHealthHistory(
     acc[day].total++
     if (check.latency) acc[day].latencies.push(check.latency)
     return acc
-  }, {} as Record<string, any>)
+  }, {} as Record<string, DayStats>)
 
-  const history = Object.entries(grouped).map(([date, stats]) => ({
+  const history = Object.entries(grouped).map(([date, stats]: [string, DayStats]) => ({
     date,
     online: stats.online,
     degraded: stats.degraded,
@@ -60,15 +63,10 @@ export async function getServerHealthHistory(
 }
 
 export async function getLatestHealthCheck(serverId: string) {
-  return prisma.healthCheck.findFirst({
-    where: { serverId },
-    orderBy: { createdAt: 'desc' },
-  })
+  return db.select().from(healthChecks).where(eq(healthChecks.serverId, serverId)).orderBy(desc(healthChecks.createdAt)).limit(1).then((r: any) => r[0] || null)
 }
 
 export async function cleanupOldHealthChecks(days: number = 30) {
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000)
-  return prisma.healthCheck.deleteMany({
-    where: { createdAt: { lt: since } },
-  })
+  return db.delete(healthChecks).where(lt(healthChecks.createdAt, since)).returning()
 }

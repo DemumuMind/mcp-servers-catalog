@@ -1,14 +1,14 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import { Textarea } from '@/components/ui/textarea'
 import { Flag } from 'lucide-react'
 
@@ -18,7 +18,8 @@ interface ReportButtonProps {
   targetName?: string
 }
 
-export function ReportButton({ targetType, targetId, targetName }: ReportButtonProps) {
+export function ReportButton({ targetType: _targetType, targetId: _targetId, targetName }: ReportButtonProps) {
+  const t = useTranslations('Reports')
   const [open, setOpen] = useState(false)
   const [reason, setReason] = useState('')
   const [isPending, startTransition] = useTransition()
@@ -28,7 +29,6 @@ export function ReportButton({ targetType, targetId, targetName }: ReportButtonP
     if (!reason.trim()) return
     startTransition(async () => {
       // In production, send to API/admin notification
-      console.log('Report submitted:', { targetType, targetId, reason })
       setSubmitted(true)
       setTimeout(() => {
         setOpen(false)
@@ -45,29 +45,29 @@ export function ReportButton({ targetType, targetId, targetName }: ReportButtonP
         className="text-xs text-muted-foreground hover:text-red-500 transition-colors flex items-center gap-1"
       >
         <Flag className="h-3 w-3" />
-        Пожаловаться
+        {t('report')}
       </button>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Пожаловаться</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         {submitted ? (
-          <p className="text-green-600 text-sm">Спасибо! Жалоба отправлена администратору.</p>
+          <p className="text-green-600 text-sm">{t('thanks')}</p>
         ) : (
           <div className="space-y-3">
             {targetName && (
               <p className="text-sm text-muted-foreground">
-                Объект: <span className="font-medium">{targetName}</span>
+                {t('target')}: <span className="font-medium">{targetName}</span>
               </p>
             )}
             <Textarea
-              placeholder="Опишите причину жалобы..."
+              placeholder={t('reasonPlaceholder')}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               rows={3}
             />
             <Button onClick={handleSubmit} disabled={isPending || !reason.trim()}>
-              {isPending ? 'Отправка...' : 'Отправить жалобу'}
+              {isPending ? t('submitting') : t('submit')}
             </Button>
           </div>
         )}

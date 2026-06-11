@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -21,14 +22,6 @@ interface ReleasesChangelogProps {
   repoUrl: string
 }
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
-
 function truncateBody(body: string | null, maxLength: number = 200): string {
   if (!body) return ''
   const cleaned = body
@@ -42,6 +35,7 @@ function truncateBody(body: string | null, maxLength: number = 200): string {
 }
 
 export function ReleasesChangelog({ releases, repoUrl }: ReleasesChangelogProps) {
+  const t = useTranslations('Releases')
   const [expanded, setExpanded] = useState<string | null>(null)
 
   if (releases.length === 0) {
@@ -50,12 +44,12 @@ export function ReleasesChangelog({ releases, repoUrl }: ReleasesChangelogProps)
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Tag className="w-5 h-5" />
-            Последние обновления
+            {t('title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Нет информации о релизах. Возможно, репозиторий не использует GitHub Releases.
+            {t('noReleases')}
           </p>
         </CardContent>
       </Card>
@@ -67,7 +61,7 @@ export function ReleasesChangelog({ releases, repoUrl }: ReleasesChangelogProps)
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
           <Tag className="w-5 h-5" />
-          Последние обновления
+          {t('title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -98,7 +92,11 @@ export function ReleasesChangelog({ releases, repoUrl }: ReleasesChangelogProps)
                     
                     <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                       <Calendar className="w-3 h-3" />
-                      {formatDate(release.published_at)}
+                      {new Date(release.published_at).toLocaleDateString(undefined, {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
                     </div>
 
                     {release.body && (
@@ -117,12 +115,12 @@ export function ReleasesChangelog({ releases, repoUrl }: ReleasesChangelogProps)
                             {isExpanded ? (
                               <>
                                 <ChevronUp className="w-3 h-3 mr-1" />
-                                Свернуть
+                                {t('collapse')}
                               </>
                             ) : (
                               <>
                                 <ChevronDown className="w-3 h-3 mr-1" />
-                                Подробнее
+                                {t('more')}
                               </>
                             )}
                           </Button>
@@ -143,7 +141,7 @@ export function ReleasesChangelog({ releases, repoUrl }: ReleasesChangelogProps)
             rel="noopener noreferrer"
             className="text-sm text-primary hover:underline inline-flex items-center gap-1"
           >
-            Все релизы на GitHub →
+            {t('allReleases')}
           </a>
         </div>
       </CardContent>

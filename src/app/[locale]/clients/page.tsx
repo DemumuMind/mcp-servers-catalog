@@ -1,57 +1,61 @@
 import { getClients } from '@/app/actions/clients'
 import { ClientCard } from '@/components/client-card'
 import { SearchBar } from '@/components/search-bar'
+import { EmptyState, PageHero, PageShell } from '@/components/page-components'
+import { SectionHeader } from '@/components/section-header'
+import { MonitorCog } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
 export default async function ClientsPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>
   searchParams: Promise<{ q?: string }>
 }) {
+  const { locale } = await params
   const { q } = await searchParams
   const clients = await getClients({ search: q })
-  const featuredClients = clients.filter((c) => c.featured)
-  const regularClients = clients.filter((c) => !c.featured)
+  const featuredClients = clients.filter((c: any) => c.featured)
+  const regularClients = clients.filter((c: any) => !c.featured)
+
+  const t = await getTranslations({ locale, namespace: 'Clients' })
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Hero */}
-      <section className="text-center py-8">
-        <h1 className="text-3xl font-bold mb-2">MCP-клиенты</h1>
-        <p className="text-xl text-muted-foreground mb-8">
-          Откройте для себя приложения и инструменты, поддерживающие MCP-серверы
-        </p>
+    <PageShell className="space-y-10">
+      <PageHero
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
+      >
         <SearchBar />
-      </section>
+      </PageHero>
 
-      {/* Featured */}
       {featuredClients.length > 0 && (
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-4">Рекомендуемые</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {featuredClients.map((client) => (
+        <section>
+          <SectionHeader title={t('featuredTitle')} href="#all-clients" locale={locale} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-5">
+            {featuredClients.map((client: any) => (
               <ClientCard key={client.id} client={client} />
             ))}
           </div>
         </section>
       )}
 
-      {/* All Clients */}
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Все клиенты</h2>
+      <section id="all-clients" className="scroll-mt-24">
+        <SectionHeader title={t('allTitle')} href="#all-clients" locale={locale} />
         {regularClients.length === 0 && clients.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground">
-            {q ? 'Нет клиентов, соответствующих поиску' : 'Нет клиентов'}
-          </div>
+          <EmptyState icon={MonitorCog} title={q ? t('emptySearchTitle') : t('emptyNoSearchTitle')} description={t('emptyDescription')} />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {regularClients.map((client) => (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-5">
+            {regularClients.map((client: any) => (
               <ClientCard key={client.id} client={client} />
             ))}
           </div>
         )}
       </section>
-    </div>
+    </PageShell>
   )
 }

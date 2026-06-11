@@ -2,23 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 
-const categories = [
-  { id: 'all', label: 'Все' },
-  { id: 'official', label: 'Официальный 🌟' },
-  { id: 'search', label: 'Поиск' },
-  { id: 'web-scraping', label: 'Веб-скрейпинг' },
-  { id: 'communication', label: 'Коммуникация' },
-  { id: 'productivity', label: 'Продуктивность' },
-  { id: 'development', label: 'Разработка' },
-  { id: 'database', label: 'База данных' },
-  { id: 'cloud-service', label: 'Облачный сервис' },
-  { id: 'file-system', label: 'Файловая система' },
-  { id: 'cloud-storage', label: 'Облачное хранилище' },
-  { id: 'version-control', label: 'Контроль версий' },
-  { id: 'other', label: 'Другое' },
-]
+const categoryIds = [
+  'all', 'official', 'search', 'web-scraping', 'communication',
+  'productivity', 'development', 'database', 'cloud-service',
+  'file-system', 'cloud-storage', 'version-control', 'other',
+] as const
 
 interface CategoryTabsProps {
   activeCategory: string
@@ -27,30 +18,31 @@ interface CategoryTabsProps {
 export function CategoryTabs({ activeCategory }: CategoryTabsProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const t = useTranslations('Categories')
 
   return (
     <div className="flex flex-wrap gap-2">
-      {categories.map((category) => {
+      {categoryIds.map((id) => {
         const params = new URLSearchParams(searchParams.toString())
-        if (category.id === 'all') {
+        if (id === 'all') {
           params.delete('category')
         } else {
-          params.set('category', category.id)
+          params.set('category', id)
         }
         const href = params.toString() ? `${pathname}?${params.toString()}` : pathname
 
         return (
           <Link
-            key={category.id}
+            key={id}
             href={href}
             className={cn(
-              'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-              activeCategory === category.id
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted hover:bg-muted/80'
+              'rounded-2xl border border-transparent px-4 py-2 text-sm font-semibold transition-all focus-ring',
+              activeCategory === id
+                ? 'border-primary/20 bg-primary text-primary-foreground shadow-[0_16px_36px_-24px_var(--primary)]'
+                : 'border-border/60 bg-card/58 text-muted-foreground hover:-translate-y-0.5 hover:border-primary/25 hover:bg-card/90 hover:text-foreground'
             )}
           >
-            {category.label}
+            {t(id)}
           </Link>
         )
       })}

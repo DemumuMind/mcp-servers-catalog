@@ -32,7 +32,6 @@ export interface ReadmeAnalysis {
 export function analyzeReadme(readme: string): ReadmeAnalysis {
   const lower = readme.toLowerCase()
 
-  // Extract supported clients
   const supportedClients: string[] = []
   for (const client of CLIENT_KEYWORDS) {
     if (client.keywords.some((kw) => lower.includes(kw))) {
@@ -40,7 +39,6 @@ export function analyzeReadme(readme: string): ReadmeAnalysis {
     }
   }
 
-  // Extract installation steps
   const lines = readme.split('\n')
   const installationSteps: string[] = []
   let inInstallSection = false
@@ -97,7 +95,6 @@ export function analyzeReadme(readme: string): ReadmeAnalysis {
     }
   }
 
-  // Check for examples
   const hasExamples =
     lower.includes('## example') ||
     lower.includes('## usage') ||
@@ -105,7 +102,6 @@ export function analyzeReadme(readme: string): ReadmeAnalysis {
     lower.includes('```typescript') ||
     lower.includes('```ts')
 
-  // Check for configuration section
   const hasConfigurationSection =
     lower.includes('## configuration') ||
     lower.includes('## config') ||

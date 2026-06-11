@@ -8,9 +8,9 @@ async function migrate() {
     await client.query(`
       ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
     `)
-    console.log('Added updatedAt to User')
+    process.stdout.write('Added updatedAt to User\n')
   } catch (e) {
-    console.log('updatedAt already exists or error:', (e as Error).message)
+    process.stdout.write(`updatedAt already exists or error: ${(e as Error).message}\n`)
   }
 
   // Add emailNotifications to User if not exists
@@ -18,12 +18,11 @@ async function migrate() {
     await client.query(`
       ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "emailNotifications" BOOLEAN NOT NULL DEFAULT true;
     `)
-    console.log('Added emailNotifications to User')
+    process.stdout.write('Added emailNotifications to User\n')
   } catch (e) {
-    console.log('emailNotifications already exists or error:', (e as Error).message)
+    process.stdout.write(`emailNotifications already exists or error: ${(e as Error).message}\n`)
   }
 
-  // Create ViewHistory table
   try {
     await client.query(`
       CREATE TABLE IF NOT EXISTS "ViewHistory" (
@@ -39,13 +38,13 @@ async function migrate() {
     await client.query(`
       CREATE INDEX IF NOT EXISTS "ViewHistory_userId_createdAt_idx" ON "ViewHistory"("userId", "createdAt");
     `)
-    console.log('Created ViewHistory table')
+    process.stdout.write('Created ViewHistory table\n')
   } catch (e) {
-    console.log('ViewHistory error:', (e as Error).message)
+    process.stdout.write(`ViewHistory error: ${(e as Error).message}\n`)
   }
 
   await client.close()
-  console.log('Migration complete')
+  process.stdout.write('Migration complete\n')
 }
 
 migrate().catch(console.error)

@@ -1,7 +1,9 @@
 'use client'
 
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { BarChart3, PieChart as PieChartIcon } from 'lucide-react'
 import {
   BarChart,
   Bar,
@@ -18,6 +20,15 @@ import {
 } from 'recharts'
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D']
+
+function EmptyChart({ icon: Icon, message }: { icon: React.ElementType; message: string }) {
+  return (
+    <div className="flex h-[300px] flex-col items-center justify-center gap-3 text-muted-foreground">
+      <Icon className="size-10 opacity-30" />
+      <p className="text-sm">{message}</p>
+    </div>
+  )
+}
 
 interface AnalyticsChartsProps {
   submissions: Array<{
@@ -53,6 +64,8 @@ interface AnalyticsChartsProps {
 }
 
 export function AnalyticsCharts({ submissions, servers }: AnalyticsChartsProps) {
+  const t = useTranslations('Admin.charts')
+
   const dailyData = useMemo(() => {
     const last30Days = new Date()
     last30Days.setDate(last30Days.getDate() - 30)
@@ -72,11 +85,11 @@ export function AnalyticsCharts({ submissions, servers }: AnalyticsChartsProps) 
 
   const statusData = useMemo(
     () => [
-      { name: 'На рассмотрении', value: submissions.filter((s) => s.status === 'pending').length, color: '#FFBB28' },
-      { name: 'Одобрено', value: submissions.filter((s) => s.status === 'approved').length, color: '#00C49F' },
-      { name: 'Отклонено', value: submissions.filter((s) => s.status === 'rejected').length, color: '#FF8042' },
+      { name: t('pending'), value: submissions.filter((s) => s.status === 'pending').length, color: '#FFBB28' },
+      { name: t('approved'), value: submissions.filter((s) => s.status === 'approved').length, color: '#00C49F' },
+      { name: t('rejected'), value: submissions.filter((s) => s.status === 'rejected').length, color: '#FF8042' },
     ],
-    [submissions]
+    [submissions, t]
   )
 
   const categoryChartData = useMemo(() => {
@@ -93,104 +106,124 @@ export function AnalyticsCharts({ submissions, servers }: AnalyticsChartsProps) 
 
   const premiumData = useMemo(
     () => [
-      { name: 'Бесплатные', value: submissions.filter((s) => !s.premium).length },
-      { name: 'Premium', value: submissions.filter((s) => s.premium).length },
+      { name: t('free'), value: submissions.filter((s) => !s.premium).length },
+      { name: t('premium'), value: submissions.filter((s) => s.premium).length },
     ],
-    [submissions]
+    [submissions, t]
   )
+
+  const hasStatusData = statusData.some((d) => d.value > 0)
+  const hasCategoryData = categoryChartData.length > 0
+  const hasPremiumData = premiumData.some((d) => d.value > 0)
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Аналитика</h2>
+      <h2 className="text-2xl font-bold">{t('title')}</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Submissions by day */}
         <Card>
           <CardHeader>
-            <CardTitle>Отправки за последние 30 дней</CardTitle>
+            <CardTitle>{t('submissions30days')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={dailyData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" tickFormatter={(value) => value.slice(5)} />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="count" stroke="#0088FE" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
+            {dailyData.length === 0 ? (
+              <EmptyChart icon={BarChart3} message={t('noSubmissions30days')} />
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={dailyData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" tickFormatter={(value) => value.slice(5)} />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="count" stroke="#0088FE" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
 
         {/* Submissions by status */}
         <Card>
           <CardHeader>
-            <CardTitle>Статус отправок</CardTitle>
+            <CardTitle>{t('submissionStatus')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={statusData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, value }) => `${name}: ${value}`}
-                  outerRadius={80}
-                  dataKey="value"
-                >
-                  {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            {!hasStatusData ? (
+              <EmptyChart icon={PieChartIcon} message={t('noSubmissionsYet')} />
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={statusData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, value }) => `${name}: ${value}`}
+                    outerRadius={80}
+                    dataKey="value"
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
 
         {/* Servers by category */}
         <Card>
           <CardHeader>
-            <CardTitle>Серверы по категориям</CardTitle>
+            <CardTitle>{t('serversByCategory')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={categoryChartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="value" fill="#8884D8" />
-              </BarChart>
-            </ResponsiveContainer>
+            {!hasCategoryData ? (
+              <EmptyChart icon={BarChart3} message={t('noServersCategorized')} />
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={categoryChartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#8884D8" />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
 
         {/* Premium vs Free */}
         <Card>
           <CardHeader>
-            <CardTitle>Тип отправок</CardTitle>
+            <CardTitle>{t('submissionTypes')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={premiumData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, value }) => `${name}: ${value}`}
-                  outerRadius={80}
-                  dataKey="value"
-                >
-                  {premiumData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            {!hasPremiumData ? (
+              <EmptyChart icon={PieChartIcon} message={t('noSubmissionsYet')} />
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={premiumData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, value }) => `${name}: ${value}`}
+                    outerRadius={80}
+                    dataKey="value"
+                  >
+                    {premiumData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
       </div>

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { servers } from '@/lib/db/schema'
+import { eq, and, lt, isNotNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
 function verifyCronAuth(req: NextRequest | Request): NextResponse | null {
@@ -27,36 +29,24 @@ export async function GET(req: NextRequest) {
 
   try {
     // Expire featured status
-    const expiredFeatured = await prisma.server.updateMany({
-      where: {
-        featured: true,
-        featuredUntil: { lt: now },
-      },
-      data: {
-        featured: false,
-        featuredUntil: null,
-      },
-    })
+    const expiredFeatured = await db.update(servers)
+      .set({ featured: false, featuredUntil: null })
+      .where(and(eq(servers.featured, true), lt(servers.featuredUntil!, now)))
+      .run()
 
     // Expire sponsored status
-    const expiredSponsored = await prisma.server.updateMany({
-      where: {
-        isSponsored: true,
-        sponsoredUntil: { lt: now },
-      },
-      data: {
-        isSponsored: false,
-        sponsoredUntil: null,
-      },
-    })
+    const expiredSponsored = await db.update(servers)
+      .set({ isSponsored: false, sponsoredUntil: null })
+      .where(and(eq(servers.isSponsored, true), lt(servers.sponsoredUntil!, now)))
+      .run()
 
     revalidatePath('/', 'layout')
     revalidatePath('/admin/servers', 'layout')
 
     return NextResponse.json({
       success: true,
-      expiredFeatured: expiredFeatured.count,
-      expiredSponsored: expiredSponsored.count,
+      expiredFeatured: expiredFeatured.rowsAffected,
+      expiredSponsored: expiredSponsored.rowsAffected,
     })
   } catch (error: any) {
     console.error('Expire premium cron failed:', error)

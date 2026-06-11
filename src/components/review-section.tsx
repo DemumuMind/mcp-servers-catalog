@@ -1,16 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { createReview, voteReview, deleteReview } from '@/app/actions/reviews'
+import { submitReview, voteReview, deleteReview } from '@/app/actions/reviews'
 import { ReportButton } from '@/components/report-button'
 import { formatDistanceToNow } from '@/lib/date-utils'
 import { ThumbsUp, ThumbsDown, Trash2 } from 'lucide-react'
 
-interface Review {
+export interface Review {
   id: string
   content: string
   helpfulCount: number
@@ -36,6 +38,8 @@ interface ReviewSectionProps {
 }
 
 export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectionProps) {
+  const t = useTranslations('Reviews')
+  const locale = useLocale()
   const [reviews, setReviews] = useState<Review[]>(initialReviews)
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
@@ -49,11 +53,11 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
     setError('')
 
     try {
-      const newReview = await createReview(userId, serverId, content.trim())
-      setReviews((prev) => [newReview as unknown as Review, ...prev])
+      const newReview = await submitReview(userId, serverId, content.trim())
+      setReviews((prev) => [newReview as Review, ...prev])
       setContent('')
     } catch (err: any) {
-      setError(err.message || 'Ошибка при добавлении отзыва')
+      setError(err.message || t('addError'))
     } finally {
       setLoading(false)
     }
@@ -108,12 +112,12 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Отзывы ({reviews.length})</h2>
+      <h2 className="text-2xl font-bold">{t('title')} ({reviews.length})</h2>
 
       {userId ? (
         <form onSubmit={handleSubmit} className="space-y-3">
           <Textarea
-            placeholder="Напишите подробный отзыв об опыте использования этого сервера..."
+            placeholder={t('placeholder')}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={4}
@@ -121,15 +125,15 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
           />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <Button type="submit" disabled={loading || !content.trim()}>
-            {loading ? 'Отправка...' : 'Оставить отзыв'}
+            {loading ? t('submitting') : t('submit')}
           </Button>
         </form>
       ) : (
         <p className="text-sm text-muted-foreground">
-          <a href="/api/auth/signin" className="text-primary hover:underline">
-            Войдите
-          </a>{' '}
-          чтобы оставить отзыв
+          <Link href="/api/auth/signin" className="text-primary hover:underline">
+            {t('signIn')}
+          </Link>{' '}
+          {t('toReview')}
         </p>
       )}
 
@@ -143,15 +147,15 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-sm">{review.user.name || 'Аноним'}</span>
+                  <span className="font-medium text-sm">{review.user.name || t('anonymous')}</span>
                   {review.user.isVerifiedAuthor && (
                     <Badge className="bg-green-500 text-white text-[10px] px-1 py-0 h-4">
-                      ✓ Автор
+                      {t('verifiedAuthor')}
                     </Badge>
                   )}
                 </div>
                 <span className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(review.createdAt))}
+                  {formatDistanceToNow(new Date(review.createdAt), locale)}
                 </span>
               </div>
               <div className="prose dark:prose-invert max-w-none prose-sm mt-2">
@@ -169,7 +173,7 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
                   disabled={!userId}
                 >
                   <ThumbsUp className="h-3.5 w-3.5" />
-                  Полезно ({review.helpfulCount})
+                  {t('helpful')} ({review.helpfulCount})
                 </button>
                 <button
                   onClick={() => handleVote(review.id, false)}
@@ -181,12 +185,12 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
                   disabled={!userId}
                 >
                   <ThumbsDown className="h-3.5 w-3.5" />
-                  Не полезно ({review.notHelpfulCount})
+                  {t('notHelpful')} ({review.notHelpfulCount})
                 </button>
                 <ReportButton
                   targetType="review"
                   targetId={review.id}
-                  targetName={`Отзыв от ${review.user.name || 'Аноним'}`}
+                  targetName={`${t('reviewFrom')} ${review.user.name || t('anonymous')}`}
                 />
                 {userId === review.userId && (
                   <button
@@ -194,7 +198,7 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
                     className="flex items-center gap-1 text-xs text-red-500 hover:text-red-700 ml-auto"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
-                    Удалить
+                    {t('delete')}
                   </button>
                 )}
               </div>

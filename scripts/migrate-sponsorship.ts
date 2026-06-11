@@ -5,7 +5,7 @@ async function main() {
   const dbPath = path.resolve(process.cwd(), '.pglite')
   const client = new PGlite(dbPath)
 
-  console.log('Creating Sponsorship table...')
+  process.stdout.write('Creating Sponsorship table...\n')
   await client.query(`
     CREATE TABLE IF NOT EXISTS "Sponsorship" (
       id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
@@ -24,11 +24,11 @@ async function main() {
     )
   `)
 
-  console.log('Creating indexes...')
+  process.stdout.write('Creating indexes...\n')
   await client.query(`CREATE INDEX IF NOT EXISTS "Sponsorship_serverId_idx" ON "Sponsorship"("serverId")`)
   await client.query(`CREATE INDEX IF NOT EXISTS "Sponsorship_active_endDate_idx" ON "Sponsorship"(active, "endDate")`)
 
-  console.log('Migration completed successfully!')
+  process.stdout.write('Migration completed successfully!\n')
   await client.close()
 }
 

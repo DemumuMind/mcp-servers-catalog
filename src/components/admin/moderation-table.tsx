@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -12,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, XCircle, ExternalLink } from 'lucide-react'
 
@@ -40,6 +40,7 @@ export function ModerationTable({
   bulkApproveAction,
   bulkRejectAction,
 }: ModerationTableProps) {
+  const t = useTranslations('Admin.moderation')
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -63,7 +64,7 @@ export function ModerationTable({
   }
 
   const handleBulkApprove = () => {
-    if (!confirm(`Одобрить ${selected.size} комментариев?`)) return
+    if (!confirm(t('confirmBulkApprove', { count: selected.size }))) return
     startTransition(async () => {
       await bulkApproveAction(Array.from(selected))
       setSelected(new Set())
@@ -72,7 +73,7 @@ export function ModerationTable({
   }
 
   const handleBulkReject = () => {
-    if (!confirm(`Отклонить ${selected.size} комментариев?`)) return
+    if (!confirm(t('confirmBulkReject', { count: selected.size }))) return
     startTransition(async () => {
       await bulkRejectAction(Array.from(selected))
       setSelected(new Set())
@@ -95,7 +96,7 @@ export function ModerationTable({
     <div className="space-y-4">
       {selected.size > 0 && (
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Выбрано: {selected.size}</span>
+          <span className="text-sm text-muted-foreground">{t('selected', { count: selected.size })}</span>
           <Button
             variant="default"
             size="sm"
@@ -104,7 +105,7 @@ export function ModerationTable({
             className="bg-green-600 hover:bg-green-700"
           >
             <CheckCircle className="h-4 w-4 mr-1" />
-            Одобрить
+            {t('approve')}
           </Button>
           <Button
             variant="destructive"
@@ -113,14 +114,12 @@ export function ModerationTable({
             disabled={isPending}
           >
             <XCircle className="h-4 w-4 mr-1" />
-            Отклонить
+            {t('reject')}
           </Button>
         </div>
       )}
 
-      <Card>
-        <CardContent className="pt-6">
-          <Table>
+      <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">
@@ -129,19 +128,19 @@ export function ModerationTable({
                     onCheckedChange={toggleAll}
                   />
                 </TableHead>
-                <TableHead>Сервер</TableHead>
-                <TableHead>Автор</TableHead>
-                <TableHead>Комментарий</TableHead>
-                <TableHead>Статус</TableHead>
-                <TableHead>Дата</TableHead>
-                <TableHead className="text-right">Действия</TableHead>
+                <TableHead>{t('table.server')}</TableHead>
+                <TableHead>{t('table.author')}</TableHead>
+                <TableHead>{t('table.comment')}</TableHead>
+                <TableHead>{t('table.status')}</TableHead>
+                <TableHead>{t('table.date')}</TableHead>
+                <TableHead className="text-right">{t('table.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {comments.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center text-muted-foreground">
-                    Нет комментариев
+                    {t('noComments')}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -166,7 +165,7 @@ export function ModerationTable({
                       </a>
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{comment.user.name || 'Аноним'}</div>
+                      <div className="font-medium">{comment.user.name || t('anonymous')}</div>
                       <div className="text-sm text-muted-foreground">{comment.user.email}</div>
                     </TableCell>
                     <TableCell className="max-w-md">
@@ -174,13 +173,13 @@ export function ModerationTable({
                     </TableCell>
                     <TableCell>
                       {comment.isModerated ? (
-                        <Badge className="bg-green-500 text-white">Одобрен</Badge>
+                        <Badge className="bg-green-500 text-white">{t('approved')}</Badge>
                       ) : (
-                        <Badge className="bg-yellow-500 text-white">На проверке</Badge>
+                        <Badge className="bg-yellow-500 text-white">{t('underReview')}</Badge>
                       )}
                     </TableCell>
                     <TableCell>
-                      {new Date(comment.createdAt).toLocaleDateString('ru-RU')}
+                      {new Date(comment.createdAt).toLocaleDateString('en-US')}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
@@ -189,7 +188,7 @@ export function ModerationTable({
                             variant="outline"
                             size="icon"
                             className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                            title="Одобрить"
+                            title={t('buttonTitle.approve')}
                             onClick={() => handleAction('approve', comment.id)}
                             disabled={isPending}
                           >
@@ -199,8 +198,8 @@ export function ModerationTable({
                         <Button
                           variant="outline"
                           size="icon"
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                          title="Удалить"
+                          className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+                          title="Delete"
                           onClick={() => handleAction('reject', comment.id)}
                           disabled={isPending}
                         >
@@ -213,8 +212,7 @@ export function ModerationTable({
               )}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
     </div>
   )
 }
+

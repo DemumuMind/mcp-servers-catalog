@@ -4,7 +4,7 @@ test.describe('Submit Flow', () => {
   test('should display submit page', async ({ page }) => {
     await page.goto('/ru/submit', { timeout: 30000 })
     await expect(page.locator('h1')).toContainText('Отправьте свой MCP-сервер')
-    await expect(page.locator('input[placeholder="e.g., Brave Search"]:visible')).toBeVisible()
+    await expect(page.locator('input[placeholder="Brave Search MCP"]:visible')).toBeVisible()
     await expect(page.locator('input[placeholder="https://github.com/owner/repo"]:visible')).toBeVisible()
   })
 

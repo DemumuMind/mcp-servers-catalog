@@ -22,7 +22,7 @@ function generateCSV(headers: string[], rows: (string | number | boolean | null 
 export async function exportServersToCSV(): Promise<string> {
   const servers = await getServers()
   const headers = ['ID', 'Name', 'Description', 'Owner', 'Repo', 'FullSlug', 'Category', 'Official', 'Sponsored', 'Remote', 'Featured', 'GitHubURL', 'Tags', 'AuthType', 'Endpoint', 'CreatedAt', 'UpdatedAt']
-  const rows = servers.map((s) => [
+  const rows = servers.map((s: any) => [
     s.id,
     s.name,
     s.description,
@@ -47,7 +47,7 @@ export async function exportServersToCSV(): Promise<string> {
 export async function exportClientsToCSV(): Promise<string> {
   const clients = await getClients()
   const headers = ['ID', 'Name', 'Description', 'URL', 'Icon', 'Featured', 'CreatedAt', 'UpdatedAt']
-  const rows = clients.map((c) => [
+  const rows = clients.map((c: any) => [
     c.id,
     c.name,
     c.description,
@@ -63,7 +63,7 @@ export async function exportClientsToCSV(): Promise<string> {
 export async function exportSubmissionsToCSV(): Promise<string> {
   const submissions = await getSubmissions()
   const headers = ['ID', 'Name', 'Description', 'URL', 'Category', 'Email', 'Premium', 'Status', 'CreatedAt', 'UpdatedAt']
-  const rows = submissions.map((s) => [
+  const rows = submissions.map((s: any) => [
     s.id,
     s.name,
     s.description,

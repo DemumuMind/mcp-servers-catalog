@@ -1,104 +1,89 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
 
 export default function SettingsPage() {
+  const t = useTranslations('Admin.settings')
+
   const [settings, setSettings] = useState({
     siteTitle: 'Awesome MCP Servers',
-    siteDescription: 'Коллекция серверов для Model Context Protocol',
-    siteUrl: 'https://mcpservers.org',
+    siteDescription: 'Collection of servers for Model Context Protocol',
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://mcpservers.org',
     googleAnalytics: '',
     yandexMetrika: '',
   })
 
   const handleSave = () => {
-    // Save to localStorage for now (in production: API call)
     localStorage.setItem('siteSettings', JSON.stringify(settings))
-    alert('Настройки сохранены!')
+    alert(t('settingsSaved'))
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Settings</h1>
+    <div className="space-y-8">
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>SEO Settings</CardTitle>
+            <CardTitle>{t('seoSettings')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Site Title</label>
-              <Input
-                value={settings.siteTitle}
-                onChange={(e) => setSettings({ ...settings, siteTitle: e.target.value })}
-              />
+              <label htmlFor="site-title" className="text-sm font-medium">{t('siteTitle')}</label>
+              <Input id="site-title" value={settings.siteTitle} onChange={(e) => setSettings({ ...settings, siteTitle: e.target.value })} />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Site Description</label>
-              <Textarea
-                value={settings.siteDescription}
-                onChange={(e) => setSettings({ ...settings, siteDescription: e.target.value })}
-                rows={3}
-              />
+              <label htmlFor="site-description" className="text-sm font-medium">{t('siteDescription')}</label>
+              <Textarea id="site-description" value={settings.siteDescription} onChange={(e) => setSettings({ ...settings, siteDescription: e.target.value })} rows={3} />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Site URL</label>
-              <Input
-                value={settings.siteUrl}
-                onChange={(e) => setSettings({ ...settings, siteUrl: e.target.value })}
-              />
+              <label htmlFor="site-url" className="text-sm font-medium">{t('siteUrl')}</label>
+              <Input id="site-url" value={settings.siteUrl} onChange={(e) => setSettings({ ...settings, siteUrl: e.target.value })} />
             </div>
-            <Button onClick={handleSave}>Сохранить SEO</Button>
+            <Button onClick={handleSave}>{t('saveSEO')}</Button>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Analytics</CardTitle>
+            <CardTitle>{t('analyticsCard')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Google Analytics ID</label>
-              <Input
-                placeholder="G-XXXXXXXXXX"
-                value={settings.googleAnalytics}
-                onChange={(e) => setSettings({ ...settings, googleAnalytics: e.target.value })}
-              />
+              <label htmlFor="ga-id" className="text-sm font-medium">{t('googleAnalyticsId')}</label>
+              <Input id="ga-id" placeholder="G-XXXXXXXXXX" value={settings.googleAnalytics} onChange={(e) => setSettings({ ...settings, googleAnalytics: e.target.value })} />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Yandex Metrika ID</label>
-              <Input
-                placeholder="XXXXXXXX"
-                value={settings.yandexMetrika}
-                onChange={(e) => setSettings({ ...settings, yandexMetrika: e.target.value })}
-              />
+              <label htmlFor="ym-id" className="text-sm font-medium">{t('yandexMetrikaId')}</label>
+              <Input id="ym-id" placeholder="XXXXXXXX" value={settings.yandexMetrika} onChange={(e) => setSettings({ ...settings, yandexMetrika: e.target.value })} />
             </div>
-            <Button onClick={handleSave}>Сохранить Analytics</Button>
+            <Button onClick={handleSave}>{t('saveAnalytics')}</Button>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Cache Management</CardTitle>
+            <CardTitle>{t('cacheManagement')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Очистка кэша Next.js и данных.
+              {t('cacheDescription')}
             </p>
             <div className="flex gap-2">
               <Button
                 variant="outline"
                 onClick={() => {
                   localStorage.clear()
-                  alert('LocalStorage очищен!')
+                  alert(t('localStorageCleared'))
                 }}
               >
-                Очистить LocalStorage
+                {t('clearLocalStorage')}
               </Button>
               <Button
                 variant="outline"
@@ -106,12 +91,12 @@ export default function SettingsPage() {
                   if ('caches' in window) {
                     caches.keys().then((names) => {
                       names.forEach((name) => caches.delete(name))
-                      alert('Cache API очищен!')
+                      alert(t('cacheApiCleared'))
                     })
                   }
                 }}
               >
-                Очистить Cache API
+                {t('clearCacheApi')}
               </Button>
             </div>
           </CardContent>
@@ -119,27 +104,27 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Moderation Queue</CardTitle>
+            <CardTitle>{t('moderationQueue')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Настройки модерации.
+              {t('moderationSettings')}
             </p>
             <div className="space-y-2">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" defaultChecked />
-                <span className="text-sm">Автоматическая модерация</span>
+              <label htmlFor="auto-moderation" className="flex items-center gap-2">
+                <input id="auto-moderation" type="checkbox" aria-label={t('automaticModeration')} defaultChecked />
+                <span className="text-sm">{t('automaticModeration')}</span>
               </label>
-              <label className="flex items-center gap-2">
-                <input type="checkbox" defaultChecked />
-                <span className="text-sm">Email уведомления</span>
+              <label htmlFor="email-notifications-admin" className="flex items-center gap-2">
+                <input id="email-notifications-admin" type="checkbox" aria-label={t('emailNotifications')} defaultChecked />
+                <span className="text-sm">{t('emailNotifications')}</span>
               </label>
-              <label className="flex items-center gap-2">
-                <input type="checkbox" />
-                <span className="text-sm">Требовать Premium для Featured</span>
+              <label htmlFor="premium-featured" className="flex items-center gap-2">
+                <input id="premium-featured" type="checkbox" aria-label={t('requirePremiumForFeatured')} />
+                <span className="text-sm">{t('requirePremiumForFeatured')}</span>
               </label>
             </div>
-            <Button onClick={handleSave}>Сохранить настройки</Button>
+            <Button onClick={handleSave}>{t('saveSettings')}</Button>
           </CardContent>
         </Card>
       </div>

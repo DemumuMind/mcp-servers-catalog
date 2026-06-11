@@ -1,6 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
+import { eq, and, gte, desc, asc, inArray, count } from 'drizzle-orm'
 
 export async function computeServerRankings(period: 'week' | 'month' = 'week') {
   const now = new Date()
@@ -9,66 +10,72 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     : new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
 
   // Aggregate metrics per server for the period
-  const servers = await prisma.server.findMany({
-    select: { id: true, name: true, stars: true, forks: true },
-  })
+  const serverRows = await db.select({
+    id: servers.id,
+    name: servers.name,
+    stars: servers.stars,
+    forks: servers.forks,
+  }).from(servers)
 
-  const rankings = await Promise.all(
-    servers.map(async (server) => {
-      const [views, bookmarks, ratings, comments] = await Promise.all([
-        prisma.viewHistory.count({
-          where: { serverId: server.id, createdAt: { gte: startDate } },
-        }),
-        prisma.bookmark.count({
-          where: { serverId: server.id, createdAt: { gte: startDate } },
-        }),
-        prisma.rating.count({
-          where: { serverId: server.id, createdAt: { gte: startDate } },
-        }),
-        prisma.comment.count({
-          where: { serverId: server.id, createdAt: { gte: startDate } },
-        }),
+  const rankingData = await Promise.all(
+    serverRows.map(async (server: any) => {
+      const [viewResult, bookmarkResult, ratingResult, commentResult] = await Promise.all([
+        db.select({ count: count() }).from(viewHistories).where(
+          and(eq(viewHistories.serverId, server.id), gte(viewHistories.createdAt, startDate))
+        ),
+        db.select({ count: count() }).from(bookmarks).where(
+          and(eq(bookmarks.serverId, server.id), gte(bookmarks.createdAt, startDate))
+        ),
+        db.select({ count: count() }).from(ratings).where(
+          and(eq(ratings.serverId, server.id), gte(ratings.createdAt, startDate))
+        ),
+        db.select({ count: count() }).from(comments).where(
+          and(eq(comments.serverId, server.id), gte(comments.createdAt, startDate))
+        ),
       ])
 
+      const views = viewResult[0]?.count ?? 0
+      const bookmarkCount = bookmarkResult[0]?.count ?? 0
+      const ratingCount = ratingResult[0]?.count ?? 0
+      const commentCount = commentResult[0]?.count ?? 0
+
       // Composite score: views(1) + bookmarks(3) + ratings(2) + comments(2) + stars(0.5)
-      const score = views * 1 + bookmarks * 3 + ratings * 2 + comments * 2 + (server.stars || 0) * 0.5
+      const score = views * 1 + bookmarkCount * 3 + ratingCount * 2 + commentCount * 2 + (server.stars || 0) * 0.5
 
       return {
         serverId: server.id,
         score,
         views,
-        bookmarks,
-        ratings,
+        bookmarks: bookmarkCount,
+        ratings: ratingCount,
       }
     })
   )
 
   // Sort by score descending
-  const sorted = rankings
-    .filter((r) => r.score > 0)
-    .sort((a, b) => b.score - a.score)
+  const sorted = rankingData
+    .filter((r: any) => r.score > 0)
+    .sort((a: any, b: any) => b.score - a.score)
 
   // Clear old rankings for this period
-  await prisma.serverRanking.deleteMany({
-    where: { period, startDate: { gte: startDate } },
-  })
+  await db.delete(serverRankings).where(
+    and(eq(serverRankings.period, period), gte(serverRankings.startDate, startDate))
+  )
 
   // Insert new rankings
   const endDate = now
   await Promise.all(
-    sorted.map((r, index) =>
-      prisma.serverRanking.create({
-        data: {
-          serverId: r.serverId,
-          period,
-          rank: index + 1,
-          score: r.score,
-          views: r.views,
-          bookmarks: r.bookmarks,
-          ratings: r.ratings,
-          startDate,
-          endDate,
-        },
+    sorted.map((r: any, index: any) =>
+      db.insert(serverRankings).values({
+        serverId: r.serverId,
+        period,
+        rank: index + 1,
+        score: r.score,
+        views: r.views,
+        bookmarks: r.bookmarks,
+        ratings: r.ratings,
+        startDate,
+        endDate,
       })
     )
   )
@@ -77,14 +84,23 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
 }
 
 export async function getServerRankings(period: 'week' | 'month' = 'week', limit = 10) {
-  const rankings = await prisma.serverRanking.findMany({
-    where: { period },
-    orderBy: { rank: 'asc' },
-    take: limit,
-    include: {
-      server: { select: { id: true, name: true, owner: true, repo: true, description: true, stars: true } },
-    },
-  })
+  const rankingRows = await db.select({
+    ...serverRankings,
+    serverId_col: servers.id,
+    serverName: servers.name,
+    serverOwner: servers.owner,
+    serverRepo: servers.repo,
+    serverDescription: servers.description,
+    serverStars: servers.stars,
+  }).from(serverRankings)
+    .innerJoin(servers, eq(serverRankings.serverId, servers.id))
+    .where(eq(serverRankings.period, period))
+    .orderBy(asc(serverRankings.rank))
+    .limit(limit)
 
-  return rankings
+  // Map to include nested server object
+  return rankingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, serverDescription, serverStars, ...rankingData }: any) => ({
+    ...rankingData,
+    server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo, description: serverDescription, stars: serverStars },
+  }))
 }

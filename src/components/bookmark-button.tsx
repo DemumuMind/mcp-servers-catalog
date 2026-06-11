@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Bookmark, BookmarkCheck } from 'lucide-react'
 import { toggleBookmark } from '@/app/actions/public'
@@ -14,6 +15,7 @@ export function BookmarkButton({
   userId: string
   initialBookmarked?: boolean
 }) {
+  const t = useTranslations('Bookmarks')
   const [bookmarked, setBookmarked] = useState(initialBookmarked)
   const [isPending, startTransition] = useTransition()
 
@@ -45,7 +47,7 @@ export function BookmarkButton({
       ) : (
         <Bookmark className="h-4 w-4" />
       )}
-      {bookmarked ? 'В закладках' : 'В закладки'}
+      {bookmarked ? t('bookmarked') : t('addBookmark')}
     </Button>
   )
 }

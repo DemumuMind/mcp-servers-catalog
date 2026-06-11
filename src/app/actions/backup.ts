@@ -1,7 +1,9 @@
 'use server'
 
-import { PGlite } from '@electric-sql/pglite'
+import { createClient, type Client } from '@libsql/client'
 import path from 'path'
+import { requireAdmin } from '@/lib/auth-guard'
+import { logAudit } from './audit-log'
 
 const DANGEROUS_SQL_PATTERNS = [
   /\bDROP\b/i,
@@ -10,12 +12,8 @@ const DANGEROUS_SQL_PATTERNS = [
   /\bALTER\b/i,
   /\bGRANT\b/i,
   /\bREVOKE\b/i,
-  /\bCOPY\b/i,
-  /\bEXECUTE\b/i,
-  /\bVACUUM\b/i,
-  /\bREINDEX\b/i,
-  /\bCLUSTER\b/i,
-  /\bREFRESH\b/i,
+  /\bATTACH\b/i,
+  /\bDETACH\b/i,
 ]
 
 function validateSqlStatement(statement: string): boolean {
@@ -29,85 +27,92 @@ function validateSqlStatement(statement: string): boolean {
   return true
 }
 
-export async function backupDatabase(): Promise<string> {
-  const dataDir = process.env.DATABASE_DIR
-    ? path.resolve(process.env.DATABASE_DIR)
-    : path.resolve(process.cwd(), '.pglite')
+function escapeSqlValue(value: unknown): string {
+  if (value === null || value === undefined) return 'NULL'
+  if (typeof value === 'boolean') return value ? '1' : '0'
+  if (typeof value === 'number') return String(value)
+  if (value instanceof Date) return `'${value.toISOString()}'`
+  if (Array.isArray(value) || typeof value === 'object') return `'${JSON.stringify(value).replace(/'/g, "''")}'`
+  return `'${String(value).replace(/'/g, "''")}'`
+}
 
-  const db = new PGlite({ dataDir })
+function getDbUrl(): string {
+  return process.env.DATABASE_URL?.trim() || 'file:./.turso/local.db'
+}
+
+function createDbClient(): Client {
+  const url = getDbUrl()
+  const authToken = process.env.DATABASE_AUTH_TOKEN?.trim()
+  if (url.startsWith('libsql://') || url.startsWith('http://') || url.startsWith('https://')) {
+    return createClient({ url, authToken })
+  }
+  return createClient({ url })
+}
+
+export async function backupDatabase(): Promise<string> {
+  const userId = await requireAdmin()
+  const client = createDbClient()
 
   try {
-    // Get all tables
-    const tablesResult = await db.query(`
-      SELECT tablename FROM pg_tables 
-      WHERE schemaname = 'public' 
-      AND tablename NOT LIKE 'pg_%' 
-      AND tablename NOT LIKE '_pg_%'
-    `)
+    // Get all table names from SQLite
+    const tablesResult = await client.execute(
+      `SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name`
+    )
+    const tables = tablesResult.rows.map(r => r.name as string)
 
-    const tables = tablesResult.rows.map((r: any) => r.tablename)
-    
-    let sql = `-- Backup generated at ${new Date().toISOString()}\n\n`
-    
+    let sql = `-- Backup generated at ${new Date().toISOString()}\n-- Database: Turso/SQLite\n\n`
+
     for (const table of tables) {
-      // Get table schema
-      const schemaResult = await db.query(`
-        SELECT column_name, data_type, is_nullable, column_default
-        FROM information_schema.columns
-        WHERE table_name = '${table}'
-        ORDER BY ordinal_position
-      `)
-      
-      const columns = schemaResult.rows.map((r: any) => {
-        let def = `${r.column_name} ${r.data_type}`
-        if (r.is_nullable === 'NO') def += ' NOT NULL'
-        if (r.column_default) def += ` DEFAULT ${r.column_default}`
+      // Get column info
+      const colResult = await client.execute(`PRAGMA table_info("${table}")`)
+      const columns = colResult.rows.map(r => ({
+        name: r.name as string,
+        type: r.type as string,
+        notnull: r.notnull as number,
+        dflt_value: r.dflt_value as string | null,
+        pk: r.pk as number,
+      }))
+
+      // Build CREATE TABLE statement
+      const colDefs = columns.map(c => {
+        let def = `"${c.name}" ${c.type || 'TEXT'}`
+        if (c.notnull) def += ' NOT NULL'
+        if (c.dflt_value !== null) def += ` DEFAULT ${c.dflt_value}`
+        if (c.pk) def += ' PRIMARY KEY'
         return def
       }).join(', ')
-      
       sql += `-- Table: ${table}\n`
-      sql += `CREATE TABLE IF NOT EXISTS "${table}" (${columns});\n\n`
-      
+      sql += `CREATE TABLE IF NOT EXISTS "${table}" (${colDefs});\n\n`
+
       // Get data
-      const dataResult = await db.query(`SELECT * FROM "${table}"`)
-      
+      const dataResult = await client.execute(`SELECT * FROM "${table}"`)
       if (dataResult.rows.length > 0) {
-        const columnNames = Object.keys(dataResult.rows[0] as Record<string, unknown>).map(c => `"${c}"`).join(', ')
-        
+        const colNames = columns.map(c => `"${c.name}"`).join(', ')
         for (const row of dataResult.rows) {
-          const values = Object.values(row as Record<string, unknown>).map(v => {
-            if (v === null) return 'NULL'
-            if (typeof v === 'boolean') return v ? 'TRUE' : 'FALSE'
-            if (v instanceof Date) return `'${v.toISOString()}'`
-            if (Array.isArray(v)) return `ARRAY[${v.map(item => `'${String(item).replace(/'/g, "''")}'`).join(', ')}]`
-            return `'${String(v).replace(/'/g, "''")}'`
-          }).join(', ')
-          
-          sql += `INSERT INTO "${table}" (${columnNames}) VALUES (${values});\n`
+          const values = columns.map(c => escapeSqlValue(row[c.name])).join(', ')
+          sql += `INSERT INTO "${table}" (${colNames}) VALUES (${values});\n`
         }
         sql += '\n'
       }
     }
-    
+
+    try { await logAudit('system.backup', undefined, undefined, { timestamp: new Date().toISOString() }, userId) } catch { /* audit log failure — non-critical */ }
     return sql
   } finally {
-    await db.close()
+    client.close()
   }
 }
 
 export async function restoreDatabase(sql: string): Promise<void> {
-  const dataDir = process.env.DATABASE_DIR
-    ? path.resolve(process.env.DATABASE_DIR)
-    : path.resolve(process.cwd(), '.pglite')
-
-  const db = new PGlite({ dataDir })
+  const userId = await requireAdmin()
+  const client = createDbClient()
 
   try {
     const statements = sql
       .split(';')
       .map(s => s.trim())
       .filter(s => s.length > 0 && !s.startsWith('--'))
-    
+
     let skipped = 0
     for (const statement of statements) {
       if (!validateSqlStatement(statement)) {
@@ -116,7 +121,7 @@ export async function restoreDatabase(sql: string): Promise<void> {
         continue
       }
       try {
-        await db.query(statement + ';')
+        await client.execute(statement)
       } catch (err) {
         console.error('Error executing statement:', err)
       }
@@ -124,7 +129,8 @@ export async function restoreDatabase(sql: string): Promise<void> {
     if (skipped > 0) {
       console.warn(`[RESTORE] Skipped ${skipped} dangerous statements`)
     }
+    try { await logAudit('system.restore', undefined, undefined, { skipped }, userId) } catch { /* audit log failure — non-critical */ }
   } finally {
-    await db.close()
+    client.close()
   }
 }

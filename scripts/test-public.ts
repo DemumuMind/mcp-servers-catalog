@@ -3,10 +3,10 @@ import { getServersPublic } from '../src/app/actions/public'
 
 async function test() {
   const result = await getServersPublic(1, undefined, undefined, undefined, false, false, false, 'featured')
-  console.log('Total:', result.total)
-  console.log('Servers:', result.servers.length)
+  process.stdout.write(`Total: ${result.total}\n`)
+  process.stdout.write(`Servers: ${result.servers.length}\n`)
   for (const s of result.servers) {
-    console.log(`- ${s.name}: ${s.description?.substring(0, 30)}...`)
+    process.stdout.write(`- ${s.name}: ${s.description?.substring(0, 30)}...\n`)
   }
 }
 

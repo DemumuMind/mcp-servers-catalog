@@ -1,207 +1,87 @@
-import path from 'path'
-import { PrismaClient } from '@prisma/client'
-import { PGlite } from '@electric-sql/pglite'
-import { PrismaPGlite } from 'pglite-prisma-adapter'
-import { Pool } from 'pg'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { validateProductionSecrets } from '@/lib/auth-guard'
+import { createClient, type Client } from '@libsql/client'
+import { drizzle } from 'drizzle-orm/libsql'
+import * as schema from './db/schema'
+import { logger } from '@/lib/logger'
 
-validateProductionSecrets()
+// ─── Environment ─────────────────────────────────────────────────────────────
+const DATABASE_URL = process.env.DATABASE_URL?.trim() || 'file:./.turso/local.db'
+const DATABASE_AUTH_TOKEN = process.env.DATABASE_AUTH_TOKEN?.trim()
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
-  pgliteInstance: PGlite | undefined
-  pgPool: Pool | undefined
-  dbFailed: boolean | undefined
-  nullPrismaClient: PrismaClient | undefined
-  vercelNoExternalDb: boolean | undefined
-}
+// ─── libsql client ───────────────────────────────────────────────────────────
+// Supports:
+//   - Local file:    file:./.turso/local.db   or  file:/abs/path.db
+//   - Remote Turso:  libsql://dbname-org.turso.io?authToken=xxx
+//   - Local + sync:  http://127.0.0.1:8080     (turso dev)
 
-function getDataDir(): string {
-  const dir = process.env.DATABASE_DIR?.trim()
-  return dir
-    ? path.resolve(dir)
-    : path.resolve(process.cwd(), '.pglite')
-}
+const isRemoteUrl = (url: string): boolean =>
+  url.startsWith('libsql://') || url.startsWith('http://') || url.startsWith('https://')
 
-function createPrismaClient(): PrismaClient {
-  const dataDir = getDataDir()
-  
-  let pglite = globalForPrisma.pgliteInstance
-  if (!pglite) {
-    try {
-      pglite = new PGlite({ dataDir })
-      globalForPrisma.pgliteInstance = pglite
-    } catch (e) {
-      console.error('[PGlite] Failed to initialize with dataDir:', dataDir, e)
-      // Fallback: try in-memory mode
-      try {
-        pglite = new PGlite()
-        globalForPrisma.pgliteInstance = pglite
-        console.warn('[PGlite] Using in-memory fallback. Data will not persist.')
-      } catch (e2) {
-        console.error('[PGlite] In-memory fallback also failed:', e2)
-        throw new Error('PGlite initialization failed. Please ensure WASM support is available.')
-      }
-    }
-  }
-  
-  const adapter = new PrismaPGlite(pglite)
-  return new PrismaClient({ adapter })
-}
+function createTursoClient(): Client {
+  const url = DATABASE_URL
 
-// Create a mock Prisma client that returns empty results for all queries
-// Used as fallback when database is unavailable (e.g., on Vercel serverless)
-function createNullPrismaClient(): PrismaClient {
-  const handler = {
-    get(_target: any, prop: string) {
-      if (['$connect', '$disconnect', '$transaction', '$queryRaw', '$executeRaw', '$queryRawUnsafe', '$executeRawUnsafe'].includes(prop)) {
-        return async () => {
-          console.warn(`[DB] Mock Prisma: ${prop} called, database unavailable`)
-          return prop.startsWith('$query') ? [] : undefined
-        }
-      }
-      if (prop === '$extends' || prop === '$on') {
-        return () => createNullPrismaClient()
-      }
-      if (prop === '$use') {
-        return () => {}
-      }
-      // Return a proxy for model methods (findMany, findUnique, etc.)
-      return new Proxy({}, {
-        get(_t, method) {
-          return async () => {
-            console.warn(`[DB] Mock Prisma: ${prop}.${String(method)} called, returning empty result`)
-            if (method === 'count' || method === 'aggregate') return 0
-            if (method === 'findUnique' || method === 'findFirst') return null
-            if (method === 'groupBy') return []
-            return []
-          }
-        }
-      })
-    }
-  }
-  return new Proxy({} as PrismaClient, handler) as PrismaClient
-}
-
-function isExternalPostgresUrl(url?: string): boolean {
-  if (!url || url.trim() === '' || url === 'undefined') return false
-  const lower = url.toLowerCase()
-  // Reject dummy/localhost URLs used for local dev or build-time type generation
-  if (lower.includes('localhost') || lower.includes('127.0.0.1')) return false
-  return lower.startsWith('postgresql://') || lower.startsWith('postgres://')
-}
-
-function createStandardPrismaClient(): PrismaClient {
-  let pool = globalForPrisma.pgPool
-  if (!pool) {
-    const connectionString = process.env.DATABASE_URL!
-    pool = new Pool({ connectionString })
-    globalForPrisma.pgPool = pool
-  }
-  const adapter = new PrismaPg(pool)
-  return new PrismaClient({ adapter })
-}
-
-function getNullPrismaClient(): PrismaClient {
-  if (!globalForPrisma.nullPrismaClient) {
-    globalForPrisma.nullPrismaClient = createNullPrismaClient()
-  }
-  return globalForPrisma.nullPrismaClient
-}
-
-function getPrismaClient(): PrismaClient {
-  if (globalForPrisma.dbFailed) {
-    return getNullPrismaClient()
+  if (isRemoteUrl(url)) {
+    logger.info('[DB] Connecting to remote Turso:', url.replace(/\?authToken=.+/, '?authToken=***'))
+    return createClient({
+      url,
+      authToken: DATABASE_AUTH_TOKEN,
+    })
   }
 
-  const dbUrl = process.env.DATABASE_URL
+  // Local file path — ensure parent dir exists
+  logger.info('[DB] Connecting to local Turso file:', url)
+  return createClient({ url })
+}
 
-  // On Vercel serverless, check if a real external PostgreSQL DATABASE_URL is configured
-  if (process.env.VERCEL || process.env.VERCEL_ENV) {
-    if (isExternalPostgresUrl(dbUrl)) {
-      console.log('[DB] Vercel serverless with external PostgreSQL detected, using standard Prisma client')
-      return createStandardPrismaClient()
-    }
-    if (globalForPrisma.vercelNoExternalDb) {
-      return getNullPrismaClient()
-    }
-    console.warn('[DB] Vercel serverless detected without external DB, using null Prisma client')
-    globalForPrisma.dbFailed = true
-    globalForPrisma.vercelNoExternalDb = true
-    return getNullPrismaClient()
+// ─── Singleton pattern (dev hot-reload safety) ──────────────────────────────
+const globalForDb = globalThis as typeof globalThis & {
+  _tursoClient?: Client
+  _drizzleDb?: ReturnType<typeof drizzle<typeof schema>>
+}
+
+function getClient(): Client {
+  if (!globalForDb._tursoClient) {
+    globalForDb._tursoClient = createTursoClient()
+  }
+  return globalForDb._tursoClient
+}
+
+// ─── Drizzle instance ────────────────────────────────────────────────────────
+export const db = (() => {
+  if (globalForDb._drizzleDb) return globalForDb._drizzleDb
+
+  const client = getClient()
+  const instance = drizzle(client, { schema })
+
+  if (process.env.NODE_ENV !== 'production') {
+    globalForDb._drizzleDb = instance
   }
 
-  const cached = globalForPrisma.prisma
-  if (cached) {
-    return cached
-  }
+  return instance
+})()
 
+// ─── Health check ────────────────────────────────────────────────────────────
+export async function healthCheck(): Promise<{ ok: boolean; latencyMs: number; error?: string }> {
+  const start = Date.now()
   try {
-    const fresh = createPrismaClient()
-    if (process.env.NODE_ENV !== 'production') {
-      globalForPrisma.prisma = fresh
-    }
-    return fresh
-  } catch (err) {
-    console.error('[DB] Failed to create Prisma client, using null fallback:', err)
-    globalForPrisma.dbFailed = true
-    return getNullPrismaClient()
+    const client = getClient()
+    await client.execute('SELECT 1')
+    return { ok: true, latencyMs: Date.now() - start }
+  } catch (err: any) {
+    return { ok: false, latencyMs: Date.now() - start, error: err?.message || String(err) }
   }
 }
 
-let _prisma: PrismaClient | undefined
-let _dbFailed = false
+// ─── Re-export schema for convenient imports ─────────────────────────────────
+export * from './db/schema'
 
-export const prisma = new Proxy({} as PrismaClient, {
-  get(_target, prop) {
-    if (_dbFailed && globalForPrisma.dbFailed) {
-      return (getNullPrismaClient() as any)[prop]
-    }
-    if (!_prisma) {
-      try {
-        _prisma = getPrismaClient()
-      } catch (err) {
-        console.error('[DB] Lazy init failed:', err)
-        _dbFailed = true
-        globalForPrisma.dbFailed = true
-        _prisma = getNullPrismaClient()
-      }
-    }
-    return (_prisma as any)[prop]
-  },
-})
+// ─── Export raw client for direct SQL when Drizzle API is insufficient ──────
+export { getClient }
 
-// Reset function for when PGLite crashes
-export function resetDatabaseConnection() {
-  console.log('[DB] Resetting database connection...')
-  _prisma = undefined
-  _dbFailed = false
-  globalForPrisma.prisma = undefined
-  globalForPrisma.pgliteInstance = undefined
-  globalForPrisma.pgPool = undefined
-  globalForPrisma.dbFailed = undefined
-  globalForPrisma.nullPrismaClient = undefined
-  globalForPrisma.vercelNoExternalDb = undefined
-}
+// ─── Legacy compatibility (Prisma → Drizzle migration) ─────────────────────
+// Some files still import { prisma } — alias to Drizzle db instance
+export const prisma = db
 
-// Helper to execute Prisma queries with automatic retry on PGLite crash
-export async function withDbRetry<T>(fn: (prisma: PrismaClient) => Promise<T>, maxRetries: number = 3): Promise<T> {
-  let lastError: any
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      return await fn(prisma)
-    } catch (err: any) {
-      lastError = err
-      const message = err?.message || String(err)
-      if (message.includes('Aborted') || message.includes('RuntimeError') || message.includes('PGlite')) {
-        console.warn(`[DB] PGLite crashed (attempt ${attempt + 1}/${maxRetries}), resetting and retrying...`)
-        resetDatabaseConnection()
-        await new Promise(r => setTimeout(r, 100 * (attempt + 1)))
-        continue
-      }
-      throw err
-    }
-  }
-  throw lastError
+// Some files import { withDbRetry } — simple passthrough wrapper
+export async function withDbRetry<T>(fn: () => Promise<T>): Promise<T> {
+  return fn()
 }

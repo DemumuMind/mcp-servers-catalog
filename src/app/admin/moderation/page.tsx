@@ -1,5 +1,8 @@
 import { getPendingComments, getAllComments, approveComment, rejectComment, bulkApproveComments, bulkRejectComments } from '@/app/actions/moderation'
 import { ModerationTable } from '@/components/admin/moderation-table'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import Link from 'next/link'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,6 +11,7 @@ export default async function ModerationPage({
 }: {
   searchParams: Promise<{ tab?: string }>
 }) {
+  const t = await getAdminTranslations('Admin.moderation')
   const params = await searchParams
   const showAll = params.tab === 'all'
 
@@ -34,34 +38,32 @@ export default async function ModerationPage({
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Модерация комментариев</h1>
-        <div className="flex gap-2">
-          <a
-            href="/admin/moderation"
+    <div className="space-y-8">
+      <AdminPageHeader title={t('title')} description={t('description')} actions={
+          <div className="flex gap-2">
+          <Link href="/admin/moderation"
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               !showAll ? 'bg-primary text-primary-foreground' : 'border hover:bg-accent'
             }`}
           >
-            На проверке
-          </a>
-          <a
-            href="/admin/moderation?tab=all"
+            {t('underReviewTab')}
+          </Link>
+          <Link href="/admin/moderation?tab=all"
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               showAll ? 'bg-primary text-primary-foreground' : 'border hover:bg-accent'
             }`}
           >
-            Все комментарии
-          </a>
+            {t('allCommentsTab')}
+          </Link>
         </div>
-      </div>
+        }
+      />
 
-      <div className="bg-card rounded-lg border p-4">
+      <div className="premium-panel p-4">
         <p className="text-muted-foreground">
           {showAll
-            ? `Всего комментариев: ${comments.length}`
-            : `Комментариев на проверке: ${comments.length}`}
+            ? t('totalComments', { count: comments.length })
+            : t('commentsUnderReview', { count: comments.length })}
         </p>
       </div>
 
@@ -75,3 +77,6 @@ export default async function ModerationPage({
     </div>
   )
 }
+
+
+

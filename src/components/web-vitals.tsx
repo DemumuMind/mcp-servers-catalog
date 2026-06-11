@@ -1,12 +1,14 @@
 'use client'
 
+import { logger } from '@/lib/logger'
+
 import { useEffect } from 'react'
 import { onCLS, onINP, onFCP, onLCP, onTTFB } from 'web-vitals'
 
 function sendToAnalytics(metric: any) {
   // Send to console in dev, to analytics endpoint in production
   if (process.env.NODE_ENV === 'development') {
-    console.log('[Web Vitals]', metric.name, metric.value, metric.rating)
+    logger.info('[Web Vitals]', metric.name, metric.value, metric.rating)
   } else {
     // Send to your analytics endpoint or Sentry
     const body = JSON.stringify(metric)

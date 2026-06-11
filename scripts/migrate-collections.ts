@@ -6,12 +6,11 @@ async function migrate() {
   // Add collectionId to Bookmark
   try {
     await client.query(`ALTER TABLE "Bookmark" ADD COLUMN IF NOT EXISTS "collectionId" TEXT;`)
-    console.log('Added collectionId to Bookmark')
+    process.stdout.write('Added collectionId to Bookmark\n')
   } catch (e) {
-    console.log('collectionId already exists or error:', (e as Error).message)
+    process.stdout.write(`collectionId already exists or error: ${(e as Error).message}\n`)
   }
 
-  // Create Collection table
   try {
     await client.query(`
       CREATE TABLE IF NOT EXISTS "Collection" (
@@ -23,12 +22,11 @@ async function migrate() {
       );
     `)
     await client.query(`CREATE INDEX IF NOT EXISTS "Collection_userId_idx" ON "Collection"("userId");`)
-    console.log('Created Collection table')
+    process.stdout.write('Created Collection table\n')
   } catch (e) {
-    console.log('Collection error:', (e as Error).message)
+    process.stdout.write(`Collection error: ${(e as Error).message}\n`)
   }
 
-  // Create DigestSubscription table
   try {
     await client.query(`
       CREATE TABLE IF NOT EXISTS "DigestSubscription" (
@@ -40,12 +38,11 @@ async function migrate() {
       );
     `)
     await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS "DigestSubscription_userId_key" ON "DigestSubscription"("userId");`)
-    console.log('Created DigestSubscription table')
+    process.stdout.write('Created DigestSubscription table\n')
   } catch (e) {
-    console.log('DigestSubscription error:', (e as Error).message)
+    process.stdout.write(`DigestSubscription error: ${(e as Error).message}\n`)
   }
 
-  // Create Vote table
   try {
     await client.query(`
       CREATE TABLE IF NOT EXISTS "Vote" (
@@ -57,21 +54,21 @@ async function migrate() {
       );
     `)
     await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS "Vote_userId_serverId_key" ON "Vote"("userId", "serverId");`)
-    console.log('Created Vote table')
+    process.stdout.write('Created Vote table\n')
   } catch (e) {
-    console.log('Vote error:', (e as Error).message)
+    process.stdout.write(`Vote error: ${(e as Error).message}\n`)
   }
 
   // Add vote relation to Server
   try {
     await client.query(`ALTER TABLE "Server" ADD COLUMN IF NOT EXISTS "voteCount" INTEGER DEFAULT 0;`)
-    console.log('Added voteCount to Server')
+    process.stdout.write('Added voteCount to Server\n')
   } catch (e) {
-    console.log('voteCount already exists or error:', (e as Error).message)
+    process.stdout.write(`voteCount already exists or error: ${(e as Error).message}\n`)
   }
 
   await client.close()
-  console.log('Migration complete')
+  process.stdout.write('Migration complete\n')
 }
 
 migrate().catch(console.error)

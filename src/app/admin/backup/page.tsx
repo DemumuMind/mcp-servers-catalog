@@ -4,10 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Upload } from 'lucide-react'
 import { BackupDownload } from '@/components/admin/backup-download'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
-export default function BackupRestorePage() {
+export default async function BackupRestorePage() {
+  const t = await getAdminTranslations('Admin.backup')
+
   async function backupAction() {
     'use server'
     return await backupDatabase()
@@ -22,17 +26,17 @@ export default function BackupRestorePage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Backup / Restore</h1>
+    <div className="space-y-8">
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Создать Backup</CardTitle>
+            <CardTitle>{t('createBackup')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Скачать SQL дамп базы данных.
+              {t('downloadDump')}
             </p>
             <BackupDownload backupAction={backupAction} />
           </CardContent>
@@ -40,22 +44,22 @@ export default function BackupRestorePage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Восстановить из Backup</CardTitle>
+            <CardTitle>{t('restoreFromBackup')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground text-red-600">
-              ⚠️ Внимание! Это перезапишет текущие данные. Сначала сделайте backup!
+              {t('warning')}
             </p>
             <form action={handleRestore} className="space-y-4">
               <Textarea
                 name="sql"
-                placeholder="Вставьте SQL дамп здесь..."
+                placeholder={t('pasteSqlPlaceholder')}
                 rows={10}
                 required
               />
               <Button type="submit" variant="destructive">
                 <Upload className="h-4 w-4 mr-2" />
-                Восстановить
+                {t('restore')}
               </Button>
             </form>
           </CardContent>
@@ -64,3 +68,4 @@ export default function BackupRestorePage() {
     </div>
   )
 }
+

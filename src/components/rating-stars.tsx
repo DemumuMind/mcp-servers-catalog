@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { Star } from 'lucide-react'
 import { rateServer } from '@/app/actions/public'
 
@@ -13,6 +14,7 @@ export function RatingStars({
   userId: string
   initialRating?: number
 }) {
+  const t = useTranslations('Rating')
   const [hoverValue, setHoverValue] = useState(0)
   const [userRating, setUserRating] = useState(initialRating)
   const [isPending, startTransition] = useTransition()
@@ -51,7 +53,7 @@ export function RatingStars({
         </button>
       ))}
       {userRating > 0 && (
-        <span className="text-xs text-muted-foreground ml-1">Ваша оценка: {userRating}</span>
+        <span className="text-xs text-muted-foreground ml-1">{t('yourRating')}: {userRating}</span>
       )}
     </div>
   )

@@ -1,7 +1,8 @@
 'use server'
 
 import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { eq } from 'drizzle-orm'
 import { createCheckoutSession } from '@/lib/stripe'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -14,23 +15,33 @@ export async function createPremiumCheckout(
   const userId = session?.user?.id
 
   if (!userId) {
-    throw new Error('Необходимо авторизоваться')
+    throw new Error('AUTH_REQUIRED')
   }
 
-  const server = await prisma.server.findUnique({
-    where: { id: serverId },
-    select: { id: true, owner: true, repo: true, authorId: true, featured: true, isSponsored: true },
-  })
+  const serverRows = await db
+    .select({
+      id: servers.id,
+      owner: servers.owner,
+      repo: servers.repo,
+      authorId: servers.authorId,
+      featured: servers.featured,
+      isSponsored: servers.isSponsored,
+    })
+    .from(servers)
+    .where(eq(servers.id, serverId))
+    .limit(1)
+
+  const server = serverRows[0]
 
   if (!server) {
-    throw new Error('Сервер не найден')
+    throw new Error('SERVER_NOT_FOUND')
   }
 
   const isAdmin = session.user.role === 'admin'
   const isAuthor = server.authorId === userId
 
   if (!isAdmin && !isAuthor) {
-    throw new Error('Только автор или администратор может продвигать сервер')
+    throw new Error('PROMOTE_UNAUTHORIZED')
   }
 
   const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
@@ -46,13 +57,13 @@ export async function createPremiumCheckout(
     )
 
     if (!checkoutSession.url) {
-      throw new Error('Не удалось создать сессию оплаты')
+      throw new Error('CHECKOUT_SESSION_FAILED')
     }
 
     redirect(checkoutSession.url)
   } catch (err: any) {
-    if (err.message?.includes('Stripe не настроен')) {
-      throw new Error('Платежная система временно недоступна. Обратитесь к администратору.')
+    if (err.message?.includes('STRIPE_NOT_CONFIGURED')) {
+      throw new Error('PAYMENT_SYSTEM_UNAVAILABLE')
     }
     throw err
   }
@@ -66,21 +77,21 @@ export async function activatePremiumStatus(
   const expiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000)
 
   if (tier === 'featured') {
-    await prisma.server.update({
-      where: { id: serverId },
-      data: {
+    await db
+      .update(servers)
+      .set({
         featured: true,
         featuredUntil: expiresAt,
-      },
-    })
+      })
+      .where(eq(servers.id, serverId))
   } else {
-    await prisma.server.update({
-      where: { id: serverId },
-      data: {
+    await db
+      .update(servers)
+      .set({
         isSponsored: true,
         sponsoredUntil: expiresAt,
-      },
-    })
+      })
+      .where(eq(servers.id, serverId))
   }
 
   revalidatePath('/', 'layout')

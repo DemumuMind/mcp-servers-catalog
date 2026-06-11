@@ -3,14 +3,14 @@ import { readFileSync } from 'fs'
 
 async function main() {
   const dataDir = process.env.DATABASE_DIR || '.pglite'
-  console.log(`Applying schema to ${dataDir}...`)
+  process.stdout.write(`Applying schema to ${dataDir}...\n`)
   
   const pglite = new PGlite({ dataDir })
   
   const sql = readFileSync('prisma/full-schema.sql', 'utf-8')
   await pglite.exec(sql)
   
-  console.log('Schema applied successfully!')
+  process.stdout.write('Schema applied successfully!\n')
   await pglite.close()
 }
 

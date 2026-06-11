@@ -1,24 +1,37 @@
+import { getTranslations } from 'next-intl/server'
+
 export const dynamic = 'force-dynamic'
 
-export const metadata = {
-  title: 'Офлайн — MCP Servers',
-  description: 'Нет подключения к интернету',
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Offline' })
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
-export default function OfflinePage() {
+export default async function OfflinePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Offline' })
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
       <div className="text-6xl mb-4">📡</div>
-      <h1 className="text-2xl font-bold mb-2">Нет подключения к интернету</h1>
+      <h1 className="font-heading text-3xl font-semibold tracking-[-0.05em] mb-2">{t('title')}</h1>
       <p className="text-muted-foreground text-center max-w-md mb-6">
-        Похоже, вы потеряли соединение. Некоторые ранее загруженные страницы могут быть доступны.
+        {t('description')}
       </p>
-      <button
-        onClick={() => window.location.reload()}
-        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+      <a
+        href={`/${locale || 'ru'}`}
+        className="rounded-md bg-primary px-4 py-2 text-primary-foreground transition-colors hover:bg-primary/90"
       >
-        Попробовать снова
-      </button>
+        {t('retry')}
+      </a>
     </div>
   )
 }

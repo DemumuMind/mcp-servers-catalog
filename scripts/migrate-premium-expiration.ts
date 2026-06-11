@@ -5,14 +5,14 @@ async function main() {
   const dbPath = path.resolve(process.cwd(), '.pglite')
   const client = new PGlite(dbPath)
 
-  console.log('Adding premium expiration columns to Server table...')
+  process.stdout.write('Adding premium expiration columns to Server table...\n')
   await client.query(`
     ALTER TABLE "Server"
     ADD COLUMN IF NOT EXISTS "featuredUntil" TIMESTAMP(3),
     ADD COLUMN IF NOT EXISTS "sponsoredUntil" TIMESTAMP(3)
   `)
 
-  console.log('Migration completed successfully!')
+  process.stdout.write('Migration completed successfully!\n')
   await client.close()
 }
 

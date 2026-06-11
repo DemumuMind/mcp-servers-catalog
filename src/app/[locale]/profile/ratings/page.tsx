@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { Star, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { formatDistanceToNow } from '@/lib/date-utils'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +14,7 @@ export default async function ProfileRatingsPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'ProfileRatings' })
   const session = await auth()
 
   if (!session?.user?.id) {
@@ -25,20 +27,20 @@ export default async function ProfileRatingsPage({
     <div className="space-y-6">
       <div className="flex items-center gap-2">
         <Star className="h-5 w-5" />
-        <h1 className="text-xl font-bold">Мои оценки</h1>
+        <h1 className="text-xl font-bold">{t('title')}</h1>
         <span className="text-sm text-muted-foreground">({ratings.length})</span>
       </div>
 
       {ratings.length === 0 ? (
         <p className="text-muted-foreground text-center py-16">
-          Вы пока не оценили ни один сервер.
+          {t('empty')}
         </p>
       ) : (
         <div className="space-y-4">
-          {ratings.map((rating) => (
+          {ratings.map((rating: any) => (
             <div
               key={rating.id}
-              className="p-4 rounded-lg border hover:bg-accent/50 transition-colors"
+              className="p-4 rounded-2xl border border-border/70 bg-card/70 shadow-[var(--shadow-soft)] hover:bg-accent/50 transition-colors"
             >
               <div className="flex items-center justify-between mb-2">
                 <Link
@@ -49,7 +51,7 @@ export default async function ProfileRatingsPage({
                   <ExternalLink className="h-3 w-3" />
                 </Link>
                 <span className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(rating.createdAt)}
+                  {formatDistanceToNow(new Date(rating.createdAt), locale)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -65,7 +67,7 @@ export default async function ProfileRatingsPage({
                     />
                   ))}
                 </div>
-                <span className="text-sm font-medium">{rating.value} из 5</span>
+                <span className="text-sm font-medium">{t('outOf5', { value: rating.value })}</span>
               </div>
             </div>
           ))}

@@ -6,7 +6,7 @@ function getStripeClient(): Stripe | null {
     return null
   }
   return new Stripe(key, {
-    apiVersion: '2026-04-22.dahlia' as any,
+    apiVersion: '2026-04-22.dahlia',
   })
 }
 
@@ -37,7 +37,7 @@ export async function createCheckoutSession(
 ) {
   const stripe = getStripeClient()
   if (!stripe) {
-    throw new Error('Stripe не настроен. Укажите STRIPE_SECRET_KEY в .env')
+    throw new Error('STRIPE_NOT_CONFIGURED')
   }
 
   const product = STRIPE_PRODUCTS[tier]

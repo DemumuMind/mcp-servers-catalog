@@ -6,12 +6,11 @@ async function migrate() {
   // Add isModerated to Comment if not exists
   try {
     await client.query(`ALTER TABLE "Comment" ADD COLUMN IF NOT EXISTS "isModerated" BOOLEAN NOT NULL DEFAULT false;`)
-    console.log('Added isModerated to Comment')
+    process.stdout.write('Added isModerated to Comment\n')
   } catch (e) {
-    console.log('isModerated already exists or error:', (e as Error).message)
+    process.stdout.write(`isModerated already exists or error: ${(e as Error).message}\n`)
   }
 
-  // Create Notification table
   try {
     await client.query(`
       CREATE TABLE IF NOT EXISTS "Notification" (
@@ -26,13 +25,13 @@ async function migrate() {
       );
     `)
     await client.query(`CREATE INDEX IF NOT EXISTS "Notification_userId_read_createdAt_idx" ON "Notification"("userId", "read", "createdAt");`)
-    console.log('Created Notification table')
+    process.stdout.write('Created Notification table\n')
   } catch (e) {
-    console.log('Notification error:', (e as Error).message)
+    process.stdout.write(`Notification error: ${(e as Error).message}\n`)
   }
 
   await client.close()
-  console.log('Migration complete')
+  process.stdout.write('Migration complete\n')
 }
 
 migrate().catch(console.error)

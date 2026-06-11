@@ -1,3 +1,56 @@
+import { BRAND_NAME, miniBrandMarkSvg } from '@/lib/brand-svg'
+
+const SITE_URL = process.env.SITE_URL || 'https://mcpservers.org'
+
+type Locale = 'ru' | 'en'
+
+const strings = {
+  ru: {
+    htmlLang: 'ru',
+    footerAutoMessage: 'Это автоматическое сообщение от',
+    footerReason: 'Вы получили это письмо, потому что связаны с нашим каталогом MCP серверов.',
+    newSubmission: 'Новая отправка MCP-сервера',
+    name: 'Название',
+    description: 'Описание',
+    category: 'Категория',
+    premiumYes: '✅ Да',
+    premiumNo: '❌ Нет',
+    goToAdmin: 'Перейти в админку',
+    approved: 'одобрена',
+    rejected: 'отклонена',
+    yourSubmissionStatus: 'Ваша отправка сервера {name} была {status}.',
+    yourSubmissionTitle: 'Ваша отправка {name} {status}',
+    thanksForContributing: 'Спасибо за участие в развитии экосистемы MCP!',
+    weeklyDigest: 'Еженедельный дайджест MCP серверов{categoryTitle}',
+    newServersThisWeek: 'Новые MCP серверы за неделю{categoryTitle}:',
+    viewAllServers: 'Посмотреть все серверы →',
+  },
+  en: {
+    htmlLang: 'en',
+    footerAutoMessage: 'This is an automated message from',
+    footerReason: 'You received this email because you are associated with our MCP servers catalog.',
+    newSubmission: 'New MCP Server Submission',
+    name: 'Name',
+    description: 'Description',
+    category: 'Category',
+    premiumYes: '✅ Yes',
+    premiumNo: '❌ No',
+    goToAdmin: 'Go to Admin Panel',
+    approved: 'approved',
+    rejected: 'rejected',
+    yourSubmissionStatus: 'Your submission of server <strong>{name}</strong> has been <strong>{status}</strong>.',
+    yourSubmissionTitle: 'Your submission {name} {status}',
+    thanksForContributing: 'Thank you for contributing to the MCP ecosystem!',
+    weeklyDigest: 'Weekly MCP Servers Digest{categoryTitle}',
+    newServersThisWeek: 'New MCP servers this week{categoryTitle}:',
+    viewAllServers: 'View all servers →',
+  },
+} as const
+
+function t(locale: Locale) {
+  return strings[locale] ?? strings.ru
+}
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, '&amp;')
@@ -7,18 +60,24 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#39;')
 }
 
-function emailTemplate(title: string, content: string): string {
+function emailTemplate(title: string, content: string, locale: Locale = 'ru'): string {
+  const s = t(locale)
+  const brandMark = miniBrandMarkSvg()
+
   return `<!DOCTYPE html>
-<html lang="ru">
+<html lang="${s.htmlLang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #000; color: #fff; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-    .content { background: #f9f9f9; padding: 24px; border-radius: 0 0 8px 8px; }
-    .footer { text-align: center; color: #666; font-size: 12px; margin-top: 24px; }
-    a { color: #2563eb; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #2f2419; max-width: 600px; margin: 0 auto; padding: 20px; background:#f8f1e1; }
+    .header { background: linear-gradient(135deg, #2a1b10, #7a4e1a 62%, #1c130c); color: #fff6e5; padding: 22px; text-align: center; border-radius: 18px 18px 0 0; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-mark { display: inline-block; width: 36px; height: 36px; line-height: 0; vertical-align: middle; }
+    .brand-mark svg { display: block; width: 36px; height: 36px; }
+    .content { background: #fffaf0; padding: 24px; border: 1px solid #eadcc4; border-top: 0; border-radius: 0 0 18px 18px; }
+    .footer { text-align: center; color: #776651; font-size: 12px; margin-top: 24px; }
+    a { color: #8a5a20; }
     table { width: 100%; border-collapse: collapse; margin: 16px 0; }
     td, th { padding: 10px; border: 1px solid #ddd; text-align: left; }
     th { background: #f3f3f3; }
@@ -26,15 +85,18 @@ function emailTemplate(title: string, content: string): string {
 </head>
 <body>
   <div class="header">
-    <h1 style="margin:0;font-size:20px;">Awesome MCP Servers</h1>
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">${brandMark}</span>
+      <h1 style="margin:0;font-size:20px;">${BRAND_NAME}</h1>
+    </div>
   </div>
   <div class="content">
     <h2>${title}</h2>
     ${content}
   </div>
   <div class="footer">
-    <p>Это автоматическое сообщение от <a href="https://mcpservers.org">mcpservers.org</a></p>
-    <p>Вы получили это письмо, потому что связаны с нашим каталогом MCP серверов.</p>
+    <p>${s.footerAutoMessage} <a href="${SITE_URL}">mcpservers.org</a></p>
+    <p>${s.footerReason}</p>
   </div>
 </body>
 </html>`
@@ -47,46 +109,76 @@ export function submissionNotificationTemplate(submission: {
   url: string
   category: string
   premium: boolean
-}): string {
+}, locale: Locale = 'ru'): string {
+  const s = t(locale)
   return emailTemplate(
-    'Новая отправка MCP-сервера',
+    s.newSubmission,
     `
     <table>
-      <tr><th>Название</th><td>${escapeHtml(submission.name)}</td></tr>
+      <tr><th>${s.name}</th><td>${escapeHtml(submission.name)}</td></tr>
       <tr><th>Email</th><td>${escapeHtml(submission.email)}</td></tr>
-      <tr><th>Описание</th><td>${escapeHtml(submission.description)}</td></tr>
+      <tr><th>${s.description}</th><td>${escapeHtml(submission.description)}</td></tr>
       <tr><th>URL</th><td><a href="${escapeHtml(submission.url)}">${escapeHtml(submission.url)}</a></td></tr>
-      <tr><th>Категория</th><td>${escapeHtml(submission.category)}</td></tr>
-      <tr><th>Premium</th><td>${submission.premium ? '✅ Да' : '❌ Нет'}</td></tr>
+      <tr><th>${s.category}</th><td>${escapeHtml(submission.category)}</td></tr>
+      <tr><th>Premium</th><td>${submission.premium ? s.premiumYes : s.premiumNo}</td></tr>
     </table>
-    <p><a href="${process.env.NEXTAUTH_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">Перейти в админку</a></p>
-    `
+    <p><a href="${process.env.NEXTAUTH_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${s.goToAdmin}</a></p>
+    `,
+    locale
   )
+}
+
+/** Locale-aware category title fragment for digest emails */
+export function digestCategoryTitle(category: string | null | undefined, locale: Locale): string {
+  if (!category) return ''
+  const s = t(locale)
+  // The email template already prepends locale-appropriate prefix via {categoryTitle}
+  // We need to match the pattern used in subject strings: " категории \"X\"" (ru) / " in category \"X\"" (en)
+  const categoryStrings = {
+    ru: ` категории "${category}"`,
+    en: ` in category "${category}"`,
+  } as const
+  return categoryStrings[locale] ?? categoryStrings.ru
 }
 
 export function statusUpdateTemplate(submission: {
   name: string
   status: string
-}): string {
-  const statusText = submission.status === 'approved' ? 'одобрена' : 'отклонена'
+}, locale: Locale = 'ru'): string {
+  const s = t(locale)
+  const statusText = submission.status === 'approved' ? s.approved : s.rejected
+  const safeName = submission.name.replace(/[\r\n]/g, ' ')
+
+  const title = s.yourSubmissionTitle
+    .replace('{name}', safeName)
+    .replace('{status}', statusText)
+
+  const bodyContent = s.yourSubmissionStatus
+    .replace('{name}', escapeHtml(submission.name))
+    .replace('{status}', statusText)
+
   return emailTemplate(
-    `Ваша отправка ${submission.name.replace(/[\r\n]/g, ' ')} ${statusText}`,
+    title,
     `
-    <p>Ваша отправка сервера <strong>${escapeHtml(submission.name)}</strong> была <strong>${statusText}</strong>.</p>
-    <p>Спасибо за участие в развитии экосистемы MCP!</p>
-    `
+    <p>${bodyContent}</p>
+    <p>${s.thanksForContributing}</p>
+    `,
+    locale
   )
 }
 
-export function digestTemplate(categoryTitle: string, servers: Array<{ name: string; description: string }>): string {
+export function digestTemplate(categoryTitle: string, servers: Array<{ name: string; description: string }>, locale: Locale = 'ru'): string {
+  const s = t(locale)
+  const localePath = locale === 'ru' ? '/ru' : '/en'
   return emailTemplate(
-    `Еженедельный дайджест MCP серверов${categoryTitle}`,
+    s.weeklyDigest.replace('{categoryTitle}', categoryTitle),
     `
-    <p>Новые MCP серверы за неделю${categoryTitle}:</p>
+    <p>${s.newServersThisWeek.replace('{categoryTitle}', categoryTitle)}</p>
     <ul>
-      ${servers.map((s) => `<li><strong>${escapeHtml(s.name)}</strong>: ${escapeHtml(s.description)}</li>`).join('')}
+      ${servers.map((s2) => `<li><strong>${escapeHtml(s2.name)}</strong>: ${escapeHtml(s2.description)}</li>`).join('')}
     </ul>
-    <p><a href="https://mcpservers.org/ru/all" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">Посмотреть все серверы →</a></p>
-    `
+    <p><a href="${SITE_URL}${localePath}/all" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${s.viewAllServers}</a></p>
+    `,
+    locale
   )
 }

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { getStripeClient } from '@/lib/stripe'
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
@@ -9,10 +10,7 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
 export async function POST(req: NextRequest) {
   const stripe = getStripeClient()
   if (!stripe) {
-    return NextResponse.json(
-      { error: 'Stripe не настроен' },
-      { status: 503 }
-    )
+    throw new Error('STRIPE_NOT_CONFIGURED')
   }
 
   if (!webhookSecret) {
@@ -47,25 +45,22 @@ export async function POST(req: NextRequest) {
 
     try {
       if (tier === 'featured') {
-        await prisma.server.update({
-          where: { id: serverId },
-          data: {
+        await db.update(servers)
+          .set({
             featured: true,
             featuredUntil: expiresAt,
-          },
-        })
+          })
+          .where(eq(servers.id, serverId))
       } else if (tier === 'sponsored') {
-        await prisma.server.update({
-          where: { id: serverId },
-          data: {
+        await db.update(servers)
+          .set({
             isSponsored: true,
             sponsoredUntil: expiresAt,
-          },
-        })
+          })
+          .where(eq(servers.id, serverId))
       }
 
       revalidatePath('/', 'layout')
-      console.log(`Activated ${tier} for server ${serverId} until ${expiresAt.toISOString()}`)
     } catch (err: any) {
       console.error(`Failed to activate premium status: ${err.message}`)
       return NextResponse.json({ error: 'Activation failed' }, { status: 500 })

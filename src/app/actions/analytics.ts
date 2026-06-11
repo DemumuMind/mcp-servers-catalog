@@ -1,6 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db, viewHistories, servers, bookmarks, users } from '@/lib/db'
+import { sql, gte, lt, and, inArray, count, desc } from 'drizzle-orm'
 
 export async function getTimeSeriesMetrics(days: number = 30) {
   const now = new Date()
@@ -8,44 +9,53 @@ export async function getTimeSeriesMetrics(days: number = 30) {
 
   const [dailyActiveUsers, dailyServers, dailyViews, dailyBookmarks] = await Promise.all([
     // Daily active users (unique users with view history per day)
-    prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE("createdAt") as date, COUNT(DISTINCT "userId") as count
-      FROM "ViewHistory"
-      WHERE "createdAt" >= ${startDate}
-      GROUP BY DATE("createdAt")
-      ORDER BY date ASC
-    `,
+    // SQLite: createdAt stored as Unix timestamp, needs 'unixepoch' modifier
+    db
+      .select({
+        date: sql<string>`date(${viewHistories.createdAt}, 'unixepoch')`,
+        count: sql<number>`count(distinct ${viewHistories.userId})`,
+      })
+      .from(viewHistories)
+      .where(gte(viewHistories.createdAt, startDate))
+      .groupBy(sql`date(${viewHistories.createdAt}, 'unixepoch')`)
+      .orderBy(sql`date(${viewHistories.createdAt}, 'unixepoch') asc`),
     // New servers per day
-    prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE("createdAt") as date, COUNT(*) as count
-      FROM "Server"
-      WHERE "createdAt" >= ${startDate}
-      GROUP BY DATE("createdAt")
-      ORDER BY date ASC
-    `,
+    db
+      .select({
+        date: sql<string>`date(${servers.createdAt}, 'unixepoch')`,
+        count: sql<number>`count(*)`,
+      })
+      .from(servers)
+      .where(gte(servers.createdAt, startDate))
+      .groupBy(sql`date(${servers.createdAt}, 'unixepoch')`)
+      .orderBy(sql`date(${servers.createdAt}, 'unixepoch') asc`),
     // Views per day
-    prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE("createdAt") as date, COUNT(*) as count
-      FROM "ViewHistory"
-      WHERE "createdAt" >= ${startDate}
-      GROUP BY DATE("createdAt")
-      ORDER BY date ASC
-    `,
+    db
+      .select({
+        date: sql<string>`date(${viewHistories.createdAt}, 'unixepoch')`,
+        count: sql<number>`count(*)`,
+      })
+      .from(viewHistories)
+      .where(gte(viewHistories.createdAt, startDate))
+      .groupBy(sql`date(${viewHistories.createdAt}, 'unixepoch')`)
+      .orderBy(sql`date(${viewHistories.createdAt}, 'unixepoch') asc`),
     // Bookmarks per day
-    prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-      SELECT DATE("createdAt") as date, COUNT(*) as count
-      FROM "Bookmark"
-      WHERE "createdAt" >= ${startDate}
-      GROUP BY DATE("createdAt")
-      ORDER BY date ASC
-    `,
+    db
+      .select({
+        date: sql<string>`date(${bookmarks.createdAt}, 'unixepoch')`,
+        count: sql<number>`count(*)`,
+      })
+      .from(bookmarks)
+      .where(gte(bookmarks.createdAt, startDate))
+      .groupBy(sql`date(${bookmarks.createdAt}, 'unixepoch')`)
+      .orderBy(sql`date(${bookmarks.createdAt}, 'unixepoch') asc`),
   ])
 
   return {
-    dailyActiveUsers: dailyActiveUsers.map((r) => ({ date: r.date.toISOString().split('T')[0], count: Number(r.count) })),
-    dailyServers: dailyServers.map((r) => ({ date: r.date.toISOString().split('T')[0], count: Number(r.count) })),
-    dailyViews: dailyViews.map((r) => ({ date: r.date.toISOString().split('T')[0], count: Number(r.count) })),
-    dailyBookmarks: dailyBookmarks.map((r) => ({ date: r.date.toISOString().split('T')[0], count: Number(r.count) })),
+    dailyActiveUsers: dailyActiveUsers.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    dailyServers: dailyServers.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    dailyViews: dailyViews.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    dailyBookmarks: dailyBookmarks.map((r: any) => ({ date: r.date, count: Number(r.count) })),
   }
 }
 
@@ -64,14 +74,14 @@ export async function getCohortAnalysis(weeks: number = 8) {
     const cohortLabel = weekStart.toISOString().split('T')[0]
 
     // Users who registered in this week
-    const newUsers = await prisma.user.findMany({
-      where: { createdAt: { gte: weekStart, lt: weekEnd } },
-      select: { id: true },
-    })
+    const newUsers = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(and(gte(users.createdAt, weekStart), lt(users.createdAt, weekEnd)))
 
     if (newUsers.length === 0) continue
 
-    const userIds = newUsers.map((u) => u.id)
+    const userIds = newUsers.map((u: any) => u.id)
     const size = userIds.length
 
     // Retention for each subsequent week (up to current)
@@ -82,14 +92,19 @@ export async function getCohortAnalysis(weeks: number = 8) {
       const checkStart = new Date(weekStart.getTime() + w * 7 * 24 * 60 * 60 * 1000)
       const checkEnd = new Date(checkStart.getTime() + 7 * 24 * 60 * 60 * 1000)
 
-      const activeCount = await prisma.viewHistory.count({
-        where: {
-          userId: { in: userIds },
-          createdAt: { gte: checkStart, lt: checkEnd },
-        },
-      })
+      const activeUsers = await db
+        .selectDistinct({ userId: viewHistories.userId })
+        .from(viewHistories)
+        .where(
+          and(
+            inArray(viewHistories.userId, userIds),
+            gte(viewHistories.createdAt, checkStart),
+            lt(viewHistories.createdAt, checkEnd),
+          )
+        )
+      const activeCount = activeUsers.length
 
-      retention.push(Math.round((activeCount / size) * 100))
+      retention.push(Math.min(100, Math.round((activeCount / size) * 100)))
     }
 
     cohorts.push({ cohort: cohortLabel, size, retention })

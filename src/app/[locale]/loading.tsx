@@ -1,26 +1,23 @@
 export default function Loading() {
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Hero skeleton */}
-      <div className="text-center py-12 space-y-4">
-        <div className="h-10 w-64 bg-muted rounded mx-auto animate-pulse" />
-        <div className="h-6 w-96 bg-muted rounded mx-auto animate-pulse" />
-        <div className="h-10 w-80 bg-muted rounded mx-auto animate-pulse" />
+    <div className="page-shell space-y-8">
+      <div className="premium-panel p-8 text-center space-y-4">
+        <div className="mx-auto h-12 w-72 animate-pulse rounded-2xl bg-muted" />
+        <div className="mx-auto h-6 w-96 max-w-full animate-pulse rounded-2xl bg-muted" />
+        <div className="mx-auto h-12 w-full max-w-xl animate-pulse rounded-3xl bg-muted" />
       </div>
-
-      {/* Grid skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="border rounded-lg p-4 space-y-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="premium-panel space-y-4 p-5">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 bg-muted rounded-full animate-pulse" />
-              <div className="h-5 w-32 bg-muted rounded animate-pulse" />
+              <div className="h-10 w-10 animate-pulse rounded-2xl bg-muted" />
+              <div className="h-5 w-40 animate-pulse rounded-xl bg-muted" />
             </div>
-            <div className="h-4 w-full bg-muted rounded animate-pulse" />
-            <div className="h-4 w-3/4 bg-muted rounded animate-pulse" />
+            <div className="h-4 w-full animate-pulse rounded-xl bg-muted" />
+            <div className="h-4 w-3/4 animate-pulse rounded-xl bg-muted" />
             <div className="flex gap-2">
-              <div className="h-5 w-16 bg-muted rounded animate-pulse" />
-              <div className="h-5 w-20 bg-muted rounded animate-pulse" />
+              <div className="h-6 w-20 animate-pulse rounded-xl bg-muted" />
+              <div className="h-6 w-24 animate-pulse rounded-xl bg-muted" />
             </div>
           </div>
         ))}

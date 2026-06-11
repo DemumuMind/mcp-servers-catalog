@@ -15,24 +15,63 @@
     "profile": "Profile",
     "bookmarks": "Bookmarks",
     "settings": "Settings",
-    "search": "Search MCP servers..."
+    "search": "Search MCP servers...",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation",
+    "openMenu": "Open menu",
+    "guide": "Guide"
   },
   "Home": {
-    "heroTitle": "Awesome MCP Servers",
-    "heroDescription": "Collection of servers for Model Context Protocol",
+    "heroEyebrow": "Model Context Protocol index",
+    "heroTitle": "Find the MCP server for your AI stack",
+    "heroDescription": "A curated catalog of MCP servers, clients, and integrations: search, ratings, official implementations, and remote endpoints in one place.",
+    "viewCatalog": "View catalog",
+    "addServer": "Add server",
+    "inCatalog": "In catalog",
+    "serversAndIntegrations": "servers & integrations",
+    "officialLabel": "Official",
+    "verifiedSources": "verified sources",
+    "remoteLabel": "Remote",
+    "availableByEndpoint": "available by endpoint",
+    "filters": "Filters",
+    "quickNavigation": "Quick catalog navigation",
+    "popularTags": "Popular tags",
+    "officialOnly": "Official only",
+    "remoteOnly": "Remote only",
     "featured": "Featured MCP",
     "trending": "Trending Now",
     "allServers": "All MCP",
     "showAll": "Show all →",
-    "noResults": "No results",
+    "noFeatured": "No featured servers",
+    "changeFiltersOrCatalog": "Change filters or browse the full catalog.",
+    "noTrendsYet": "No trends yet",
+    "trendsWillAppear": "Trends will appear once enough activity accumulates.",
+    "noResultsFor": "No results for \"{search}\"",
     "noServers": "No servers",
-    "officialOnly": "Official only"
+    "tryDifferent": "Try a different query, category, or reset filters.",
+    "noResults": "No results",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Frequently asked questions about Model Context Protocol"
+  },
+  "Footer": {
+    "description": "A curated catalog of Model Context Protocol servers.",
+    "guide": "Guide",
+    "brandSubtitle": "CURATED CATALOG"
+  },
+  "ThemeToggle": {
+    "light": "Light theme",
+    "system": "System theme",
+    "dark": "Dark theme"
+  },
+  "SectionHeader": {
+    "eyebrow": "Catalog",
+    "showAll": "Show all"
   },
   "Server": {
     "stars": "stars",
     "forks": "forks",
     "official": "Official",
-    "sponsored": "sponsored",
+    "sponsored": "Promo",
     "category": "Category",
     "github": "GitHub",
     "endpoint": "Endpoint",
@@ -43,7 +82,8 @@
     "addComment": "Add comment",
     "rating": "Rating",
     "bookmark": "Bookmark",
-    "removeBookmark": "Remove bookmark"
+    "removeBookmark": "Remove bookmark",
+    "open": "Open"
   },
   "Profile": {
     "title": "Profile",
@@ -66,17 +106,469 @@
     "noBookmarks": "You don't have any bookmarks yet",
     "noComments": "You haven't left any comments yet",
     "noRatings": "You haven't rated any servers yet",
-    "noHistory": "View history is empty"
+    "noHistory": "View history is empty",
+    "eyebrow": "Profile",
+    "defaultName": "User",
+    "memberSince": "Member since {date}",
+    "edit": "Edit",
+    "addServer": "Add server",
+    "analyticsTitle": "Your servers analytics"
   },
   "Admin": {
-    "dashboard": "Dashboard",
-    "servers": "Servers",
-    "clients": "Clients",
-    "submissions": "Submissions",
-    "users": "Users",
-    "analytics": "Analytics",
-    "backup": "Backup",
-    "settings": "Settings"
+    "eyebrow": "Admin",
+    "nav": {
+      "brandSubtitle": "ADMIN OPS",
+      "signOut": "Sign Out",
+      "dashboard": "Dashboard",
+      "servers": "Servers",
+      "clients": "Clients",
+      "submissions": "Submissions",
+      "moderation": "Moderation",
+      "sponsorships": "Sponsorships",
+      "analytics": "Analytics",
+      "monitoring": "Monitoring",
+      "backup": "Backup",
+      "users": "Users",
+      "auditLog": "Audit Log",
+      "timeSeries": "Time Series",
+      "searchGaps": "Search Gaps",
+      "settings": "Settings"
+    },
+    "login": {
+      "eyebrow": "Secure area",
+      "title": "Admin Login",
+      "description": "Sign in to manage the MCP catalog.",
+      "email": "Email",
+      "password": "Password",
+      "signingIn": "Signing in...",
+      "signIn": "Sign In",
+      "invalidCredentials": "Invalid email or password"
+    },
+    "dashboard": {
+      "eyebrow": "Operations",
+      "title": "Dashboard",
+      "description": "Catalog overview, GitHub sync, and moderation.",
+      "totalServers": "Total Servers",
+      "totalClients": "Total Clients",
+      "totalSubmissions": "Total Submissions",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "official": "Official",
+      "featured": "Featured",
+      "remote": "Remote",
+      "totalStars": "Total Stars",
+      "system": "System",
+      "ready": "Ready",
+      "syncChecksOperational": "Sync & checks operational"
+    },
+    "syncGithub": {
+      "syncGithub": "Sync GitHub",
+      "syncing": "Syncing...",
+      "updatedErrors": "Updated: {updated}, Errors: {failed}",
+      "syncError": "Sync error"
+    },
+    "charts": {
+      "title": "Analytics",
+      "submissions30days": "Submissions (last 30 days)",
+      "noSubmissions30days": "No submissions in the last 30 days",
+      "submissionStatus": "Submission status",
+      "noSubmissionsYet": "No submissions yet",
+      "serversByCategory": "Servers by category",
+      "noServersCategorized": "No servers categorized yet",
+      "submissionTypes": "Submission types",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "free": "Free",
+      "premium": "Premium"
+    },
+    "servers": {
+      "title": "Servers",
+      "description": "Manage MCP servers, featured status, and bulk actions.",
+      "addServer": "Add Server",
+      "editServer": "Edit Server",
+      "exportCSV": "Export CSV",
+      "selected": "Selected: {count}",
+      "delete": "Delete",
+      "confirmDelete": "Delete server?",
+      "confirmBulkDelete": "Delete {count} servers?",
+      "ariaEdit": "Edit server",
+      "ariaDelete": "Delete server",
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "official": "Official",
+        "featured": "Featured",
+        "featuredUntil": "Featured until",
+        "sponsoredUntil": "Sponsored until",
+        "actions": "Actions",
+        "featuredYes": "✅ Featured"
+      },
+      "form": {
+        "name": "Name",
+        "githubUrl": "GitHub URL",
+        "description": "Description",
+        "owner": "Owner",
+        "repo": "Repo",
+        "category": "Category",
+        "selectCategory": "Select category",
+        "tags": "Tags (comma-separated)",
+        "tagsPlaceholder": "tag1, tag2, tag3",
+        "authType": "Auth Type",
+        "endpoint": "Endpoint",
+        "official": "Official",
+        "sponsored": "Sponsored",
+        "remote": "Remote",
+        "featured": "Featured",
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "save": "Save",
+        "create": "Create",
+        "errorSaving": "Error saving server",
+        "validation": {
+          "nameRequired": "Enter a name",
+          "descriptionRequired": "Enter a description",
+          "ownerRequired": "Enter owner",
+          "repoRequired": "Enter repo",
+          "categoryRequired": "Select category",
+          "urlInvalid": "Enter a valid URL"
+        }
+      }
+    },
+    "clients": {
+      "title": "Clients",
+      "description": "MCP-enabled applications and tools.",
+      "addClient": "Add Client",
+      "editClient": "Edit Client",
+      "exportCSV": "Export CSV",
+      "selected": "Selected: {count}",
+      "delete": "Delete",
+      "confirmDelete": "Delete client?",
+      "confirmBulkDelete": "Delete {count} clients?",
+      "ariaEdit": "Edit client",
+      "ariaDelete": "Delete client",
+      "table": {
+        "name": "Name",
+        "url": "URL",
+        "featured": "Featured",
+        "actions": "Actions"
+      },
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "url": "URL",
+        "iconUrl": "Icon URL (optional)",
+        "featured": "Featured",
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "save": "Save",
+        "create": "Create",
+        "errorSaving": "Error saving client",
+        "validation": {
+          "nameRequired": "Enter a name",
+          "descriptionRequired": "Enter a description",
+          "urlInvalid": "Enter a valid URL"
+        }
+      }
+    },
+    "submissions": {
+      "title": "MCP Server Submissions",
+      "description": "Moderation queue, approval and rejection of new listings.",
+      "filters": "Filters",
+      "search": "Search",
+      "searchPlaceholder": "Search by name, description or email...",
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "premium": "Premium",
+      "apply": "Apply",
+      "noSubmissions": "No submissions to display",
+      "selected": "Selected: {count}",
+      "delete": "Delete",
+      "approve": "Approve",
+      "reject": "Reject",
+      "exportCSV": "Export CSV",
+      "confirmBulkDelete": "Delete {count} submissions?",
+      "confirmBulkApprove": "Approve {count} submissions?",
+      "errorAction": "Error performing action",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "category": "Category",
+        "premium": "Premium",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "buttonTitle": {
+        "approve": "Approve",
+        "reject": "Reject",
+        "delete": "Delete"
+      }
+    },
+    "moderation": {
+      "title": "Comment Moderation",
+      "description": "Review queue and comment history.",
+      "underReviewTab": "Under Review",
+      "allCommentsTab": "All Comments",
+      "totalComments": "Total comments: {count}",
+      "commentsUnderReview": "Comments under review: {count}",
+      "selected": "Selected: {count}",
+      "approve": "Approve",
+      "reject": "Reject",
+      "confirmBulkApprove": "Approve {count} comments?",
+      "confirmBulkReject": "Reject {count} comments?",
+      "anonymous": "Anonymous",
+      "approved": "Approved",
+      "underReview": "Under Review",
+      "noComments": "No comments",
+      "table": {
+        "server": "Server",
+        "author": "Author",
+        "comment": "Comment",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "buttonTitle": {
+        "approve": "Approve",
+        "delete": "Delete"
+      }
+    },
+    "sponsorships": {
+      "title": "Sponsorships",
+      "description": "Active placements and advertising periods.",
+      "newSponsorship": "New Sponsorship",
+      "noActiveSponsorships": "No active sponsorships",
+      "until": "until",
+      "active": "Active",
+      "inactive": "Inactive",
+      "table": {
+        "server": "Server",
+        "sponsor": "Sponsor",
+        "period": "Period",
+        "amount": "Amount",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "noServersAvailable": "No servers available for sponsorship. All servers are already sponsored.",
+        "server": "Server",
+        "selectServer": "Select server",
+        "sponsorName": "Sponsor name",
+        "sponsorNamePlaceholder": "Sponsor company",
+        "sponsorUrl": "Sponsor URL",
+        "sponsorUrlPlaceholder": "Sponsor page URL",
+        "amount": "Amount (USD)",
+        "amountPlaceholder": "0.00",
+        "endDate": "End date",
+        "creating": "Creating...",
+        "createSponsorship": "Create sponsorship",
+        "sponsorshipCreated": "Sponsorship created!"
+      }
+    },
+    "promoteServer": {
+      "promote": "Promote",
+      "title": "Promote Server",
+      "description": "Choose a plan to boost your server's visibility",
+      "paymentUnavailable": "⚠️ Payment system is temporarily unavailable. Contact the administrator to activate.",
+      "featured": "Featured",
+      "featuredPrice": "$29 / 30 days",
+      "featuredDescription": "Your server will be highlighted in the featured section on the homepage",
+      "activeUntil": "Active until {date}",
+      "renewFeatured": "Renew Featured",
+      "buyFeatured": "Buy Featured",
+      "sponsored": "Sponsored",
+      "sponsoredPrice": "$99 / 30 days",
+      "sponsoredDescription": "Premium placement with a sponsor badge on the server card",
+      "renewSponsored": "Renew Sponsored",
+      "buySponsored": "Buy Sponsored"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Categories, submitters and catalog growth charts.",
+      "totalServers": "Total Servers",
+      "totalSubmissions": "Total Submissions",
+      "conversion": "Conversion",
+      "popularCategories": "Popular Categories",
+      "topSubmitters": "Top Submitters"
+    },
+    "monitoring": {
+      "title": "Health Monitoring",
+      "description": "Remote server availability and uptime.",
+      "remoteServers": "Remote Servers",
+      "online": "Online",
+      "offlineIssues": "Offline / Issues",
+      "avgUptime24h": "Avg Uptime (24h)",
+      "na": "N/A",
+      "remoteServerStatus": "Remote Server Status",
+      "noRemoteServers": "No remote servers configured. Only remote servers with endpoints are health-checked.",
+      "localGithubServers": "Local / GitHub Servers",
+      "localGithubDescription": "These servers are GitHub-hosted repositories. Health monitoring applies only to remote servers with active endpoints.",
+      "github": "GitHub",
+      "statusLabels": {
+        "online": "Online",
+        "degraded": "Degraded",
+        "offline": "Offline",
+        "timeout": "Timeout",
+        "noData": "No data"
+      },
+      "table": {
+        "server": "Server",
+        "status": "Status",
+        "uptime24h": "Uptime (24h)",
+        "latency": "Latency",
+        "lastCheck": "Last Check",
+        "checks": "Checks"
+      },
+      "localTable": {
+        "server": "Server",
+        "category": "Category",
+        "status": "Status"
+      },
+      "checkAll": {
+        "checkAll": "Check All",
+        "checkedResult": "Checked {checked} servers: {online} online, {offline} offline",
+        "checkFailed": "Check failed",
+        "failedToRun": "Failed to run health checks",
+        "checking": "Checking..."
+      }
+    },
+    "backup": {
+      "title": "Backup / Restore",
+      "description": "Database export and restore.",
+      "createBackup": "Create Backup",
+      "downloadDump": "Download SQL database dump.",
+      "downloadBackup": "Download Backup",
+      "creating": "Creating...",
+      "restoreFromBackup": "Restore from Backup",
+      "warning": "⚠️ Warning! This will overwrite current data. Create a backup first!",
+      "pasteSqlPlaceholder": "Paste SQL dump here...",
+      "restore": "Restore"
+    },
+    "users": {
+      "title": "Users",
+      "description": "Roles, verified authors, and user management.",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "table": {
+        "email": "Email",
+        "role": "Role",
+        "authorStatus": "Author Status",
+        "created": "Created",
+        "actions": "Actions"
+      }
+    },
+    "auditLog": {
+      "title": "Audit Log",
+      "description": "Admin actions and system events log.",
+      "table": {
+        "time": "Time",
+        "action": "Action",
+        "user": "User",
+        "type": "Type",
+        "id": "ID",
+        "ip": "IP"
+      }
+    },
+    "timeSeries": {
+      "title": "Analytics Dashboard",
+      "description": "Time-series and cohort metrics.",
+      "dauToday": "DAU (today)",
+      "newServersToday": "New Servers (today)",
+      "viewsToday": "Views (today)",
+      "bookmarksToday": "Bookmarks (today)",
+      "metrics30days": "Metrics (30 days)",
+      "cohortAnalysis": "Cohort Analysis (Retention, %)",
+      "notEnoughData": "Not enough data for cohort analysis",
+      "table": {
+        "date": "Date",
+        "dau": "DAU",
+        "newServers": "New Servers",
+        "views": "Views",
+        "bookmarks": "Bookmarks"
+      },
+      "cohortTable": {
+        "cohort": "Cohort",
+        "size": "Size"
+      }
+    },
+    "searchGaps": {
+      "title": "Search Analytics",
+      "totalSearches30d": "Total Searches (30d)",
+      "withResults": "With Results",
+      "withoutResults": "Without Results",
+      "notFoundRate": "\"Not Found\" Rate",
+      "searchGapsTitle": "Search Gaps (0 results)",
+      "allQueriesReturnResults": "All queries return results. Great!",
+      "times": "times",
+      "topSearchQueries": "Top Search Queries",
+      "approxResults": "~{count} results"
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "SEO, analytics, and basic site parameters.",
+      "seoSettings": "SEO Settings",
+      "siteTitle": "Site Title",
+      "siteDescription": "Site Description",
+      "siteUrl": "Site URL",
+      "saveSEO": "Save SEO",
+      "analyticsCard": "Analytics",
+      "googleAnalyticsId": "Google Analytics ID",
+      "yandexMetrikaId": "Yandex Metrika ID",
+      "saveAnalytics": "Save Analytics",
+      "cacheManagement": "Cache Management",
+      "cacheDescription": "Clear Next.js cache and data.",
+      "clearLocalStorage": "Clear LocalStorage",
+      "clearCacheApi": "Clear Cache API",
+      "localStorageCleared": "LocalStorage cleared!",
+      "cacheApiCleared": "Cache API cleared!",
+      "moderationQueue": "Moderation Queue",
+      "moderationSettings": "Moderation settings.",
+      "automaticModeration": "Automatic moderation",
+      "emailNotifications": "Email notifications",
+      "requirePremiumForFeatured": "Require Premium for Featured",
+      "saveSettings": "Save Settings",
+      "settingsSaved": "Settings saved!"
+    },
+    "authorAnalytics": {
+      "noLinkedServers": "You don't have any linked servers yet. You can link a server on the server page.",
+      "selectServer": "Select server",
+      "loading": "Loading...",
+      "selectServerToView": "Select a server to view analytics"
+    },
+    "authorDashboard": {
+      "views30d": "Views (30d)",
+      "bookmarks": "Bookmarks",
+      "avgRating": "Avg Rating",
+      "ratings": "Ratings",
+      "comments": "Comments",
+      "githubStars": "GitHub Stars",
+      "viewsByDay": "Views by Day",
+      "views": "Views",
+      "comparisonWithSimilar": "Comparison with Similar Servers",
+      "recommendations": "Recommendations"
+    },
+    "common": {
+      "selected": "Selected: {count}",
+      "delete": "Delete",
+      "approve": "Approve",
+      "reject": "Reject",
+      "cancel": "Cancel",
+      "save": "Save",
+      "create": "Create",
+      "saving": "Saving...",
+      "creating": "Creating...",
+      "exportCSV": "Export CSV",
+      "actions": "Actions",
+      "noData": "No data",
+      "loading": "Loading...",
+      "na": "N/A"
+    }
   },
   "Auth": {
     "loginTitle": "Sign In",
@@ -89,18 +581,40 @@
     "registerButton": "Sign Up",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
-    "adminLink": "Admin login"
+    "adminLink": "Admin login",
+    "invalidCredentials": "Invalid email or password",
+    "signingIn": "Signing in...",
+    "adminPrompt": "Admin?",
+    "passwordsNoMatch": "Passwords do not match",
+    "registrationError": "Registration error",
+    "optional": "optional",
+    "namePlaceholder": "Your name",
+    "passwordMinLength": "At least 6 characters",
+    "registering": "Registering..."
   },
   "Notifications": {
     "title": "Notifications",
     "markAllRead": "Mark all as read",
-    "empty": "No notifications"
+    "empty": "No notifications",
+    "ariaLabel": "Notifications"
   },
   "Compare": {
     "title": "Compare Servers",
     "selectServers": "Select at least 2 servers to compare",
     "characteristic": "Characteristic",
-    "link": "Link"
+    "link": "Link",
+    "selectMin": "Select at least 2 servers to compare. Add ?ids=id1,id2 to the URL.",
+    "goCatalog": "Go to catalog",
+    "fieldName": "Name",
+    "fieldCategory": "Category",
+    "fieldOfficial": "Official",
+    "fieldRemote": "Remote",
+    "fieldTags": "Tags",
+    "fieldDescription": "Description",
+    "fieldGithub": "GitHub",
+    "linkLabel": "Link",
+    "yes": "Yes",
+    "no": "No"
   },
   "Common": {
     "loading": "Loading...",
@@ -117,6 +631,695 @@
     "search": "Search",
     "filter": "Filter",
     "sort": "Sort",
-    "all": "All"
+    "all": "All",
+    "errors": {
+      "INVALID_EMAIL": "Invalid email",
+      "PASSWORD_MIN_LENGTH": "Minimum 6 characters",
+      "NAME_REQUIRED": "Enter your name",
+      "EMAIL_ALREADY_EXISTS": "A user with this email already exists",
+      "CANNOT_CHANGE_PASSWORD": "Cannot change password for this account type",
+      "INVALID_CURRENT_PASSWORD": "Current password is incorrect",
+      "RATE_LIMIT_COMMENTS": "Too many comments. Please try again later.",
+      "RATE_LIMIT_REVIEWS": "Too many reviews. Please try again later.",
+      "REVIEW_ALREADY_EXISTS": "You have already reviewed this server.",
+      "AUTH_REQUIRED": "Authentication required",
+      "SERVER_NOT_FOUND": "Server not found",
+      "PROMOTE_UNAUTHORIZED": "Only the author or admin can promote this server",
+      "CHECKOUT_SESSION_FAILED": "Failed to create checkout session",
+      "STRIPE_NOT_CONFIGURED": "Stripe is not configured. Set STRIPE_SECRET_KEY in .env",
+      "PAYMENT_SYSTEM_UNAVAILABLE": "Payment system is temporarily unavailable. Contact the administrator.",
+      "ADD_MORE_TAGS": "Add more tags — servers with 5+ tags get 2x more views",
+      "SPECIFY_CONNECTION_TYPE": "Specify connection type (local/stdio/remote) in tags",
+      "ASK_FOR_FIRST_RATING": "Ask users to leave the first rating — it builds trust",
+      "LOW_VIEWS_PROMOTE": "Your server has few views. Share it in MCP communities.",
+      "LOW_BOOKMARK_CONVERSION": "Low bookmark conversion. Improve the description, add usage examples."
+    }
+  },
+  "Categories": {
+    "all": "All",
+    "official": "Official ✦",
+    "search": "Search",
+    "web-scraping": "Web Scraping",
+    "communication": "Communication",
+    "productivity": "Productivity",
+    "development": "Development",
+    "database": "Database",
+    "cloud-service": "Cloud Service",
+    "file-system": "File System",
+    "cloud-storage": "Cloud Storage",
+    "version-control": "Version Control",
+    "other": "Other"
+  },
+  "Pagination": {
+    "label": "Pagination",
+    "back": "← Back",
+    "next": "Next →"
+  },
+  "Search": {
+    "placeholder": "Search MCP servers, tags, repositories...",
+    "fullSearch": "Enter — full search"
+  },
+  "Brand": {
+    "subtitle": "PROTOCOL INDEX"
+  },
+  "FAQ": {
+    "q0": "What is Model Context Protocol (MCP)?",
+    "a0": "Model Context Protocol (MCP) is an open protocol developed by Anthropic that allows AI models to securely connect to external data sources and tools. MCP standardizes the interaction between AI and various services.",
+    "q1": "How do I install an MCP server?",
+    "a1": "Installing an MCP server is typically done via npm or another package manager. Most servers have detailed documentation with installation and configuration instructions in the repository's README file.",
+    "q2": "How does MCP differ from traditional APIs?",
+    "a2": "Unlike traditional APIs, where a developer manually integrates endpoints, MCP provides a standardized way for AI models to automatically discover and use available tools and data.",
+    "q3": "Which clients support MCP?",
+    "a3": "MCP is supported in Claude Desktop, Claude Code, as well as various code editors and AI tools. The list of supported clients is constantly growing.",
+    "q4": "Can I create my own MCP server?",
+    "a4": "Yes, you can create your own MCP server using SDKs for TypeScript, Python, or other languages. The MCP SDK provides all the necessary tools for server development.",
+    "q5": "Is the MCP protocol secure?",
+    "a5": "MCP is designed with security in mind. The user always controls which servers are running and what permissions they have. Each server runs in an isolated process."
+  },
+  "Guide": {
+    "title": "Guide to MCP Servers",
+    "subtitle": "Step-by-step guide: from choosing a client to running your first MCP server. Everything you need to know about Model Context Protocol.",
+    "eyebrow": "Guide",
+    "whatIsMcp": {
+      "title": "What is MCP?",
+      "description": "Model Context Protocol (MCP) is an open protocol that allows AI models to securely connect to external tools and data. MCP servers provide tools, resources, and prompts that AI uses to accomplish tasks — from reading files to querying databases.",
+      "servers": "Servers",
+      "serversDesc": "Provide tools and data",
+      "clients": "Clients",
+      "clientsDesc": "AI applications using MCP",
+      "security": "Security",
+      "securityDesc": "Access control and permissions"
+    },
+    "step1": {
+      "title": "Choose an MCP Client",
+      "description": "MCP servers work with various AI clients. Choose the right one:",
+      "recommended": "Recommended",
+      "popular": "Popular",
+      "openSource": "Open Source"
+    },
+    "step2": {
+      "title": "Install an MCP Server",
+      "description": "MCP servers are installed via npm or run directly with npx:",
+      "globalInstall": "# Global install",
+      "npxRun": "# Run without install (recommended)",
+      "tip": "💡 We recommend using npx — you'll always get the latest version without a global install."
+    },
+    "step3": {
+      "title": "Configure Your Client",
+      "description": "Add the server to your client's configuration file:",
+      "apiKeys": "🔑 Servers requiring API keys use the env field."
+    },
+    "step4": {
+      "title": "Use the Tools",
+      "description": "After connecting, AI will automatically have access to the server's tools:",
+      "files": "Files",
+      "filesDesc": "Read, write, and search files on disk",
+      "search": "Search",
+      "searchDesc": "Web search and documentation lookup",
+      "databases": "Databases",
+      "databasesDesc": "SQL queries to PostgreSQL, SQLite, MySQL",
+      "github": "GitHub",
+      "githubDesc": "Manage PRs, issues, and repositories",
+      "browser": "Browser",
+      "browserDesc": "Web automation and scraping",
+      "cloud": "Cloud",
+      "cloudDesc": "AWS, Cloudflare, Azure, GCP services"
+    },
+    "step5": {
+      "title": "Popular MCP Servers"
+    },
+    "cta": {
+      "title": "Find More Servers",
+      "description": "Our catalog has thousands of MCP servers with descriptions, tags, and ratings.",
+      "allServers": "All Servers",
+      "allClients": "All Clients"
+    }
+  },
+  "ProfileNav": {
+    "profile": "Profile",
+    "bookmarks": "Bookmarks",
+    "comments": "Comments",
+    "ratings": "Ratings",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "ProfileComments": {
+    "title": "My comments",
+    "empty": "You haven't left any comments yet."
+  },
+  "ProfileHistory": {
+    "title": "View history",
+    "empty": "View history is empty. Visit server pages for them to appear here."
+  },
+  "ProfileRatings": {
+    "title": "My ratings",
+    "empty": "You haven't rated any server yet.",
+    "outOf5": "{value} out of 5"
+  },
+  "Ecosystem": {
+    "title": "MCP Ecosystem",
+    "totalServers": "Total servers",
+    "tagLinks": "Tag links",
+    "avgConnectivity": "Average connectivity",
+    "connectionViz": "Connection visualization",
+    "tagCategoryLinks": "Links by tags and categories",
+    "connections": "{count} connections",
+    "more": "+{count} more"
+  },
+  "Embed": {
+    "title": "Embed widget",
+    "description": "Embed MCP server cards on your websites, blogs, and documentation.",
+    "method1Iframe": "Method 1: iframe",
+    "method1Desc": "Simple and reliable method. Replace SERVER_ID with the server ID from the URL.",
+    "method2Js": "Method 2: JavaScript",
+    "method2Desc": "Automatic size adaptation and lazy loading.",
+    "whereId": "Where to find the server ID?",
+    "whereIdDescPrefix": "Open the server page and copy the URL part after",
+    "whereIdDescMiddle": "For example, for",
+    "whereIdDescSuffix": "The server ID can be found in the admin panel or via API."
+  },
+  "ApiStatus": {
+    "title": "API Status",
+    "subtitle": "Public status of API endpoints and usage information",
+    "statusLabel": "Status",
+    "allSystemsOk": "All systems operational",
+    "auth": "Authentication",
+    "apiUsage": "API Usage",
+    "serversList": "server list",
+    "serverDetails": "server details",
+    "search": "search",
+    "header": "Header:",
+    "graphqlPlayground": "Playground is available at the same address (GET)"
+  },
+  "Rankings": {
+    "title": "Server rankings",
+    "subtitle": "Top servers by community activity",
+    "weeklyTop": "Weekly Top",
+    "monthlyTop": "Monthly Top",
+    "noDataWeek": "Not enough data for this week",
+    "noDataMonth": "Not enough data for this month"
+  },
+  "Badges": {
+    "title": "README Badges",
+    "description": "Add a badge to your MCP server README to attract more users.",
+    "preview": "Preview:",
+    "badgeDefaultName": "Default",
+    "badgeDefaultDesc": "Shows that the server is listed in the catalog",
+    "badgeStarsName": "Stars",
+    "badgeStarsDesc": "Shows the GitHub star count",
+    "badgeOfficialName": "Official",
+    "badgeOfficialDesc": "Shows official/community server status",
+    "badgeCategoryName": "Category",
+    "badgeCategoryDesc": "Shows the server category",
+    "replacePrefix": "Replace",
+    "replaceMiddle": "with your server's actual path. For example, for",
+    "replaceSuffix": "use"
+  },
+  "Authors": {
+    "title": "Top authors",
+    "subtitle": "Developers creating the best MCP servers for the community",
+    "noAuthors": "No authors with linked servers yet",
+    "anonymous": "Anonymous",
+    "servers": "{count} servers",
+    "ratings": "{count} ratings"
+  },
+  "Offline": {
+    "title": "No internet connection",
+    "description": "It seems you've lost connection. Some previously loaded pages may still be available.",
+    "retry": "Try again"
+  },
+  "WhatsNew": {
+    "title": "What's new?",
+    "subtitle": "New servers, updates and trends over the past week",
+    "newServers": "New servers",
+    "last7days": "in the last 7 days",
+    "trending": "Trending",
+    "updated": "Updated",
+    "newServersSection": "New servers",
+    "trendingSection": "Currently trending",
+    "recentlyUpdatedSection": "Recently updated",
+    "nothingNew": "Nothing new this week yet",
+    "comeBackLater": "Come back later!"
+  },
+  "Submit": {
+    "hero": {
+      "eyebrow": "Submit server",
+      "title": "Submit your MCP server",
+      "description": "Add a repository or documentation. If it's a GitHub link, we'll try to auto-fill the name and description."
+    },
+    "validation": {
+      "nameRequired": "Enter server name",
+      "descriptionRequired": "Enter description",
+      "urlInvalid": "Enter a valid URL",
+      "urlRequired": "Enter a link",
+      "categoryRequired": "Select a category",
+      "emailInvalid": "Enter a valid email",
+      "emailRequired": "Enter email"
+    },
+    "categories": {
+      "search": "Search",
+      "webScraping": "Web Scraping",
+      "communication": "Communication",
+      "productivity": "Productivity",
+      "development": "Development",
+      "database": "Database",
+      "cloudService": "Cloud Service",
+      "fileSystem": "File System",
+      "cloudStorage": "Cloud Storage",
+      "versionControl": "Version Control",
+      "browserAutomation": "Browser Automation",
+      "aiMl": "AI / ML",
+      "other": "Other"
+    },
+    "labels": {
+      "serverName": "Server name",
+      "shortDescription": "Short description",
+      "githubUrl": "GitHub or documentation link",
+      "category": "Category",
+      "tags": "Tags",
+      "owner": "Owner",
+      "contactEmail": "Contact email"
+    },
+    "placeholders": {
+      "description": "One clear phrase about what the server does",
+      "selectCategory": "Select a category",
+      "tagsHint": "Comma-separated. Up to 10 tags.",
+      "ownerHint": "Repository owner's GitHub username."
+    },
+    "autoFill": "Auto-fill",
+    "errors": {
+      "submissionFailed": "Submission failed. Please try again.",
+      "enterGitHubUrl": "Enter a GitHub repository URL first",
+      "githubFetchFailed": "Failed to fetch data from GitHub"
+    },
+    "success": {
+      "title": "Thank you for submitting",
+      "description": "Your MCP server has been submitted for review. We'll check it and add it to the catalog.",
+      "submitAnother": "Submit another"
+    },
+    "duplicate": {
+      "inCatalog": "This server is already in the catalog!",
+      "inSubmissions": "This server has already been submitted for review!",
+      "goToServer": "Go to server →",
+      "stillSubmit": "You can still submit if this is a different version or fork."
+    },
+    "urlHint": "Enter a GitHub URL and click \"Auto-fill\" to pull metadata.",
+    "premium": {
+      "title": "Premium submission",
+      "fastReview": "Faster review.",
+      "badge": "Badge on MCP listing.",
+      "dofollow": "Dofollow link."
+    },
+    "submitting": "Submitting...",
+    "submit": "Submit"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "description": "An error occurred while loading the page. Try refreshing or go back to the home page.",
+    "tryAgain": "Try again",
+    "goHome": "Go home"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "goHome": "Go home"
+  },
+  "AllServers": {
+    "eyebrow": "Full index",
+    "title": "All MCP Servers",
+    "description": "Search by name, repository, category, and tags. The list loads progressively to keep the catalog fast.",
+    "emptyTitle": "No servers found",
+    "emptyDescription": "Try changing your query, sort, or filters."
+  },
+  "OfficialServers": {
+    "eyebrow": "Verified sources",
+    "title": "Official MCP Servers",
+    "description": "Implementations from platform owners and teams that maintain the original product or service.",
+    "emptyTitle": "No official servers",
+    "emptyDescription": "When new verified implementations appear, they will be listed here."
+  },
+  "RemoteServers": {
+    "eyebrow": "Remote endpoints",
+    "title": "Remote MCP Servers",
+    "description": "Remote MCP servers with authorization and endpoint connectivity for cloud workflows.",
+    "emptyTitle": "No remote servers found",
+    "emptyDescription": "Try a different search query."
+  },
+  "Clients": {
+    "eyebrow": "MCP clients",
+    "title": "MCP-Compatible Clients & Applications",
+    "description": "Tools, IDEs, and desktop applications that can connect to MCP servers.",
+    "featuredTitle": "Featured Clients",
+    "allTitle": "All Clients",
+    "emptySearchTitle": "No clients found",
+    "emptyNoSearchTitle": "No clients yet",
+    "emptyDescription": "Try a different query or check back later."
+  },
+  "AboutMcp": {
+    "metaTitle": "What is Model Context Protocol (MCP)",
+    "metaDescription": "A detailed explanation of Model Context Protocol (MCP) — an open protocol for integrating AI assistants with external tools, databases, and services.",
+    "metaKeywords": "MCP, Model Context Protocol, AI protocol, MCP servers, what is MCP",
+    "ogDescription": "A detailed explanation of the MCP protocol for AI integrations",
+    "h1": "What is Model Context Protocol (MCP)?",
+    "intro": "Model Context Protocol (MCP) is an open protocol developed by Anthropic to standardize interaction between AI assistants and external data sources, tools, and services.",
+    "whyMcpTitle": "Why is MCP needed?",
+    "whyMcpP1": "Before MCP, each AI integrator created their own way to connect to external systems. This led to fragmentation: the same integrations had to be rebuilt for each AI client.",
+    "whyMcpP2": "MCP solves this problem by providing a unified standard. Now it's enough to write an MCP server once, and it will work with any MCP-compatible client: Claude Desktop, Cursor, Continue, Cline, and many others.",
+    "howMcpTitle": "How does MCP work?",
+    "architectureTitle": "MCP Architecture",
+    "archServer": "MCP Server — provides tools, resources, and prompts",
+    "archClient": "MCP Client — an AI application that connects to servers",
+    "archTransport": "Transport — stdio, SSE (Server-Sent Events), or HTTP",
+    "capabilitiesIntro": "An MCP server can provide three types of capabilities:",
+    "capTools": "Tools — functions that AI can invoke to perform actions (search, write data, send messages)",
+    "capResources": "Resources — data that AI can read (files, databases, API responses)",
+    "capPrompts": "Prompts — ready-made request templates for typical tasks",
+    "examplesTitle": "Usage Examples",
+    "exampleDbTitle": "🗄️ Database Access",
+    "exampleDbDesc": "AI can execute SQL queries, get table schemas, and analyze data without direct database access.",
+    "exampleDocsTitle": "🔍 Documentation Search",
+    "exampleDocsDesc": "AI gains access to internal company documentation and can answer questions based on current data.",
+    "exampleInfraTitle": "🛠️ Infrastructure Management",
+    "exampleInfraDesc": "AI can read logs, restart services, and check metrics through integration with Kubernetes, AWS, Docker.",
+    "exampleFilesTitle": "📁 File Operations",
+    "exampleFilesDesc": "AI can read, create, and edit files in the project through the MCP server's file system.",
+    "securityTitle": "Security",
+    "securityIntro": "MCP is designed with security in mind:",
+    "secConfirm": "Each tool requires explicit user confirmation",
+    "secGranular": "Granular resource-level permissions",
+    "secAuth": "Authentication support (OAuth, API keys)",
+    "secIsolation": "Context isolation between different servers",
+    "startTitle": "Get Started with MCP",
+    "startCtaPrefix": "Check out our",
+    "startCtaGuideLink": "usage guide",
+    "startCtaMiddle": "or browse the",
+    "startCtaCatalogLink": "MCP server catalog"
+  },
+  "ServerDetail": {
+    "checkoutSuccess": "Payment was successful.",
+    "checkoutTierActivated": "«{tier}» status activated for 30 days.",
+    "tierFeatured": "Featured",
+    "tierSponsored": "Sponsored",
+    "checkoutCancel": "Payment was cancelled. If you have any questions, please contact us.",
+    "badgeOfficial": "Official",
+    "badgeSponsor": "Sponsor",
+    "featuredUntil": "Featured until",
+    "claimAuthor": "I am the author",
+    "authorLabel": "Author:",
+    "starsLabel": "stars",
+    "forksLabel": "forks",
+    "quickStart": "Quick start",
+    "remoteEndpoint": "Remote endpoint",
+    "verifiedPublisher": "Verified publisher",
+    "communityRating": "Community rating",
+    "viewOnGitHub": "View on GitHub",
+    "relatedServers": "Related servers"
+  },
+  "TimeAgo": {
+    "justNow": "just now",
+    "secondsAgo": "{n}s ago",
+    "minutesAgo": "{n}m ago",
+    "hoursAgo": "{n}h ago",
+    "daysAgo": "{n}d ago",
+    "monthsAgo": "{n}mo ago",
+    "yearsAgo": "{n}y ago"
+  },
+  "BrandSvg": {
+    "catalogTitle": "MCP Server Catalog",
+    "catalogSubtitle": "search, ratings & integrations for your AI stack",
+    "findServer": "Find an MCP Server",
+    "catalogIntegrations": "catalog of integrations, clients & remote endpoints",
+    "openCatalog": "Open Catalog",
+    "addServer": "Add Server",
+    "findLine1": "Find an",
+    "findLine2": "MCP Server",
+    "integrationsLine1": "catalog of integrations, clients",
+    "integrationsLine2": "& remote endpoints"
+  },
+  "Emails": {
+    "htmlLang": "en",
+    "footerAutoMessage": "This is an automated message from",
+    "footerReason": "You received this email because you are associated with our MCP servers catalog.",
+    "newSubmission": "New MCP Server Submission",
+    "name": "Name",
+    "description": "Description",
+    "category": "Category",
+    "premiumYes": "✅ Yes",
+    "premiumNo": "❌ No",
+    "goToAdmin": "Go to Admin Panel",
+    "approved": "approved",
+    "rejected": "rejected",
+    "yourSubmissionStatus": "Your submission of server <strong>{name}</strong> has been <strong>{status}</strong>.",
+    "yourSubmissionTitle": "Your submission {name} {status}",
+    "thanksForContributing": "Thank you for contributing to the MCP ecosystem!",
+    "weeklyDigest": "Weekly MCP Servers Digest{categoryTitle}",
+    "newServersThisWeek": "New MCP servers this week{categoryTitle}:",
+    "viewAllServers": "View all servers →",
+    "subjectNewSubmission": "New MCP Server Submission: {name}",
+    "subjectYourSubmissionStatus": "Your MCP server submission {name} {status}",
+    "subjectWeeklyDigest": "Weekly MCP Servers Digest{categoryTitle}"
+  },
+  "Feed": {
+    "description": "A collection of servers for the Model Context Protocol",
+    "language": "en",
+    "categoryTitleInCategory": " in category \"{category}\""
+  },
+  "Help": {
+    "title": "Keyboard Shortcuts",
+    "ariaLabel": "Keyboard shortcuts",
+    "searchAction": "Search servers",
+    "homeScope": "Home",
+    "escapeAction": "Close modal / search",
+    "everywhereScope": "Everywhere",
+    "helpAction": "Help (this window)",
+    "allAction": "All servers",
+    "submitAction": "Submit server",
+    "helpAltAction": "This help window"
+  },
+  "Install": {
+    "button": "Install",
+    "title": "Install {name}",
+    "claudeTitle": "Claude Desktop",
+    "claudeStep0": "Open Claude Desktop",
+    "claudeStep1": "Press Cmd/Ctrl + , for settings",
+    "claudeStep2": "Open «Developer» → «Edit Config»",
+    "claudeStep3": "Paste config into file",
+    "claudeStep4": "Restart Claude Desktop",
+    "cursorTitle": "Cursor",
+    "cursorStep0": "Open Cursor",
+    "cursorStep1": "Settings → MCP",
+    "cursorStep2": "Click «Add MCP Server»",
+    "cursorStep3": "Paste config",
+    "cursorStep4": "Save and restart",
+    "continueTitle": "Continue",
+    "continueStep0": "Open VS Code with Continue",
+    "continueStep1": "Open Continue settings",
+    "continueStep2": "Add MCP server to config.json",
+    "continueStep3": "Restart VS Code",
+    "quickInstall": "Quick install via npx:"
+  },
+  "Share": {
+    "label": "Share:",
+    "shareIn": "Share on {name}"
+  },
+  "Keyboard": {
+    "searchPlaceholder": "Search"
+  },
+  "Sponsored": {
+    "title": "Sponsored Servers",
+    "adBadge": "Ad"
+  },
+  "RemoteCard": {
+    "official": "Official 🌟",
+    "copied": "Copied!",
+    "copyUrl": "Copy URL",
+    "connect": "Connect",
+    "configure": "Configure"
+  },
+  "OftenUsed": {
+    "title": "Often Used Together"
+  },
+  "Usage": {
+    "title": "Usage Examples"
+  },
+  "PullRefresh": {
+    "refreshing": "Refreshing...",
+    "releaseToRefresh": "Release to refresh",
+    "pullToRefresh": "Pull to refresh"
+  },
+  "A2HS": {
+    "installApp": "Install the App",
+    "quickAccess": "Quick access to MCP catalog",
+    "install": "Install"
+  },
+  "Health": {
+    "title": "Availability History",
+    "checkNow": "Check Now",
+    "noData": "No availability data",
+    "startMonitoring": "Click \"Check Now\" to start monitoring"
+  },
+  "Readme": {
+    "readme": "README",
+    "openGithub": "Open on GitHub →",
+    "collapse": "Collapse",
+    "showFull": "Show all ({lineCount} lines)"
+  },
+  "Releases": {
+    "title": "Latest Updates",
+    "noReleases": "No release information available. The repository may not use GitHub Releases.",
+    "collapse": "Collapse",
+    "more": "More details",
+    "allReleases": "All releases on GitHub →"
+  },
+  "SearchBar": {
+    "placeholder": "Search..."
+  },
+  "AdvancedSearch": {
+    "title": "Advanced Search",
+    "subtitle": "Find MCP servers with precise filters",
+    "categories": "Categories",
+    "minStars": "Min. stars",
+    "maxStars": "Max. stars",
+    "minRating": "Min. rating",
+    "languages": "Languages",
+    "onlyRemote": "Remote only (SSE/HTTP)",
+    "onlyOfficial": "Official only",
+    "hasEndpoint": "Has endpoint",
+    "search": "Search",
+    "reset": "Reset",
+    "foundServers": "Found {count} servers",
+    "configureFilters": "Configure filters and click \"Search\"",
+    "filters": "Filters"
+  },
+  "Sort": {
+    "sortPlaceholder": "Sort by",
+    "featured": "Featured",
+    "newest": "Newest",
+    "stars": "By stars",
+    "alphabetical": "Alphabetical",
+    "trending": "Trending"
+  },
+  "SearchGaps": {
+    "title": "Search Analytics",
+    "totalSearches": "Total searches (30d)",
+    "withResults": "With results",
+    "withoutResults": "Without results",
+    "notFoundRate": "\"Not found\" rate",
+    "searchGaps": "Search gaps (0 results)",
+    "allGood": "All queries return results. Great!",
+    "times": "{count} times",
+    "topSearches": "Top search queries",
+    "avgResults": "~{count} results"
+  },
+  "Bookmarks": {
+    "title": "My Bookmarks",
+    "bookmarked": "Bookmarked",
+    "addBookmark": "Add Bookmark",
+    "pageTitle": "My Bookmarks",
+    "emptyState": "You don't have any bookmarks yet. Click \"Add Bookmark\" on a server card to save it.",
+    "selected": "Selected: {count}",
+    "compare": "Compare",
+    "clearSelection": "Clear",
+    "selectMin": "Select at least 2 servers to compare"
+  },
+  "Collections": {
+    "title": "My Collections",
+    "newCollection": "New Collection",
+    "emptyState": "You don't have any collections yet. Create your first one to group servers.",
+    "createTitle": "Create Collection",
+    "namePlaceholder": "Name",
+    "descriptionPlaceholder": "Description (optional)",
+    "create": "Create",
+    "editTitle": "Collection Settings",
+    "nameLabel": "Collection name",
+    "descriptionLabel": "Collection description",
+    "publicLabel": "Public collection",
+    "shareLink": "Link: mcpservers.org/{locale}/collections/{slug}",
+    "save": "Save",
+    "public": "Public",
+    "serverCount": "{count} servers",
+    "settings": "Settings",
+    "share": "Share",
+    "deleteLabel": "Delete",
+    "deleteConfirm": "Delete collection?",
+    "publicCollection": "Public Collection",
+    "downloadConfig": "Download configuration for Claude Desktop"
+  },
+  "History": {
+    "clearConfirm": "Clear all browsing history?",
+    "clearing": "Clearing...",
+    "clearHistory": "Clear History"
+  },
+  "Comments": {
+    "title": "Comments",
+    "placeholder": "Write a comment...",
+    "submitting": "Submitting...",
+    "submit": "Submit",
+    "signIn": "Sign in",
+    "toComment": "to leave a comment",
+    "anonymous": "Anonymous",
+    "commentFrom": "Comment from",
+    "delete": "Delete",
+    "addError": "Error adding comment"
+  },
+  "Reviews": {
+    "title": "Reviews",
+    "placeholder": "Write a detailed review about your experience with this server...",
+    "submitting": "Submitting...",
+    "submit": "Leave a review",
+    "signIn": "Sign in",
+    "toReview": "to leave a review",
+    "anonymous": "Anonymous",
+    "verifiedAuthor": "✓ Author",
+    "helpful": "Helpful",
+    "notHelpful": "Not helpful",
+    "reviewFrom": "Review from",
+    "delete": "Delete",
+    "addError": "Error adding review"
+  },
+  "Rating": {
+    "yourRating": "Your rating"
+  },
+  "Reports": {
+    "report": "Report",
+    "title": "Report",
+    "thanks": "Thank you! Your report has been sent to the administrator.",
+    "target": "Target",
+    "reasonPlaceholder": "Describe the reason for your report...",
+    "submitting": "Submitting...",
+    "submit": "Submit report"
+  },
+  "UserDropdown": {
+    "defaultUser": "User",
+    "profile": "Profile",
+    "myBookmarks": "My Bookmarks",
+    "settings": "Settings",
+    "signOut": "Sign Out"
+  },
+  "ViewHistory": {
+    "title": "Recently Viewed",
+    "empty": "No recently viewed servers",
+    "clear": "Clear history"
+  },
+  "Health": {
+    "healthy": "Healthy",
+    "degraded": "Degraded",
+    "down": "Down",
+    "unknown": "Unknown",
+    "checkButton": "Check health"
+  },
+  "TrendingSearches": {
+    "title": "Trending searches"
+  },
+  "Digest": {
+    "title": "Stay Updated",
+    "description": "Get regular updates about new MCP servers",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "category": "Category",
+    "updateFrequency": "Update frequency",
+    "subscribed": "You are subscribed"
   }
 }

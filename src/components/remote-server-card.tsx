@@ -1,4 +1,7 @@
+'use client'
+
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -22,6 +25,7 @@ interface RemoteServerCardProps {
 }
 
 export function RemoteServerCard({ server }: RemoteServerCardProps) {
+  const t = useTranslations('RemoteCard')
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -41,7 +45,7 @@ export function RemoteServerCard({ server }: RemoteServerCardProps) {
           <div>
             <h3 className="font-semibold text-lg">{server.name}</h3>
             {server.isOfficial && (
-              <Badge variant="default" className="bg-yellow-500 mt-1">Официальный 🌟</Badge>
+              <Badge variant="default" className="bg-yellow-500 mt-1">{t('official')}</Badge>
             )}
           </div>
           {server.authType && (
@@ -62,18 +66,18 @@ export function RemoteServerCard({ server }: RemoteServerCardProps) {
             variant="ghost"
             className="h-7 w-7 shrink-0"
             onClick={handleCopy}
-            title={copied ? 'Скопировано!' : 'Копировать URL'}
-            aria-label={copied ? 'Скопировано!' : 'Копировать URL'}
+            title={copied ? t('copied') : t('copyUrl')}
+            aria-label={copied ? t('copied') : t('copyUrl')}
           >
             {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button size="sm">Подключить</Button>
+              <Button size="sm">{t('connect')}</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Настроить</DropdownMenuItem>
-              <DropdownMenuItem>Копировать URL</DropdownMenuItem>
+              <DropdownMenuItem>{t('configure')}</DropdownMenuItem>
+              <DropdownMenuItem>{t('copyUrl')}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

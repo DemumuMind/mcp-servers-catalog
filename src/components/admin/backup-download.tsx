@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
+import { useTransition } from "react";
 import { Button } from '@/components/ui/button'
 import { Download } from 'lucide-react'
 
@@ -9,6 +10,7 @@ interface BackupDownloadProps {
 }
 
 export function BackupDownload({ backupAction }: BackupDownloadProps) {
+  const t = useTranslations('Admin.backup')
   const [isPending, startTransition] = useTransition()
 
   const handleDownload = () => {
@@ -25,7 +27,7 @@ export function BackupDownload({ backupAction }: BackupDownloadProps) {
   return (
     <Button onClick={handleDownload} disabled={isPending}>
       <Download className="h-4 w-4 mr-2" />
-      {isPending ? 'Создание...' : 'Скачать Backup'}
+      {isPending ? t('creating') : t('downloadBackup')}
     </Button>
   )
 }
