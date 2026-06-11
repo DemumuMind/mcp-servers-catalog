@@ -6,8 +6,12 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { AnalyticsCharts } from '@/components/admin/analytics-charts'
 import { SyncGithubButton } from '@/components/admin/sync-github-button'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export default async function AdminDashboard() {
+  const t = await getAdminTranslations('Admin.dashboard')
+
   const [
     serverCount,
     clientCount,
@@ -36,14 +40,14 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/admin/servers">
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="pt-6">
               <div className="text-3xl font-bold">{serverCount}</div>
-              <div className="text-muted-foreground">Всего серверов</div>
+              <div className="text-muted-foreground">{t('totalServers')}</div>
             </CardContent>
           </Card>
         </Link>
@@ -51,7 +55,7 @@ export default async function AdminDashboard() {
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="pt-6">
               <div className="text-3xl font-bold">{clientCount}</div>
-              <div className="text-muted-foreground">Всего клиентов</div>
+              <div className="text-muted-foreground">{t('totalClients')}</div>
             </CardContent>
           </Card>
         </Link>
@@ -59,7 +63,7 @@ export default async function AdminDashboard() {
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="pt-6">
               <div className="text-3xl font-bold">{submissionCount}</div>
-              <div className="text-muted-foreground">Всего отправок</div>
+              <div className="text-muted-foreground">{t('totalSubmissions')}</div>
             </CardContent>
           </Card>
         </Link>
@@ -68,7 +72,7 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">На рассмотрении</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('pending')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{pendingCount}</div>
@@ -76,7 +80,7 @@ export default async function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Одобрено</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('approved')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{approvedCount}</div>
@@ -84,7 +88,7 @@ export default async function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Отклонено</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('rejected')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{rejectedCount}</div>
@@ -92,7 +96,7 @@ export default async function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Официальные</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('official')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{officialCount}</div>
@@ -100,7 +104,7 @@ export default async function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Featured</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('featured')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{featuredCount}</div>
@@ -108,7 +112,7 @@ export default async function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Remote</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('remote')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{remoteCount}</div>
@@ -116,7 +120,7 @@ export default async function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Всего звёзд</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalStars')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">

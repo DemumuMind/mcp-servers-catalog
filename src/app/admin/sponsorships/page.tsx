@@ -12,10 +12,14 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Trash2 } from 'lucide-react'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
 export default async function SponsorshipsPage() {
+  const t = await getAdminTranslations('Admin.sponsorships')
+
   const [sponsorships, servers] = await Promise.all([
     getSponsorships(),
     getServers(),
@@ -25,12 +29,10 @@ export default async function SponsorshipsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Спонсорские места</h1>
-      </div>
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
       <div className="bg-card rounded-lg border p-6">
-        <h2 className="text-lg font-semibold mb-4">Новое спонсорство</h2>
+        <h2 className="text-lg font-semibold mb-4">{t('newSponsorship')}</h2>
         <SponsorshipForm servers={availableServers} />
       </div>
 
@@ -38,19 +40,19 @@ export default async function SponsorshipsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Сервер</TableHead>
-              <TableHead>Спонсор</TableHead>
-              <TableHead>Период</TableHead>
-              <TableHead>Сумма</TableHead>
-              <TableHead>Статус</TableHead>
-              <TableHead className="w-[100px]">Действия</TableHead>
+              <TableHead>{t('table.server')}</TableHead>
+              <TableHead>{t('table.sponsor')}</TableHead>
+              <TableHead>{t('table.period')}</TableHead>
+              <TableHead>{t('table.amount')}</TableHead>
+              <TableHead>{t('table.status')}</TableHead>
+              <TableHead className="w-[100px]">{t('table.actions')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {sponsorships.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  Нет активных спонсорств
+                  {t('noActiveSponsorships')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -81,10 +83,10 @@ export default async function SponsorshipsPage() {
                   </TableCell>
                   <TableCell>
                     <div className="text-sm">
-                      <p>{new Date(s.startDate).toLocaleDateString('ru-RU')}</p>
+                      <p>{new Date(s.startDate).toLocaleDateString()}</p>
                       {s.endDate && (
                         <p className="text-muted-foreground">
-                          до {new Date(s.endDate).toLocaleDateString('ru-RU')}
+                          {t('until')} {new Date(s.endDate).toLocaleDateString()}
                         </p>
                       )}
                     </div>
@@ -100,7 +102,7 @@ export default async function SponsorshipsPage() {
                   </TableCell>
                   <TableCell>
                     <Badge variant={s.active ? 'default' : 'secondary'}>
-                      {s.active ? 'Активно' : 'Неактивно'}
+                      {s.active ? t('active') : t('inactive')}
                     </Badge>
                   </TableCell>
                   <TableCell>

@@ -1,10 +1,13 @@
 import { getTimeSeriesMetrics, getCohortAnalysis } from '@/app/actions/analytics'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { BarChart3, Users, Server, Eye, Bookmark } from 'lucide-react'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
 export default async function TimeSeriesDashboardPage() {
+  const t = await getAdminTranslations('Admin.timeSeries')
   const metrics = await getTimeSeriesMetrics(30)
   const cohorts = await getCohortAnalysis(8)
 
@@ -15,10 +18,7 @@ export default async function TimeSeriesDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BarChart3 className="h-6 w-6 text-primary" />
-        <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
-      </div>
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -26,7 +26,7 @@ export default async function TimeSeriesDashboardPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Users className="h-4 w-4 text-blue-500" />
-              DAU (сегодня)
+              {t('dauToday')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -37,7 +37,7 @@ export default async function TimeSeriesDashboardPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Server className="h-4 w-4 text-green-500" />
-              Новых серверов (сегодня)
+              {t('newServersToday')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -48,7 +48,7 @@ export default async function TimeSeriesDashboardPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Eye className="h-4 w-4 text-purple-500" />
-              Просмотров (сегодня)
+              {t('viewsToday')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -59,7 +59,7 @@ export default async function TimeSeriesDashboardPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Bookmark className="h-4 w-4 text-amber-500" />
-              Закладок (сегодня)
+              {t('bookmarksToday')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -71,18 +71,18 @@ export default async function TimeSeriesDashboardPage() {
       {/* Time Series Tables */}
       <Card>
         <CardHeader>
-          <CardTitle>Метрики за 30 дней</CardTitle>
+          <CardTitle>{t('metrics30days')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left py-2 px-3">Дата</th>
-                  <th className="text-right py-2 px-3">DAU</th>
-                  <th className="text-right py-2 px-3">Новые серверы</th>
-                  <th className="text-right py-2 px-3">Просмотры</th>
-                  <th className="text-right py-2 px-3">Закладки</th>
+                  <th className="text-left py-2 px-3">{t('table.date')}</th>
+                  <th className="text-right py-2 px-3">{t('table.dau')}</th>
+                  <th className="text-right py-2 px-3">{t('table.newServers')}</th>
+                  <th className="text-right py-2 px-3">{t('table.views')}</th>
+                  <th className="text-right py-2 px-3">{t('table.bookmarks')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,18 +104,18 @@ export default async function TimeSeriesDashboardPage() {
       {/* Cohort Analysis */}
       <Card>
         <CardHeader>
-          <CardTitle>Cohort Analysis (Retention, %)</CardTitle>
+          <CardTitle>{t('cohortAnalysis')}</CardTitle>
         </CardHeader>
         <CardContent>
           {cohorts.length === 0 ? (
-            <p className="text-muted-foreground">Недостаточно данных для cohort analysis</p>
+            <p className="text-muted-foreground">{t('notEnoughData')}</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-left py-2 px-3">Cohort</th>
-                    <th className="text-right py-2 px-3">Size</th>
+                    <th className="text-left py-2 px-3">{t('cohortTable.cohort')}</th>
+                    <th className="text-right py-2 px-3">{t('cohortTable.size')}</th>
                     {Array.from({ length: Math.max(...cohorts.map((c) => c.retention.length)) }).map((_, i) => (
                       <th key={i} className="text-right py-2 px-3">W{i}</th>
                     ))}

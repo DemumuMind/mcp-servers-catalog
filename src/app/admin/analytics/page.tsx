@@ -4,10 +4,14 @@ import { asc, count, eq, sql, desc } from 'drizzle-orm'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AnalyticsCharts } from '@/components/admin/analytics-charts'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AnalyticsPage() {
+  const t = await getAdminTranslations('Admin.analytics')
+
   const allSubmissions = await db.select().from(submissions).orderBy(asc(submissions.createdAt))
 
   const allServers = await db.select().from(servers)
@@ -35,12 +39,12 @@ export default async function AnalyticsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Analytics</h1>
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Всего серверов</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalServers')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalServers}</div>
@@ -48,7 +52,7 @@ export default async function AnalyticsPage() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Всего отправок</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalSubmissions')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalSubmissions}</div>
@@ -56,7 +60,7 @@ export default async function AnalyticsPage() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Конверсия</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('conversion')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{conversion}%</div>
@@ -69,7 +73,7 @@ export default async function AnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Популярные категории</CardTitle>
+            <CardTitle>{t('popularCategories')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
@@ -85,7 +89,7 @@ export default async function AnalyticsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Топ отправителей</CardTitle>
+            <CardTitle>{t('topSubmitters')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">

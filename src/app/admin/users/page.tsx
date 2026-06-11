@@ -14,10 +14,13 @@ import { Badge } from '@/components/ui/badge'
 import { Trash2, CheckCircle, XCircle } from 'lucide-react'
 import { verifyAuthor } from '@/app/actions/author-analytics'
 import { revalidatePath } from 'next/cache'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
 export default async function UsersPage() {
+  const t = await getAdminTranslations('Admin.users')
   const allUsers = await db.select().from(users).orderBy(desc(users.createdAt))
 
   async function deleteUser(formData: FormData) {
@@ -41,20 +44,18 @@ export default async function UsersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Users</h1>
-      </div>
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
       <Card>
         <CardContent className="pt-6">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Статус автора</TableHead>
-                <TableHead>Создан</TableHead>
-                <TableHead className="text-right">Действия</TableHead>
+                <TableHead>{t('table.email')}</TableHead>
+                <TableHead>{t('table.role')}</TableHead>
+                <TableHead>{t('table.authorStatus')}</TableHead>
+                <TableHead>{t('table.created')}</TableHead>
+                <TableHead className="text-right">{t('table.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -77,15 +78,15 @@ export default async function UsersPage() {
                         className={user.isVerifiedAuthor ? 'bg-green-600 hover:bg-green-700' : ''}
                       >
                         {user.isVerifiedAuthor ? (
-                          <><CheckCircle className="h-3.5 w-3.5 mr-1" /> Подтверждён</>
+                          <><CheckCircle className="h-3.5 w-3.5 mr-1" /> {t('verified')}</>
                         ) : (
-                          <><XCircle className="h-3.5 w-3.5 mr-1" /> Не подтверждён</>
+                          <><XCircle className="h-3.5 w-3.5 mr-1" /> {t('unverified')}</>
                         )}
                       </Button>
                     </form>
                   </TableCell>
                   <TableCell>
-                    {new Date(user.createdAt).toLocaleDateString('ru-RU')}
+                    {new Date(user.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="text-right">
                     <form action={deleteUser}>

@@ -11,18 +11,18 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Activity, Server, AlertTriangle, Clock } from 'lucide-react'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
 export default async function MonitoringPage() {
+  const t = await getAdminTranslations('Admin.monitoring')
   const data = await getHealthMonitoringData()
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Activity className="h-6 w-6 text-primary" />
-        <h1 className="text-3xl font-bold">Health Monitoring</h1>
-      </div>
+      <AdminPageHeader title={t('title')} description={t('description')} />
 
       {/* Overall Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -30,7 +30,7 @@ export default async function MonitoringPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Server className="h-4 w-4" />
-              Всего серверов
+              {t('remoteServers')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -42,7 +42,7 @@ export default async function MonitoringPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Activity className="h-4 w-4 text-green-500" />
-              Online
+              {t('online')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -54,7 +54,7 @@ export default async function MonitoringPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 text-red-500" />
-              Offline / Проблемы
+              {t('offlineIssues')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -66,12 +66,12 @@ export default async function MonitoringPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              Средний Uptime (24ч)
+              {t('avgUptime24h')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {data.overall.avgUptime !== null ? `${data.overall.avgUptime}%` : 'N/A'}
+              {data.overall.avgUptime !== null ? `${data.overall.avgUptime}%` : t('na')}
             </div>
             {data.overall.avgUptime !== null && (
               <Progress value={data.overall.avgUptime} className="mt-2 h-2" />
@@ -83,18 +83,18 @@ export default async function MonitoringPage() {
       {/* Server Details */}
       <Card>
         <CardHeader>
-          <CardTitle>Статус серверов</CardTitle>
+          <CardTitle>{t('remoteServerStatus')}</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Сервер</TableHead>
-                <TableHead>Статус</TableHead>
-                <TableHead>Uptime (24ч)</TableHead>
-                <TableHead>Latency</TableHead>
-                <TableHead>Последняя проверка</TableHead>
-                <TableHead>Проверок</TableHead>
+                <TableHead>{t('table.server')}</TableHead>
+                <TableHead>{t('table.status')}</TableHead>
+                <TableHead>{t('table.uptime24h')}</TableHead>
+                <TableHead>{t('table.latency')}</TableHead>
+                <TableHead>{t('table.lastCheck')}</TableHead>
+                <TableHead>{t('table.checks')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -103,13 +103,13 @@ export default async function MonitoringPage() {
                   <TableCell className="font-medium">{server.name}</TableCell>
                   <TableCell>
                     {server.latestStatus === 'online' ? (
-                      <Badge className="bg-green-500">Online</Badge>
+                      <Badge className="bg-green-500">{t('statusLabels.online')}</Badge>
                     ) : server.latestStatus === 'degraded' ? (
-                      <Badge className="bg-yellow-500">Degraded</Badge>
+                      <Badge className="bg-yellow-500">{t('statusLabels.degraded')}</Badge>
                     ) : server.latestStatus === 'offline' ? (
-                      <Badge className="bg-red-500">Offline</Badge>
+                      <Badge className="bg-red-500">{t('statusLabels.offline')}</Badge>
                     ) : (
-                      <Badge variant="outline">No data</Badge>
+                      <Badge variant="outline">{t('statusLabels.noData')}</Badge>
                     )}
                   </TableCell>
                   <TableCell>
@@ -119,19 +119,19 @@ export default async function MonitoringPage() {
                         <Progress value={server.uptimePercent} className="w-20 h-2" />
                       </div>
                     ) : (
-                      <span className="text-muted-foreground text-sm">N/A</span>
+                      <span className="text-muted-foreground text-sm">{t('na')}</span>
                     )}
                   </TableCell>
                   <TableCell>
                     {server.avgLatency !== null ? (
                       <span className="text-sm">{server.avgLatency}ms</span>
                     ) : (
-                      <span className="text-muted-foreground text-sm">N/A</span>
+                      <span className="text-muted-foreground text-sm">{t('na')}</span>
                     )}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {server.latestCheckedAt
-                      ? new Date(server.latestCheckedAt).toLocaleString('ru-RU')
+                      ? new Date(server.latestCheckedAt).toLocaleString()
                       : '—'}
                   </TableCell>
                   <TableCell className="text-sm">{server.totalChecks}</TableCell>

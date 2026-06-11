@@ -10,10 +10,13 @@ import {
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Shield } from 'lucide-react'
+import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getAdminTranslations } from '@/lib/admin-i18n'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AuditLogPage() {
+  const t = await getAdminTranslations('Admin.auditLog')
   const logs = await getAuditLogs(200)
 
   const actionColors: Record<string, string> = {
@@ -27,29 +30,30 @@ export default async function AuditLogPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Shield className="h-6 w-6 text-primary" />
-        <h1 className="text-3xl font-bold">Audit Log</h1>
-      </div>
+      <AdminPageHeader
+        title={t('title')}
+        description={t('description')}
+        eyebrow="Audit"
+      />
 
       <Card>
         <CardContent className="pt-6">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Время</TableHead>
-                <TableHead>Действие</TableHead>
-                <TableHead>Пользователь</TableHead>
-                <TableHead>Тип</TableHead>
-                <TableHead>ID</TableHead>
-                <TableHead>IP</TableHead>
+                <TableHead>{t('table.time')}</TableHead>
+                <TableHead>{t('table.action')}</TableHead>
+                <TableHead>{t('table.user')}</TableHead>
+                <TableHead>{t('table.type')}</TableHead>
+                <TableHead>{t('table.id')}</TableHead>
+                <TableHead>{t('table.ip')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {logs.map((log) => (
                 <TableRow key={log.id}>
                   <TableCell className="text-sm whitespace-nowrap">
-                    {new Date(log.createdAt).toLocaleString('ru-RU')}
+                    {new Date(log.createdAt).toLocaleString()}
                   </TableCell>
                   <TableCell>
                     <Badge className={`text-white text-xs ${actionColors[log.action] || 'bg-gray-500'}`}>
