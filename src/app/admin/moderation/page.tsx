@@ -15,7 +15,7 @@ export default async function ModerationPage({
   const params = await searchParams
   const showAll = params.tab === 'all'
 
-  const comments = showAll ? await getAllComments() : await getPendingComments()
+  const comments = (showAll ? await getAllComments() : await getPendingComments()) as any
 
   async function handleApprove(id: string) {
     'use server'

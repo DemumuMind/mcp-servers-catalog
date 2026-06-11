@@ -146,12 +146,12 @@ export async function getServersPublic(
   const total = totalResult[0]?.count ?? 0
 
   const serverIds = serverRows.map((s: any) => s.id)
-  const ratingsAgg: { serverId: string; avg: number | null; count: number }[] = serverIds.length > 0
-    ? await db.select({
+  const ratingsAgg = serverIds.length > 0
+    ? (await db.select({
         serverId: ratings.serverId,
         avg: avg(ratings.value),
         count: count(),
-      }).from(ratings).where(inArray(ratings.serverId, serverIds)).groupBy(ratings.serverId)
+      }).from(ratings).where(inArray(ratings.serverId, serverIds)).groupBy(ratings.serverId)) as any[]
     : []
 
   const ratingMap: Map<number, { avg: number | null; count: number }> = new Map(ratingsAgg.map((r: any) => [r.serverId, { avg: r.avg, count: r.count }]))
@@ -311,7 +311,7 @@ export async function addComment(userId: string, serverId: string, content: stri
     ...comments,
     userName: users.name,
     userImage: users.image,
-  }).from(comments)
+  } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
     .where(eq(comments.id, commentRow.id))
     .limit(1).then((r: any) => r[0] ?? null)
@@ -333,7 +333,7 @@ export async function getServerComments(serverId: string, isAdmin = false) {
     ...comments,
     userName: users.name,
     userImage: users.image,
-  }).from(comments)
+  } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))

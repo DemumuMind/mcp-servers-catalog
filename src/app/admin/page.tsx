@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic'
 
-import { prisma, withDbRetry } from '@/lib/db'
+import { db, servers, submissions, clients } from '@/lib/db'
+import { eq, count, desc } from 'drizzle-orm'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { AnalyticsCharts } from '@/components/admin/analytics-charts'
@@ -17,20 +18,20 @@ export default async function AdminDashboard() {
     officialCount,
     featuredCount,
     remoteCount,
-    submissions,
-    servers,
+    allSubmissions,
+    allServers,
   ] = await Promise.all([
-    withDbRetry(p => p.server.count()),
-    withDbRetry(p => p.client.count()),
-    withDbRetry(p => p.submission.count()),
-    withDbRetry(p => p.submission.count({ where: { status: 'pending' } })),
-    withDbRetry(p => p.submission.count({ where: { status: 'approved' } })),
-    withDbRetry(p => p.submission.count({ where: { status: 'rejected' } })),
-    withDbRetry(p => p.server.count({ where: { isOfficial: true } })),
-    withDbRetry(p => p.server.count({ where: { featured: true } })),
-    withDbRetry(p => p.server.count({ where: { isRemote: true } })),
-    withDbRetry(p => p.submission.findMany({ orderBy: { createdAt: 'asc' } })),
-    withDbRetry(p => p.server.findMany()),
+    db.select({ count: count() }).from(servers).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(clients).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(submissions).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(submissions).where(eq(submissions.status, 'pending')).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(submissions).where(eq(submissions.status, 'approved')).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(submissions).where(eq(submissions.status, 'rejected')).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(servers).where(eq(servers.isOfficial, true)).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(servers).where(eq(servers.featured, true)).then((r: any) => r[0].count),
+    db.select({ count: count() }).from(servers).where(eq(servers.isRemote, true)).then((r: any) => r[0].count),
+    db.select().from(submissions).orderBy(desc(submissions.createdAt)),
+    db.select().from(servers),
   ])
 
   return (
@@ -119,7 +120,7 @@ export default async function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {servers.reduce((acc, s) => acc + (s.stars || 0), 0).toLocaleString()}
+              {allServers.reduce((acc: number, s: any) => acc + (s.stars || 0), 0).toLocaleString()}
             </div>
           </CardContent>
         </Card>
@@ -130,7 +131,7 @@ export default async function AdminDashboard() {
         </Card>
       </div>
 
-      <AnalyticsCharts submissions={submissions} servers={servers} />
+      <AnalyticsCharts submissions={allSubmissions} servers={allServers} />
     </div>
   )
 }

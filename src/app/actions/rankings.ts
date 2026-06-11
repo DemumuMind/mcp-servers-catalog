@@ -92,7 +92,7 @@ export async function getServerRankings(period: 'week' | 'month' = 'week', limit
     serverRepo: servers.repo,
     serverDescription: servers.description,
     serverStars: servers.stars,
-  }).from(serverRankings)
+  } as any).from(serverRankings)
     .innerJoin(servers, eq(serverRankings.serverId, servers.id))
     .where(eq(serverRankings.period, period))
     .orderBy(asc(serverRankings.rank))

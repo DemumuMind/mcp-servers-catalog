@@ -1,5 +1,6 @@
 import { createYoga, createSchema } from 'graphql-yoga'
-import { prisma } from '@/lib/db'
+import { db, getClient, servers, clients } from '@/lib/db'
+import { eq, and, or, like, desc, sql } from 'drizzle-orm'
 import { validateApiKey } from '@/app/actions/api-keys'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 import { NextResponse } from 'next/server'
@@ -54,7 +55,7 @@ const typeDefs = /* GraphQL */ `
 const resolvers = {
   Query: {
     async servers(
-      _: unknown,
+      _: any,
       args: {
         category?: string
         search?: string
@@ -64,52 +65,67 @@ const resolvers = {
         offset?: number
       }
     ) {
-      const where: Record<string, unknown> = {}
-      
-      if (args.category) where.category = args.category
-      if (args.featured !== undefined) where.featured = args.featured
-      if (args.isOfficial !== undefined) where.isOfficial = args.isOfficial
+      const conditions = []
+
+      if (args.category) conditions.push(eq(servers.category, args.category))
+      if (args.featured !== undefined) conditions.push(eq(servers.featured, args.featured))
+      if (args.isOfficial !== undefined) conditions.push(eq(servers.isOfficial, args.isOfficial))
       if (args.search) {
-        where.OR = [
-          { name: { contains: args.search, mode: 'insensitive' } },
-          { description: { contains: args.search, mode: 'insensitive' } },
-        ]
+        conditions.push(
+          or(
+            like(servers.name, `%${args.search}%`),
+            like(servers.description, `%${args.search}%`)
+          )!
+        )
       }
 
-      const servers = await prisma.server.findMany({
-        where,
-        take: args.limit || 50,
-        skip: args.offset || 0,
-        orderBy: { stars: 'desc' },
-      })
+      const query = db
+        .select()
+        .from(servers)
+        .where(conditions.length > 0 ? and(...conditions) : undefined)
+        .limit(args.limit || 50)
+        .offset(args.offset || 0)
+        .orderBy(desc(servers.stars))
 
-      return servers
+      return query
     },
 
-    async server(_: unknown, args: { id: string }) {
-      return prisma.server.findUnique({ where: { id: args.id } })
+    async server(_: any, args: { id: string }) {
+      const rows = await db
+        .select()
+        .from(servers)
+        .where(eq(servers.id, args.id))
+        .limit(1)
+      return rows[0] || null
     },
 
-    async serverBySlug(_: unknown, args: { owner: string; repo: string }) {
-      return prisma.server.findUnique({
-        where: { fullSlug: `${args.owner}/${args.repo}` },
-      })
+    async serverBySlug(_: any, args: { owner: string; repo: string }) {
+      const rows = await db
+        .select()
+        .from(servers)
+        .where(eq(servers.fullSlug, `${args.owner}/${args.repo}`))
+        .limit(1)
+      return rows[0] || null
     },
 
     async clients() {
-      return prisma.client.findMany({ orderBy: { createdAt: 'desc' } })
+      return db.select().from(clients).orderBy(desc(clients.createdAt))
     },
 
-    async client(_: unknown, args: { id: string }) {
-      return prisma.client.findUnique({ where: { id: args.id } })
+    async client(_: any, args: { id: string }) {
+      const rows = await db
+        .select()
+        .from(clients)
+        .where(eq(clients.id, args.id))
+        .limit(1)
+      return rows[0] || null
     },
 
     async categories() {
-      const servers = await prisma.server.findMany({
-        select: { category: true },
-        distinct: ['category'],
-      })
-      return servers.map((s) => s.category)
+      const rows = await db
+        .selectDistinct({ category: servers.category })
+        .from(servers)
+      return rows.map((s) => s.category)
     },
   },
 }

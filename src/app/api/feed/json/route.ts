@@ -1,18 +1,14 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { eq, desc } from 'drizzle-orm'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const category = searchParams.get('category')
 
-  const where: any = {}
-  if (category) where.category = category
-
-  const servers = await prisma.server.findMany({
-    where,
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  })
+  const serverList = category
+    ? await db.select().from(servers).where(eq(servers.category, category)).orderBy(desc(servers.createdAt)).limit(50)
+    : await db.select().from(servers).orderBy(desc(servers.createdAt)).limit(50)
 
   const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
 
@@ -23,7 +19,7 @@ export async function GET(request: Request) {
     feed_url: `${baseUrl}/api/feed/json`,
     description: 'Коллекция серверов для Model Context Protocol',
     language: 'ru',
-    items: servers.map((server) => ({
+    items: serverList.map((server: any) => ({
       id: server.id,
       title: server.name,
       content_text: server.description,

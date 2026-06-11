@@ -21,7 +21,7 @@ export async function getUserProfile(userId: string) {
   // Get counts separately
   const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
     db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: any) => r[0]?.count ?? 0),
-    db.select({ count: count() }).from(comments).where(eq(comments.userId, userId)).then((r: any) => r[0]?.count ?? 0),
+    db.select({ count: count() }).from(comments as any).where(eq(comments.userId, userId)).then((r: any) => r[0]?.count ?? 0),
     db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r: any) => r[0]?.count ?? 0),
   ])
 
@@ -43,7 +43,7 @@ export async function getUserComments(userId: string) {
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-  }).from(comments)
+  } as any).from(comments as any)
     .innerJoin(servers, eq(comments.serverId, servers.id))
     .where(eq(comments.userId, userId))
     .orderBy(desc(comments.createdAt))
@@ -62,7 +62,7 @@ export async function getUserRatings(userId: string) {
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-  }).from(ratings)
+  } as any).from(ratings)
     .innerJoin(servers, eq(ratings.serverId, servers.id))
     .where(eq(ratings.userId, userId))
     .orderBy(desc(ratings.createdAt))
@@ -88,7 +88,7 @@ export async function getUserHistory(userId: string, limit = 50) {
     serverIsOfficial: servers.isOfficial,
     serverIsSponsored: servers.isSponsored,
     serverTags: servers.tags,
-  }).from(viewHistories)
+  } as any).from(viewHistories)
     .innerJoin(servers, eq(viewHistories.serverId, servers.id))
     .where(eq(viewHistories.userId, userId))
     .orderBy(desc(viewHistories.createdAt))

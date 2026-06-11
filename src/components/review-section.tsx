@@ -54,7 +54,7 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
 
     try {
       const newReview = await submitReview(userId, serverId, content.trim())
-      setReviews((prev) => [newReview as Review, ...prev])
+      setReviews((prev) => [newReview as unknown as Review, ...prev])
       setContent('')
     } catch (err: any) {
       setError(err.message || t('addError'))
@@ -75,15 +75,15 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
         let newHelpful = r.helpfulCount
         let newNotHelpful = r.notHelpfulCount
 
-        if (result.action === 'added') {
+        if ((result as any).action === 'added') {
           newVotes.push({ userId, helpful })
           if (helpful) newHelpful++
           else newNotHelpful++
-        } else if (result.action === 'removed' && existingVote) {
+        } else if ((result as any).action === 'removed' && existingVote) {
           newVotes = newVotes.filter((v) => v.userId !== userId)
           if (existingVote.helpful) newHelpful--
           else newNotHelpful--
-        } else if (result.action === 'changed' && existingVote) {
+        } else if ((result as any).action === 'changed' && existingVote) {
           newVotes = newVotes.map((v) => (v.userId === userId ? { userId, helpful } : v))
           if (helpful) {
             newHelpful++

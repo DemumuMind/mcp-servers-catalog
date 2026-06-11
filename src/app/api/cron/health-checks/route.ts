@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { servers } from '@/lib/db/schema'
 import { eq, and, isNotNull } from 'drizzle-orm'
-import { checkServerStatus } from '@/app/actions/health'
+import { checkServerHealth } from '@/app/actions/health'
 
 function verifyCronAuth(req: NextRequest): NextResponse | null {
   const authHeader = req.headers.get('authorization')
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
 
     for (const server of remoteServers) {
       try {
-        const result = await checkServerStatus(server.id)
+        const result = await checkServerHealth(server.id)
         results.push({
           id: server.id,
           name: server.name,

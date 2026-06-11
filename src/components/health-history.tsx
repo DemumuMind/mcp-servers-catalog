@@ -34,12 +34,13 @@ export function HealthHistory({ serverId, isRemote }: HealthHistoryProps) {
 
   const loadHistory = useCallback(async () => {
     const data = await getServerHealthHistory(serverId, 7)
-    setHistory(data)
+    setHistory(data as any)
     if (data.length > 0) {
+      const first = (data as any)[0]
       setLatest({
-        status: data[0].online > 0 ? 'online' : data[0].degraded > 0 ? 'degraded' : 'offline',
-        latency: data[0].avgLatency,
-        createdAt: new Date(data[0].date),
+        status: first.online > 0 ? 'online' : first.degraded > 0 ? 'degraded' : 'offline',
+        latency: first.avgLatency ?? first.latency ?? null,
+        createdAt: new Date(first.date ?? first.createdAt),
       })
     }
   }, [serverId])

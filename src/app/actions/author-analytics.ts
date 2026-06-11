@@ -1,6 +1,6 @@
 'use server'
 
-import { db, servers, users, viewHistories, bookmarks, ratings, comments } from '@/lib/db'
+import { db, servers, users, viewHistories, bookmarks, ratings, comments, getClient } from '@/lib/db'
 import { eq, and, ne, gte, desc, count, avg, sql } from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
@@ -57,14 +57,14 @@ async function fetchAnalyticsData(serverId: string, since30Days: Date) {
   ])
 
   // SQLite: createdAt is stored as Unix timestamp integer, needs 'unixepoch' modifier
-  const dailyViews = await db.execute(sql<Array<{ date: string; count: bigint }>>`
+  const dailyViews = await getClient().execute(sql<Array<{ date: string; count: bigint }>>`
     SELECT date("createdAt", 'unixepoch') as date, COUNT(*) as count
     FROM "ViewHistory"
     WHERE "serverId" = ${serverId}
       AND "createdAt" >= ${since30Days}
     GROUP BY date("createdAt", 'unixepoch')
     ORDER BY date ASC
-  `)
+  ` as any)
 
   return { views, bookmarks: bookmarksCount, ratings: ratingsAgg, comments: commentsCount, totalStars, dailyViews: dailyViews.rows }
 }

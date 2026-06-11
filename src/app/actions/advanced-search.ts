@@ -81,8 +81,8 @@ export async function advancedSearchServers(params: {
   const serverIds = serverRows.map((s: any) => s.id)
 
   // Aggregate ratings per server
-  const ratingsAgg: { serverId: number; avgValue: number | null; countValue: number }[] = serverIds.length > 0
-    ? await db
+  const ratingsAgg = serverIds.length > 0
+    ? (await db
         .select({
           serverId: ratings.serverId,
           avgValue: avg(ratings.value),
@@ -90,7 +90,7 @@ export async function advancedSearchServers(params: {
         })
         .from(ratings)
         .where(inArray(ratings.serverId, serverIds))
-        .groupBy(ratings.serverId)
+        .groupBy(ratings.serverId)) as any[]
     : []
 
   const ratingMap: Map<number, { avg: number | null; count: number }> = new Map(

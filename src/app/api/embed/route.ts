@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db, servers, ratings } from '@/lib/db'
+import { eq } from 'drizzle-orm'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -9,19 +10,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Missing server id' }, { status: 400 })
   }
 
-  const server = await prisma.server.findUnique({
-    where: { id },
-    include: {
-      ratings: { select: { value: true } },
-    },
-  })
+  const server = await db.select().from(servers).where(eq(servers.id, id)).limit(1).then(r => r[0] ?? null)
 
   if (!server) {
     return NextResponse.json({ error: 'Server not found' }, { status: 404 })
   }
 
-  const avgRating = server.ratings.length > 0
-    ? server.ratings.reduce((s, r) => s + r.value, 0) / server.ratings.length
+  const serverRatings = await db.select({ value: ratings.value }).from(ratings).where(eq(ratings.serverId, id))
+
+  const avgRating = serverRatings.length > 0
+    ? serverRatings.reduce((s: number, r: any) => s + r.value, 0) / serverRatings.length
     : 0
 
   const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
@@ -94,7 +92,7 @@ export async function GET(request: Request) {
         <div>
           <div class="title">${escapeHtml(server.name)} ${server.isOfficial ? '<span class="badge">Official</span>' : ''}</div>
           <div class="description">${escapeHtml(server.description)}</div>
-          ${server.tags.length > 0 ? `<div style="margin-top:8px">${server.tags.slice(0, 3).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+          ${server.tags.length > 0 ? `<div style="margin-top:8px">${server.tags.slice(0, 3).map((t: any) => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
         </div>
       </div>
       <div class="footer">

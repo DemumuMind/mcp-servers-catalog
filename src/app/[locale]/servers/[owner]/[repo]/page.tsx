@@ -118,7 +118,7 @@ export default async function ServerDetailPage({
     },
     aggregateRating: rating.count > 0 ? {
       '@type': 'AggregateRating',
-      ratingValue: rating.average.toFixed(1),
+      ratingValue: Number(rating.average as string | number).toFixed(1),
       ratingCount: rating.count,
     } : undefined,
     codeRepository: server.githubUrl,
@@ -265,7 +265,7 @@ export default async function ServerDetailPage({
                       <Star
                         key={star}
                         className={`h-5 w-5 ${
-                          star <= Math.round(rating.average)
+                          star <= Math.round(Number(rating.average))
                             ? 'fill-primary text-primary'
                             : 'text-muted-foreground/35'
                         }`}
@@ -273,7 +273,7 @@ export default async function ServerDetailPage({
                     ))}
                   </div>
                   <span className="font-mono text-sm text-muted-foreground" data-numeric>
-                    {rating.average.toFixed(1)} ({rating.count})
+                    {Number(rating.average as string | number).toFixed(1)} ({rating.count})
                   </span>
                 </div>
                 {userId && <div className="mt-3"><RatingStars serverId={server.id} userId={userId} /></div>}

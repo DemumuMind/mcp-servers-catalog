@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db, servers } from '@/lib/db'
+import { eq, desc } from 'drizzle-orm'
 import { fetchServerReleases } from '@/app/actions/releases'
 
 export async function GET(request: Request) {
@@ -16,9 +17,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Invalid server slug' }, { status: 400 })
     }
 
-    const server = await prisma.server.findUnique({
-      where: { fullSlug: serverSlug },
-    })
+    const server = await db.select().from(servers).where(eq(servers.fullSlug, serverSlug)).limit(1).then(r => r[0] ?? null)
 
     if (!server) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 })
@@ -58,14 +57,9 @@ export async function GET(request: Request) {
   }
 
   // Default: all servers feed
-  const where: any = {}
-  if (category) where.category = category
-
-  const servers = await prisma.server.findMany({
-    where,
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  })
+  const serverList = category
+    ? await db.select().from(servers).where(eq(servers.category, category)).orderBy(desc(servers.createdAt)).limit(50)
+    : await db.select().from(servers).orderBy(desc(servers.createdAt)).limit(50)
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -75,9 +69,9 @@ export async function GET(request: Request) {
     <description>Коллекция серверов для Model Context Protocol</description>
     <language>ru</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    ${servers
+    ${serverList
       .map(
-        (server) => `
+        (server: any) => `
     <item>
       <title>${escapeXml(server.name)}</title>
       <link>${baseUrl}/ru/servers/${server.owner}/${server.repo}</link>

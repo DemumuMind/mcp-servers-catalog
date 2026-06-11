@@ -1,4 +1,6 @@
-import { prisma } from '@/lib/db'
+import { db, submissions, servers } from '@/lib/db'
+import { getClient } from '@/lib/db'
+import { asc, count, eq, sql, desc } from 'drizzle-orm'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AnalyticsCharts } from '@/components/admin/analytics-charts'
@@ -6,30 +8,29 @@ import { AnalyticsCharts } from '@/components/admin/analytics-charts'
 export const dynamic = 'force-dynamic'
 
 export default async function AnalyticsPage() {
-  const submissions = await prisma.submission.findMany({
-    orderBy: { createdAt: 'asc' },
+  const allSubmissions = await db.select().from(submissions).orderBy(asc(submissions.createdAt))
+
+  const allServers = await db.select().from(servers)
+
+  const serversByCategory = await getClient().execute({
+    sql: `SELECT category, COUNT(*) as count FROM "Server" GROUP BY category ORDER BY count DESC`,
+    args: [],
   })
 
-  const servers = await prisma.server.findMany()
+  const topSubmitters = await getClient().execute({
+    sql: `SELECT email, COUNT(*) as count FROM "Submission" GROUP BY email ORDER BY count DESC LIMIT 10`,
+    args: [],
+  })
 
-  const serversByCategory = await prisma.$queryRaw`
-    SELECT category, COUNT(*) as count
-    FROM "Server"
-    GROUP BY category
-    ORDER BY count DESC
-  `
+  const totalServersResult = await db.select({ count: count() }).from(servers)
+  const totalServers = totalServersResult[0].count
 
-  const topSubmitters = await prisma.$queryRaw`
-    SELECT email, COUNT(*) as count
-    FROM "Submission"
-    GROUP BY email
-    ORDER BY count DESC
-    LIMIT 10
-  `
+  const totalSubmissionsResult = await db.select({ count: count() }).from(submissions)
+  const totalSubmissions = totalSubmissionsResult[0].count
 
-  const totalServers = await prisma.server.count()
-  const totalSubmissions = await prisma.submission.count()
-  const approvedCount = await prisma.submission.count({ where: { status: 'approved' } })
+  const approvedCountResult = await db.select({ count: count() }).from(submissions).where(eq(submissions.status, 'approved'))
+  const approvedCount = approvedCountResult[0].count
+
   const conversion = Math.round((approvedCount / Math.max(totalSubmissions, 1)) * 100)
 
   return (
@@ -63,7 +64,7 @@ export default async function AnalyticsPage() {
         </Card>
       </div>
 
-      <AnalyticsCharts submissions={submissions} servers={servers} />
+      <AnalyticsCharts submissions={allSubmissions} servers={allServers} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
@@ -72,7 +73,7 @@ export default async function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {(serversByCategory as any[]).map((cat: any) => (
+              {serversByCategory.rows.map((cat: any) => (
                 <div key={cat.category} className="flex justify-between items-center">
                   <span className="capitalize">{cat.category}</span>
                   <Badge>{String(cat.count)}</Badge>
@@ -88,7 +89,7 @@ export default async function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {(topSubmitters as any[]).map((submitter: any, i: number) => (
+              {topSubmitters.rows.map((submitter: any, i: number) => (
                 <div key={submitter.email} className="flex justify-between items-center">
                   <span className="text-sm">{i + 1}. {submitter.email}</span>
                   <Badge variant="outline">{String(submitter.count)}</Badge>

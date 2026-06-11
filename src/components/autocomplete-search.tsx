@@ -97,7 +97,7 @@ export function AutocompleteSearch({ locale = 'en', defaultValue = '', className
       if (
         containerRef.current &&
         !containerRef.current.contains(event.target as Node) &&
-        !(event.target as Node).closest?.('[data-autocomplete-dropdown]')
+        !(event.target as Element).closest?.('[data-autocomplete-dropdown]')
       ) {
         setShowDropdown(false)
       }

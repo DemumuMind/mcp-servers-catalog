@@ -1,6 +1,6 @@
 'use server'
 
-import { db, searchQueries } from '@/lib/db'
+import { db, searchQueries, getClient } from '@/lib/db'
 import { eq, gte, gt, and, count, sql } from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
@@ -18,14 +18,14 @@ export async function logSearchQuery(query: string, results: number, source: str
 
 export async function getSearchGaps(limit: number = 50) {
   // Queries with 0 results, grouped by query text, ordered by frequency
-  const gaps = await db.execute(sql<Array<{ query: string; count: bigint; lastSearch: Date }>>`
+  const gaps = await getClient().execute(sql<Array<{ query: string; count: bigint; lastSearch: Date }>>`
     SELECT query, COUNT(*) as count, MAX("createdAt") as "lastSearch"
     FROM "SearchQuery"
     WHERE results = 0
     GROUP BY query
     ORDER BY count DESC
     LIMIT ${limit}
-  `)
+  ` as any)
 
   return gaps.rows.map((g: any) => ({
     query: g.query,
@@ -35,13 +35,13 @@ export async function getSearchGaps(limit: number = 50) {
 }
 
 export async function getTopSearches(limit: number = 20) {
-  const searches = await db.execute(sql<Array<{ query: string; count: bigint; avgResults: number }>>`
+  const searches = await getClient().execute(sql<Array<{ query: string; count: bigint; avgResults: number }>>`
     SELECT query, COUNT(*) as count, AVG(results) as "avgResults"
     FROM "SearchQuery"
     GROUP BY query
     ORDER BY count DESC
     LIMIT ${limit}
-  `)
+  ` as any)
 
   return searches.rows.map((s: any) => ({
     query: s.query,

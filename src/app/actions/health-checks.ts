@@ -47,7 +47,7 @@ export async function getServerHealthHistory(
     return acc
   }, {} as Record<string, DayStats>)
 
-  const history = Object.entries(grouped).map(([date, stats]: [string, DayStats]) => ({
+  const history = Object.entries(grouped as Record<string, DayStats>).map(([date, stats]: [string, DayStats]) => ({
     date,
     online: stats.online,
     degraded: stats.degraded,

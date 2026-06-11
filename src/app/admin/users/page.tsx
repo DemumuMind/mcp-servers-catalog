@@ -1,4 +1,5 @@
-import { prisma } from '@/lib/db'
+import { db, users } from '@/lib/db'
+import { eq, desc } from 'drizzle-orm'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -17,15 +18,13 @@ import { revalidatePath } from 'next/cache'
 export const dynamic = 'force-dynamic'
 
 export default async function UsersPage() {
-  const users = await prisma.user.findMany({
-    orderBy: { createdAt: 'desc' },
-  })
+  const allUsers = await db.select().from(users).orderBy(desc(users.createdAt))
 
-    async function deleteUser(formData: FormData) {
+  async function deleteUser(formData: FormData) {
     'use server'
     const id = formData.get('id') as string
     if (id) {
-      await prisma.user.delete({ where: { id } })
+      await db.delete(users).where(eq(users.id, id))
       revalidatePath('/admin/users')
     }
   }
@@ -59,7 +58,7 @@ export default async function UsersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.map((user) => (
+              {allUsers.map((user: any) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
