@@ -264,7 +264,7 @@ export const searchQueries = sqliteTable('SearchQuery', {
 
 export const serverRankings = sqliteTable('ServerRanking', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
-  serverId: text('serverId').notNull().unique().references(() => servers.id, { onDelete: 'cascade' }),
+  serverId: text('serverId').notNull().references(() => servers.id, { onDelete: 'cascade' }),
   period: text('period').notNull(), // week, month
   rank: integer('rank').notNull(),
   score: real('score').notNull(),
@@ -277,6 +277,7 @@ export const serverRankings = sqliteTable('ServerRanking', {
 }, (table) => [
   index('ServerRanking_period_startDate_idx').on(table.period, table.startDate),
   index('ServerRanking_rank_idx').on(table.rank),
+  index('ServerRanking_serverId_period_unique').on(table.serverId, table.period),
 ])
 
 export const reviews = sqliteTable('Review', {
