@@ -3,23 +3,7 @@ import { db } from '@/lib/db'
 import { servers } from '@/lib/db/schema'
 import { eq, and, isNotNull } from 'drizzle-orm'
 import { checkServerHealth } from '@/app/actions/health'
-
-function verifyCronAuth(req: NextRequest): NextResponse | null {
-  const authHeader = req.headers.get('authorization')
-  const token = (authHeader?.replace('Bearer ', '') ?? '').trim()
-  const urlSecret = (new URL(req.url).searchParams.get('secret') ?? '').trim()
-  const expected = (process.env.CRON_SECRET ?? '').trim()
-
-  if (!expected) {
-    return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 })
-  }
-
-  if (token !== expected && urlSecret !== expected) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
-  return null
-}
+import { verifyCronAuth } from '@/lib/cron-auth'
 
 export async function GET(req: NextRequest) {
   const unauthorized = verifyCronAuth(req)

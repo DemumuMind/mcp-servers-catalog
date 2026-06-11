@@ -9,7 +9,7 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     ? new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     : new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
 
-  // Aggregate metrics per server for the period
+  // Aggregate metrics per server for the period — single batch query approach
   const serverRows = await db.select({
     id: servers.id,
     name: servers.name,
@@ -17,27 +17,36 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     forks: servers.forks,
   }).from(servers)
 
-  const rankingData = await Promise.all(
-    serverRows.map(async (server: any) => {
-      const [viewResult, bookmarkResult, ratingResult, commentResult] = await Promise.all([
-        db.select({ count: count() }).from(viewHistories).where(
-          and(eq(viewHistories.serverId, server.id), gte(viewHistories.createdAt, startDate))
-        ),
-        db.select({ count: count() }).from(bookmarks).where(
-          and(eq(bookmarks.serverId, server.id), gte(bookmarks.createdAt, startDate))
-        ),
-        db.select({ count: count() }).from(ratings).where(
-          and(eq(ratings.serverId, server.id), gte(ratings.createdAt, startDate))
-        ),
-        db.select({ count: count() }).from(comments).where(
-          and(eq(comments.serverId, server.id), gte(comments.createdAt, startDate))
-        ),
-      ])
+  // Batch aggregate views, bookmarks, ratings, comments in single queries
+  const [viewAgg, bookmarkAgg, ratingAgg, commentAgg] = await Promise.all([
+    db.select({ serverId: viewHistories.serverId, count: count() })
+      .from(viewHistories)
+      .where(gte(viewHistories.createdAt, startDate))
+      .groupBy(viewHistories.serverId) as unknown as any[],
+    db.select({ serverId: bookmarks.serverId, count: count() })
+      .from(bookmarks)
+      .where(gte(bookmarks.createdAt, startDate))
+      .groupBy(bookmarks.serverId) as unknown as any[],
+    db.select({ serverId: ratings.serverId, count: count() })
+      .from(ratings)
+      .where(gte(ratings.createdAt, startDate))
+      .groupBy(ratings.serverId) as unknown as any[],
+    db.select({ serverId: comments.serverId, count: count() })
+      .from(comments)
+      .where(gte(comments.createdAt, startDate))
+      .groupBy(comments.serverId) as unknown as any[],
+  ])
 
-      const views = viewResult[0]?.count ?? 0
-      const bookmarkCount = bookmarkResult[0]?.count ?? 0
-      const ratingCount = ratingResult[0]?.count ?? 0
-      const commentCount = commentResult[0]?.count ?? 0
+  const viewMap = new Map(viewAgg.map((r: any) => [r.serverId, r.count]))
+  const bookmarkMap = new Map(bookmarkAgg.map((r: any) => [r.serverId, r.count]))
+  const ratingMap = new Map(ratingAgg.map((r: any) => [r.serverId, r.count]))
+  const commentMap = new Map(commentAgg.map((r: any) => [r.serverId, r.count]))
+
+  const rankingData = serverRows.map((server: any) => {
+    const views = viewMap.get(server.id) ?? 0
+    const bookmarkCount = bookmarkMap.get(server.id) ?? 0
+    const ratingCount = ratingMap.get(server.id) ?? 0
+    const commentCount = commentMap.get(server.id) ?? 0
 
       // Composite score: views(1) + bookmarks(3) + ratings(2) + comments(2) + stars(0.5)
       const score = views * 1 + bookmarkCount * 3 + ratingCount * 2 + commentCount * 2 + (server.stars || 0) * 0.5
@@ -50,7 +59,6 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
         ratings: ratingCount,
       }
     })
-  )
 
   // Sort by score descending
   const sorted = rankingData
@@ -62,23 +70,25 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     and(eq(serverRankings.period, period), gte(serverRankings.startDate, startDate))
   )
 
-  // Insert new rankings
+  // Insert new rankings (batch to avoid DB lock contention)
   const endDate = now
-  await Promise.all(
-    sorted.map((r: any, index: any) =>
-      db.insert(serverRankings).values({
-        serverId: r.serverId,
-        period,
-        rank: index + 1,
-        score: r.score,
-        views: r.views,
-        bookmarks: r.bookmarks,
-        ratings: r.ratings,
-        startDate,
-        endDate,
-      })
-    )
-  )
+  const insertValues = sorted.map((r: any, index: any) => ({
+    serverId: r.serverId,
+    period,
+    rank: index + 1,
+    score: r.score,
+    views: r.views,
+    bookmarks: r.bookmarks,
+    ratings: r.ratings,
+    startDate,
+    endDate,
+  }))
+
+  // Insert in chunks of 50 to avoid overwhelming libsql
+  for (let i = 0; i < insertValues.length; i += 50) {
+    const chunk = insertValues.slice(i, i + 50)
+    await db.insert(serverRankings).values(chunk)
+  }
 
   return { computed: sorted.length, period }
 }

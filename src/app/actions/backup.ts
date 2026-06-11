@@ -49,8 +49,7 @@ function createDbClient(): Client {
   return createClient({ url })
 }
 
-export async function backupDatabase(): Promise<string> {
-  const userId = await requireAdmin()
+export async function backupDatabase(userId?: string): Promise<string> {
   const client = createDbClient()
 
   try {
@@ -96,7 +95,7 @@ export async function backupDatabase(): Promise<string> {
       }
     }
 
-    try { await logAudit('system.backup', undefined, undefined, { timestamp: new Date().toISOString() }, userId) } catch { /* audit log failure — non-critical */ }
+    try { if (userId) await logAudit('system.backup', undefined, undefined, { timestamp: new Date().toISOString() }, userId) } catch { /* audit log failure — non-critical */ }
     return sql
   } finally {
     client.close()

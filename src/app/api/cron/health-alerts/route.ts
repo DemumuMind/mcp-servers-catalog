@@ -3,23 +3,7 @@ import { db } from '@/lib/db'
 import { servers, healthChecks, notifications } from '@/lib/db/schema'
 import { eq, and, gte, isNotNull, sql } from 'drizzle-orm'
 import { createNotification } from '@/app/actions/notifications'
-
-function verifyCronAuth(req: NextRequest | Request): NextResponse | null {
-  const authHeader = req.headers.get('authorization')
-  const token = authHeader?.replace('Bearer ', '')
-  const urlSecret = new URL(req.url).searchParams.get('secret')
-  const expected = process.env.CRON_SECRET
-
-  if (!expected || expected === '') {
-    return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 })
-  }
-
-  if (token !== expected && urlSecret !== expected) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
-  return null
-}
+import { verifyCronAuth } from '@/lib/cron-auth'
 
 export async function GET(req: NextRequest) {
   const unauthorized = verifyCronAuth(req)
@@ -42,16 +26,16 @@ export async function GET(req: NextRequest) {
           isNotNull(servers.authorId),
           // NOT EXISTS: no online health check in last 3 days
           sql`NOT EXISTS (
-            SELECT 1 FROM health_checks hc
-            WHERE hc.server_id = ${servers.id}
-              AND hc.status = 'online'
-              AND hc.created_at >= ${threeDaysAgo}
+            SELECT 1 FROM "HealthCheck" hc
+            WHERE hc."serverId" = ${servers.id}
+              AND hc."status" = 'online'
+              AND hc."createdAt" >= ${threeDaysAgo}
           )`,
           // EXISTS: some health check exists in last 3 days
           sql`EXISTS (
-            SELECT 1 FROM health_checks hc
-            WHERE hc.server_id = ${servers.id}
-              AND hc.created_at >= ${threeDaysAgo}
+            SELECT 1 FROM "HealthCheck" hc
+            WHERE hc."serverId" = ${servers.id}
+              AND hc."createdAt" >= ${threeDaysAgo}
           )`
         )
       )
