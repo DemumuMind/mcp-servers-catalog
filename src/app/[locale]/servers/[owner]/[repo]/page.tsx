@@ -32,35 +32,58 @@ import { isStripeEnabled } from '@/lib/stripe'
 import { PageShell } from '@/components/page-components'
 import { ServerHealthBadge } from '@/components/server-health-badge'
 import { getTranslations } from 'next-intl/server'
+import { generateServerJsonLd, generateBreadcrumbJsonLd } from '@/lib/json-ld'
+
+const SITE_URL = process.env.SITE_URL || 'https://mcpservers.org'
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ owner: string; repo: string; locale: string }>
 }): Promise<Metadata> {
-  const { owner, repo } = await params
+  const { owner, repo, locale } = await params
   const server = await getServerBySlug(owner, repo)
 
   if (!server) {
     return { title: 'Server not found' }
   }
 
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const ogImageUrl = `${SITE_URL}/api/og/${owner}/${repo}`
+  const canonicalUrl = `${SITE_URL}/en/servers/${owner}/${repo}`
 
   return {
     title: `${server.name} — MCP Server`,
     description: server.description,
+    keywords: [server.category, ...server.tags, 'MCP', 'Model Context Protocol'],
     openGraph: {
-      title: server.name,
+      title: `${server.name} — MCP Server`,
       description: server.description,
       type: 'article',
-      images: [`${baseUrl}/api/og/${owner}/${repo}`],
+      url: `${SITE_URL}/${locale}/servers/${owner}/${repo}`,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: server.name,
+        },
+      ],
+      publishedTime: server.createdAt.toISOString(),
+      modifiedTime: server.updatedAt.toISOString(),
+      tags: server.tags,
     },
     twitter: {
       card: 'summary_large_image',
-      title: server.name,
+      title: `${server.name} — MCP Server`,
       description: server.description,
-      images: [`${baseUrl}/api/og/${owner}/${repo}`],
+      images: [ogImageUrl],
+    },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        en: `${SITE_URL}/en/servers/${owner}/${repo}`,
+        ru: `${SITE_URL}/ru/servers/${owner}/${repo}`,
+      },
     },
   }
 }
@@ -75,8 +98,7 @@ export default async function ServerDetailPage({
   const { owner, repo, locale } = await params
   const query = await searchParams
   const server = await getServerBySlug(owner, repo)
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
-  const serverUrl = `${baseUrl}/${locale}/servers/${owner}/${repo}`
+  const serverUrl = `${SITE_URL}/${locale}/servers/${owner}/${repo}`
 
   if (!server) {
     notFound()
@@ -104,38 +126,41 @@ export default async function ServerDetailPage({
   const isBookmarked = userId ? await isServerBookmarked(userId, server.id) : false
   const t = await getTranslations({ locale, namespace: 'ServerDetail' })
 
-  const jsonLd = {
-    '@context': process.env.NEXT_PUBLIC_SCHEMA_ORG_URL || 'https://schema.org',
-    '@type': 'SoftwareApplication',
+  // Structured data using JSON-LD helpers
+  const serverJsonLd = generateServerJsonLd({
     name: server.name,
     description: server.description,
-    applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'Any',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    aggregateRating: rating.count > 0 ? {
-      '@type': 'AggregateRating',
-      ratingValue: Number(rating.average as string | number).toFixed(1),
-      ratingCount: rating.count,
-    } : undefined,
-    codeRepository: server.githubUrl,
-    programmingLanguage: 'TypeScript',
-    author: author ? {
-      '@type': 'Person',
-      name: author.name || author.email,
-    } : undefined,
-    datePublished: server.createdAt.toISOString(),
-    dateModified: server.updatedAt.toISOString(),
-  }
+    owner: server.owner,
+    repo: server.repo,
+    githubUrl: server.githubUrl,
+    stars: server.stars,
+    forks: server.forks,
+    tags: server.tags as string[] | null,
+    category: server.category,
+    isRemote: server.isRemote,
+    endpoint: server.endpoint,
+    createdAt: server.createdAt,
+    updatedAt: server.updatedAt,
+    ratingAverage: rating.average != null ? Number(rating.average) : null,
+    ratingCount: rating.count,
+    authorName: author?.name ?? null,
+  })
+
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: 'Home', url: `${SITE_URL}/${locale}` },
+    { name: 'Servers', url: `${SITE_URL}/${locale}/servers` },
+    { name: server.name, url: `${SITE_URL}/${locale}/servers/${owner}/${repo}` },
+  ])
 
   return (
     <PageShell className="space-y-8">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serverJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {checkoutStatus === 'success' && (
