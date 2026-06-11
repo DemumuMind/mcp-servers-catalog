@@ -1,133 +1,145 @@
 # Awesome MCP Servers
 
-Коллекция серверов и клиентов для Model Context Protocol (MCP). Платформа для поиска, сравнения и обмена MCP серверами.
+Каталог серверов и клиентов для Model Context Protocol (MCP). Платформа для поиска, сравнения и обмена MCP серверами.
 
-## 🚀 Функции
+## Функции
 
 ### Для пользователей
-- 🔍 **Поиск и фильтрация** — находите серверы по категориям, тегам, названию
-- ⭐ **Закладки** — сохраняйте понравившиеся серверы
-- ⭐ **Оценки** — ставьте рейтинг серверам 1-5 звёзд
-- 💬 **Комментарии** — обсуждайте серверы с сообществом
-- 📊 **История просмотров** — отслеживайте просмотренные серверы
-- 🔔 **Уведомления** — получайте уведомления о статусе заявок и ответах
-- 👤 **Профиль** — управляйте своим аккаунтом, закладками, комментариями
+- Поиск и фильтрация — по категориям, тегам, названию, официальности, remote
+- Сравнение серверов — side-by-side таблица до 6 серверов (/compare)
+- Закладки — сохраняйте понравившиеся серверы
+- Оценки — рейтинг 1-5 звёзд
+- Комментарии — обсуждайте серверы с сообществом
+- История просмотров — отслеживайте просмотренные серверы
+- Уведомления — о статусе заявок и ответах
+- Профиль — аккаунт, закладки, комментарии
+- PWA — офлайн-доступ, установка на рабочий стол
 
 ### Для администраторов
-- 📋 **Управление заявками** — одобрение, отклонение, удаление
-- 📊 **Аналитика** — графики, статистика, экспорт CSV
-- 🔄 **Синхронизация GitHub** — автоматическое обновление stars/forks
-- 💾 **Бэкап и восстановление** — SQL дампы базы данных
-- 📡 **RSS/JSON Feed** — фиды с новыми серверами
+- Управление заявками — одобрение, отклонение, удаление
+- Аналитика — графики, статистика, экспорт CSV
+- Синхронизация GitHub — batch-обработка с rate limit tracking
+- Бэкап и восстановление — SQL дампы базы данных
+- RSS/JSON Feed — фиды с новыми серверами
+- 8 cron endpoints — здоровье, рейтинги, дайджест, бэкап и др.
 
-## 🛠 Технологии
+### Для разработчиков
+- REST API v2 — /api/v1/servers, /api/v1/stats, /api/v1/export, /api/v1/search
+- OpenAPI 3.0 спецификация — /api/docs
+- GraphQL endpoint — /api/graphql
+- Pagination headers — Link, X-Total-Count, X-RateLimit-*
+- Cache-Control — на статичных endpoints
 
-- **Next.js 16** — App Router, Server Actions
-- **Prisma 7 + PGLite** — ORM и встроенная PostgreSQL
-- **NextAuth v5** — аутентификация (email/password + admin credentials)
+## Технологии
+
+- **Next.js 16** — App Router, Server Actions, Turbopack
+- **Drizzle ORM + Turso (libsql)** — ORM и SQLite-совместимая БД
+- **NextAuth v5** — аутентификация (email/password + GitHub OAuth)
+- **next-intl** — интернационализация (EN/RU), i18n в admin
 - **Tailwind CSS + shadcn/ui** — стилизация и компоненты
 - **recharts** — графики и аналитика
-- **Playwright + Vitest** — тестирование
+- **Service Worker** — PWA, offline fallback, stale-while-revalidate
 
-## 📦 Установка
+## Установка
 
 ```bash
-# Клонирование
 git clone <repo-url>
 cd mcpservers-clone
 
-# Настройка окружения до npm install: postinstall запускает Prisma
 cp .env.example .env
-# Отредактируйте .env: DATABASE_DIR, DATABASE_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
+# Отредактируйте .env (см. таблицу ниже)
 
-# Установка зависимостей и генерация Prisma Client
 npm install
 
-# Схема БД и стартовые данные
-npm run db:init
+# Инициализация БД и seed данные
+npx drizzle-kit push
 npm run db:seed
 
 # Запуск dev сервера
 npm run dev
 ```
 
+> **WSL:** Dev сервер запускайте из PowerShell (`npx next dev`), не из WSL — libsql lockfile не работает на NTFS через WSL.
+
 ### Переменные окружения
 
 | Переменная | Описание | Обязательная |
 |---|---|---|
-| `DATABASE_DIR` | Путь к PGLite директории | Да |
-| `DATABASE_URL` | Safe URL для Prisma generate или внешний PostgreSQL для production | Да |
+| `DATABASE_URL` | Turso/local DB: `file:.turso/local.db` или `libsql://...` | Да |
+| `DATABASE_AUTH_TOKEN` | Turso auth token (для remote DB) | Для remote |
 | `AUTH_SECRET` | Секрет NextAuth | Да |
-| `ADMIN_EMAIL` | Email администратора | Да |
 | `ADMIN_PASSWORD` | Пароль администратора | Да |
-| `GITHUB_TOKEN` | GitHub PAT для API | Нет |
+| `CRON_SECRET` | Секрет для cron endpoints | Да |
+| `GITHUB_TOKEN` | GitHub PAT для sync (scopes: `public_repo`) | Нет |
+| `GITHUB_CLIENT_ID` | GitHub OAuth (для логина) | Нет |
+| `GITHUB_CLIENT_SECRET` | GitHub OAuth secret | Нет |
 | `SMTP_*` | Настройки почты для уведомлений | Нет |
+| `SITE_URL` | URL сайта для RSS/OG (default: `https://mcpservers.org`) | Нет |
 
-## 🚢 Деплой
+## Структура проекта
 
-### Vercel
-1. Подключите репозиторий к Vercel
-2. Установите переменные окружения в dashboard
-3. Деплой произойдёт автоматически
-
-### Docker
-```bash
-docker-compose up -d
+```
+src/
+├── app/
+│   ├── [locale]/          # Публичные страницы (i18n)
+│   │   ├── page.tsx       # Homepage
+│   │   ├── servers/       # Каталог серверов + детали [owner]/[repo]
+│   │   ├── compare/       # Сравнение side-by-side
+│   │   ├── clients/       # Каталог клиентов
+│   │   ├── rankings/      # Рейтинги
+│   │   ├── all/           # Все серверы с поиском
+│   │   └── ...            # guide, about-mcp, ecosystem, badges, etc.
+│   ├── admin/             # Админ-панель (7 страниц, i18n)
+│   ├── api/
+│   │   ├── v1/            # REST API v1/v2
+│   │   ├── cron/          # 8 cron endpoints (shared auth)
+│   │   ├── feed/          # RSS + JSON feed
+│   │   ├── docs/          # OpenAPI спецификация
+│   │   ├── graphql/       # GraphQL
+│   │   └── embed/         # Embed widget
+│   └── actions/           # 42 server actions
+├── components/            # 96 компонентов
+├── lib/
+│   ├── db.ts              # Drizzle + Turso connection manager
+│   ├── db/schema.ts       # 21 таблица, Drizzle schema
+│   ├── db/relations.ts    # Drizzle relations
+│   ├── cron-auth.ts       # Shared cron verification (trim)
+│   ├── github.ts          # GitHub API + rate limit tracking
+│   ├── json-ld.ts         # SEO structured data generators
+│   └── ...
+└── messages/              # next-intl: en.json, ru.json
 ```
 
-### Самостоятельный сервер
-```bash
-npm run build
-npm start
-```
+## Деплой
 
-## 📝 API
+См. [docs/DEPLOY.md](docs/DEPLOY.md).
 
-### Server Actions
+## API
 
-- `getServersPublic(page, search, category, tag)` — получить серверы
-- `toggleBookmark(userId, serverId)` — добавить/удалить закладку
-- `rateServer(userId, serverId, value)` — оценить сервер
-- `addComment(userId, serverId, content)` — добавить комментарий
-- `searchServers(query)` — умный поиск с ранжированием
+См. [docs/API.md](docs/API.md) и интерактивную документацию на `/api/docs`.
 
-См. [docs/API.md](docs/API.md) для полной документации.
+## Cron Endpoints
 
-## 🧪 Тесты
+Все cron endpoints требуют `?secret=<CRON_SECRET>` query параметр.
 
-```bash
-# Линтинг
-npm run lint
+| Endpoint | Описание |
+|---|---|
+| `/api/cron/health-checks` | Проверка здоровья серверов |
+| `/api/cron/health-alerts` | Алерты при проблемах |
+| `/api/cron/rankings` | Вычисление рейтингов (week/month) |
+| `/api/cron/sync-github` | Синхронизация GitHub (batch, rate limit) |
+| `/api/cron/backup` | Бэкап БД |
+| `/api/cron/cleanup` | Очистка старых данных |
+| `/api/cron/digest` | Email дайджест |
+| `/api/cron/expire-premium` | Снятие истёкших премиумов |
 
-# Проверка TypeScript
-npm run typecheck
+## SEO
 
-# Unit тесты
-npm run test:unit
+- `robots.txt` — блокирует /admin, /api, /profile
+- `sitemap.xml` — динамический, 3,000+ URLs
+- JSON-LD — WebSite, Organization, SoftwareApplication, BreadcrumbList
+- Open Graph + Twitter Cards — на всех страницах
 
-# Быстрая локальная проверка без E2E
-npm run validate
-
-# E2E тесты
-npm run test:e2e
-```
-
-## 🎨 Брендовые ассеты
-
-Логотип, PWA-иконки, favicon, OG-изображение и manifest screenshots генерируются из единого SVG-источника:
-
-- `src/lib/brand-svg.ts` — геометрия логотипа и SVG-шаблоны
-- `scripts/generate-brand-assets.ts` — генерация PNG/SVG/ICO файлов
-- `scripts/check-brand-assets.ts` — проверка ссылок и размеров из `public/manifest.json`
-
-```bash
-# Перегенерировать все брендовые файлы
-npm run brand:assets
-
-# Проверить, что manifest assets существуют и имеют верные размеры
-npm run brand:check
-```
-
-## 📄 Лицензия
+## Лицензия
 
 MIT

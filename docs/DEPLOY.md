@@ -3,42 +3,89 @@
 ## Vercel (Рекомендуется)
 
 ### Подготовка
-1. Форкните или загрузите репозиторий на GitHub
-2. Убедитесь, что `next.config.ts` настроен с `output: 'standalone'`
+1. Форкните репозиторий на GitHub
+2. Создайте Turso DB: `turso db create mcpservers`
+3. Получите URL и auth token: `turso db show mcpservers --url` и `turso db tokens create mcpservers`
 
 ### Деплой
-1. Зайдите в [Vercel Dashboard](https://vercel.com)
-2. Импортируйте репозиторий
-3. Настройте переменные окружения:
-   - `DATABASE_URL` — внешний PostgreSQL URL (Neon, Supabase, Vercel Postgres). Для serverless production PGLite в файловой системе не подходит.
-   - `AUTH_SECRET` — случайная строка (генерируйте через `openssl rand -base64 32`)
-   - `ADMIN_EMAIL` и `ADMIN_PASSWORD`
-   - `GITHUB_TOKEN` (опционально)
-4. Деплой запустится автоматически
+1. Импортируйте репозиторий в [Vercel Dashboard](https://vercel.com)
+2. Настройте переменные окружения:
+   - `DATABASE_URL` — Turso URL (`libsql://mcpservers-xxx.turso.io`)
+   - `DATABASE_AUTH_TOKEN` — Turso auth token
+   - `AUTH_SECRET` — `openssl rand -base64 32`
+   - `ADMIN_PASSWORD` — пароль администратора
+   - `CRON_SECRET` — секрет для cron endpoints
+   - `GITHUB_TOKEN` — (опционально) для sync-github
+3. Деплой запустится автоматически
 
 ### После деплоя
-- Примените схему к внешней PostgreSQL базе перед первым запуском production трафика. Минимальный вариант: выполните SQL из `prisma/full-schema.sql` любым клиентом PostgreSQL для вашего провайдера.
-- Создайте стартового администратора через API или добавьте вручную в БД. Локальная команда `npm run db:seed` предназначена для PGLite setup и не заменяет seed внешней production БД.
-- Настройте SMTP для email-уведомлений (опционально)
+- Примените схему к Turso: `npx drizzle-kit push`
+- Seed: `npm run db:seed` (создаёт admin + 3 демо-сервера)
+- Настройте Vercel Cron для вызова `/api/cron/*` endpoints
+
+### Vercel Cron
+Добавьте в `vercel.json`:
+```json
+{
+  "crons": [
+    { "path": "/api/cron/health-checks?secret=YOUR_CRON_SECRET", "schedule": "0 */6 * * *" },
+    { "path": "/api/cron/rankings?secret=YOUR_CRON_SECRET", "schedule": "0 0 * * *" },
+    { "path": "/api/cron/sync-github?secret=YOUR_CRON_SECRET&limit=100", "schedule": "0 3 * * *" },
+    { "path": "/api/cron/cleanup?secret=YOUR_CRON_SECRET", "schedule": "0 4 * * 0" }
+  ]
+}
+```
+
+## Локальная разработка
+
+### Требования
+- Node.js 20+
+- npm
+
+### Установка
+```bash
+cp .env.example .env
+# Настройте .env
+
+npm install
+
+# Инициализация локальной Turso DB
+npx drizzle-kit push
+npm run db:seed
+
+# Dev сервер
+npm run dev
+```
+
+> **WSL:** Запускайте dev сервер из PowerShell. Libsql lockfile не работает на NTFS через WSL — используйте `powershell.exe -Command "npx next dev --port 3000"`.
+
+### Локальная БД
+По умолчанию `DATABASE_URL=file:.turso/local.db` — локальный SQLite файл через libsql.
+Схема: 21 таблица, Drizzle ORM. Миграция: `npx drizzle-kit push`.
+
+### Миграции
+```bash
+# Применить схему к DB (create/alter tables)
+npx drizzle-kit push
+
+# Генерация SQL миграции (для ручного контроля)
+npx drizzle-kit generate
+
+# Применить сгенерированную миграцию
+npx drizzle-kit migrate
+```
 
 ## Docker
 
-### Требования
-- Docker и Docker Compose
-
 ### Запуск
 ```bash
-# Клонирование и запуск
 git clone <repo-url>
 cd mcpservers-clone
 docker-compose up -d
 
-# Просмотр логов
+# Логи
 docker-compose logs -f app
 ```
-
-### Конфигурация
-Переименуйте `.env.example` в `.env` и настройте переменные.
 
 ### Обновление
 ```bash
@@ -49,32 +96,10 @@ docker-compose up -d --build
 
 ## Самостоятельный сервер
 
-### Требования
-- Node.js 20+
-- npm или yarn
-
-### Установка
-```bash
-# Настройка окружения до npm install: postinstall запускает Prisma
-cp .env.example .env
-# Отредактируйте .env: DATABASE_DIR, DATABASE_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
-
-npm install
-
-# Инициализация PGLite схемы и стартовых данных
-npm run db:init
-npm run db:seed
-
-# Сборка
-npm run build
-
-# Запуск
-npm start
-```
-
-### PM2 (процесс-менеджер)
+### PM2
 ```bash
 npm install -g pm2
+npm run build
 pm2 start npm --name "mcp-servers" -- start
 pm2 save
 pm2 startup
@@ -85,69 +110,85 @@ pm2 startup
 ### Обязательные
 | Переменная | Описание | Пример |
 |---|---|---|
-| `DATABASE_DIR` | Путь к PGLite | `./.pglite` |
-| `DATABASE_URL` | Внешний PostgreSQL для Vercel/serverless production | `postgresql://user:password@host/db?sslmode=require` |
-| `AUTH_SECRET` | JWT секрет NextAuth | `base64-encoded-secret` |
-| `ADMIN_EMAIL` | Email админа | `admin@example.com` |
-| `ADMIN_PASSWORD` | Пароль админа | `admin123` |
+| `DATABASE_URL` | Turso/local DB URL | `file:.turso/local.db` или `libsql://db.turso.io` |
+| `AUTH_SECRET` | JWT секрет NextAuth | `openssl rand -base64 32` |
+| `ADMIN_PASSWORD` | Пароль администратора | `secure-password` |
+| `CRON_SECRET` | Секрет для cron endpoints | `random-36-char-string` |
+
+### Turso Remote
+| Переменная | Описание |
+|---|---|
+| `DATABASE_AUTH_TOKEN` | Turso auth token (для remote DB) |
 
 ### Опциональные
 | Переменная | Описание |
 |---|---|
-| `GITHUB_TOKEN` | GitHub PAT для синхронизации stars/forks |
-| `SMTP_HOST` | SMTP сервер для email |
-| `SMTP_PORT` | Порт SMTP |
-| `SMTP_USER` | SMTP пользователь |
-| `SMTP_PASS` | SMTP пароль |
-| `CRON_SECRET` | Секрет для cron endpoints |
-| `SITE_URL` | URL сайта для RSS/фидов |
+| `GITHUB_TOKEN` | GitHub PAT для sync (scopes: `public_repo`) |
+| `GITHUB_CLIENT_ID` | GitHub OAuth для логина |
+| `GITHUB_CLIENT_SECRET` | GitHub OAuth secret |
+| `SITE_URL` | URL сайта для RSS/OG (default: `https://mcpservers.org`) |
+| `SMTP_HOST/PORT/USER/PASS` | SMTP для email уведомлений |
+| `STRIPE_SECRET_KEY` | Stripe для премиум-размещений |
+| `SENTRY_DSN` | Sentry error tracking |
+| `SYNC_BATCH_SIZE` | Чанк для sync-github (default: 50) |
+| `SYNC_CHUNK_DELAY_MS` | Пауза между чанками (default: 1000) |
+| `SYNC_RATE_LIMIT_THRESHOLD` | Пауза если GitHub API remaining < N (default: 100) |
 
 ## Безопасность
 
-1. **AUTH_SECRET** — всегда используйте случайную строку длиной 32+ символов
-2. **ADMIN_PASSWORD** — используйте надёжный пароль
-3. **GITHUB_TOKEN** — храните в безопасности, используйте minimal scopes
-4. **CRON_SECRET** — защищает cron endpoints от случайных вызовов
+1. **AUTH_SECRET** — случайная строка 32+ символов
+2. **ADMIN_PASSWORD** — надёжный пароль
+3. **CRON_SECRET** — 36+ символов, защищает cron endpoints. `.trim()` обязателен (env whitespace баг)
+4. **GITHUB_TOKEN** — минимальные scopes (`public_repo`)
+5. **DATABASE_AUTH_TOKEN** — не коммитьте в репозиторий
 
 ## Мониторинг
 
 ### Health Check
-- Главная страница: `GET /ru`
-- RSS фид: `GET /api/feed/rss`
+- Homepage: `GET /en` (200)
+- API: `GET /api/v1/stats` (200)
+- RSS: `GET /api/feed/rss` (200)
 
-### Логи
-- Vercel: Dashboard → Logs
-- Docker: `docker-compose logs -f app`
-- PM2: `pm2 logs mcp-servers`
+### Cron Status
+Все cron endpoints возвращают JSON с результатом. Мониторьте `failed` и `rateLimitRemaining`.
 
 ## Резервное копирование
 
-### PGLite
-PGLite хранит данные в файловой системе. Для резервного копирования:
+### Turso
 ```bash
-# Копирование директории
-cp -r .pglite .pglite-backup-$(date +%Y%m%d)
+turso db dump mcpservers > backup-$(date +%Y%m%d).sql
 ```
 
-### Или через админ-панель
-Используйте функцию "Бэкап" в админ-панели для создания SQL дампа.
+### Локальная DB
+```bash
+cp .turso/local.db .turso/local.db.bak
+```
+
+### Через cron endpoint
+`GET /api/cron/backup?secret=<CRON_SECRET>` — создаёт SQL дамп.
 
 ## Обновление
 
-1. Сделайте бэкап данных
-2. Загрузите новую версию кода
-3. Перегенерируйте Prisma Client: `npx prisma generate`
-4. Запустите миграции (если есть новые)
-5. Пересоберите: `npm run build`
-6. Перезапустите сервер
+1. Бэкап БД
+2. `git pull`
+3. `npx drizzle-kit push` — применить новую схему
+4. `npm install` — обновить зависимости
+5. `npm run build` — пересобрать
+6. Перезапустить сервер
 
 ## Устранение неполадок
 
-### Ошибка "DATABASE_URL not found"
-Для локального/self-hosted запуска PGLite использует `DATABASE_DIR`. Для Vercel/serverless production нужен внешний `DATABASE_URL`, иначе приложение перейдет в fallback без реальной БД.
+### "libsql lockfile" ошибка (WSL)
+Не запускайте `npm run dev` из WSL. Используйте PowerShell:
+```bash
+powershell.exe -Command "cd C:\path\to\project; npx next dev --port 3000"
+```
 
-### Ошибка Prisma "model not found"
-Запустите `npx prisma generate` для перегенерации клиента.
+### Cron 401 (Unauthorized)
+Проверьте: (1) CRON_SECRET в .env без trailing whitespace, (2) `?secret=` параметр совпадает полностью, (3) `verifyCronAuth` использует `.trim()`.
+
+### Rankings 500 (UNIQUE constraint)
+ServerRanking имеет unique index `(serverId, period)`. Если возникает — запустите `npx drizzle-kit push` для обновления схемы.
 
 ### Turbopack cache corruption
 ```bash
@@ -155,5 +196,7 @@ rm -rf .next
 npm run dev
 ```
 
-### Сбой билда с PGLite
-Убедитесь, что все страницы админки объявляют `export const dynamic = 'force-dynamic'`.
+### Drizzle "model not found"
+```bash
+npx drizzle-kit push
+```
