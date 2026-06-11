@@ -6,11 +6,11 @@ import { checkServerHealth } from '@/app/actions/health'
 
 function verifyCronAuth(req: NextRequest): NextResponse | null {
   const authHeader = req.headers.get('authorization')
-  const token = authHeader?.replace('Bearer ', '')
-  const urlSecret = new URL(req.url).searchParams.get('secret')
-  const expected = process.env.CRON_SECRET
+  const token = (authHeader?.replace('Bearer ', '') ?? '').trim()
+  const urlSecret = (new URL(req.url).searchParams.get('secret') ?? '').trim()
+  const expected = (process.env.CRON_SECRET ?? '').trim()
 
-  if (!expected || expected === '') {
+  if (!expected) {
     return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 })
   }
 
