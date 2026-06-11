@@ -65,10 +65,8 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     .filter((r: any) => r.score > 0)
     .sort((a: any, b: any) => b.score - a.score)
 
-  // Clear old rankings for this period
-  await db.delete(serverRankings).where(
-    and(eq(serverRankings.period, period), gte(serverRankings.startDate, startDate))
-  )
+  // Clear ALL old rankings for this period (not just gte startDate — avoid unique constraint violations)
+  await db.delete(serverRankings).where(eq(serverRankings.period, period))
 
   // Insert new rankings (batch to avoid DB lock contention)
   const endDate = now
@@ -84,10 +82,9 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     endDate,
   }))
 
-  // Insert in chunks of 50 to avoid overwhelming libsql
-  for (let i = 0; i < insertValues.length; i += 50) {
-    const chunk = insertValues.slice(i, i + 50)
-    await db.insert(serverRankings).values(chunk)
+  // Insert sequentially — libsql/local SQLite has write lock, no parallel/batch
+  for (const row of insertValues) {
+    await db.insert(serverRankings).values(row)
   }
 
   return { computed: sorted.length, period }

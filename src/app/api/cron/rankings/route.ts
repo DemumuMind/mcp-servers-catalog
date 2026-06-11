@@ -7,10 +7,8 @@ export async function GET(request: NextRequest) {
   if (unauthorized) return unauthorized
 
   try {
-    const [weekResult, monthResult] = await Promise.all([
-      computeServerRankings('week'),
-      computeServerRankings('month'),
-    ])
+    const weekResult = await computeServerRankings('week')
+    const monthResult = await computeServerRankings('month')
 
     return NextResponse.json({
       success: true,
@@ -19,6 +17,7 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error('Rankings cron error:', error)
-    return NextResponse.json({ error: 'Failed to compute rankings' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : String(error)
+    return NextResponse.json({ error: 'Failed to compute rankings', detail: msg }, { status: 500 })
   }
 }
