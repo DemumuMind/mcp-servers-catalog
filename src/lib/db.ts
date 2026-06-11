@@ -77,11 +77,4 @@ export * from './db/schema'
 // ─── Export raw client for direct SQL when Drizzle API is insufficient ──────
 export { getClient }
 
-// ─── Legacy compatibility (Prisma → Drizzle migration) ─────────────────────
-// Some files still import { prisma } — alias to Drizzle db instance
-export const prisma = db
 
-// Some files import { withDbRetry } — simple passthrough wrapper
-export async function withDbRetry<T>(fn: () => Promise<T>): Promise<T> {
-  return fn()
-}
