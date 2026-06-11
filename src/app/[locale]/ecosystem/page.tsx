@@ -5,7 +5,7 @@ import { Network } from 'lucide-react'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic' // revalidate = 86400
 
 export default async function EcosystemPage({
   params,

@@ -31,7 +31,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json(feed, {
     headers: {
-      'Cache-Control': 'public, max-age=3600',
+      'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
     },
   })
 }

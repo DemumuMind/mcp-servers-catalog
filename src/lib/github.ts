@@ -17,6 +17,114 @@ interface GitHubRepoData {
   repo: string
 }
 
+// ─── Rate limit tracking ────────────────────────────────────────────────────
+
+export interface RateLimitInfo {
+  remaining: number
+  limit: number
+  resetAt: Date
+}
+
+/** In-memory rate limit state, updated from every API response header. */
+let cachedRateLimit: RateLimitInfo = {
+  remaining: 5000,
+  limit: 5000,
+  resetAt: new Date(0),
+}
+
+/**
+ * Update the cached rate limit info from a GitHub API response's headers.
+ * Called automatically by `githubFetch` after every request.
+ */
+function updateRateLimitFromHeaders(headers: Headers): void {
+  const remaining = headers.get('x-ratelimit-remaining')
+  const limit = headers.get('x-ratelimit-limit')
+  const reset = headers.get('x-ratelimit-reset')
+
+  if (remaining !== null) {
+    cachedRateLimit.remaining = parseInt(remaining, 10)
+    lastRateLimitUpdate = Date.now()
+  }
+  if (limit !== null) {
+    cachedRateLimit.limit = parseInt(limit, 10)
+  }
+  if (reset !== null) {
+    const resetEpoch = parseInt(reset, 10)
+    if (!isNaN(resetEpoch)) {
+      cachedRateLimit.resetAt = new Date(resetEpoch * 1000)
+    }
+  }
+}
+
+/**
+ * Get the current GitHub API rate limit info.
+ *
+ * If the cached info is stale (no recent API calls), this falls back to
+ * calling `GET /rate_limit` to get a fresh snapshot.
+ */
+/** Timestamp of the last time cachedRateLimit was updated from a response header. */
+let lastRateLimitUpdate = 0
+
+export async function getRateLimitInfo(): Promise<RateLimitInfo> {
+  // If we have fresh data from a recent API call (within last 60s), return it
+  if (Date.now() - lastRateLimitUpdate < 60_000) {
+    return { ...cachedRateLimit }
+  }
+
+  // Fallback: call the /rate_limit endpoint
+  try {
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github.v3+json',
+    }
+    if (GITHUB_TOKEN) {
+      headers.Authorization = `token ${GITHUB_TOKEN}`
+    }
+
+    const res = await fetch(`${GITHUB_API_BASE}/rate_limit`, { headers })
+    if (res.ok) {
+      const data = await res.json()
+      const core = data?.rate || data?.resources?.core
+      if (core) {
+        cachedRateLimit = {
+          remaining: core.remaining ?? cachedRateLimit.remaining,
+          limit: core.limit ?? cachedRateLimit.limit,
+          resetAt: new Date((core.reset ?? 0) * 1000),
+        }
+        lastRateLimitUpdate = Date.now()
+      }
+    }
+  } catch {
+    // Ignore — return whatever we have cached
+  }
+
+  return { ...cachedRateLimit }
+}
+
+/**
+ * If remaining rate limit is below the threshold, sleep until the reset time.
+ * Returns the updated rate limit info after waiting (or immediately if no wait).
+ */
+export async function waitForRateLimit(threshold: number = 100): Promise<RateLimitInfo> {
+  const info = await getRateLimitInfo()
+
+  if (info.remaining < threshold) {
+    const waitMs = info.resetAt.getTime() - Date.now() + 1000 // +1s buffer
+    if (waitMs > 0) {
+      console.warn(
+        `[rate-limit] Remaining ${info.remaining} < threshold ${threshold}. ` +
+        `Sleeping ${Math.round(waitMs / 1000)}s until reset at ${info.resetAt.toISOString()}`
+      )
+      await new Promise((resolve) => setTimeout(resolve, waitMs))
+    }
+    // Refresh after waiting
+    return getRateLimitInfo()
+  }
+
+  return info
+}
+
+// ─── Core fetch helpers ─────────────────────────────────────────────────────
+
 async function githubFetch(url: string): Promise<any> {
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github.v3+json',
@@ -26,6 +134,10 @@ async function githubFetch(url: string): Promise<any> {
   }
 
   const res = await fetch(url, { headers })
+
+  // Update rate limit tracking from response headers
+  updateRateLimitFromHeaders(res.headers)
+
   if (!res.ok) {
     if (res.status === 404) throw new Error('Repository not found')
     if (res.status === 403) throw new Error('GitHub API rate limit exceeded')

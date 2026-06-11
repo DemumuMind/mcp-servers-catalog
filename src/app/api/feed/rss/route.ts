@@ -51,7 +51,7 @@ export async function GET(request: Request) {
     return new NextResponse(rss, {
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600',
+        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
       },
     })
   }
@@ -88,7 +88,7 @@ export async function GET(request: Request) {
   return new NextResponse(rss, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600',
+      'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
     },
   })
 }

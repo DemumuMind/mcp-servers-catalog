@@ -64,12 +64,17 @@ export async function GET(request: Request) {
         headers: {
           'Content-Type': 'text/csv',
           'Content-Disposition': `attachment; filename="${table}.csv"`,
+          'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
         },
       })
     }
 
     // JSON
-    return NextResponse.json({ data, meta: { count: data.length, table } })
+    return NextResponse.json({ data, meta: { count: data.length, table } }, {
+      headers: {
+        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
+      },
+    })
   } catch (error) {
     console.error('Export error:', error)
     return NextResponse.json({ error: 'Export failed' }, { status: 500 })

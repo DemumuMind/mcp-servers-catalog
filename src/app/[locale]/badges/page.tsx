@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic' // revalidate = 86400
 
 const BADGE_DEFS = [
   { type: 'default', label: 'MCP', queryParam: '', nameKey: 'badgeDefaultName', descKey: 'badgeDefaultDesc' },

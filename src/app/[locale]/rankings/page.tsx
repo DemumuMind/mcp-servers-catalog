@@ -4,7 +4,7 @@ import { SectionHeader } from '@/components/section-header'
 import { Trophy } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic' // revalidate = 3600
 
 interface RankingItem {
   id: string

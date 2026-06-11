@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Activity, Zap, Shield, Globe } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic' // revalidate = 300
 
 export default async function ApiStatusPage({
   params,
