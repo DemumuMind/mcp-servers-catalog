@@ -1,7 +1,7 @@
 'use server'
 
 import { db, viewHistories, servers } from '@/lib/db'
-import { eq, and, desc, gte, sql } from 'drizzle-orm'
+import {eq,and,desc,gte, sql} from 'drizzle-orm'
 
 export async function recordView(
   userId: string | null,

@@ -1,8 +1,7 @@
-export const ITEMS_PER_PAGE = 24
-
 import { db, servers } from '@/lib/db'
 import { or, sql, desc, count } from 'drizzle-orm'
 
+export const ITEMS_PER_PAGE = 12
 
 /** Build search conditions from a search string — splits into words and creates AND logic across fields. */
 export function buildSearchConditions(search: string | undefined, serversTable: typeof servers): any[] {

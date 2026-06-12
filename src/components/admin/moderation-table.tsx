@@ -21,8 +21,8 @@ interface Comment {
   content: string
   isModerated: boolean
   createdAt: Date
-  user: { name: string | null; email: string | null } | null
-  server: { name: string | null; owner: string | null; repo: string | null } | null
+  user: { name: string | null; email: string }
+  server: { name: string; owner: string; repo: string }
 }
 
 interface ModerationTableProps {
@@ -153,22 +153,20 @@ export function ModerationTable({
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{comment.server?.name ?? 'Unknown'}</div>
-                      {comment.server && (
-                        <a
-                          href={`/servers/${comment.server.owner}/${comment.server.repo}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-                        >
-                          {comment.server.owner}/{comment.server.repo}
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      )}
+                      <div className="font-medium">{comment.server.name}</div>
+                      <a
+                        href={`/servers/${comment.server.owner}/${comment.server.repo}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline inline-flex items-center gap-1"
+                      >
+                        {comment.server.owner}/{comment.server.repo}
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{comment.user?.name || t('anonymous')}</div>
-                      <div className="text-sm text-muted-foreground">{comment.user?.email ?? 'N/A'}</div>
+                      <div className="font-medium">{comment.user.name || t('anonymous')}</div>
+                      <div className="text-sm text-muted-foreground">{comment.user.email}</div>
                     </TableCell>
                     <TableCell className="max-w-md">
                       <p className="text-sm line-clamp-3">{comment.content}</p>

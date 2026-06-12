@@ -1,4 +1,4 @@
-import { createYoga, createSchema, type YogaSchemaDefinition } from 'graphql-yoga'
+import { createYoga, createSchema } from 'graphql-yoga'
 import { db, servers, clients } from '@/lib/db'
 import { eq, and, or, like, desc } from 'drizzle-orm'
 import { validateApiKey } from '@/app/actions/api-keys'
@@ -134,10 +134,8 @@ const schema = createSchema({
   resolvers,
 })
 
-type YogaContext = { apiKey: { userId: string | undefined; permissions: string[] | undefined } | null }
-
-const yoga = createYoga<Record<string, any>, YogaContext>({
-  schema: schema as YogaSchemaDefinition<Record<string, any>, YogaContext>,
+const yoga = createYoga({
+    schema: schema as any,
   graphqlEndpoint: '/api/graphql',
   graphiql: true,
   landingPage: false,

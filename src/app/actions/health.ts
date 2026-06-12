@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, healthChecks } from '@/lib/db'
-import { eq, desc, and, gte, sql } from 'drizzle-orm'
+import {eq,desc,and,gte, sql} from 'drizzle-orm'
 
 export async function checkServerHealth(
   serverId: string
@@ -55,19 +55,10 @@ export async function checkServerHealth(
   }
 }
 
-export interface HealthCheckRow {
-  id: string
-  serverId: string
-  status: string
-  latency: number | null
-  error: string | null
-  createdAt: Date
-}
-
 export async function getServerHealthHistory(
   serverId: string,
   limit: number = 30
-): Promise<HealthCheckRow[]> {
+) {
   return db
     .select()
     .from(healthChecks)

@@ -6,21 +6,23 @@ import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
 
 export async function getUserProfile(userId: string) {
-  const user = await db.select({
+    const user = await db.select({
     id: users.id,
     name: users.name,
     email: users.email,
     image: users.image,
     createdAt: users.createdAt,
     emailNotifications: users.emailNotifications,
-  }).from(users).where(eq(users.id, userId)).limit(1).then((r) => r[0] ?? null)
+  }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] ?? null)
 
   if (!user) return null
 
   const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
-    db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r) => r[0]?.count ?? 0),
-    db.select({ count: count() }).from(comments).where(eq(comments.userId, userId)).then((r) => r[0]?.count ?? 0),
-    db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r) => r[0]?.count ?? 0),
+        db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
+        db.select({ count: count() }).from(
+            comments as any
+    ).where(eq(comments.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
+        db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
   ])
 
   return {
@@ -34,58 +36,47 @@ export async function getUserProfile(userId: string) {
 }
 
 export async function getUserComments(userId: string) {
-  const commentRows = await db.select({
-    id: comments.id,
-    userId: comments.userId,
+    const commentRows = await db.select({
+    ...comments,
     serverId: comments.serverId,
-    content: comments.content,
-    isModerated: comments.isModerated,
-    createdAt: comments.createdAt,
-    updatedAt: comments.updatedAt,
     serverId_col: servers.id,
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-  }).from(comments)
+      } as any).from(
+        comments as any
+  )
     .innerJoin(servers, eq(comments.serverId, servers.id))
     .where(eq(comments.userId, userId))
     .orderBy(desc(comments.createdAt))
 
-  return commentRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...commentData }) => ({
+    return commentRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...commentData }: any) => ({
     ...commentData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
   }))
 }
 
 export async function getUserRatings(userId: string) {
-  const ratingRows = await db.select({
-    id: ratings.id,
-    userId: ratings.userId,
-    serverId: ratings.serverId,
-    value: ratings.value,
-    createdAt: ratings.createdAt,
-    updatedAt: ratings.updatedAt,
+    const ratingRows = await db.select({
+    ...ratings,
     serverId_col: servers.id,
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-  }).from(ratings)
+      } as any).from(ratings)
     .innerJoin(servers, eq(ratings.serverId, servers.id))
     .where(eq(ratings.userId, userId))
     .orderBy(desc(ratings.createdAt))
 
-  return ratingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...ratingData }) => ({
+    return ratingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...ratingData }: any) => ({
     ...ratingData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
   }))
 }
 
 export async function getUserHistory(userId: string, limit = 50) {
-  const historyRows = await db.select({
-    id: viewHistories.id,
-    userId: viewHistories.userId,
-    serverId: viewHistories.serverId,
-    createdAt: viewHistories.createdAt,
+    const historyRows = await db.select({
+    ...viewHistories,
     serverId_col: servers.id,
     serverName: servers.name,
     serverDescription: servers.description,
@@ -97,13 +88,13 @@ export async function getUserHistory(userId: string, limit = 50) {
     serverIsOfficial: servers.isOfficial,
     serverIsSponsored: servers.isSponsored,
     serverTags: servers.tags,
-  }).from(viewHistories)
+      } as any).from(viewHistories)
     .innerJoin(servers, eq(viewHistories.serverId, servers.id))
     .where(eq(viewHistories.userId, userId))
     .orderBy(desc(viewHistories.createdAt))
     .limit(limit)
 
-  const mapped = historyRows.map((row) => {
+    const mapped = historyRows.map((row: any) => {
     const {
       serverId_col, serverName, serverDescription, serverOwner, serverRepo,
       serverCategory, serverStars, serverForks, serverIsOfficial, serverIsSponsored, serverTags,
@@ -128,7 +119,7 @@ export async function getUserHistory(userId: string, limit = 50) {
   })
 
   const seen = new Set<string>()
-  return mapped.filter((h) => {
+    return mapped.filter((h: any) => {
     if (seen.has(h.serverId)) return false
     seen.add(h.serverId)
     return true
@@ -148,7 +139,7 @@ export async function trackServerView(userId: string, serverId: string) {
 }
 
 export async function updateProfile(userId: string, data: { name: string }) {
-  const user = await db.update(users).set({ name: data.name }).where(eq(users.id, userId)).returning().then((r) => r[0])
+    const user = await db.update(users).set({ name: data.name }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
   revalidatePath('/ru/profile')
   return { success: true, user: { name: user.name, email: user.email } }
 }
@@ -158,7 +149,7 @@ export async function updatePassword(
   currentPassword: string,
   newPassword: string
 ) {
-  const user = await db.select({ password: users.password }).from(users).where(eq(users.id, userId)).limit(1).then((r) => r[0] ?? null)
+    const user = await db.select({ password: users.password }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] ?? null)
 
   if (!user?.password) {
     throw new Error('CANNOT_CHANGE_PASSWORD')
@@ -179,7 +170,7 @@ export async function updateSettings(
   userId: string,
   data: { emailNotifications: boolean }
 ) {
-  const user = await db.update(users).set({ emailNotifications: data.emailNotifications }).where(eq(users.id, userId)).returning().then((r) => r[0])
+    const user = await db.update(users).set({ emailNotifications: data.emailNotifications }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
   revalidatePath('/ru/profile/settings')
   return { success: true, emailNotifications: user.emailNotifications }
 }

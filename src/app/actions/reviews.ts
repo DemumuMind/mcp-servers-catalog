@@ -161,7 +161,7 @@ export async function voteReview(
   userId: string,
   reviewId: string,
   helpful: boolean
-): Promise<{ success: boolean; action: 'added' | 'removed' | 'changed' }> {
+): Promise<{ success: boolean }> {
   const existing = await db
     .select({ id: reviewVotes.id, helpful: reviewVotes.helpful })
     .from(reviewVotes)
@@ -174,7 +174,6 @@ export async function voteReview(
       // Same vote — remove it (toggle off)
       await db.delete(reviewVotes).where(eq(reviewVotes.id, existing.id))
       await updateReviewVoteCounts(reviewId, helpful ? -1 : 0, helpful ? 0 : -1)
-      return { success: true, action: 'removed' }
     } else {
       // Switching vote direction
       await db
@@ -182,14 +181,14 @@ export async function voteReview(
         .set({ helpful })
         .where(eq(reviewVotes.id, existing.id))
       await updateReviewVoteCounts(reviewId, helpful ? 1 : -1, helpful ? -1 : 1)
-      return { success: true, action: 'changed' }
     }
   } else {
     // New vote
     await db.insert(reviewVotes).values({ userId, reviewId, helpful })
     await updateReviewVoteCounts(reviewId, helpful ? 1 : 0, helpful ? 0 : 1)
-    return { success: true, action: 'added' }
   }
+
+  return { success: true }
 }
 
 export async function getUserReview(

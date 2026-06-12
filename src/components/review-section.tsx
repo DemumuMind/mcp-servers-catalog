@@ -53,8 +53,20 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
     setError('')
 
     try {
-      const newReview = await submitReview(userId, serverId, content.trim())
-      setReviews((prev) => [newReview as unknown as Review, ...prev])
+      const result = await submitReview(userId, serverId, content.trim())
+      if (result.success && result.reviewId) {
+        const optimistic: Review = {
+          id: result.reviewId,
+          userId,
+          content: content.trim(),
+          helpfulCount: 0,
+          notHelpfulCount: 0,
+          createdAt: new Date(),
+          votes: [],
+          user: { id: userId, name: null, image: null, isVerifiedAuthor: false },
+        }
+        setReviews((prev) => [optimistic, ...prev])
+      }
       setContent('')
     } catch (err: any) {
       setError(err.message || t('addError'))
@@ -65,7 +77,7 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
 
   const handleVote = async (reviewId: string, helpful: boolean) => {
     if (!userId) return
-    const voteResult = await voteReview(userId, reviewId, helpful)
+    const result = await voteReview(userId, reviewId, helpful)
 
     setReviews((prev) =>
       prev.map((r) => {
@@ -75,15 +87,15 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
         let newHelpful = r.helpfulCount
         let newNotHelpful = r.notHelpfulCount
 
-        if (voteResult.action === 'added') {
+        if ((result as any).action === 'added') {
           newVotes.push({ userId, helpful })
           if (helpful) newHelpful++
           else newNotHelpful++
-        } else if (voteResult.action === 'removed' && existingVote) {
+        } else if ((result as any).action === 'removed' && existingVote) {
           newVotes = newVotes.filter((v) => v.userId !== userId)
           if (existingVote.helpful) newHelpful--
           else newNotHelpful--
-        } else if (voteResult.action === 'changed' && existingVote) {
+        } else if ((result as any).action === 'changed' && existingVote) {
           newVotes = newVotes.map((v) => (v.userId === userId ? { userId, helpful } : v))
           if (helpful) {
             newHelpful++

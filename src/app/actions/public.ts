@@ -8,6 +8,18 @@ import { getCacheKey, getCache, setCache } from '@/lib/cache'
 import { sanitizeUserHtml } from '@/lib/sanitize'
 import { buildSearchConditions, ITEMS_PER_PAGE, attachUserInfo, getServerCategoriesAgg } from './public-helpers'
 
+const commentSelectFields = {
+  id: comments.id,
+  userId: comments.userId,
+  serverId: comments.serverId,
+  content: comments.content,
+  isModerated: comments.isModerated,
+  createdAt: comments.createdAt,
+  updatedAt: comments.updatedAt,
+  userName: users.name,
+  userImage: users.image,
+}
+
 export async function checkServerExists(owner: string, repo: string): Promise<{ exists: boolean; inCatalog: boolean; inSubmissions: boolean; serverUrl?: string }> {
   const fullSlug = `${owner}/${repo}`.toLowerCase()
 
@@ -33,18 +45,6 @@ export async function checkServerExists(owner: string, repo: string): Promise<{ 
     inSubmissions,
     serverUrl: inCatalog ? `/servers/${serverMatch[0].owner}/${serverMatch[0].repo}` : undefined,
   }
-}
-
-export interface CommentWithUserRow {
-  id: string
-  userId: string
-  serverId: string
-  content: string
-  isModerated: boolean
-  createdAt: Date
-  updatedAt: Date
-  userName: string | null
-  userImage: string | null
 }
 
 export interface ServerWithRating {
@@ -268,17 +268,11 @@ export async function addComment(userId: string, serverId: string, content: stri
 
     const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r: any) => r[0])
 
-    const commentWithUser: CommentWithUserRow | null = await db.select({
-      id: comments.id,
-      userId: comments.userId,
-      serverId: comments.serverId,
-      content: comments.content,
-      isModerated: comments.isModerated,
-      createdAt: comments.createdAt,
-      updatedAt: comments.updatedAt,
-      userName: users.name,
-      userImage: users.image,
-    }).from(comments)
+    const commentWithUser = await db.select({
+    ...comments,
+    userName: users.name,
+    userImage: users.image,
+      } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
         .where(eq(comments.id, commentRow.id))
     .limit(1).then((r: any) => r[0] ?? null)
@@ -291,17 +285,11 @@ export async function getServerComments(serverId: string, isAdmin = false) {
   const conditions = [eq(comments.serverId, serverId)]
   if (!isAdmin) conditions.push(eq(comments.isModerated, true))
 
-    const commentRows: CommentWithUserRow[] = await db.select({
-      id: comments.id,
-      userId: comments.userId,
-      serverId: comments.serverId,
-      content: comments.content,
-      isModerated: comments.isModerated,
-      createdAt: comments.createdAt,
-      updatedAt: comments.updatedAt,
-      userName: users.name,
-      userImage: users.image,
-    }).from(comments)
+    const commentRows = await db.select({
+    ...comments,
+    userName: users.name,
+    userImage: users.image,
+      } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))

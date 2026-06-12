@@ -31,7 +31,8 @@ export default async function ServersPage({
   const onlyOfficial = sp.official === 'true'
   const onlyRemote = sp.remote === 'true'
   const sortBy = sp.sort || 'featured'
-  
+  const _view = sp.view || 'grid'
+
   const t = await getTranslations({ locale, namespace: 'AllServers' })
   const tc = await getTranslations({ locale, namespace: 'Categories' })
 

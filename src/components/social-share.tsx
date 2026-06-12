@@ -13,7 +13,8 @@ export function SocialShareButtons({ url, title, description }: SocialShareProps
   const t = useTranslations('Share')
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
-  
+  const _encodedDesc = encodeURIComponent(description)
+
   const TWITTER_SHARE = process.env.NEXT_PUBLIC_TWITTER_SHARE_URL || 'https://twitter.com/intent/tweet'
   const TELEGRAM_SHARE = process.env.NEXT_PUBLIC_TELEGRAM_SHARE_URL || 'https://t.me/share/url'
   const LINKEDIN_SHARE = process.env.NEXT_PUBLIC_LINKEDIN_SHARE_URL || 'https://www.linkedin.com/sharing/share-offsite/'

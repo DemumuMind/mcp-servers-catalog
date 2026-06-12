@@ -2,12 +2,6 @@ import { db, ratings, bookmarks } from '@/lib/db'
 import { eq, and, inArray, avg, count } from 'drizzle-orm'
 import crypto from 'crypto'
 
-interface RatingAggRow {
-  serverId: string
-  avgValue: string | null
-  countValue: number
-}
-
 /**
  * Fetch a Map of serverId → { avg, count } for the given server IDs.
  * Returns an empty map when serverIds is empty.
@@ -18,7 +12,7 @@ export async function fetchRatingMap(
 ): Promise<Map<string, { avg: number | null; count: number }>> {
   if (serverIds.length === 0) return new Map()
 
-  const ratingsAgg: RatingAggRow[] = await db
+  const ratingsAgg = (await db
     .select({
       serverId: ratings.serverId,
       avgValue: avg(ratings.value),
@@ -26,12 +20,12 @@ export async function fetchRatingMap(
     })
     .from(ratings)
     .where(inArray(ratings.serverId, serverIds))
-    .groupBy(ratings.serverId)
+    .groupBy(ratings.serverId)) as any[]
 
   return new Map(
-    ratingsAgg.map((r) => [
+    ratingsAgg.map((r: any) => [
       r.serverId,
-      { avg: r.avgValue !== null ? Number(r.avgValue) : null, count: r.countValue },
+      { avg: r.avgValue, count: r.countValue },
     ]),
   )
 }
