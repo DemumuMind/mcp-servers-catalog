@@ -8,18 +8,6 @@ import { getCacheKey, getCache, setCache } from '@/lib/cache'
 import { sanitizeUserHtml } from '@/lib/sanitize'
 import { buildSearchConditions, ITEMS_PER_PAGE, attachUserInfo, getServerCategoriesAgg } from './public-helpers'
 
-const commentSelectFields = {
-  id: comments.id,
-  userId: comments.userId,
-  serverId: comments.serverId,
-  content: comments.content,
-  isModerated: comments.isModerated,
-  createdAt: comments.createdAt,
-  updatedAt: comments.updatedAt,
-  userName: users.name,
-  userImage: users.image,
-}
-
 export async function checkServerExists(owner: string, repo: string): Promise<{ exists: boolean; inCatalog: boolean; inSubmissions: boolean; serverUrl?: string }> {
   const fullSlug = `${owner}/${repo}`.toLowerCase()
 

@@ -60,7 +60,8 @@ function cookiesToString(cookies: Record<string, string>): string {
   return Object.entries(cookies).map(([k, v]) => `${k}=${v}`).join('; ')
 }
 
-/api/servers/submit`, {
+async function seedServer(baseUrl: string, slug: string) {
+  const res = await fetch(`${baseUrl}/api/servers/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ slug }),
