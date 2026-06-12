@@ -590,7 +590,8 @@
     "optional": "опционально",
     "namePlaceholder": "Ваше имя",
     "passwordMinLength": "Минимум 6 символов",
-    "registering": "Регистрация..."
+    "registering": "Регистрация...",
+    "account": "Аккаунт"
   },
   "Notifications": {
     "title": "Уведомления",
@@ -668,7 +669,20 @@
     "file-system": "Файловая система",
     "cloud-storage": "Облачное хранилище",
     "version-control": "Контроль версий",
-    "other": "Другое"
+    "other": "Другое",
+    "ai": "ИИ",
+    "tools": "Инструменты",
+    "browser": "Браузер",
+    "web": "Веб",
+    "finance": "Финансы",
+    "security": "Безопасность",
+    "filesystem": "Файловая система",
+    "git": "Git",
+    "monitoring": "Мониторинг",
+    "social": "Социальные",
+    "email": "Email",
+    "memory": "Память",
+    "calendar": "Календарь"
   },
   "Pagination": {
     "label": "Пагинация",
@@ -703,6 +717,7 @@
     "whatIsMcp": {
       "title": "Что такое MCP?",
       "description": "Model Context Protocol (MCP) — это открытый протокол, который позволяет AI-моделям безопасно подключаться к внешним инструментам и данным. MCP серверы предоставляют инструменты (tools), ресурсы (resources) и подсказки (prompts), которые AI использует для выполнения задач — от чтения файлов до запросов к базам данных.",
+      "mcpFullName": "Model Context Protocol (MCP)",
       "servers": "Серверы",
       "serversDesc": "Предоставляют инструменты и данные",
       "clients": "Клиенты",
@@ -715,7 +730,13 @@
       "description": "MCP серверы работают с различными AI-клиентами. Выберите подходящий:",
       "recommended": "Рекомендуемый",
       "popular": "Популярный",
-      "openSource": "Open Source"
+      "openSource": "Open Source",
+      "claudeDesktop": "Официальный десктопный клиент от Anthropic с полной поддержкой MCP. macOS и Windows.",
+      "cursor": "AI-редактор кода с встроенной поддержкой MCP. Идеален для разработчиков.",
+      "windsurf": "AI-first IDE от Codeium с нативной поддержкой MCP серверов.",
+      "cline": "Автономный AI-агент для VS Code с поддержкой MCP инструментов.",
+      "continueDev": "Открытый плагин для VS Code и JetBrains. Поддерживает множество моделей.",
+      "zed": "Высокопроизводительный редактор с AI и MCP поддержкой."
     },
     "step2": {
       "title": "Установите MCP сервер",
@@ -746,7 +767,13 @@
       "cloudDesc": "AWS, Cloudflare, Azure, GCP сервисы"
     },
     "step5": {
-      "title": "Популярные MCP серверы"
+      "title": "Популярные MCP серверы",
+      "filesystemDesc": "Чтение, запись и поиск файлов",
+      "githubDesc": "PR, issues, код и API GitHub",
+      "postgresDesc": "SQL-запросы к PostgreSQL",
+      "braveDesc": "Веб-поиск через Brave API",
+      "playwrightDesc": "Браузерная автоматизация",
+      "sqliteDesc": "Работа с SQLite базами данных"
     },
     "cta": {
       "title": "Найдите больше серверов",
@@ -809,7 +836,15 @@
     "serverDetails": "детали сервера",
     "search": "поиск",
     "header": "Заголовок:",
-    "graphqlPlayground": "Playground доступен по тому же адресу (GET)"
+    "graphqlPlayground": "Playground доступен по тому же адресу (GET)",
+    "rateLimit": "Лимит запросов",
+    "rateLimitValue": "100 запр/мин",
+    "authType": "API Key / Bearer",
+    "endpoints": "Эндпоинты",
+    "operational": "работает",
+    "restApi": "REST API",
+    "graphql": "GraphQL",
+    "rateLimitInfo": "Лимит запросов: 60 запросов/минуту"
   },
   "Rankings": {
     "title": "Рейтинг серверов",
@@ -817,7 +852,11 @@
     "weeklyTop": "Топ недели",
     "monthlyTop": "Топ месяца",
     "noDataWeek": "Недостаточно данных за эту неделю",
-    "noDataMonth": "Недостаточно данных за этот месяц"
+    "noDataMonth": "Недостаточно данных за этот месяц",
+    "score": "Оценка",
+    "views": "просмотров",
+    "bookmarks": "закладок",
+    "ratings": "оценок"
   },
   "Badges": {
     "title": "Бейджи для README",
@@ -948,7 +987,12 @@
     "title": "Все MCP серверы",
     "description": "Ищите по названию, репозиторию, категории и тегам. Список подгружается постепенно, чтобы каталог оставался быстрым.",
     "emptyTitle": "Серверы не найдены",
-    "emptyDescription": "Попробуйте изменить запрос, сортировку или фильтры."
+    "emptyDescription": "Попробуйте изменить запрос, сортировку или фильтры.",
+    "categories": "Категории",
+    "allServers": "Все серверы",
+    "clear": "Очистить",
+    "official": "Официальный",
+    "remote": "Remote"
   },
   "OfficialServers": {
     "eyebrow": "Verified sources",
@@ -1152,10 +1196,11 @@
     "install": "Установить"
   },
   "Health": {
-    "title": "История доступности",
-    "checkNow": "Проверить сейчас",
-    "noData": "Нет данных о доступности",
-    "startMonitoring": "Нажмите «Проверить сейчас» чтобы начать мониторинг"
+    "healthy": "Работает",
+    "degraded": "Деградация",
+    "down": "Недоступен",
+    "unknown": "Неизвестно",
+    "checkButton": "Проверить"
   },
   "Readme": {
     "readme": "README",
@@ -1300,13 +1345,6 @@
     "empty": "Нет недавно просмотренных серверов",
     "clear": "Очистить историю"
   },
-  "Health": {
-    "healthy": "Работает",
-    "degraded": "Деградация",
-    "down": "Недоступен",
-    "unknown": "Неизвестно",
-    "checkButton": "Проверить"
-  },
   "TrendingSearches": {
     "title": "Популярные запросы"
   },
@@ -1321,5 +1359,22 @@
     "category": "Категория",
     "updateFrequency": "Изменить частоту",
     "subscribed": "Вы подписаны"
+  },
+  "CollectionsIndex": {
+    "eyebrow": "Коллекции",
+    "title": "Публичные коллекции",
+    "description": "Кураторские подборки MCP серверов, которыми поделилось сообщество. Ищите, просматривайте и находите наборы серверов для ваших задач.",
+    "searchPlaceholder": "Поиск коллекций...",
+    "emptyTitle": "Пока нет коллекций",
+    "emptyDescription": "Публичные коллекции ещё не созданы. Станьте первым, кто поделится!",
+    "serverCount": "{count} серверов"
+  },
+  "Activity": {
+    "eyebrow": "Активность",
+    "title": "Последняя активность",
+    "description": "Последние добавления и обновления в каталоге MCP серверов",
+    "empty": "Нет недавней активности",
+    "official": "Официальный",
+    "addedBy": "Добавлен {owner}"
   }
 }

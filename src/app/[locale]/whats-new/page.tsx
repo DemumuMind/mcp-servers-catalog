@@ -95,7 +95,7 @@ export default async function WhatsNewPage({
           <SectionHeader title={t('trendingSection')} href={`/${locale}/all`} locale={locale} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {trending.map((server: any) => (
-              <ServerCard key={`new-${server.id}`} server={server} locale={locale} />
+              <ServerCard key={`trending-${server.id}`} server={server} locale={locale} />
             ))}
           </div>
         </section>
@@ -107,7 +107,7 @@ export default async function WhatsNewPage({
           <SectionHeader title={t('recentlyUpdatedSection')} href={`/${locale}/all`} locale={locale} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {recentlyUpdated.map((server) => (
-              <ServerCard key={`new-${server.id}`} server={server} locale={locale} />
+              <ServerCard key={`latest-${server.id}`} server={server} locale={locale} />
             ))}
           </div>
         </section>

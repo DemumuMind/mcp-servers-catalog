@@ -590,7 +590,8 @@
     "optional": "optional",
     "namePlaceholder": "Your name",
     "passwordMinLength": "At least 6 characters",
-    "registering": "Registering..."
+    "registering": "Registering...",
+    "account": "Account"
   },
   "Notifications": {
     "title": "Notifications",
@@ -668,7 +669,20 @@
     "file-system": "File System",
     "cloud-storage": "Cloud Storage",
     "version-control": "Version Control",
-    "other": "Other"
+    "other": "Other",
+    "ai": "AI",
+    "tools": "Tools",
+    "browser": "Browser",
+    "web": "Web",
+    "finance": "Finance",
+    "security": "Security",
+    "filesystem": "Filesystem",
+    "git": "Git",
+    "monitoring": "Monitoring",
+    "social": "Social",
+    "email": "Email",
+    "memory": "Memory",
+    "calendar": "Calendar"
   },
   "Pagination": {
     "label": "Pagination",
@@ -703,6 +717,7 @@
     "whatIsMcp": {
       "title": "What is MCP?",
       "description": "Model Context Protocol (MCP) is an open protocol that allows AI models to securely connect to external tools and data. MCP servers provide tools, resources, and prompts that AI uses to accomplish tasks — from reading files to querying databases.",
+      "mcpFullName": "Model Context Protocol (MCP)",
       "servers": "Servers",
       "serversDesc": "Provide tools and data",
       "clients": "Clients",
@@ -715,7 +730,13 @@
       "description": "MCP servers work with various AI clients. Choose the right one:",
       "recommended": "Recommended",
       "popular": "Popular",
-      "openSource": "Open Source"
+      "openSource": "Open Source",
+      "claudeDesktop": "Official desktop client from Anthropic with full MCP support. macOS and Windows.",
+      "cursor": "AI code editor with built-in MCP support. Ideal for developers.",
+      "windsurf": "AI-first IDE by Codeium with native MCP server support.",
+      "cline": "Autonomous AI agent for VS Code with MCP tool support.",
+      "continueDev": "Open-source plugin for VS Code and JetBrains. Supports multiple models.",
+      "zed": "High-performance editor with AI and MCP support."
     },
     "step2": {
       "title": "Install an MCP Server",
@@ -746,7 +767,13 @@
       "cloudDesc": "AWS, Cloudflare, Azure, GCP services"
     },
     "step5": {
-      "title": "Popular MCP Servers"
+      "title": "Popular MCP Servers",
+      "filesystemDesc": "Read, write, and search files",
+      "githubDesc": "PRs, issues, code, and GitHub API",
+      "postgresDesc": "SQL queries to PostgreSQL",
+      "braveDesc": "Web search via Brave API",
+      "playwrightDesc": "Browser automation",
+      "sqliteDesc": "Work with SQLite databases"
     },
     "cta": {
       "title": "Find More Servers",
@@ -809,7 +836,15 @@
     "serverDetails": "server details",
     "search": "search",
     "header": "Header:",
-    "graphqlPlayground": "Playground is available at the same address (GET)"
+    "graphqlPlayground": "Playground is available at the same address (GET)",
+    "rateLimit": "Rate Limit",
+    "rateLimitValue": "100 req/min",
+    "authType": "API Key / Bearer",
+    "endpoints": "Endpoints",
+    "operational": "operational",
+    "restApi": "REST API",
+    "graphql": "GraphQL",
+    "rateLimitInfo": "Rate limit: 60 requests/minute"
   },
   "Rankings": {
     "title": "Server rankings",
@@ -817,7 +852,11 @@
     "weeklyTop": "Weekly Top",
     "monthlyTop": "Monthly Top",
     "noDataWeek": "Not enough data for this week",
-    "noDataMonth": "Not enough data for this month"
+    "noDataMonth": "Not enough data for this month",
+    "score": "Score",
+    "views": "views",
+    "bookmarks": "bookmarks",
+    "ratings": "ratings"
   },
   "Badges": {
     "title": "README Badges",
@@ -948,7 +987,12 @@
     "title": "All MCP Servers",
     "description": "Search by name, repository, category, and tags. The list loads progressively to keep the catalog fast.",
     "emptyTitle": "No servers found",
-    "emptyDescription": "Try changing your query, sort, or filters."
+    "emptyDescription": "Try changing your query, sort, or filters.",
+    "categories": "Categories",
+    "allServers": "All servers",
+    "clear": "Clear",
+    "official": "Official",
+    "remote": "Remote"
   },
   "OfficialServers": {
     "eyebrow": "Verified sources",
@@ -1152,10 +1196,11 @@
     "install": "Install"
   },
   "Health": {
-    "title": "Availability History",
-    "checkNow": "Check Now",
-    "noData": "No availability data",
-    "startMonitoring": "Click \"Check Now\" to start monitoring"
+    "healthy": "Healthy",
+    "degraded": "Degraded",
+    "down": "Down",
+    "unknown": "Unknown",
+    "checkButton": "Check health"
   },
   "Readme": {
     "readme": "README",
@@ -1300,13 +1345,6 @@
     "empty": "No recently viewed servers",
     "clear": "Clear history"
   },
-  "Health": {
-    "healthy": "Healthy",
-    "degraded": "Degraded",
-    "down": "Down",
-    "unknown": "Unknown",
-    "checkButton": "Check health"
-  },
   "TrendingSearches": {
     "title": "Trending searches"
   },
@@ -1321,5 +1359,22 @@
     "category": "Category",
     "updateFrequency": "Update frequency",
     "subscribed": "You are subscribed"
+  },
+  "CollectionsIndex": {
+    "eyebrow": "Collections",
+    "title": "Public Collections",
+    "description": "Curated groups of MCP servers shared by the community. Browse, search, and find server bundles for your workflow.",
+    "searchPlaceholder": "Search collections...",
+    "emptyTitle": "No collections yet",
+    "emptyDescription": "No public collections have been created yet. Be the first to share one!",
+    "serverCount": "{count} servers"
+  },
+  "Activity": {
+    "eyebrow": "Activity",
+    "title": "Recent Activity",
+    "description": "Latest additions and updates to the MCP server catalog",
+    "empty": "No recent activity",
+    "official": "Official",
+    "addedBy": "Added by {owner}"
   }
 }

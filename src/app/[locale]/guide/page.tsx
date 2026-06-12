@@ -26,25 +26,6 @@ const clients = [
   { name: 'Zed', icon: '📝', descKey: 'zed', url: 'https://zed.dev', tagKey: '' },
 ]
 
-const clientDescriptions: Record<string, Record<string, string>> = {
-  ru: {
-    claudeDesktop: 'Официальный десктопный клиент от Anthropic с полной поддержкой MCP. macOS и Windows.',
-    cursor: 'AI-редактор кода с встроенной поддержкой MCP. Идеален для разработчиков.',
-    windsurf: 'AI-first IDE от Codeium с нативной поддержкой MCP серверов.',
-    cline: 'Автономный AI-агент для VS Code с поддержкой MCP инструментов.',
-    continueDev: 'Открытый плагин для VS Code и JetBrains. Поддерживает множество моделей.',
-    zed: 'Высокопроизводительный редактор с AI и MCP поддержкой.',
-  },
-  en: {
-    claudeDesktop: 'Official desktop client from Anthropic with full MCP support. macOS and Windows.',
-    cursor: 'AI code editor with built-in MCP support. Ideal for developers.',
-    windsurf: 'AI-first IDE by Codeium with native MCP server support.',
-    cline: 'Autonomous AI agent for VS Code with MCP tool support.',
-    continueDev: 'Open-source plugin for VS Code and JetBrains. Supports multiple models.',
-    zed: 'High-performance editor with AI and MCP support.',
-  },
-}
-
 const popularServers = [
   { name: 'Filesystem', pkg: '@modelcontextprotocol/server-filesystem', descKey: 'filesystemDesc', icon: FolderIcon },
   { name: 'GitHub', pkg: 'github/github-mcp-server', descKey: 'githubDesc', icon: Code2 },
@@ -53,25 +34,6 @@ const popularServers = [
   { name: 'Playwright', pkg: 'microsoft/playwright-mcp', descKey: 'playwrightDesc', icon: Globe },
   { name: 'SQLite', pkg: '@modelcontextprotocol/server-sqlite', descKey: 'sqliteDesc', icon: Database },
 ]
-
-const serverDescriptions: Record<string, Record<string, string>> = {
-  ru: {
-    filesystemDesc: 'Чтение, запись и поиск файлов',
-    githubDesc: 'PR, issues, код и API GitHub',
-    postgresDesc: 'SQL-запросы к PostgreSQL',
-    braveDesc: 'Веб-поиск через Brave API',
-    playwrightDesc: 'Браузерная автоматизация',
-    sqliteDesc: 'Работа с SQLite базами данных',
-  },
-  en: {
-    filesystemDesc: 'Read, write, and search files',
-    githubDesc: 'PRs, issues, code, and GitHub API',
-    postgresDesc: 'SQL queries to PostgreSQL',
-    braveDesc: 'Web search via Brave API',
-    playwrightDesc: 'Browser automation',
-    sqliteDesc: 'Work with SQLite databases',
-  },
-}
 
 const configPaths = [
   { client: 'Claude Desktop', path: '~/Library/Application Support/Claude/claude_desktop_config.json', os: 'macOS' },
@@ -92,8 +54,6 @@ export default async function GuidePage({
 }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Guide' })
-  const descMap = clientDescriptions[locale] || clientDescriptions['en']
-  const servDescMap = serverDescriptions[locale] || serverDescriptions['en']
   const session = await auth()
   const userId = session?.user?.id
 
@@ -115,7 +75,7 @@ export default async function GuidePage({
           <h2 className="text-xl font-bold">{t('whatIsMcp.title')}</h2>
         </div>
         <p className="text-muted-foreground leading-relaxed">
-          <strong className="text-foreground">Model Context Protocol (MCP)</strong>{' '}
+          <strong className="text-foreground">{t('whatIsMcp.mcpFullName')}</strong>{' '}
           {t('whatIsMcp.description')}
         </p>
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -152,7 +112,7 @@ export default async function GuidePage({
                 )}
               </div>
               <h3 className="font-semibold text-sm group-hover:text-primary transition-colors">{client.name}</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">{descMap[client.descKey]}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">{t(`step1.${client.descKey}`)}</p>
             </a>
           ))}
         </div>
@@ -261,7 +221,7 @@ export default async function GuidePage({
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold">{server.name}</p>
-                <p className="text-xs text-muted-foreground">{servDescMap[server.descKey]}</p>
+                <p className="text-xs text-muted-foreground">{t(`step5.${server.descKey}`)}</p>
               </div>
               <code className="hidden sm:block text-[0.65rem] text-muted-foreground truncate max-w-[200px]">{server.pkg}</code>
               <ArrowUpRight className="size-4 text-muted-foreground/50 shrink-0" />

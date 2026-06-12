@@ -51,7 +51,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md overflow-visible">
         <CardHeader className="items-center text-center">
           <BrandMark size={58} className="mb-4" />
-          <p className="eyebrow">Account</p>
+          <p className="eyebrow">{t('account')}</p>
           <CardTitle className="text-3xl">{t('loginTitle')}</CardTitle>
         </CardHeader>
         <CardContent>

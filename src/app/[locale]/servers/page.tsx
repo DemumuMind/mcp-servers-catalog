@@ -35,6 +35,7 @@ export default async function ServersPage({
   const view = sp.view || 'grid'
 
   const t = await getTranslations({ locale, namespace: 'AllServers' })
+  const tc = await getTranslations({ locale, namespace: 'Categories' })
 
   const { servers, pages, currentPage } = await getServersPublic(
     1, search, category, undefined, onlyOfficial, undefined, onlyRemote, sortBy
@@ -70,13 +71,13 @@ export default async function ServersPage({
         <aside className="lg:w-56 shrink-0">
           <div className="sticky top-24 space-y-1">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
-              Categories
+              {t('categories')}
             </h3>
             <Link
               href={filterUrl({ category: undefined })}
               className={`block px-3 py-1.5 rounded-lg text-sm transition-colors ${!category ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'}`}
             >
-              All servers
+              {t('allServers')}
             </Link>
             {CATEGORIES.map(cat => (
               <Link
@@ -84,7 +85,7 @@ export default async function ServersPage({
                 href={filterUrl({ category: cat })}
                 className={`block px-3 py-1.5 rounded-lg text-sm transition-colors capitalize ${category === cat ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'}`}
               >
-                {cat.replace(/-/g, ' ')}
+                {tc(cat)}
               </Link>
             ))}
           </div>
@@ -97,12 +98,12 @@ export default async function ServersPage({
             <div className="flex flex-wrap gap-2 items-center">
               {activeFilters.length > 0 && (
                 <Link href={filterUrl({ category: undefined, official: undefined, remote: undefined, q: undefined })} className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
-                  <X className="h-3 w-3 mr-1" /> Clear
+                  <X className="h-3 w-3 mr-1" /> {t('clear')}
                 </Link>
               )}
               {category && <Badge variant="outline">{category}</Badge>}
-              {onlyOfficial && <Badge>official</Badge>}
-              {onlyRemote && <Badge>remote</Badge>}
+              {onlyOfficial && <Badge>{t('official')}</Badge>}
+              {onlyRemote && <Badge>{t('remote')}</Badge>}
               {search && <Badge variant="secondary">q: {search}</Badge>}
             </div>
             <SortDropdown currentSort={sortBy} locale={locale} />

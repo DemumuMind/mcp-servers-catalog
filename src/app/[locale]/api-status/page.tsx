@@ -13,14 +13,14 @@ export default async function ApiStatusPage({
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'ApiStatus' })
   const endpoints = [
-    { name: 'REST API v1', path: '/api/v1/servers', status: 'operational', latency: '<100ms' },
-    { name: 'GraphQL API', path: '/api/graphql', status: 'operational', latency: '<150ms' },
-    { name: 'Search API', path: '/api/v1/search', status: 'operational', latency: '<200ms' },
-    { name: 'Feeds (RSS/JSON)', path: '/api/feed/rss', status: 'operational', latency: '<50ms' },
-    { name: 'OG Images', path: '/api/og/owner/repo', status: 'operational', latency: '<300ms' },
-    { name: 'Badges', path: '/api/badge/owner/repo', status: 'operational', latency: '<100ms' },
-    { name: 'Embed Widget', path: '/api/embed', status: 'operational', latency: '<50ms' },
-    { name: 'Image Proxy', path: '/api/proxy-image', status: 'operational', latency: '<500ms' },
+    { name: 'REST API v1', path: '/api/v1/servers', status: t('operational'), latency: '<100ms' },
+    { name: 'GraphQL API', path: '/api/graphql', status: t('operational'), latency: '<150ms' },
+    { name: 'Search API', path: '/api/v1/search', status: t('operational'), latency: '<200ms' },
+    { name: 'Feeds (RSS/JSON)', path: '/api/feed/rss', status: t('operational'), latency: '<50ms' },
+    { name: 'OG Images', path: '/api/og/owner/repo', status: t('operational'), latency: '<300ms' },
+    { name: 'Badges', path: '/api/badge/owner/repo', status: t('operational'), latency: '<100ms' },
+    { name: 'Embed Widget', path: '/api/embed', status: t('operational'), latency: '<50ms' },
+    { name: 'Image Proxy', path: '/api/proxy-image', status: t('operational'), latency: '<500ms' },
   ]
 
   return (
@@ -54,8 +54,8 @@ export default async function ApiStatusPage({
                 <Zap className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Rate Limit</div>
-                <div className="text-lg font-semibold">100 req/min</div>
+                <div className="text-sm text-muted-foreground">{t('rateLimit')}</div>
+                <div className="text-lg font-semibold">{t('rateLimitValue')}</div>
               </div>
             </div>
           </CardContent>
@@ -69,7 +69,7 @@ export default async function ApiStatusPage({
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">{t('auth')}</div>
-                <div className="text-lg font-semibold">API Key / Bearer</div>
+                <div className="text-lg font-semibold">{t('authType')}</div>
               </div>
             </div>
           </CardContent>
@@ -80,7 +80,7 @@ export default async function ApiStatusPage({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Globe className="h-5 w-5" />
-            Endpoints
+            {t('endpoints')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -111,7 +111,7 @@ export default async function ApiStatusPage({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">REST API</CardTitle>
+              <CardTitle className="text-base">{t('restApi')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p><code className="bg-muted px-1 py-0.5 rounded">GET /api/v1/servers</code> — {t('serversList')}</p>
@@ -123,12 +123,12 @@ export default async function ApiStatusPage({
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">GraphQL</CardTitle>
+              <CardTitle className="text-base">{t('graphql')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p><code className="bg-muted px-1 py-0.5 rounded">POST /api/graphql</code></p>
               <p className="text-muted-foreground">{t('graphqlPlayground')}</p>
-              <p className="text-muted-foreground mt-2">Rate limit: 60 requests/minute</p>
+              <p className="text-muted-foreground mt-2">{t('rateLimitInfo')}</p>
             </CardContent>
           </Card>
         </div>

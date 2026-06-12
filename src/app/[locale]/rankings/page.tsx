@@ -16,7 +16,7 @@ interface RankingItem {
   server: { name: string; description: string }
 }
 
-function RankingCard({ rank }: { rank: RankingItem }) {
+function RankingCard({ rank, t }: { rank: RankingItem; t: (key: string) => string }) {
   return (
     <Card>
       <CardContent className="p-4 flex items-center gap-4">
@@ -30,9 +30,9 @@ function RankingCard({ rank }: { rank: RankingItem }) {
           </p>
         </div>
         <div className="text-right text-sm text-muted-foreground">
-          <div>Score: {Math.round(rank.score)}</div>
+          <div>{t('score')}: {Math.round(rank.score)}</div>
           <div className="text-xs">
-            {rank.views} views · {rank.bookmarks} bookmarks · {rank.ratings} ratings
+            {rank.views} {t('views')} · {rank.bookmarks} {t('bookmarks')} · {rank.ratings} {t('ratings')}
           </div>
         </div>
       </CardContent>
@@ -72,7 +72,7 @@ export default async function RankingsPage({
         ) : (
           <div className="space-y-3">
             {weekly.map((rank: any) => (
-              <RankingCard key={rank.id} rank={rank} />
+              <RankingCard key={rank.id} rank={rank} t={t} />
             ))}
           </div>
         )}
@@ -86,7 +86,7 @@ export default async function RankingsPage({
         ) : (
           <div className="space-y-3">
             {monthly.map((rank: any) => (
-              <RankingCard key={rank.id} rank={rank} />
+              <RankingCard key={rank.id} rank={rank} t={t} />
             ))}
           </div>
         )}
