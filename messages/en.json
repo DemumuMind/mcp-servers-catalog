@@ -615,7 +615,11 @@
     "fieldGithub": "GitHub",
     "linkLabel": "Link",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "eyebrow": "COMPARE",
+    "description": "Compare up to 6 MCP servers by characteristics: category, tags, rating, remote access availability, and more.",
+    "searchPlaceholder": "Search servers to add...",
+    "selected": "selected"
   },
   "Common": {
     "loading": "Loading...",
