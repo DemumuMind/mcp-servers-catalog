@@ -5,8 +5,6 @@ import { eq, like, asc, inArray, lt, and } from 'drizzle-orm'
 import { fetchGitHubRepo, fetchRepoReadme, waitForRateLimit, getRateLimitInfo, type RateLimitInfo } from '@/lib/github'
 import { analyzeReadme, mergeTags } from '@/lib/readme-analysis'
 
-// ─── Configuration ──────────────────────────────────────────────────────────
-
 /** Number of servers to process before inserting a delay between chunks. */
 const BATCH_SIZE = parseInt(process.env.SYNC_BATCH_SIZE || '50', 10)
 
@@ -15,8 +13,6 @@ const CHUNK_DELAY_MS = parseInt(process.env.SYNC_CHUNK_DELAY_MS || '1000', 10)
 
 /** If remaining API calls drop below this, pause until the reset window. */
 const RATE_LIMIT_THRESHOLD = parseInt(process.env.SYNC_RATE_LIMIT_THRESHOLD || '100', 10)
-
-// ─── Types ──────────────────────────────────────────────────────────────────
 
 export interface SyncProgress {
   updated: number
@@ -39,20 +35,15 @@ export interface SyncOptions {
   limit?: number
 }
 
-// ─── Main sync function ────────────────────────────────────────────────────
-
 export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncProgress> {
   const { since, serverIds, limit = 0 } = options
 
-  // Build the query with optional filters
-  // Sort by updatedAt ASC so oldest entries get synced first (resume-friendly)
   let query = db
     .select()
     .from(servers)
     .where(like(servers.githubUrl, 'https://github.com/%'))
     .orderBy(asc(servers.updatedAt))
 
-  // Apply `since` filter: only servers not updated since the given date
   if (since) {
     query = db
       .select()
@@ -64,7 +55,6 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
       .orderBy(asc(servers.updatedAt))
   }
 
-  // Apply `serverIds` filter: targeted sync for specific servers
   if (serverIds && serverIds.length > 0) {
     query = db
       .select()
@@ -78,7 +68,6 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
 
   let serverList = await query
 
-  // Apply hard limit on how many servers to process
   if (limit > 0 && serverList.length > limit) {
     serverList = serverList.slice(0, limit)
   }
@@ -90,14 +79,11 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
   let skipped = 0
   let processed = 0
 
-  // Get initial rate limit info
   let rateLimit: RateLimitInfo = await getRateLimitInfo()
 
-  // Process in chunks
   for (let chunkStart = 0; chunkStart < total; chunkStart += BATCH_SIZE) {
     const chunk = serverList.slice(chunkStart, chunkStart + BATCH_SIZE)
 
-    // Check rate limit before each chunk
     rateLimit = await waitForRateLimit(RATE_LIMIT_THRESHOLD)
 
     for (const server of chunk) {
@@ -133,10 +119,8 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
         if (readmeAnalysis) enriched++
 
       } catch (err: any) {
-        // Distinguish rate limit errors from other failures
         if (err?.message?.includes('rate limit')) {
           console.error(`Rate limit hit at server ${server.githubUrl}. Pausing.`)
-          // Wait for reset, then retry this single server
           rateLimit = await waitForRateLimit(RATE_LIMIT_THRESHOLD)
           try {
             const data = await fetchGitHubRepo(server.githubUrl)
@@ -162,12 +146,10 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
       }
     }
 
-    // Delay between chunks (not after the last one)
     if (chunkStart + BATCH_SIZE < total) {
       await new Promise((resolve) => setTimeout(resolve, CHUNK_DELAY_MS))
     }
 
-    // Log progress after each chunk
     console.log(
       `[sync] Chunk ${Math.floor(chunkStart / BATCH_SIZE) + 1}: ` +
       `processed=${processed}/${total} updated=${updated} failed=${failed} enriched=${enriched} ` +
@@ -175,7 +157,6 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
     )
   }
 
-  // Final rate limit info
   rateLimit = await getRateLimitInfo()
 
   return {
@@ -190,8 +171,6 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
     rateLimitResetAt: rateLimit.resetAt.toISOString(),
   }
 }
-
-// ─── Single-server README analysis (unchanged) ─────────────────────────────
 
 export async function analyzeServerReadme(serverId: string) {
   const rows = await db
@@ -208,7 +187,6 @@ export async function analyzeServerReadme(serverId: string) {
 
   const analysis = analyzeReadme(readme)
 
-  // Update tags with suggested ones if not already present
   const newTags = mergeTags(server.tags, [], analysis.suggestedTags)
   if (newTags.length > server.tags.length) {
     await db

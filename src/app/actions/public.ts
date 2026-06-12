@@ -3,18 +3,16 @@
 import { db, servers, clients, bookmarks, ratings, comments, viewHistories, users, submissions } from '@/lib/db'
 import { eq, and, or, like, desc, asc, count, avg, sql, inArray, gte, ne } from 'drizzle-orm'
 import { rateLimit } from "@/lib/rate-limit";
+import { fetchRatingMap } from '@/lib/action-helpers'
 
-// Check if a server already exists by owner/repo or fullSlug
 export async function checkServerExists(owner: string, repo: string): Promise<{ exists: boolean; inCatalog: boolean; inSubmissions: boolean; serverUrl?: string }> {
   const fullSlug = `${owner}/${repo}`.toLowerCase()
 
-  // Check servers table
   const serverMatch = await db.select({ id: servers.id, owner: servers.owner, repo: servers.repo })
     .from(servers)
     .where(sql`LOWER(${servers.fullSlug}) = ${fullSlug}`)
     .limit(1)
 
-  // Check pending submissions
   const subMatch = await db.select({ id: submissions.id })
     .from(submissions)
     .where(and(
@@ -88,7 +86,6 @@ export async function getServersPublic(
 
   const skip = (page - 1) * ITEMS_PER_PAGE
 
-  // Build where conditions
   const conditions = []
   if (search) {
     // Split into words and search each word separately (AND logic)
@@ -128,7 +125,6 @@ export async function getServersPublic(
 
   const whereClause = conditions.length > 0 ? and(...conditions) : undefined
 
-  // Sort order mapping
   const orderByMap: Record<string, any[]> = {
     'featured': [desc(servers.featured)],
     'newest': [desc(servers.createdAt)],
@@ -146,15 +142,7 @@ export async function getServersPublic(
   const total = totalResult[0]?.count ?? 0
 
   const serverIds = serverRows.map((s: any) => s.id)
-  const ratingsAgg = serverIds.length > 0
-    ? (await db.select({
-        serverId: ratings.serverId,
-        avg: avg(ratings.value),
-        count: count(),
-      }).from(ratings).where(inArray(ratings.serverId, serverIds)).groupBy(ratings.serverId)) as any[]
-    : []
-
-  const ratingMap: Map<number, { avg: number | null; count: number }> = new Map(ratingsAgg.map((r: any) => [r.serverId, { avg: r.avg, count: r.count }]))
+  const ratingMap = await fetchRatingMap(serverIds)
 
   const serversWithRating = serverRows.map((server: any) => ({
     ...server,
@@ -268,6 +256,16 @@ export async function isServerBookmarked(userId: string, serverId: string): Prom
   return !!bookmark
 }
 
+/** Fetch average rating and count for a single server */
+async function getServerAggRating(serverId: string) {
+  const aggResult = await db.select({
+    avg: avg(ratings.value),
+    count: count(),
+  }).from(ratings).where(eq(ratings.serverId, serverId))
+
+  return { average: aggResult[0]?.avg || 0, count: aggResult[0]?.count ?? 0 }
+}
+
 export async function rateServer(userId: string, serverId: string, value: number) {
   if (value < 1 || value > 5) throw new Error('Rating must be between 1 and 5')
 
@@ -277,23 +275,14 @@ export async function rateServer(userId: string, serverId: string, value: number
       set: { value },
     })
 
-  const aggResult = await db.select({
-    avg: avg(ratings.value),
-    count: count(),
-  }).from(ratings).where(eq(ratings.serverId, serverId))
-
-  return { average: aggResult[0]?.avg || 0, count: aggResult[0]?.count ?? 0 }
+  return getServerAggRating(serverId)
 }
 
 export async function getServerRating(serverId: string) {
-  const aggResult = await db.select({
-    avg: avg(ratings.value),
-    count: count(),
-  }).from(ratings).where(eq(ratings.serverId, serverId))
-
+  const { average, count } = await getServerAggRating(serverId)
   const userRating = null // Will be fetched separately if needed
 
-  return { average: aggResult[0]?.avg || 0, count: aggResult[0]?.count ?? 0, userRating }
+  return { average, count, userRating }
 }
 
 export async function addComment(userId: string, serverId: string, content: string) {
@@ -306,7 +295,6 @@ export async function addComment(userId: string, serverId: string, content: stri
 
   const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r: any) => r[0])
 
-  // Fetch with user info via join
   const commentWithUser = await db.select({
     ...comments,
     userName: users.name,
@@ -316,7 +304,6 @@ export async function addComment(userId: string, serverId: string, content: stri
     .where(eq(comments.id, commentRow.id))
     .limit(1).then((r: any) => r[0] ?? null)
 
-  // Map to the shape expected by consumers (include nested user object)
   if (!commentWithUser) return commentRow
   const { userName, userImage, ...commentData } = commentWithUser
   return {
@@ -338,7 +325,6 @@ export async function getServerComments(serverId: string, isAdmin = false) {
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))
 
-  // Map to include nested user object
   return commentRows.map(({ userName, userImage, ...commentData }: any) => ({
     ...commentData,
     user: { name: userName, image: userImage },
@@ -431,12 +417,10 @@ export async function getTrendingServers(limit = 6) {
 
   let result
   if (sorted.length === 0) {
-    // Fallback: return featured servers
     result = await db.select().from(servers).where(eq(servers.featured, true)).limit(limit)
   } else {
     const serverRows = await db.select().from(servers).where(inArray(servers.id, sorted))
 
-    // Sort by score order
     result = sorted.map((id) => serverRows.find((s: any) => s.id === id)).filter((s): s is typeof serverRows[0] => !!s)
   }
 

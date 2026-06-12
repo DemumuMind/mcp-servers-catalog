@@ -10,7 +10,6 @@ export default async function ActivityPage({ params }: { params: Promise<{ local
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Activity' })
 
-  // Get recent servers as activity items
   const recentServers = await db.select({
     id: servers.id,
     name: servers.name,

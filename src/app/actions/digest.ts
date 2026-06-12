@@ -3,7 +3,6 @@
 import { db, digestSubscriptions, users } from '@/lib/db'
 import { eq, and } from 'drizzle-orm'
 
-// ─── Subscribe Digest ─────────────────────────────────────────────────────────
 export async function subscribeDigest(
   userId: string,
   frequency: 'daily' | 'weekly' | 'monthly',
@@ -33,7 +32,6 @@ export async function subscribeDigest(
   return { success: true }
 }
 
-// ─── Unsubscribe Digest ───────────────────────────────────────────────────────
 export async function unsubscribeDigest(
   userId: string
 ): Promise<{ success: boolean }> {
@@ -45,7 +43,6 @@ export async function unsubscribeDigest(
   return { success: true }
 }
 
-// ─── Update Digest Frequency ──────────────────────────────────────────────────
 export async function updateDigestFrequency(
   userId: string,
   frequency: 'daily' | 'weekly' | 'monthly'
@@ -58,7 +55,6 @@ export async function updateDigestFrequency(
   return { success: true }
 }
 
-// ─── Get User Digest ──────────────────────────────────────────────────────────
 export async function getUserDigest(
   userId: string
 ): Promise<typeof digestSubscriptions.$inferSelect | null> {
@@ -70,7 +66,6 @@ export async function getUserDigest(
     .then((r: any) => r[0] ?? null)
 }
 
-// ─── Get Digest Subscribers ───────────────────────────────────────────────────
 export async function getDigestSubscribers(
   frequency?: 'daily' | 'weekly' | 'monthly',
   category?: string

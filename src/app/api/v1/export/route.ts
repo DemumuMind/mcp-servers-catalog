@@ -69,7 +69,6 @@ export async function GET(request: Request) {
       })
     }
 
-    // JSON
     return NextResponse.json({ data, meta: { count: data.length, table } }, {
       headers: {
         'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',

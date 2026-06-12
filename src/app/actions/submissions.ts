@@ -24,13 +24,11 @@ const submissionSchema = z.object({
 export async function createSubmission(data: z.infer<typeof submissionSchema>) {
   const validated = submissionSchema.parse(data)
 
-  // Rate limit by email: 5 submissions per hour
   const rateLimitResult = await rateLimit(`submit:${validated.email}`, 5, 60 * 60 * 1000)
   if (!rateLimitResult.success) {
     throw new Error('Too many submissions. Please try again later.')
   }
 
-  // Content scanning: validate GitHub URL
   try {
     const parsedUrl = new URL(validated.url)
     const isGitHub = parsedUrl.hostname === 'github.com' || parsedUrl.hostname === 'www.github.com'
@@ -59,7 +57,6 @@ export async function createSubmission(data: z.infer<typeof submissionSchema>) {
     status: 'pending',
   }).returning()
 
-  // Send email notification to admin
   await sendSubmissionNotification(validated)
 
   return submission[0]
@@ -108,14 +105,12 @@ export async function approveSubmission(id: string) {
     .where(eq(submissions.id, id))
     .returning()
 
-  // Send status update email
   await sendStatusUpdateNotification({
     name: submission.name,
     email: submission.email,
     status: 'approved',
   })
 
-  // Try to create a server from the submission
   try {
     const url = new URL(submission.url)
     const pathParts = url.pathname.split('/').filter(Boolean)

@@ -5,7 +5,6 @@ import { eq, and, desc, sql, inArray } from 'drizzle-orm'
 import { rateLimit } from '@/lib/rate-limit'
 import { sanitizeUserHtml } from '@/lib/sanitize'
 
-// ─── Submit Review ────────────────────────────────────────────────────────────
 export async function submitReview(
   userId: string,
   serverId: string,
@@ -18,7 +17,6 @@ export async function submitReview(
 
   const sanitized = sanitizeUserHtml(content)
 
-  // Check if user already reviewed this server
   const existing = await db
     .select({ id: reviews.id })
     .from(reviews)
@@ -27,7 +25,6 @@ export async function submitReview(
     .then((r: any) => r[0] ?? null)
 
   if (existing) {
-    // Update existing review
     await db
       .update(reviews)
       .set({ content: sanitized, updatedAt: new Date() })
@@ -44,7 +41,6 @@ export async function submitReview(
   return { success: true, reviewId: result?.id }
 }
 
-// ─── Get Server Reviews ───────────────────────────────────────────────────────
 export async function getServerReviews(serverId: string) {
   const reviewRows = await db
     .select({
@@ -66,7 +62,6 @@ export async function getServerReviews(serverId: string) {
     .where(eq(reviews.serverId, serverId))
     .orderBy(desc(reviews.createdAt))
 
-  // Fetch votes for these reviews
   const reviewIds = reviewRows.map((r: any) => r.id)
   const voteRows =
     reviewIds.length > 0
@@ -110,7 +105,6 @@ export async function getServerReviews(serverId: string) {
   }))
 }
 
-// ─── Rate Server ──────────────────────────────────────────────────────────────
 export async function rateServer(
   userId: string,
   serverId: string,
@@ -118,7 +112,6 @@ export async function rateServer(
 ): Promise<{ success: boolean }> {
   const clamped = Math.min(5, Math.max(1, Math.round(value)))
 
-  // Upsert: insert or update
   const existing = await db
     .select({ id: ratings.id })
     .from(ratings)
@@ -138,7 +131,6 @@ export async function rateServer(
   return { success: true }
 }
 
-// ─── Get Server Rating ────────────────────────────────────────────────────────
 export async function getServerRating(serverId: string): Promise<{
   average: number
   count: number
@@ -155,13 +147,11 @@ export async function getServerRating(serverId: string): Promise<{
   return { average: Number(result.average), count: Number(result.count) }
 }
 
-// ─── Vote Review ──────────────────────────────────────────────────────────────
 export async function voteReview(
   userId: string,
   reviewId: string,
   helpful: boolean
 ): Promise<{ success: boolean }> {
-  // Check existing vote
   const existing = await db
     .select({ id: reviewVotes.id, helpful: reviewVotes.helpful })
     .from(reviewVotes)
@@ -173,7 +163,6 @@ export async function voteReview(
     if (existing.helpful === helpful) {
       // Same vote — remove it (toggle off)
       await db.delete(reviewVotes).where(eq(reviewVotes.id, existing.id))
-      // Adjust counters
       if (helpful) {
         await db
           .update(reviews)
@@ -186,7 +175,6 @@ export async function voteReview(
           .where(eq(reviews.id, reviewId))
       }
     } else {
-      // Switch vote
       await db
         .update(reviewVotes)
         .set({ helpful })
@@ -210,7 +198,6 @@ export async function voteReview(
       }
     }
   } else {
-    // New vote
     await db.insert(reviewVotes).values({ userId, reviewId, helpful })
     if (helpful) {
       await db
@@ -228,7 +215,6 @@ export async function voteReview(
   return { success: true }
 }
 
-// ─── Get User Review ──────────────────────────────────────────────────────────
 export async function getUserReview(
   userId: string,
   serverId: string
@@ -241,7 +227,6 @@ export async function getUserReview(
     .then((r: any) => r[0] ?? null)
 }
 
-// ─── Delete Review ────────────────────────────────────────────────────────────
 export async function deleteReview(
   userId: string,
   reviewId: string

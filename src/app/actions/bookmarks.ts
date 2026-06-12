@@ -4,9 +4,31 @@ import { db, bookmarks, collections, servers } from '@/lib/db'
 import { eq, and, desc } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
-import crypto from 'crypto'
+import { generateShareSlug, findExistingBookmarkId } from '@/lib/action-helpers'
 
-// ─── Bookmark Actions ───────────────────────────────────────────────────────
+/** Shared server column selection used by getUserBookmarks and getCollectionBookmarks */
+const serverSelectFields = {
+  id: servers.id,
+  name: servers.name,
+  description: servers.description,
+  owner: servers.owner,
+  repo: servers.repo,
+  fullSlug: servers.fullSlug,
+  category: servers.category,
+  isOfficial: servers.isOfficial,
+  isSponsored: servers.isSponsored,
+  githubUrl: servers.githubUrl,
+  tags: servers.tags,
+  isRemote: servers.isRemote,
+  authType: servers.authType,
+  endpoint: servers.endpoint,
+  featured: servers.featured,
+  stars: servers.stars,
+  forks: servers.forks,
+  authorId: servers.authorId,
+  createdAt: servers.createdAt,
+  updatedAt: servers.updatedAt,
+}
 
 export async function toggleBookmark(
   userId: string,
@@ -15,14 +37,10 @@ export async function toggleBookmark(
   const session = await auth()
   if (session?.user?.id !== userId) throw new Error('Unauthorized')
 
-  const existing = await db
-    .select({ id: bookmarks.id })
-    .from(bookmarks)
-    .where(and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId)))
-    .limit(1)
+  const existingId = await findExistingBookmarkId(userId, serverId)
 
-  if (existing.length > 0) {
-    await db.delete(bookmarks).where(eq(bookmarks.id, existing[0].id))
+  if (existingId) {
+    await db.delete(bookmarks).where(eq(bookmarks.id, existingId))
     revalidatePath('/')
     return { bookmarked: false }
   }
@@ -35,26 +53,7 @@ export async function toggleBookmark(
 export async function getUserBookmarks(userId: string) {
   return db
     .select({
-      id: servers.id,
-      name: servers.name,
-      description: servers.description,
-      owner: servers.owner,
-      repo: servers.repo,
-      fullSlug: servers.fullSlug,
-      category: servers.category,
-      isOfficial: servers.isOfficial,
-      isSponsored: servers.isSponsored,
-      githubUrl: servers.githubUrl,
-      tags: servers.tags,
-      isRemote: servers.isRemote,
-      authType: servers.authType,
-      endpoint: servers.endpoint,
-      featured: servers.featured,
-      stars: servers.stars,
-      forks: servers.forks,
-      authorId: servers.authorId,
-      createdAt: servers.createdAt,
-      updatedAt: servers.updatedAt,
+      ...serverSelectFields,
       bookmarkedAt: bookmarks.createdAt,
     })
     .from(bookmarks)
@@ -77,8 +76,6 @@ export async function removeBookmark(
   revalidatePath('/')
   return { success: true }
 }
-
-// ─── Collection Actions ─────────────────────────────────────────────────────
 
 export async function createCollection(
   userId: string,
@@ -141,7 +138,6 @@ export async function addBookmarkToCollection(
   const userId = session?.user?.id
   if (!userId) throw new Error('Unauthorized')
 
-  // Verify the collection belongs to the user
   const collectionRows = await db
     .select({ userId: collections.userId })
     .from(collections)
@@ -150,7 +146,6 @@ export async function addBookmarkToCollection(
 
   if (collectionRows[0]?.userId !== userId) throw new Error('Unauthorized')
 
-  // Verify the bookmark belongs to the user
   const bookmarkRows = await db
     .select({ userId: bookmarks.userId })
     .from(bookmarks)
@@ -170,28 +165,7 @@ export async function addBookmarkToCollection(
 
 export async function getCollectionBookmarks(collectionId: string) {
   return db
-    .select({
-      id: servers.id,
-      name: servers.name,
-      description: servers.description,
-      owner: servers.owner,
-      repo: servers.repo,
-      fullSlug: servers.fullSlug,
-      category: servers.category,
-      isOfficial: servers.isOfficial,
-      isSponsored: servers.isSponsored,
-      githubUrl: servers.githubUrl,
-      tags: servers.tags,
-      isRemote: servers.isRemote,
-      authType: servers.authType,
-      endpoint: servers.endpoint,
-      featured: servers.featured,
-      stars: servers.stars,
-      forks: servers.forks,
-      authorId: servers.authorId,
-      createdAt: servers.createdAt,
-      updatedAt: servers.updatedAt,
-    })
+    .select(serverSelectFields)
     .from(bookmarks)
     .innerJoin(servers, eq(bookmarks.serverId, servers.id))
     .where(eq(bookmarks.collectionId, collectionId))
@@ -229,10 +203,4 @@ export async function getPublicCollection(shareSlug: string) {
       },
     },
   })
-}
-
-// ─── Helper ─────────────────────────────────────────────────────────────────
-
-function generateShareSlug(): string {
-  return crypto.randomBytes(9).toString('base64url')
 }

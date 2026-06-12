@@ -12,13 +12,11 @@ export async function GET(req: NextRequest) {
   const now = new Date()
 
   try {
-    // Expire featured status
     const expiredFeatured = await db.update(servers)
       .set({ featured: false, featuredUntil: null })
       .where(and(eq(servers.featured, true), lt(servers.featuredUntil!, now)))
       .run()
 
-    // Expire sponsored status
     const expiredSponsored = await db.update(servers)
       .set({ isSponsored: false, sponsoredUntil: null })
       .where(and(eq(servers.isSponsored, true), lt(servers.sponsoredUntil!, now)))

@@ -3,7 +3,6 @@
 import { db, votes, collections, bookmarks, servers, digestSubscriptions, users } from '@/lib/db'
 import { eq, and, sum } from 'drizzle-orm'
 
-// Simple spam detection
 const SPAM_WORDS = ['casino', 'viagra', 'buy now', 'click here', 'earn money', 'free money', 'act now']
 
 export async function detectSpam(content: string): Promise<{ isSpam: boolean; reason?: string }> {
@@ -27,11 +26,9 @@ export async function detectSpam(content: string): Promise<{ isSpam: boolean; re
   return { isSpam: false }
 }
 
-// Vote actions
 export async function voteServer(userId: string, serverId: string, value: number) {
   if (value !== 1 && value !== -1) throw new Error('Vote must be 1 or -1')
   
-  // Upsert: try insert, on conflict update
   const existing = await db.select().from(votes).where(and(eq(votes.userId, userId), eq(votes.serverId, serverId))).limit(1).then((r: any) => r[0])
   
   if (existing) {
@@ -45,16 +42,13 @@ export async function voteServer(userId: string, serverId: string, value: number
   return { success: true, total: Number(voteSum) || 0 }
 }
 
-// Collection actions
 export async function createCollection(userId: string, name: string) {
   return db.insert(collections).values({ userId, name }).returning().then((r: any) => r[0])
 }
 
 export async function getUserCollections(userId: string) {
-  // Get collections for user
   const userCollections = await db.select().from(collections).where(eq(collections.userId, userId))
 
-  // For each collection, get its bookmarks with server data
   const withBookmarks = await Promise.all(userCollections.map(async (col: any) => {
     const colBookmarks = await db.select({
       id: bookmarks.id,
@@ -98,7 +92,6 @@ export async function addBookmarkToCollection(bookmarkId: string, collectionId: 
   return db.update(bookmarks).set({ collectionId }).where(eq(bookmarks.id, bookmarkId)).returning().then((r: any) => r[0])
 }
 
-// Digest subscription
 export async function subscribeToDigest(
   userId: string, 
   frequency: 'daily' | 'weekly' = 'weekly',

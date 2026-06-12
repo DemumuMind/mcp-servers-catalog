@@ -11,7 +11,7 @@ function buildSpec() {
       version: '2.0.0',
       description: 'REST API for the MCP Servers Catalog — browse, search, and export MCP server data.',
     },
-    servers: [{ url: 'https://mcpservers.org' }],
+    servers: [{ url: process.env.SITE_URL || 'https://mcpservers.org' }],
     tags: [
       { name: 'Servers', description: 'Browse and search MCP servers' },
       { name: 'Stats', description: 'Catalog statistics' },

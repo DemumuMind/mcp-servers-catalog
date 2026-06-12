@@ -1,6 +1,5 @@
 'use server'
 
-
 export async function fetchServerReadme(owner: string, repo: string): Promise<string | null> {
   try {
     const branches = ['main', 'master', 'trunk']

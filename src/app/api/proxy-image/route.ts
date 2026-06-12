@@ -5,7 +5,6 @@ import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 const checkProxyRateLimit = apiRateLimit(rateLimits.proxy)
 
 export async function GET(request: Request) {
-  // Rate limit image proxy
   const limited = await checkProxyRateLimit(request)
   if (limited) return limited
 
@@ -58,7 +57,6 @@ export async function GET(request: Request) {
     const arrayBuffer = await response.arrayBuffer()
     let buffer = Buffer.from(arrayBuffer)
 
-    // Optimize with sharp if it's an image and resize is requested
     if (contentType.startsWith('image/') && width > 0 && width <= 2000) {
       try {
         const pipeline = sharp(buffer).resize(width, undefined, { withoutEnlargement: true })
@@ -75,7 +73,6 @@ export async function GET(request: Request) {
         })
       } catch (sharpError) {
         console.warn('Sharp optimization failed, serving original:', sharpError)
-        // Fall through to original response
       }
     }
 

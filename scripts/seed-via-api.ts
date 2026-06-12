@@ -23,7 +23,7 @@ function loadEnv() {
 }
 loadEnv()
 
-const BASE_URL = process.env.SEED_BASE_URL || 'http://localhost:3000'
+const BASE_URL = process.env.NEXTAUTH_URL || process.env.SEED_BASE_URL || 'http://localhost:3000'
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@example.com'
 const envPwd: string | undefined = process.env.ADMIN_SEED_PASSWORD
 function getCredential(): string { return envPwd || "" }
@@ -71,18 +71,14 @@ async function main() {
   const servers: SeedServer[] = JSON.parse(data)
   process.stdout.write(`Loaded ${servers.length} servers to seed\n`)
 
-  // Step 1: Get CSRF token + its cookie
-  process.stdout.write('Fetching CSRF token...\n')
   const csrfRes = await fetch(`${BASE_URL}/api/auth/csrf`)
   const csrfCookies = extractCookies(csrfRes.headers.getSetCookie?.() || [])
   const csrfData = await csrfRes.json() as { csrfToken: string }
   const csrfToken = csrfData.csrfToken
   process.stdout.write(`CSRF token: ${csrfToken.slice(0, 8)}...\n`)
 
-  // Merge all cookies we have so far
   const allCookies: Record<string, string> = { ...csrfCookies }
 
-  // Step 2: Login with CSRF cookie
   process.stdout.write('Logging in...\n')
   const loginRes = await fetch(`${BASE_URL}/api/auth/callback/credentials`, {
     method: 'POST',
@@ -94,13 +90,11 @@ async function main() {
     redirect: 'manual',
   })
 
-  // Collect session cookies from login response
   const loginCookies = extractCookies(loginRes.headers.getSetCookie?.() || [])
   Object.assign(allCookies, loginCookies)
 
   const sessionKey = Object.keys(allCookies).find(k => k.includes('session-token'))
   if (!sessionKey) {
-    // Debug: show what cookies we got
     process.stdout.write(`ERROR: No session cookie found\n`)
     process.stdout.write(`Login status: ${loginRes.status}\n`)
     process.stdout.write(`Login location: ${loginRes.headers.get('location') || 'none'}\n`)
@@ -112,7 +106,6 @@ async function main() {
   const cookieStr = cookiesToString(allCookies)
   process.stdout.write('Logged in successfully\n')
 
-  // Step 3: Seed servers via API
   let created = 0
   let failed = 0
 

@@ -25,11 +25,9 @@ function apiResponse(data: unknown, status = 200) {
 }
 
 export async function GET(request: NextRequest) {
-  // Rate limit
   const rateLimitResponse = await apiRateLimit(rateLimits.search)(request)
   if (rateLimitResponse) return rateLimitResponse
 
-  // Check API key if provided
   const authHeader = request.headers.get('authorization')
   if (authHeader?.startsWith('Bearer ')) {
     const key = authHeader.slice(7)

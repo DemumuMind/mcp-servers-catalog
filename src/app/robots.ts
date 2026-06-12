@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/api', '/profile', '/backup'],
       },
     ],
-    sitemap: 'https://mcpservers.org/sitemap.xml',
+    sitemap: `${process.env.SITE_URL || 'https://mcpservers.org'}/sitemap.xml`,
   }
 }

@@ -125,7 +125,6 @@ function generateRecommendations(
 }
 
 export async function getServerAnalytics(serverId: string, userId: string) {
-  // Verify ownership
   const server = await db.select().from(servers).where(and(eq(servers.id, serverId), eq(servers.authorId, userId))).limit(1).then((r: any) => r[0])
 
   if (!server) {
@@ -171,7 +170,6 @@ export async function getAuthorDashboardData(userId: string) {
     category: servers.category,
   }).from(servers).where(eq(servers.authorId, userId))
 
-  // Fetch counts for each server
   const serversWithCounts = await Promise.all(authorServers.map(async (s: any) => {
     const [bmkCount, cmtCount, ratCount, viewCount] = await Promise.all([
       db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.serverId, s.id)).then((r: any) => r[0]?.count ?? 0),
@@ -188,7 +186,6 @@ export async function getAuthorDashboardData(userId: string) {
   const totalRatings = serversWithCounts.reduce((sum: any, s: any) => sum + s._ratings, 0)
   const totalStars = serversWithCounts.reduce((sum: any, s: any) => sum + s.stars, 0)
 
-  // Top category
   const categoryCount: Record<string, number> = {}
   for (const s of serversWithCounts) {
     categoryCount[s.category] = (categoryCount[s.category] || 0) + 1

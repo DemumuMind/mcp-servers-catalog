@@ -3,6 +3,8 @@
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
 import { eq, gte, asc, count } from 'drizzle-orm'
 
+type ServerCountRow = { serverId: string; count: number }
+
 export async function computeServerRankings(period: 'week' | 'month' = 'week') {
   const now = new Date()
   const startDate = period === 'week'
@@ -22,19 +24,19 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     db.select({ serverId: viewHistories.serverId, count: count() })
       .from(viewHistories)
       .where(gte(viewHistories.createdAt, startDate))
-      .groupBy(viewHistories.serverId) as unknown as any[],
+      .groupBy(viewHistories.serverId) as unknown as ServerCountRow[],
     db.select({ serverId: bookmarks.serverId, count: count() })
       .from(bookmarks)
       .where(gte(bookmarks.createdAt, startDate))
-      .groupBy(bookmarks.serverId) as unknown as any[],
+      .groupBy(bookmarks.serverId) as unknown as ServerCountRow[],
     db.select({ serverId: ratings.serverId, count: count() })
       .from(ratings)
       .where(gte(ratings.createdAt, startDate))
-      .groupBy(ratings.serverId) as unknown as any[],
+      .groupBy(ratings.serverId) as unknown as ServerCountRow[],
     db.select({ serverId: comments.serverId, count: count() })
       .from(comments)
       .where(gte(comments.createdAt, startDate))
-      .groupBy(comments.serverId) as unknown as any[],
+      .groupBy(comments.serverId) as unknown as ServerCountRow[],
   ])
 
   const viewMap = new Map(viewAgg.map((r: any) => [r.serverId, r.count]))
@@ -60,7 +62,6 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
       }
     })
 
-  // Sort by score descending
   const sorted = rankingData
     .filter((r: any) => r.score > 0)
     .sort((a: any, b: any) => b.score - a.score)
@@ -105,7 +106,6 @@ export async function getServerRankings(period: 'week' | 'month' = 'week', limit
     .orderBy(asc(serverRankings.rank))
     .limit(limit)
 
-  // Map to include nested server object
   return rankingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, serverDescription, serverStars, ...rankingData }: any) => ({
     ...rankingData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo, description: serverDescription, stars: serverStars },

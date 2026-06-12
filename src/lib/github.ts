@@ -17,8 +17,6 @@ interface GitHubRepoData {
   repo: string
 }
 
-// ─── Rate limit tracking ────────────────────────────────────────────────────
-
 export interface RateLimitInfo {
   remaining: number
   limit: number
@@ -66,12 +64,10 @@ function updateRateLimitFromHeaders(headers: Headers): void {
 let lastRateLimitUpdate = 0
 
 export async function getRateLimitInfo(): Promise<RateLimitInfo> {
-  // If we have fresh data from a recent API call (within last 60s), return it
   if (Date.now() - lastRateLimitUpdate < 60_000) {
     return { ...cachedRateLimit }
   }
 
-  // Fallback: call the /rate_limit endpoint
   try {
     const headers: Record<string, string> = {
       Accept: 'application/vnd.github.v3+json',
@@ -94,7 +90,6 @@ export async function getRateLimitInfo(): Promise<RateLimitInfo> {
       }
     }
   } catch {
-    // Ignore — return whatever we have cached
   }
 
   return { ...cachedRateLimit }
@@ -116,14 +111,11 @@ export async function waitForRateLimit(threshold: number = 100): Promise<RateLim
       )
       await new Promise((resolve) => setTimeout(resolve, waitMs))
     }
-    // Refresh after waiting
     return getRateLimitInfo()
   }
 
   return info
 }
-
-// ─── Core fetch helpers ─────────────────────────────────────────────────────
 
 async function githubFetch(url: string): Promise<any> {
   const headers: Record<string, string> = {
@@ -135,7 +127,6 @@ async function githubFetch(url: string): Promise<any> {
 
   const res = await fetch(url, { headers })
 
-  // Update rate limit tracking from response headers
   updateRateLimitFromHeaders(res.headers)
 
   if (!res.ok) {

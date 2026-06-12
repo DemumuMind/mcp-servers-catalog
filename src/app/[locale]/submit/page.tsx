@@ -70,19 +70,16 @@ function inferCategory(topics: string[], language: string | null): string {
     'database', 'cloud-service', 'file-system', 'cloud-storage', 'version-control',
     'browser-automation', 'ai-ml', 'other',
   ]
-  // Direct match: a topic exactly matches a category value
   for (const topic of topics) {
     const lower = topic.toLowerCase()
     if (categoryValues.includes(lower)) return lower
   }
-  // Partial match: topic contains a category keyword
   for (const topic of topics) {
     const lower = topic.toLowerCase()
     for (const cv of categoryValues) {
       if (lower.includes(cv)) return cv
     }
   }
-  // Fallback: language-based mapping
   const langMap: Record<string, string> = {
     python: 'ai-ml',
     typescript: 'development',
@@ -124,7 +121,6 @@ export default function SubmitPage() {
   const onSubmit = async (data: SubmitFormData) => {
     setIsSubmitting(true)
     try {
-      // Convert comma-separated tags string to array for the server action
       const tagsArray = data.tags
         ? data.tags
             .split(',')
@@ -158,7 +154,6 @@ export default function SubmitPage() {
     try {
       const data = await fetchRepoFromGitHub(url)
 
-      // Check for duplicates in DB
       if (data.owner && data.repo) {
         const dupCheck = await checkServerExists(data.owner, data.repo)
         if (dupCheck.exists) {
@@ -166,21 +161,16 @@ export default function SubmitPage() {
         }
       }
 
-      // Name: clean up repo name
       form.setValue('name', cleanRepoName(data.name))
 
-      // Description
       if (data.description) form.setValue('description', data.description)
 
-      // Category: infer from topics or language
       const category = inferCategory(data.topics || [], data.language || null)
       form.setValue('category', category)
 
-      // Tags: from GitHub topics (limit 10), as comma-separated string
       const tagsStr = (data.topics || []).slice(0, 10).join(', ')
       form.setValue('tags', tagsStr)
 
-      // Owner: from GitHub URL
       if (data.owner) form.setValue('owner', data.owner)
     } catch (err: any) {
       setFetchError(err.message || t('errors.githubFetchFailed'))

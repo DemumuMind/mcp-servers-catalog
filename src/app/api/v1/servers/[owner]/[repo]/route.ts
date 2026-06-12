@@ -21,7 +21,6 @@ export async function GET(
 ) {
   const { owner, repo } = await params
 
-  // Check API key if provided
   const authHeader = request.headers.get('authorization')
   if (authHeader?.startsWith('Bearer ')) {
     const key = authHeader.slice(7)

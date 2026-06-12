@@ -4,7 +4,6 @@ import { db, servers, users, ratings, bookmarks, comments } from '@/lib/db'
 import { isNotNull, eq, inArray } from 'drizzle-orm'
 
 export async function getTopAuthors(limit: number = 20) {
-  // Find all servers with authorId and aggregate stats
   const authorServers = await db.select({
     id: servers.id,
     stars: servers.stars,
@@ -13,25 +12,20 @@ export async function getTopAuthors(limit: number = 20) {
     authorEmail: users.email,
   }).from(servers).leftJoin(users, eq(servers.authorId, users.id)).where(isNotNull(servers.authorId))
 
-  // Fetch related data for each server
   const serverIds = authorServers.map((s: any) => s.id)
 
-  // Get all ratings for these servers
   const allRatings = serverIds.length > 0
     ? await db.select({ serverId: ratings.serverId, value: ratings.value }).from(ratings).where(inArray(ratings.serverId, serverIds))
     : []
 
-  // Get all bookmarks for these servers
   const allBookmarks = serverIds.length > 0
     ? await db.select({ serverId: bookmarks.serverId, id: bookmarks.id }).from(bookmarks).where(inArray(bookmarks.serverId, serverIds))
     : []
 
-  // Get all comments for these servers
   const allComments = serverIds.length > 0
     ? await db.select({ serverId: comments.serverId, id: comments.id }).from(comments).where(inArray(comments.serverId, serverIds))
     : []
 
-  // Group by author
   const authorMap = new Map<string, {
     id: string
     name: string | null
@@ -62,7 +56,6 @@ export async function getTopAuthors(limit: number = 20) {
       existing.totalBookmarks += serverBookmarks.length
       existing.totalComments += serverComments.length
       existing.totalRatings += serverRatings.length
-      // Recalculate weighted average
       const totalRatingValue = (existing.avgRating * (existing.totalRatings - serverRatings.length)) +
         serverAvg * serverRatings.length
       existing.avgRating = existing.totalRatings > 0 ? totalRatingValue / existing.totalRatings : 0

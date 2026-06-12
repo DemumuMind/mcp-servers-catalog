@@ -110,7 +110,6 @@ export async function validateApiKey(
       return { valid: false }
     }
 
-    // RBAC: check required permission
     if (requiredPermission) {
       const hasPermission =
         apiKey.permissions.includes('admin') ||

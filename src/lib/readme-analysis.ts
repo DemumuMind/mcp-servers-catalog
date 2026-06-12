@@ -1,5 +1,3 @@
-// README content analysis helpers
-
 const CLIENT_KEYWORDS = [
   { name: 'Claude Desktop', keywords: ['claude', 'claude desktop', 'anthropic'] },
   { name: 'Cursor', keywords: ['cursor'] },
@@ -55,7 +53,6 @@ export function analyzeReadme(readme: string): ReadmeAnalysis {
       continue
     }
     if (inInstallSection) {
-      // Capture code blocks and bullet points as steps
       if (line.trim().startsWith('```') || line.trim().startsWith('- ') || line.trim().startsWith('* ') || line.trim().startsWith('1.')) {
         if (currentStep) {
           installationSteps.push(currentStep.trim())
@@ -68,10 +65,8 @@ export function analyzeReadme(readme: string): ReadmeAnalysis {
   }
   if (currentStep) installationSteps.push(currentStep.trim())
 
-  // Limit steps
   const limitedSteps = installationSteps.slice(0, 5)
 
-  // Suggest tags based on README content
   const suggestedTags: string[] = []
   const tagKeywords: Record<string, string[]> = {
     database: ['database', 'sql', 'sqlite', 'postgres', 'mysql', 'mongodb'],

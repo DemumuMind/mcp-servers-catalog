@@ -3,10 +3,20 @@
 import { db, servers } from '@/lib/db'
 import { or, desc, notInArray, sql, and } from 'drizzle-orm'
 
+/** Shared select shape for autocomplete server results */
+const autocompleteServerFields = {
+  id: servers.id,
+  name: servers.name,
+  owner: servers.owner,
+  repo: servers.repo,
+  description: servers.description,
+  stars: servers.stars,
+  category: servers.category,
+}
+
 export async function autocompleteServers(query: string, limit: number = 8) {
   if (!query || query.length < 2) return []
 
-  // Split into words for multi-word search
   const words = query.toLowerCase().split(/\s+/).filter(Boolean)
   const fields = [
     sql`LOWER(${servers.name})`,
@@ -24,44 +34,19 @@ export async function autocompleteServers(query: string, limit: number = 8) {
     )
   })
 
-  const serversResult = await db.select({
-    id: servers.id,
-    name: servers.name,
-    owner: servers.owner,
-    repo: servers.repo,
-    description: servers.description,
-    stars: servers.stars,
-    category: servers.category,
-  }).from(servers).where(
+  const serversResult = await db.select(autocompleteServerFields).from(servers).where(
     and(...wordConditions)
   ).orderBy(desc(servers.stars)).limit(limit)
 
-  // Also search tags and categories for suggestions
   const excludedIds = serversResult.map((s: any) => s.id)
   const matchingTags = excludedIds.length > 0
-    ? await db.select({
-        id: servers.id,
-        name: servers.name,
-        owner: servers.owner,
-        repo: servers.repo,
-        description: servers.description,
-        stars: servers.stars,
-        category: servers.category,
-      }).from(servers).where(
+    ? await db.select(autocompleteServerFields).from(servers).where(
         and(
           sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value LIKE ${`%${query}%`})`,
           notInArray(servers.id, excludedIds)
         )
       ).orderBy(desc(servers.stars)).limit(Math.max(0, limit - serversResult.length))
-    : await db.select({
-        id: servers.id,
-        name: servers.name,
-        owner: servers.owner,
-        repo: servers.repo,
-        description: servers.description,
-        stars: servers.stars,
-        category: servers.category,
-      }).from(servers).where(
+    : await db.select(autocompleteServerFields).from(servers).where(
         sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value LIKE ${`%${query}%`})`
       ).orderBy(desc(servers.stars)).limit(limit - serversResult.length)
 

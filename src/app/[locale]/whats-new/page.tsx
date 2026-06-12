@@ -17,14 +17,11 @@ export default async function WhatsNewPage({
 
   const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 
-  // New servers this week
   const { servers: recentServers } = await getServersPublic(1, undefined, undefined, undefined, false, false)
   const newThisWeek = recentServers.filter((s) => new Date(s.createdAt) > oneWeekAgo)
 
-  // Trending
   const trending = await getTrendingServers(6)
 
-  // Most starred recently updated
   const recentlyUpdated = recentServers
     .filter((s) => new Date(s.updatedAt) > oneWeekAgo && s.stars && s.stars > 0)
     .sort((a, b) => (b.stars || 0) - (a.stars || 0))

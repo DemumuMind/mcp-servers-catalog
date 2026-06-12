@@ -22,7 +22,7 @@ export function AuthorAnalytics({ userId }: AuthorAnalyticsProps) {
         setSelectedServer(data[0].id)
       }
     })
-  }, [userId])
+  }, [userId, selectedServer])
 
   useEffect(() => {
     if (selectedServer) {

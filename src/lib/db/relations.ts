@@ -20,10 +20,6 @@ import {
   reviewVotes,
 } from "./schema";
 
-// ──────────────────────────────────────────────
-// Server relations
-// ──────────────────────────────────────────────
-
 export const serversRelations = relations(servers, ({ one, many }) => ({
   author: one(users, {
     fields: [servers.authorId],
@@ -40,10 +36,6 @@ export const serversRelations = relations(servers, ({ one, many }) => ({
   serverRanking: one(serverRankings),
   reviews: many(reviews),
 }));
-
-// ──────────────────────────────────────────────
-// User relations
-// ──────────────────────────────────────────────
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   servers: many(servers, { relationName: "serverAuthor" }),
@@ -62,10 +54,6 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   reviewVotes: many(reviewVotes),
 }));
 
-// ──────────────────────────────────────────────
-// Bookmark relations
-// ──────────────────────────────────────────────
-
 export const bookmarksRelations = relations(bookmarks, ({ one }) => ({
   user: one(users, {
     fields: [bookmarks.userId],
@@ -81,10 +69,6 @@ export const bookmarksRelations = relations(bookmarks, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// Rating relations
-// ──────────────────────────────────────────────
-
 export const ratingsRelations = relations(ratings, ({ one }) => ({
   user: one(users, {
     fields: [ratings.userId],
@@ -95,10 +79,6 @@ export const ratingsRelations = relations(ratings, ({ one }) => ({
     references: [servers.id],
   }),
 }));
-
-// ──────────────────────────────────────────────
-// Comment relations
-// ──────────────────────────────────────────────
 
 export const commentsRelations = relations(comments, ({ one }) => ({
   user: one(users, {
@@ -111,10 +91,6 @@ export const commentsRelations = relations(comments, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// ViewHistory relations
-// ──────────────────────────────────────────────
-
 export const viewHistoriesRelations = relations(viewHistories, ({ one }) => ({
   user: one(users, {
     fields: [viewHistories.userId],
@@ -126,20 +102,12 @@ export const viewHistoriesRelations = relations(viewHistories, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// Notification relations
-// ──────────────────────────────────────────────
-
 export const notificationsRelations = relations(notifications, ({ one }) => ({
   user: one(users, {
     fields: [notifications.userId],
     references: [users.id],
   }),
 }));
-
-// ──────────────────────────────────────────────
-// Collection relations
-// ──────────────────────────────────────────────
 
 export const collectionsRelations = relations(collections, ({ one, many }) => ({
   user: one(users, {
@@ -149,20 +117,12 @@ export const collectionsRelations = relations(collections, ({ one, many }) => ({
   bookmarks: many(bookmarks),
 }));
 
-// ──────────────────────────────────────────────
-// DigestSubscription relations
-// ──────────────────────────────────────────────
-
 export const digestSubscriptionsRelations = relations(digestSubscriptions, ({ one }) => ({
   user: one(users, {
     fields: [digestSubscriptions.userId],
     references: [users.id],
   }),
 }));
-
-// ──────────────────────────────────────────────
-// Vote relations
-// ──────────────────────────────────────────────
 
 export const votesRelations = relations(votes, ({ one }) => ({
   user: one(users, {
@@ -175,20 +135,12 @@ export const votesRelations = relations(votes, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// ApiKey relations
-// ──────────────────────────────────────────────
-
 export const apiKeysRelations = relations(apiKeys, ({ one }) => ({
   user: one(users, {
     fields: [apiKeys.userId],
     references: [users.id],
   }),
 }));
-
-// ──────────────────────────────────────────────
-// Webhook relations
-// ──────────────────────────────────────────────
 
 export const webhooksRelations = relations(webhooks, ({ one }) => ({
   user: one(users, {
@@ -197,20 +149,12 @@ export const webhooksRelations = relations(webhooks, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// Sponsorship relations
-// ──────────────────────────────────────────────
-
 export const sponsorshipsRelations = relations(sponsorships, ({ one }) => ({
   server: one(servers, {
     fields: [sponsorships.serverId],
     references: [servers.id],
   }),
 }));
-
-// ──────────────────────────────────────────────
-// HealthCheck relations
-// ──────────────────────────────────────────────
 
 export const healthChecksRelations = relations(healthChecks, ({ one }) => ({
   server: one(servers, {
@@ -219,10 +163,6 @@ export const healthChecksRelations = relations(healthChecks, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// AuditLog relations
-// ──────────────────────────────────────────────
-
 export const auditLogsRelations = relations(auditLogs, ({ one }) => ({
   user: one(users, {
     fields: [auditLogs.userId],
@@ -230,20 +170,12 @@ export const auditLogsRelations = relations(auditLogs, ({ one }) => ({
   }),
 }));
 
-// ──────────────────────────────────────────────
-// ServerRanking relations
-// ──────────────────────────────────────────────
-
 export const serverRankingsRelations = relations(serverRankings, ({ one }) => ({
   server: one(servers, {
     fields: [serverRankings.serverId],
     references: [servers.id],
   }),
 }));
-
-// ──────────────────────────────────────────────
-// Review relations
-// ──────────────────────────────────────────────
 
 export const reviewsRelations = relations(reviews, ({ one, many }) => ({
   user: one(users, {
@@ -256,10 +188,6 @@ export const reviewsRelations = relations(reviews, ({ one, many }) => ({
   }),
   reviewVotes: many(reviewVotes),
 }));
-
-// ──────────────────────────────────────────────
-// ReviewVote relations
-// ──────────────────────────────────────────────
 
 export const reviewVotesRelations = relations(reviewVotes, ({ one }) => ({
   user: one(users, {

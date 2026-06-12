@@ -4,13 +4,11 @@ import { db, bookmarks, servers } from '@/lib/db'
 import { eq, inArray, ne, and } from 'drizzle-orm'
 
 export async function getOftenUsedTogether(serverId: string, limit: number = 5) {
-  // Find users who bookmarked this server
   const userBookmarks = await db.select({ userId: bookmarks.userId }).from(bookmarks).where(eq(bookmarks.serverId, serverId))
 
   const userIds = userBookmarks.map((b: any) => b.userId)
   if (userIds.length === 0) return []
 
-  // Find other servers bookmarked by same users
   const otherBookmarks = await db.select({
     serverId: bookmarks.serverId,
   }).from(bookmarks).where(
@@ -20,13 +18,11 @@ export async function getOftenUsedTogether(serverId: string, limit: number = 5) 
     )
   )
 
-  // Count frequency
   const freq: Record<string, number> = {}
   for (const b of otherBookmarks) {
     freq[b.serverId] = (freq[b.serverId] || 0) + 1
   }
 
-  // Sort by frequency
   const sorted = Object.entries(freq)
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit)
@@ -48,7 +44,6 @@ export async function getOftenUsedTogether(serverId: string, limit: number = 5) 
     forks: servers.forks,
   }).from(servers).where(inArray(servers.id, sorted))
 
-  // Add frequency score
   return serverResults.map((s: any) => ({
     ...s,
     togetherCount: freq[s.id],

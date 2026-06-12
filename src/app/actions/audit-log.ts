@@ -4,6 +4,23 @@ import { db, auditLogs, users } from '@/lib/db'
 import { eq, desc } from 'drizzle-orm'
 import { headers } from 'next/headers'
 
+/** Shared select shape for audit log queries with joined user info */
+const auditLogSelectFields = {
+  id: auditLogs.id,
+  userId: auditLogs.userId,
+  action: auditLogs.action,
+  targetType: auditLogs.targetType,
+  targetId: auditLogs.targetId,
+  details: auditLogs.details,
+  ip: auditLogs.ip,
+  userAgent: auditLogs.userAgent,
+  createdAt: auditLogs.createdAt,
+  user: {
+    name: users.name,
+    email: users.email,
+  },
+}
+
 export async function logAudit(
   action: string,
   targetType?: string,
@@ -32,37 +49,19 @@ export async function logAudit(
 }
 
 export async function getAuditLogs(limit = 100, offset = 0) {
-  return db.select({
-    id: auditLogs.id,
-    userId: auditLogs.userId,
-    action: auditLogs.action,
-    targetType: auditLogs.targetType,
-    targetId: auditLogs.targetId,
-    details: auditLogs.details,
-    ip: auditLogs.ip,
-    userAgent: auditLogs.userAgent,
-    createdAt: auditLogs.createdAt,
-    user: {
-      name: users.name,
-      email: users.email,
-    },
-  }).from(auditLogs).leftJoin(users, eq(auditLogs.userId, users.id)).orderBy(desc(auditLogs.createdAt)).limit(limit).offset(offset)
+  return db.select(auditLogSelectFields)
+    .from(auditLogs)
+    .leftJoin(users, eq(auditLogs.userId, users.id))
+    .orderBy(desc(auditLogs.createdAt))
+    .limit(limit)
+    .offset(offset)
 }
 
 export async function getAuditLogsByAction(action: string, limit = 50) {
-  return db.select({
-    id: auditLogs.id,
-    userId: auditLogs.userId,
-    action: auditLogs.action,
-    targetType: auditLogs.targetType,
-    targetId: auditLogs.targetId,
-    details: auditLogs.details,
-    ip: auditLogs.ip,
-    userAgent: auditLogs.userAgent,
-    createdAt: auditLogs.createdAt,
-    user: {
-      name: users.name,
-      email: users.email,
-    },
-  }).from(auditLogs).leftJoin(users, eq(auditLogs.userId, users.id)).where(eq(auditLogs.action, action)).orderBy(desc(auditLogs.createdAt)).limit(limit)
+  return db.select(auditLogSelectFields)
+    .from(auditLogs)
+    .leftJoin(users, eq(auditLogs.userId, users.id))
+    .where(eq(auditLogs.action, action))
+    .orderBy(desc(auditLogs.createdAt))
+    .limit(limit)
 }

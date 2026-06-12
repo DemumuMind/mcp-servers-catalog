@@ -8,7 +8,6 @@ const client = createClient(
   url.startsWith('libsql://') || url.startsWith('http') ? { url, authToken } : { url }
 )
 
-// Real MCP clients - IDEs, apps, tools that connect to MCP servers
 const mcpClients = [
   {
     name: 'Claude Desktop',
@@ -286,7 +285,7 @@ const mcpClients = [
 ]
 
 async function seed() {
-  console.log(`Seeding ${mcpClients.length} MCP clients...`)
+  process.stdout.write(`Seeding ${mcpClients.length} MCP clients...\n`)
 
   let created = 0
   for (const c of mcpClients) {
@@ -302,7 +301,7 @@ async function seed() {
     }
   }
 
-  console.log(`Done: ${created} clients created`)
+  process.stdout.write(`Done: ${created} clients created\n`)
 }
 
 seed().catch(console.error)

@@ -1,7 +1,8 @@
 'use server'
 
-import { db, servers, ratings } from '@/lib/db'
-import { eq, and, or, like, desc, gte, lte, inArray, isNotNull, count, avg, sql } from 'drizzle-orm'
+import { db, servers } from '@/lib/db'
+import { eq, and, or, like, desc, gte, lte, inArray, isNotNull, count, sql } from 'drizzle-orm'
+import { fetchRatingMap } from '@/lib/action-helpers'
 
 const ITEMS_PER_PAGE = 12
 
@@ -80,31 +81,14 @@ export async function advancedSearchServers(params: {
   const total = countResult[0]?.total ?? 0
   const serverIds = serverRows.map((s: any) => s.id)
 
-  // Aggregate ratings per server
-  const ratingsAgg = serverIds.length > 0
-    ? (await db
-        .select({
-          serverId: ratings.serverId,
-          avgValue: avg(ratings.value),
-          countValue: count(),
-        })
-        .from(ratings)
-        .where(inArray(ratings.serverId, serverIds))
-        .groupBy(ratings.serverId)) as any[]
-    : []
+  const ratingMap = await fetchRatingMap(serverIds)
 
-  const ratingMap: Map<number, { avg: number | null; count: number }> = new Map(
-    ratingsAgg.map((r: any) => [r.serverId, { avg: r.avgValue, count: r.countValue }])
-  )
-
-  // Attach rating data to servers
   let filteredServers = serverRows.map((server: any) => ({
     ...server,
     avgRating: ratingMap.get(server.id)?.avg ?? null,
     ratingCount: ratingMap.get(server.id)?.count ?? 0,
   }))
 
-  // Filter by minRating if specified
   if (params.minRating !== undefined) {
     filteredServers = filteredServers.filter((s: any) => (s.avgRating || 0) >= params.minRating!)
   }

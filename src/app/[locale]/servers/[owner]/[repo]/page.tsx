@@ -36,7 +36,6 @@ import { generateServerJsonLd, generateBreadcrumbJsonLd } from '@/lib/json-ld'
 
 const SITE_URL = process.env.SITE_URL || 'https://mcpservers.org'
 
-
 export async function generateMetadata({
   params,
 }: {

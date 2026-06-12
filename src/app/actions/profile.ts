@@ -6,7 +6,6 @@ import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
 
 export async function getUserProfile(userId: string) {
-  // Get user base data
   const user = await db.select({
     id: users.id,
     name: users.name,
@@ -18,7 +17,6 @@ export async function getUserProfile(userId: string) {
 
   if (!user) return null
 
-  // Get counts separately
   const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
     db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: any) => r[0]?.count ?? 0),
     db.select({ count: count() }).from(comments as any).where(eq(comments.userId, userId)).then((r: any) => r[0]?.count ?? 0),
@@ -48,7 +46,6 @@ export async function getUserComments(userId: string) {
     .where(eq(comments.userId, userId))
     .orderBy(desc(comments.createdAt))
 
-  // Map to include nested server object
   return commentRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...commentData }: any) => ({
     ...commentData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
@@ -67,7 +64,6 @@ export async function getUserRatings(userId: string) {
     .where(eq(ratings.userId, userId))
     .orderBy(desc(ratings.createdAt))
 
-  // Map to include nested server object
   return ratingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...ratingData }: any) => ({
     ...ratingData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
@@ -94,7 +90,6 @@ export async function getUserHistory(userId: string, limit = 50) {
     .orderBy(desc(viewHistories.createdAt))
     .limit(limit)
 
-  // Map to include nested server object and deduplicate by server (keep most recent)
   const mapped = historyRows.map((row: any) => {
     const {
       serverId_col, serverName, serverDescription, serverOwner, serverRepo,
@@ -119,7 +114,6 @@ export async function getUserHistory(userId: string, limit = 50) {
     }
   })
 
-  // Deduplicate by server (keep most recent)
   const seen = new Set<string>()
   return mapped.filter((h: any) => {
     if (seen.has(h.serverId)) return false
@@ -136,7 +130,6 @@ export async function trackServerView(userId: string, serverId: string) {
         set: { createdAt: new Date() },
       })
   } catch {
-    // Silently fail if server doesn't exist or other error
   }
 }
 

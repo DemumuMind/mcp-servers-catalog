@@ -1,54 +1,38 @@
 'use server'
 
 import { db, viewHistories, servers, bookmarks, users } from '@/lib/db'
-import { gte, lt, and, inArray, sql } from 'drizzle-orm'
+import { gte, lt, and, inArray, sql, SQL } from 'drizzle-orm'
+import type { SQLiteColumn } from 'drizzle-orm/sqlite-core'
+
+/**
+ * Build a daily count query for a timestamp column.
+ * Shared pattern used by multiple metrics in getTimeSeriesMetrics.
+ */
+function buildDailyCountQuery(
+  table: { createdAt: SQLiteColumn },
+  countExpr: SQL<unknown>,
+  startDate: Date,
+) {
+  return db
+    .select({
+      date: sql<string>`date(${table.createdAt}, 'unixepoch')`,
+      count: countExpr,
+    })
+    .from(table as any)
+    .where(gte(table.createdAt, startDate))
+    .groupBy(sql`date(${table.createdAt}, 'unixepoch')`)
+    .orderBy(sql`date(${table.createdAt}, 'unixepoch') asc`)
+}
 
 export async function getTimeSeriesMetrics(days: number = 30) {
   const now = new Date()
   const startDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000)
 
   const [dailyActiveUsers, dailyServers, dailyViews, dailyBookmarks] = await Promise.all([
-    // Daily active users (unique users with view history per day)
-    // SQLite: createdAt stored as Unix timestamp, needs 'unixepoch' modifier
-    db
-      .select({
-        date: sql<string>`date(${viewHistories.createdAt}, 'unixepoch')`,
-        count: sql<number>`count(distinct ${viewHistories.userId})`,
-      })
-      .from(viewHistories)
-      .where(gte(viewHistories.createdAt, startDate))
-      .groupBy(sql`date(${viewHistories.createdAt}, 'unixepoch')`)
-      .orderBy(sql`date(${viewHistories.createdAt}, 'unixepoch') asc`),
-    // New servers per day
-    db
-      .select({
-        date: sql<string>`date(${servers.createdAt}, 'unixepoch')`,
-        count: sql<number>`count(*)`,
-      })
-      .from(servers)
-      .where(gte(servers.createdAt, startDate))
-      .groupBy(sql`date(${servers.createdAt}, 'unixepoch')`)
-      .orderBy(sql`date(${servers.createdAt}, 'unixepoch') asc`),
-    // Views per day
-    db
-      .select({
-        date: sql<string>`date(${viewHistories.createdAt}, 'unixepoch')`,
-        count: sql<number>`count(*)`,
-      })
-      .from(viewHistories)
-      .where(gte(viewHistories.createdAt, startDate))
-      .groupBy(sql`date(${viewHistories.createdAt}, 'unixepoch')`)
-      .orderBy(sql`date(${viewHistories.createdAt}, 'unixepoch') asc`),
-    // Bookmarks per day
-    db
-      .select({
-        date: sql<string>`date(${bookmarks.createdAt}, 'unixepoch')`,
-        count: sql<number>`count(*)`,
-      })
-      .from(bookmarks)
-      .where(gte(bookmarks.createdAt, startDate))
-      .groupBy(sql`date(${bookmarks.createdAt}, 'unixepoch')`)
-      .orderBy(sql`date(${bookmarks.createdAt}, 'unixepoch') asc`),
+    buildDailyCountQuery(viewHistories, sql<number>`count(distinct ${viewHistories.userId})`, startDate),
+    buildDailyCountQuery(servers, sql<number>`count(*)`, startDate),
+    buildDailyCountQuery(viewHistories, sql<number>`count(*)`, startDate),
+    buildDailyCountQuery(bookmarks, sql<number>`count(*)`, startDate),
   ])
 
   return {
@@ -73,7 +57,6 @@ export async function getCohortAnalysis(weeks: number = 8) {
     const weekEnd = new Date(now.getTime() - i * 7 * 24 * 60 * 60 * 1000)
     const cohortLabel = weekStart.toISOString().split('T')[0]
 
-    // Users who registered in this week
     const newUsers = await db
       .select({ id: users.id })
       .from(users)
@@ -84,7 +67,6 @@ export async function getCohortAnalysis(weeks: number = 8) {
     const userIds = newUsers.map((u: any) => u.id)
     const size = userIds.length
 
-    // Retention for each subsequent week (up to current)
     const retention: number[] = []
     const maxWeeks = Math.min(weeks - i, weeks)
 

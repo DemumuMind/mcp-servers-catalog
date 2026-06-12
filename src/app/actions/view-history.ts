@@ -3,7 +3,6 @@
 import { db, viewHistories, servers } from '@/lib/db'
 import { eq, and, desc, gte, sql } from 'drizzle-orm'
 
-// ─── Record View ──────────────────────────────────────────────────────────────
 export async function recordView(
   userId: string | null,
   serverId: string
@@ -57,7 +56,6 @@ export async function recordView(
   return { success: true }
 }
 
-// ─── Get Recent Views ────────────────────────────────────────────────────────
 export async function getRecentViews(
   userId: string,
   limit: number = 20
@@ -111,7 +109,6 @@ export async function getRecentViews(
   }))
 }
 
-// ─── Clear View History ──────────────────────────────────────────────────────
 export async function clearViewHistory(
   userId: string
 ): Promise<{ success: boolean }> {
@@ -119,7 +116,6 @@ export async function clearViewHistory(
   return { success: true }
 }
 
-// ─── Get View Count ──────────────────────────────────────────────────────────
 export async function getViewCount(serverId: string): Promise<{ count: number }> {
   const result = await db
     .select({ count: sql<number>`count(*)` })

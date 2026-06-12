@@ -3,7 +3,6 @@
 import { db, servers, healthChecks } from '@/lib/db'
 import { eq, desc, and, gte, sql } from 'drizzle-orm'
 
-// ─── Check Server Health ──────────────────────────────────────────────────────
 export async function checkServerHealth(
   serverId: string
 ): Promise<{ status: string; latency?: number; error?: string }> {
@@ -56,7 +55,6 @@ export async function checkServerHealth(
   }
 }
 
-// ─── Get Server Health History ────────────────────────────────────────────────
 export async function getServerHealthHistory(
   serverId: string,
   limit: number = 30
@@ -69,14 +67,12 @@ export async function getServerHealthHistory(
     .limit(limit)
 }
 
-// ─── Get Server Health Status ─────────────────────────────────────────────────
 export async function getServerHealthStatus(
   serverId: string
 ): Promise<{
   latest: { status: string; latency?: number; error?: string; createdAt: Date } | null
   uptimePercent: number
 }> {
-  // Latest check
   const latestCheck = await db
     .select()
     .from(healthChecks)
@@ -85,7 +81,6 @@ export async function getServerHealthStatus(
     .limit(1)
     .then((r: any) => r[0] ?? null)
 
-  // Uptime percentage over last 24h
   const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
   const stats = await db
     .select({

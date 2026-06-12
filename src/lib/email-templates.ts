@@ -61,11 +61,11 @@ function escapeHtml(str: string): string {
 }
 
 function emailTemplate(title: string, content: string, locale: Locale = 'ru'): string {
-  const s = t(locale)
+  const sub = t(locale)
   const brandMark = miniBrandMarkSvg()
 
   return `<!DOCTYPE html>
-<html lang="${s.htmlLang}">
+<html lang="${sub.htmlLang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,8 +95,8 @@ function emailTemplate(title: string, content: string, locale: Locale = 'ru'): s
     ${content}
   </div>
   <div class="footer">
-    <p>${s.footerAutoMessage} <a href="${SITE_URL}">mcpservers.org</a></p>
-    <p>${s.footerReason}</p>
+    <p>${sub.footerAutoMessage} <a href="${SITE_URL}">mcpservers.org</a></p>
+    <p>${sub.footerReason}</p>
   </div>
 </body>
 </html>`
@@ -110,19 +110,19 @@ export function submissionNotificationTemplate(submission: {
   category: string
   premium: boolean
 }, locale: Locale = 'ru'): string {
-  const s = t(locale)
+  const sub = t(locale)
   return emailTemplate(
-    s.newSubmission,
+    sub.newSubmission,
     `
     <table>
-      <tr><th>${s.name}</th><td>${escapeHtml(submission.name)}</td></tr>
+      <tr><th>${sub.name}</th><td>${escapeHtml(submission.name)}</td></tr>
       <tr><th>Email</th><td>${escapeHtml(submission.email)}</td></tr>
-      <tr><th>${s.description}</th><td>${escapeHtml(submission.description)}</td></tr>
+      <tr><th>${sub.description}</th><td>${escapeHtml(submission.description)}</td></tr>
       <tr><th>URL</th><td><a href="${escapeHtml(submission.url)}">${escapeHtml(submission.url)}</a></td></tr>
-      <tr><th>${s.category}</th><td>${escapeHtml(submission.category)}</td></tr>
-      <tr><th>Premium</th><td>${submission.premium ? s.premiumYes : s.premiumNo}</td></tr>
+      <tr><th>${sub.category}</th><td>${escapeHtml(submission.category)}</td></tr>
+      <tr><th>Premium</th><td>${submission.premium ? sub.premiumYes : sub.premiumNo}</td></tr>
     </table>
-    <p><a href="${process.env.NEXTAUTH_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${s.goToAdmin}</a></p>
+    <p><a href="${process.env.NEXTAUTH_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${sub.goToAdmin}</a></p>
     `,
     locale
   )
@@ -131,7 +131,6 @@ export function submissionNotificationTemplate(submission: {
 /** Locale-aware category title fragment for digest emails */
 export function digestCategoryTitle(category: string | null | undefined, locale: Locale): string {
   if (!category) return ''
-  const s = t(locale)
   // We need to match the pattern used in subject strings: " категории \"X\"" (ru) / " in category \"X\"" (en)
   const categoryStrings = {
     ru: ` категории "${category}"`,
@@ -144,15 +143,15 @@ export function statusUpdateTemplate(submission: {
   name: string
   status: string
 }, locale: Locale = 'ru'): string {
-  const s = t(locale)
-  const statusText = submission.status === 'approved' ? s.approved : s.rejected
+  const sub = t(locale)
+  const statusText = submission.status === 'approved' ? sub.approved : sub.rejected
   const safeName = submission.name.replace(/[\r\n]/g, ' ')
 
-  const title = s.yourSubmissionTitle
+  const title = sub.yourSubmissionTitle
     .replace('{name}', safeName)
     .replace('{status}', statusText)
 
-  const bodyContent = s.yourSubmissionStatus
+  const bodyContent = sub.yourSubmissionStatus
     .replace('{name}', escapeHtml(submission.name))
     .replace('{status}', statusText)
 
@@ -160,23 +159,23 @@ export function statusUpdateTemplate(submission: {
     title,
     `
     <p>${bodyContent}</p>
-    <p>${s.thanksForContributing}</p>
+    <p>${sub.thanksForContributing}</p>
     `,
     locale
   )
 }
 
 export function digestTemplate(categoryTitle: string, servers: Array<{ name: string; description: string }>, locale: Locale = 'ru'): string {
-  const s = t(locale)
+  const sub = t(locale)
   const localePath = locale === 'ru' ? '/ru' : '/en'
   return emailTemplate(
-    s.weeklyDigest.replace('{categoryTitle}', categoryTitle),
+    sub.weeklyDigest.replace('{categoryTitle}', categoryTitle),
     `
-    <p>${s.newServersThisWeek.replace('{categoryTitle}', categoryTitle)}</p>
+    <p>${sub.newServersThisWeek.replace('{categoryTitle}', categoryTitle)}</p>
     <ul>
       ${servers.map((s2) => `<li><strong>${escapeHtml(s2.name)}</strong>: ${escapeHtml(s2.description)}</li>`).join('')}
     </ul>
-    <p><a href="${SITE_URL}${localePath}/all" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${s.viewAllServers}</a></p>
+    <p><a href="${SITE_URL}${localePath}/all" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${sub.viewAllServers}</a></p>
     `,
     locale
   )

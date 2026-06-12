@@ -18,11 +18,9 @@ const querySchema = z.object({
 })
 
 export async function GET(request: NextRequest) {
-  // Rate limit
   const rateLimitResponse = await apiRateLimit(rateLimits.api)(request)
   if (rateLimitResponse) return rateLimitResponse
 
-  // Check API key if provided
   const authHeader = request.headers.get('authorization')
   let _apiKeyUser = null
   
@@ -73,7 +71,6 @@ export async function GET(request: NextRequest) {
 
   const whereClause = conditions.length > 0 ? and(...conditions) : undefined
 
-  // Determine sort order
   const sortColumn = {
     stars: servers.stars,
     createdAt: servers.createdAt,
@@ -111,7 +108,6 @@ export async function GET(request: NextRequest) {
   const total = totalResult?.total ?? 0
   const totalPages = Math.ceil(total / limit)
 
-  // Build Link header for pagination
   const baseUrl = new URL(request.url).origin
   const linkParts: string[] = []
 
@@ -127,7 +123,6 @@ export async function GET(request: NextRequest) {
     linkParts.push(`<${buildPageUrl(totalPages)}>; rel="last"`)
   }
 
-  // Rate limit info headers (reflect the api rate limit: 100/min)
   const rateLimitLimit = rateLimits.api.maxRequests
   const rateLimitRemaining = Math.max(0, rateLimitLimit - 1) // Approximation — actual tracking is per-IP
 

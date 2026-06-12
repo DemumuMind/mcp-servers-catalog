@@ -21,7 +21,6 @@ export async function getSponsorships() {
     active: sponsorships.active,
     createdAt: sponsorships.createdAt,
     updatedAt: sponsorships.updatedAt,
-    // server fields
     serverIdCol: servers.id,
     serverName: servers.name,
     serverDescription: servers.description,
@@ -103,10 +102,8 @@ export async function createSponsorship(data: {
     active: true,
   }).returning().then((r: any) => r[0])
 
-  // Also mark server as sponsored
   await db.update(servers).set({ isSponsored: true }).where(eq(servers.id, data.serverId))
 
-  // Get server data for the return value
   const server = await db.select().from(servers).where(eq(servers.id, data.serverId)).limit(1).then((r: any) => r[0])
 
   try { await logAudit('sponsorship.create', 'Sponsorship', sponsorship.id, { sponsor: data.sponsorName, serverId: data.serverId }, userId) } catch { /* audit log failure — non-critical */ }
@@ -131,7 +128,6 @@ export async function updateSponsorship(
   const userId = await requireAdmin()
   const sponsorship = await db.update(sponsorships).set(data).where(eq(sponsorships.id, id)).returning().then((r: any) => r[0])
 
-  // Sync isSponsored flag on server
   await db.update(servers).set({ isSponsored: data.active !== false }).where(eq(servers.id, sponsorship.serverId))
 
   // Get server data for the return value

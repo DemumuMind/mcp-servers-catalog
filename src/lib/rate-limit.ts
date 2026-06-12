@@ -37,7 +37,6 @@ function saveStore(store: Map<string, PersistedEntry>) {
 
 let memoryStore = loadStore()
 
-// Persist every 30 seconds
 setInterval(() => {
   saveStore(memoryStore)
 }, 30_000)

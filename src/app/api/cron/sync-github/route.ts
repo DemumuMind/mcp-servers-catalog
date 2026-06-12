@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
   const unauthorized = verifyCronAuth(request)
   if (unauthorized) return unauthorized
 
-  // Parse query parameters for resume / partial sync
   const { searchParams } = request.nextUrl
 
   const sinceStr = searchParams.get('since')
@@ -39,7 +38,6 @@ export async function GET(request: NextRequest) {
     ? serverIdsStr.split(',').map((s) => s.trim()).filter(Boolean)
     : undefined
 
-  // Pre-flight: check rate limit before starting
   const preFlight = await getRateLimitInfo()
 
   const result: SyncProgress = await syncGitHubStats({

@@ -3,7 +3,6 @@
 import { db, searchQueries } from '@/lib/db'
 import { desc, sql, gte } from 'drizzle-orm'
 
-// ─── Track Search ─────────────────────────────────────────────────────────────
 export async function trackSearch(
   query: string,
   results: number,
@@ -23,7 +22,6 @@ export async function trackSearch(
   return { success: true }
 }
 
-// ─── Get Popular Searches ─────────────────────────────────────────────────────
 export async function getPopularSearches(
   limit: number = 20
 ): Promise<Array<{ query: string; count: number }>> {
@@ -38,7 +36,6 @@ export async function getPopularSearches(
     .limit(limit)
 }
 
-// ─── Get Trending Searches ────────────────────────────────────────────────────
 export async function getTrendingSearches(
   hours: number = 24,
   limit: number = 10

@@ -52,7 +52,6 @@ export async function backupDatabase(userId?: string): Promise<string> {
   const client = createDbClient()
 
   try {
-    // Get all table names from SQLite
     const tablesResult = await client.execute(
       `SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name`
     )
@@ -61,7 +60,6 @@ export async function backupDatabase(userId?: string): Promise<string> {
     let sql = `-- Backup generated at ${new Date().toISOString()}\n-- Database: Turso/SQLite\n\n`
 
     for (const table of tables) {
-      // Get column info
       const colResult = await client.execute({ sql: 'PRAGMA table_info(?)', args: [table] })
       const columns = colResult.rows.map(r => ({
         name: r.name as string,
@@ -71,7 +69,6 @@ export async function backupDatabase(userId?: string): Promise<string> {
         pk: r.pk as number,
       }))
 
-      // Build CREATE TABLE statement
       const colDefs = columns.map(c => {
         let def = `"${c.name}" ${c.type || 'TEXT'}`
         if (c.notnull) def += ' NOT NULL'
@@ -82,7 +79,6 @@ export async function backupDatabase(userId?: string): Promise<string> {
       sql += `-- Table: ${table}\n`
       sql += `CREATE TABLE IF NOT EXISTS "${table}" (${colDefs});\n\n`
 
-      // Get data
       const dataResult = await client.execute({ sql: 'SELECT * FROM "?"', args: [table] })
       if (dataResult.rows.length > 0) {
         const colNames = columns.map(c => `"${c.name}"`).join(', ')

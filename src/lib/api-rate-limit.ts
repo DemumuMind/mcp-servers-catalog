@@ -35,23 +35,16 @@ export function apiRateLimit(config: RateLimitConfig = { maxRequests: 100, windo
   }
 }
 
-// Preset configs
 export const rateLimits = {
-  // Public API: 100 req/min per IP
   api: { maxRequests: 100, windowMs: 60 * 1000 },
   
-  // Search: 30 req/min per IP
   search: { maxRequests: 30, windowMs: 60 * 1000 },
   
-  // Submit form: 5 per hour per IP
   submit: { maxRequests: 5, windowMs: 60 * 60 * 1000 },
   
-  // GraphQL: 60 per minute per IP
   graphql: { maxRequests: 60, windowMs: 60 * 1000 },
   
-  // Cron endpoints: 10 per minute with secret
   cron: { maxRequests: 10, windowMs: 60 * 1000 },
   
-  // Image proxy: 200 per minute per IP
   proxy: { maxRequests: 200, windowMs: 60 * 1000 },
 }

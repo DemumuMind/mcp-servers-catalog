@@ -40,7 +40,6 @@ export default async function ServersPage({
     1, search, category, undefined, onlyOfficial, undefined, onlyRemote, sortBy
   )
 
-  // Build filter URL helper
   const filterUrl = (overrides: Record<string, string | undefined>) => {
     const params = new URLSearchParams()
     if (overrides.q ?? search) params.set('q', overrides.q ?? search ?? '')

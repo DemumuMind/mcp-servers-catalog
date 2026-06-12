@@ -8,12 +8,9 @@ import {
 } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
 
-// ─── Helper: generate CUID-like IDs ─────────────────────────────────────────
 // We use a simple nano-id style generator; drizzle-orm provides cuid2 via
 // `text().$default(() => createId())` but we keep it explicit so there's no
 // hidden runtime dep.
-
-// ─── Tables ──────────────────────────────────────────────────────────────────
 
 export const servers = sqliteTable('Server', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
@@ -304,8 +301,6 @@ export const reviewVotes = sqliteTable('ReviewVote', {
 }, (table) => [
   uniqueIndex('ReviewVote_userId_reviewId_key').on(table.userId, table.reviewId),
 ])
-
-// ─── Relations ───────────────────────────────────────────────────────────────
 
 export const serverRelations = relations(servers, ({ one, many }) => ({
   author: one(users, {

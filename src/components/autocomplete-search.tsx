@@ -54,7 +54,7 @@ export function AutocompleteSearch({ locale = 'en', defaultValue = '', className
     return () => clearTimeout(timer)
   }, [query, debouncedSearch])
 
-  function updatePosition() {
+  const updatePosition = useCallback(() => {
     if (!inputRef.current) return
     const rect = inputRef.current.getBoundingClientRect()
     // Estimate dropdown height: ~42px per item + 40px footer
@@ -78,7 +78,7 @@ export function AutocompleteSearch({ locale = 'en', defaultValue = '', className
       left: rect.left,
       width: rect.width,
     })
-  }
+  }, [results])
 
   useEffect(() => {
     if (showDropdown && results.length > 0) {
@@ -90,7 +90,7 @@ export function AutocompleteSearch({ locale = 'en', defaultValue = '', className
         window.removeEventListener('resize', updatePosition)
       }
     }
-  }, [showDropdown, results])
+  }, [showDropdown, results, updatePosition])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

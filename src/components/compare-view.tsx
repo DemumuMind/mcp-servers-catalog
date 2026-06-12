@@ -78,6 +78,7 @@ export function CompareView({ servers, locale }: CompareViewProps) {
           <input
             type="text"
             placeholder="Search servers to add..."
+            aria-label="Select server to compare"
             className="w-full px-4 py-2 rounded-lg border bg-background"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

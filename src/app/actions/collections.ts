@@ -4,7 +4,25 @@ import { db, collections, bookmarks } from '@/lib/db'
 import { eq, and, desc } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
-import crypto from 'crypto'
+import { generateShareSlug, findExistingBookmarkId } from '@/lib/action-helpers'
+
+/** Shared extended server columns for relational queries */
+const extendedServerColumns = {
+  id: true,
+  name: true,
+  owner: true,
+  repo: true,
+  isRemote: true,
+  endpoint: true,
+  description: true,
+  githubUrl: true,
+  isOfficial: true,
+  isSponsored: true,
+  tags: true,
+  category: true,
+  stars: true,
+  forks: true,
+} as const
 
 export async function getUserCollections(userId: string) {
   // Use relational query API for nested includes
@@ -40,22 +58,7 @@ export async function getPublicCollection(shareSlug: string) {
       bookmarks: {
         with: {
           server: {
-            columns: {
-              id: true,
-              name: true,
-              owner: true,
-              repo: true,
-              isRemote: true,
-              endpoint: true,
-              description: true,
-              githubUrl: true,
-              isOfficial: true,
-              isSponsored: true,
-              tags: true,
-              category: true,
-              stars: true,
-              forks: true,
-            },
+            columns: extendedServerColumns,
           },
         },
       },
@@ -84,10 +87,8 @@ export async function createCollection(name: string, description?: string) {
   return collection
 }
 
-export async function updateCollection(
-  id: string,
-  data: { name?: string; description?: string; isPublic?: boolean }
-) {
+/** Verify the current user owns the given collection, throw if not */
+async function verifyCollectionOwnership(collectionId: string) {
   const session = await auth()
   const userId = session?.user?.id
   if (!userId) throw new Error('Unauthorized')
@@ -95,10 +96,18 @@ export async function updateCollection(
   const existing = await db
     .select({ userId: collections.userId })
     .from(collections)
-    .where(eq(collections.id, id))
+    .where(eq(collections.id, collectionId))
     .limit(1)
 
   if (existing[0]?.userId !== userId) throw new Error('Unauthorized')
+  return userId
+}
+
+export async function updateCollection(
+  id: string,
+  data: { name?: string; description?: string; isPublic?: boolean }
+) {
+  await verifyCollectionOwnership(id)
 
   const updateData: Record<string, any> = {}
   if (data.name) updateData.name = data.name
@@ -116,47 +125,22 @@ export async function updateCollection(
 }
 
 export async function deleteCollection(id: string) {
-  const session = await auth()
-  const userId = session?.user?.id
-  if (!userId) throw new Error('Unauthorized')
-
-  const existing = await db
-    .select({ userId: collections.userId })
-    .from(collections)
-    .where(eq(collections.id, id))
-    .limit(1)
-
-  if (existing[0]?.userId !== userId) throw new Error('Unauthorized')
+  await verifyCollectionOwnership(id)
 
   await db.delete(collections).where(eq(collections.id, id))
   revalidatePath('/ru/profile')
 }
 
 export async function addServerToCollection(collectionId: string, serverId: string) {
-  const session = await auth()
-  const userId = session?.user?.id
-  if (!userId) throw new Error('Unauthorized')
-
-  const collectionRows = await db
-    .select({ userId: collections.userId })
-    .from(collections)
-    .where(eq(collections.id, collectionId))
-    .limit(1)
-
-  if (collectionRows[0]?.userId !== userId) throw new Error('Unauthorized')
-
+  const userId = await verifyCollectionOwnership(collectionId)
   // Check if bookmark already exists for this user+server
-  const existing = await db
-    .select({ id: bookmarks.id })
-    .from(bookmarks)
-    .where(and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId)))
-    .limit(1)
+  const existingId = await findExistingBookmarkId(userId, serverId)
 
-  if (existing.length > 0) {
+  if (existingId) {
     await db
       .update(bookmarks)
       .set({ collectionId })
-      .where(eq(bookmarks.id, existing[0].id))
+      .where(eq(bookmarks.id, existingId))
   } else {
     await db.insert(bookmarks).values({
       userId,
@@ -192,10 +176,6 @@ export async function removeServerFromCollection(collectionId: string, serverId:
   revalidatePath('/ru/profile')
 }
 
-function generateShareSlug(): string {
-  return crypto.randomBytes(9).toString('base64url')
-}
-
 export async function exportCollectionConfig(collectionId: string) {
   const session = await auth()
   const userId = session?.user?.id
@@ -207,22 +187,7 @@ export async function exportCollectionConfig(collectionId: string) {
       bookmarks: {
         with: {
           server: {
-            columns: {
-              id: true,
-              name: true,
-              owner: true,
-              repo: true,
-              isRemote: true,
-              endpoint: true,
-              description: true,
-              githubUrl: true,
-              isOfficial: true,
-              isSponsored: true,
-              tags: true,
-              category: true,
-              stars: true,
-              forks: true,
-            },
+            columns: extendedServerColumns,
           },
         },
       },

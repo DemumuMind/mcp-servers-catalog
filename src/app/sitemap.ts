@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { db, servers, clients } from '@/lib/db'
 import { desc } from 'drizzle-orm'
 
-const BASE_URL = 'https://mcpservers.org'
+const BASE_URL = process.env.SITE_URL || 'https://mcpservers.org'
 const LOCALES = ['en', 'ru']
 
 const STATIC_PAGES = [
@@ -15,7 +15,6 @@ const STATIC_PAGES = [
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []
 
-  // Static pages for each locale
   for (const locale of LOCALES) {
     for (const page of STATIC_PAGES) {
       entries.push({
@@ -27,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Server pages
   const serverRows = await db.select({
     owner: servers.owner,
     repo: servers.repo,
@@ -46,7 +44,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Client pages
   const clientRows = await db.select({
     id: clients.id,
     name: clients.name,
