@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [master, main]
   workflow_dispatch:
 
 concurrency:
@@ -13,7 +13,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
 
     steps:
       - uses: actions/checkout@v4
@@ -26,42 +26,31 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        env:
-          # postinstall runs `prisma generate`, so provide install-time Prisma env.
-          # The fallback keeps this verification step usable when production DB
-          # secrets live only in Vercel and are not duplicated in GitHub Actions.
-          DATABASE_URL: ${{ secrets.DATABASE_URL || 'file:.turbo/ci-test.db' }}
-          DATABASE_DIR: ${{ secrets.DATABASE_DIR || '.pglite' }}
 
-      - name: Generate Prisma client
-        run: npx prisma generate
+      - name: Push DB schema
+        run: npm run db:push
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL || 'file:.turbo/ci-test.db' }}
-          DATABASE_DIR: ${{ secrets.DATABASE_DIR || '.pglite' }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL || 'file:.turso/local.db' }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
 
       - name: Build
         run: npm run build
         env:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL || 'file:.turbo/ci-test.db' }}
-          DATABASE_DIR: ${{ secrets.DATABASE_DIR || '.pglite' }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL || 'file:.turso/local.db' }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           SITE_URL: ${{ secrets.SITE_URL }}
 
       - name: Deploy to Vercel
-        uses: vercel/action-deploy@v1
+        uses: amondnet/vercel-action@v25
         if: ${{ secrets.VERCEL_TOKEN != '' }}
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
