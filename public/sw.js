@@ -17,7 +17,6 @@ const STATIC_ASSETS = [
 ]
 const CACHEABLE_PATHS = new Set(STATIC_ASSETS)
 
-// Install: cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -28,7 +27,6 @@ self.addEventListener('install', (event) => {
   self.skipWaiting()
 })
 
-// Activate: clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -42,11 +40,9 @@ self.addEventListener('activate', (event) => {
   self.clients.claim()
 })
 
-// Fetch: stale-while-revalidate strategy
 self.addEventListener('fetch', (event) => {
   const { request } = event
   
-  // Only handle GET requests
   if (request.method !== 'GET') return
   
   // Skip non-HTTP and cross-origin requests. Opaque third-party responses
@@ -61,7 +57,6 @@ self.addEventListener('fetch', (event) => {
 
   // Navigation requests can contain authenticated UI, so do not put them in
   // the shared app-shell cache. Only fall back to the static offline page when
-  // the network is unavailable.
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => {
@@ -80,7 +75,6 @@ self.addEventListener('fetch', (event) => {
     caches.match(request).then((cachedResponse) => {
       const fetchPromise = fetch(request)
         .then((networkResponse) => {
-          // Update cache with fresh response
           if (networkResponse && networkResponse.status === 200) {
             const responseClone = networkResponse.clone()
             caches.open(CACHE_NAME).then((cache) => {

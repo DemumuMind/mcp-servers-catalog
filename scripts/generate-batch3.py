@@ -407,13 +407,14 @@ def load_existing_slugs():
                 slugs.add(s["fullSlug"].lower())
         except Exception as e:
             print(f"Warning: could not load {fname}: {e}")
+            continue
     return slugs
 
 def load_github_repos():
     """Load real GitHub repos from our search results."""
     try:
         return json.load(open("/tmp/github_repos.json"))
-    except:
+    except Exception:
         return []
 
 def categorize_repo(name, desc):
