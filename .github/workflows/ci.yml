@@ -13,6 +13,7 @@ concurrency:
 env:
   NEXT_TELEMETRY_DISABLED: 1
   DATABASE_URL: file:.turso/ci-test.db
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
 jobs:
   lint:
@@ -53,6 +54,7 @@ jobs:
         env:
           AUTH_SECRET: test-secret-for-ci-build-only
           NEXTAUTH_SECRET: test-secret-for-ci-build-only
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
   test-unit:
     runs-on: ubuntu-latest
