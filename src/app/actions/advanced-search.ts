@@ -3,8 +3,7 @@
 import { db, servers } from '@/lib/db'
 import { eq, and, or, like, desc, gte, lte, inArray, isNotNull, count, sql } from 'drizzle-orm'
 import { fetchRatingMap } from '@/lib/action-helpers'
-
-const ITEMS_PER_PAGE = 12
+import { ITEMS_PER_PAGE, getServerCategoriesAgg } from './public-helpers'
 
 export async function advancedSearchServers(params: {
   page?: number
@@ -102,11 +101,8 @@ export async function advancedSearchServers(params: {
 }
 
 export async function getServerCategories() {
-  const result = await db
-    .selectDistinct({ category: servers.category })
-    .from(servers)
-
-  return result.map((s: any) => s.category).sort()
+  const agg = await getServerCategoriesAgg()
+  return agg.map((c: any) => c.name).sort()
 }
 
 export async function getServerLanguages() {

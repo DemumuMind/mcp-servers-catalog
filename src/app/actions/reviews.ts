@@ -5,6 +5,16 @@ import { eq, and, desc, sql, inArray } from 'drizzle-orm'
 import { rateLimit } from '@/lib/rate-limit'
 import { sanitizeUserHtml } from '@/lib/sanitize'
 
+/** Update helpfulCount/notHelpfulCount on a review by a delta */
+async function updateReviewVoteCounts(reviewId: string, helpfulDelta: number, notHelpfulDelta: number) {
+  const setFields: Record<string, any> = {}
+  if (helpfulDelta !== 0) setFields.helpfulCount = sql`${reviews.helpfulCount} + ${helpfulDelta}`
+  if (notHelpfulDelta !== 0) setFields.notHelpfulCount = sql`${reviews.notHelpfulCount} + ${notHelpfulDelta}`
+  if (Object.keys(setFields).length > 0) {
+    await db.update(reviews).set(setFields).where(eq(reviews.id, reviewId))
+  }
+}
+
 export async function submitReview(
   userId: string,
   serverId: string,
@@ -163,53 +173,19 @@ export async function voteReview(
     if (existing.helpful === helpful) {
       // Same vote — remove it (toggle off)
       await db.delete(reviewVotes).where(eq(reviewVotes.id, existing.id))
-      if (helpful) {
-        await db
-          .update(reviews)
-          .set({ helpfulCount: sql`${reviews.helpfulCount} - 1` })
-          .where(eq(reviews.id, reviewId))
-      } else {
-        await db
-          .update(reviews)
-          .set({ notHelpfulCount: sql`${reviews.notHelpfulCount} - 1` })
-          .where(eq(reviews.id, reviewId))
-      }
+      await updateReviewVoteCounts(reviewId, helpful ? -1 : 0, helpful ? 0 : -1)
     } else {
+      // Switching vote direction
       await db
         .update(reviewVotes)
         .set({ helpful })
         .where(eq(reviewVotes.id, existing.id))
-      if (helpful) {
-        await db
-          .update(reviews)
-          .set({
-            helpfulCount: sql`${reviews.helpfulCount} + 1`,
-            notHelpfulCount: sql`${reviews.notHelpfulCount} - 1`,
-          })
-          .where(eq(reviews.id, reviewId))
-      } else {
-        await db
-          .update(reviews)
-          .set({
-            helpfulCount: sql`${reviews.helpfulCount} - 1`,
-            notHelpfulCount: sql`${reviews.notHelpfulCount} + 1`,
-          })
-          .where(eq(reviews.id, reviewId))
-      }
+      await updateReviewVoteCounts(reviewId, helpful ? 1 : -1, helpful ? -1 : 1)
     }
   } else {
+    // New vote
     await db.insert(reviewVotes).values({ userId, reviewId, helpful })
-    if (helpful) {
-      await db
-        .update(reviews)
-        .set({ helpfulCount: sql`${reviews.helpfulCount} + 1` })
-        .where(eq(reviews.id, reviewId))
-    } else {
-      await db
-        .update(reviews)
-        .set({ notHelpfulCount: sql`${reviews.notHelpfulCount} + 1` })
-        .where(eq(reviews.id, reviewId))
-    }
+    await updateReviewVoteCounts(reviewId, helpful ? 1 : 0, helpful ? 0 : 1)
   }
 
   return { success: true }

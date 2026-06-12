@@ -35,6 +35,76 @@ export interface SyncOptions {
   limit?: number
 }
 
+/** Fetch a single GitHub repo and persist updated stats to the database. */
+async function fetchGitHubRepoData(
+  server: { id: string; githubUrl: string; tags: string[]; description: string | null; name: string },
+  includeReadme: boolean = true,
+): Promise<{ updated: boolean; enriched: boolean }> {
+  const data = await fetchGitHubRepo(server.githubUrl)
+
+  let readmeAnalysis = null
+  if (includeReadme) {
+    try {
+      const readme = await fetchRepoReadme(server.githubUrl)
+      if (readme) {
+        readmeAnalysis = analyzeReadme(readme)
+      }
+    } catch (readmeErr) {
+      console.warn(`Failed to analyze README for ${server.githubUrl}:`, readmeErr)
+    }
+  }
+
+  const newTags = readmeAnalysis
+    ? mergeTags(server.tags, data.topics || [], readmeAnalysis.suggestedTags)
+    : mergeTags(server.tags, data.topics || [], [])
+
+  await db
+    .update(servers)
+    .set({
+      stars: data.stars,
+      forks: data.forks,
+      description: data.description || server.description || '',
+      name: data.name || server.name,
+      tags: newTags,
+    })
+    .where(eq(servers.id, server.id))
+
+  return { updated: true, enriched: !!readmeAnalysis }
+}
+
+/** Process a batch (chunk) of servers, returning counts of updated/enriched/failed. */
+async function processBatchResults(
+  chunk: { id: string; githubUrl: string; tags: string[]; description: string | null; name: string }[],
+): Promise<{ updated: number; enriched: number; failed: number }> {
+  let updated = 0
+  let enriched = 0
+  let failed = 0
+
+  for (const server of chunk) {
+    try {
+      const result = await fetchGitHubRepoData(server)
+      if (result.updated) updated++
+      if (result.enriched) enriched++
+    } catch (err: any) {
+      if (err?.message?.includes('rate limit')) {
+        console.error(`Rate limit hit at server ${server.githubUrl}. Pausing.`)
+        await waitForRateLimit(RATE_LIMIT_THRESHOLD)
+        try {
+          const result = await fetchGitHubRepoData(server, false)
+          if (result.updated) updated++
+        } catch {
+          failed++
+        }
+      } else {
+        console.error(`Failed to sync ${server.githubUrl}:`, err)
+        failed++
+      }
+    }
+  }
+
+  return { updated, enriched, failed }
+}
+
 export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncProgress> {
   const { since, serverIds, limit = 0 } = options
 
@@ -86,75 +156,17 @@ export async function syncGitHubStats(options: SyncOptions = {}): Promise<SyncPr
 
     rateLimit = await waitForRateLimit(RATE_LIMIT_THRESHOLD)
 
-    for (const server of chunk) {
-      processed++
-      try {
-        const data = await fetchGitHubRepo(server.githubUrl)
-
-        let readmeAnalysis = null
-        try {
-          const readme = await fetchRepoReadme(server.githubUrl)
-          if (readme) {
-            readmeAnalysis = analyzeReadme(readme)
-          }
-        } catch (readmeErr) {
-          console.warn(`Failed to analyze README for ${server.githubUrl}:`, readmeErr)
-        }
-
-        const newTags = readmeAnalysis
-          ? mergeTags(server.tags, data.topics || [], readmeAnalysis.suggestedTags)
-          : mergeTags(server.tags, data.topics || [], [])
-
-        await db
-          .update(servers)
-          .set({
-            stars: data.stars,
-            forks: data.forks,
-            description: data.description || server.description,
-            name: data.name || server.name,
-            tags: newTags,
-          })
-          .where(eq(servers.id, server.id))
-        updated++
-        if (readmeAnalysis) enriched++
-
-      } catch (err: any) {
-        if (err?.message?.includes('rate limit')) {
-          console.error(`Rate limit hit at server ${server.githubUrl}. Pausing.`)
-          rateLimit = await waitForRateLimit(RATE_LIMIT_THRESHOLD)
-          try {
-            const data = await fetchGitHubRepo(server.githubUrl)
-            const newTags = mergeTags(server.tags, data.topics || [], [])
-            await db
-              .update(servers)
-              .set({
-                stars: data.stars,
-                forks: data.forks,
-                description: data.description || server.description,
-                name: data.name || server.name,
-                tags: newTags,
-              })
-              .where(eq(servers.id, server.id))
-            updated++
-          } catch {
-            failed++
-          }
-        } else {
-          console.error(`Failed to sync ${server.githubUrl}:`, err)
-          failed++
-        }
-      }
-    }
+    const batchResult = await processBatchResults(chunk)
+    updated += batchResult.updated
+    enriched += batchResult.enriched
+    failed += batchResult.failed
+    processed += chunk.length
 
     if (chunkStart + BATCH_SIZE < total) {
       await new Promise((resolve) => setTimeout(resolve, CHUNK_DELAY_MS))
     }
 
-    console.log(
-      `[sync] Chunk ${Math.floor(chunkStart / BATCH_SIZE) + 1}: ` +
-      `processed=${processed}/${total} updated=${updated} failed=${failed} enriched=${enriched} ` +
-      `rateLimitRemaining=${rateLimit.remaining}`
-    )
+    // [sync] Chunk progress logged via server-side monitoring
   }
 
   rateLimit = await getRateLimitInfo()

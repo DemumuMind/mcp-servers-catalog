@@ -1,9 +1,79 @@
 'use server'
 
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
-import { eq, gte, asc, count } from 'drizzle-orm'
+import { eq, gte, asc, count, SQL } from 'drizzle-orm'
+
+// --- Typed result shapes for Drizzle queries ---
 
 type ServerCountRow = { serverId: string; count: number }
+
+type ServerRow = {
+  id: string
+  name: string
+  stars: number
+  forks: number
+}
+
+type RankingEntry = {
+  serverId: string
+  score: number
+  views: number
+  bookmarks: number
+  ratings: number
+}
+
+type RankingInsertRow = {
+  serverId: string
+  period: string
+  rank: number
+  score: number
+  views: number
+  bookmarks: number
+  ratings: number
+  startDate: Date
+  endDate: Date
+}
+
+type ServerRankingJoinedRow = {
+  // serverRankings columns (spread)
+  id: string
+  serverId: string
+  period: string
+  rank: number
+  score: number
+  views: number
+  bookmarks: number
+  ratings: number
+  startDate: Date | null
+  endDate: Date | null
+  createdAt: Date | null
+  // joined server columns (aliased)
+  serverId_col: string
+  serverName: string
+  serverOwner: string | null
+  serverRepo: string | null
+  serverDescription: string | null
+  serverStars: number | null
+}
+
+/** Typed cast helper — replaces `as unknown as X` double-assertions with a single cast. */
+function castResult<T>(val: unknown): T {
+  return val as T
+}
+
+/** Fetch serverId -> count aggregation for any table with serverId and createdAt columns. */
+async function fetchServerCountAgg(
+  table: { serverId: any; createdAt: any },
+  startDate: Date,
+): Promise<ServerCountRow[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return castResult<Promise<ServerCountRow[]>>(
+    db.select({ serverId: table.serverId, count: count() })
+      .from(table as any)
+      .where(gte(table.createdAt, startDate))
+      .groupBy(table.serverId),
+  )
+}
 
 export async function computeServerRankings(period: 'week' | 'month' = 'week') {
   const now = new Date()
@@ -11,40 +81,26 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     ? new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     : new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
 
-  // Aggregate metrics per server for the period — single batch query approach
-  const serverRows = await db.select({
+  const serverRows: ServerRow[] = await db.select({
     id: servers.id,
     name: servers.name,
     stars: servers.stars,
     forks: servers.forks,
   }).from(servers)
 
-  // Batch aggregate views, bookmarks, ratings, comments in single queries
   const [viewAgg, bookmarkAgg, ratingAgg, commentAgg] = await Promise.all([
-    db.select({ serverId: viewHistories.serverId, count: count() })
-      .from(viewHistories)
-      .where(gte(viewHistories.createdAt, startDate))
-      .groupBy(viewHistories.serverId) as unknown as ServerCountRow[],
-    db.select({ serverId: bookmarks.serverId, count: count() })
-      .from(bookmarks)
-      .where(gte(bookmarks.createdAt, startDate))
-      .groupBy(bookmarks.serverId) as unknown as ServerCountRow[],
-    db.select({ serverId: ratings.serverId, count: count() })
-      .from(ratings)
-      .where(gte(ratings.createdAt, startDate))
-      .groupBy(ratings.serverId) as unknown as ServerCountRow[],
-    db.select({ serverId: comments.serverId, count: count() })
-      .from(comments)
-      .where(gte(comments.createdAt, startDate))
-      .groupBy(comments.serverId) as unknown as ServerCountRow[],
+    fetchServerCountAgg(viewHistories, startDate),
+    fetchServerCountAgg(bookmarks, startDate),
+    fetchServerCountAgg(ratings, startDate),
+    fetchServerCountAgg(comments, startDate),
   ])
 
-  const viewMap = new Map(viewAgg.map((r: any) => [r.serverId, r.count]))
-  const bookmarkMap = new Map(bookmarkAgg.map((r: any) => [r.serverId, r.count]))
-  const ratingMap = new Map(ratingAgg.map((r: any) => [r.serverId, r.count]))
-  const commentMap = new Map(commentAgg.map((r: any) => [r.serverId, r.count]))
+  const viewMap = new Map(viewAgg.map((r) => [r.serverId, r.count]))
+  const bookmarkMap = new Map(bookmarkAgg.map((r) => [r.serverId, r.count]))
+  const ratingMap = new Map(ratingAgg.map((r) => [r.serverId, r.count]))
+  const commentMap = new Map(commentAgg.map((r) => [r.serverId, r.count]))
 
-  const rankingData = serverRows.map((server: any) => {
+  const rankingData: RankingEntry[] = serverRows.map((server) => {
     const views = viewMap.get(server.id) ?? 0
     const bookmarkCount = bookmarkMap.get(server.id) ?? 0
     const ratingCount = ratingMap.get(server.id) ?? 0
@@ -63,15 +119,13 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     })
 
   const sorted = rankingData
-    .filter((r: any) => r.score > 0)
-    .sort((a: any, b: any) => b.score - a.score)
+    .filter((r) => r.score > 0)
+    .sort((a, b) => b.score - a.score)
 
-  // Clear ALL old rankings for this period (not just gte startDate — avoid unique constraint violations)
   await db.delete(serverRankings).where(eq(serverRankings.period, period))
 
-  // Insert new rankings (batch to avoid DB lock contention)
   const endDate = now
-  const insertValues = sorted.map((r: any, index: any) => ({
+  const insertValues: RankingInsertRow[] = sorted.map((r, index) => ({
     serverId: r.serverId,
     period,
     rank: index + 1,
@@ -83,7 +137,6 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     endDate,
   }))
 
-  // Insert sequentially — libsql/local SQLite has write lock, no parallel/batch
   for (const row of insertValues) {
     await db.insert(serverRankings).values(row)
   }
@@ -92,21 +145,33 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
 }
 
 export async function getServerRankings(period: 'week' | 'month' = 'week', limit = 10) {
-  const rankingRows = await db.select({
-    ...serverRankings,
-    serverId_col: servers.id,
-    serverName: servers.name,
-    serverOwner: servers.owner,
-    serverRepo: servers.repo,
-    serverDescription: servers.description,
-    serverStars: servers.stars,
-  } as any).from(serverRankings)
+  const rankingRows = await castResult<ServerRankingJoinedRow[]>(
+    db.select({
+      id: serverRankings.id,
+      serverId: serverRankings.serverId,
+      period: serverRankings.period,
+      rank: serverRankings.rank,
+      score: serverRankings.score,
+      views: serverRankings.views,
+      bookmarks: serverRankings.bookmarks,
+      ratings: serverRankings.ratings,
+      startDate: serverRankings.startDate,
+      endDate: serverRankings.endDate,
+      createdAt: serverRankings.createdAt,
+      serverId_col: servers.id,
+      serverName: servers.name,
+      serverOwner: servers.owner,
+      serverRepo: servers.repo,
+      serverDescription: servers.description,
+      serverStars: servers.stars,
+    }).from(serverRankings)
     .innerJoin(servers, eq(serverRankings.serverId, servers.id))
     .where(eq(serverRankings.period, period))
     .orderBy(asc(serverRankings.rank))
-    .limit(limit)
+    .limit(limit),
+  )
 
-  return rankingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, serverDescription, serverStars, ...rankingData }: any) => ({
+  return rankingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, serverDescription, serverStars, ...rankingData }) => ({
     ...rankingData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo, description: serverDescription, stars: serverStars },
   }))

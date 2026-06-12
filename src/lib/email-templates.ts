@@ -1,6 +1,8 @@
 import { BRAND_NAME, miniBrandMarkSvg } from '@/lib/brand-svg'
 
-const SITE_URL = process.env.SITE_URL || 'https://mcpservers.org'
+import { getSiteUrl } from '@/lib/site-url'
+
+const SITE_URL = getSiteUrl()
 
 type Locale = 'ru' | 'en'
 
@@ -122,7 +124,7 @@ export function submissionNotificationTemplate(submission: {
       <tr><th>${sub.category}</th><td>${escapeHtml(submission.category)}</td></tr>
       <tr><th>Premium</th><td>${submission.premium ? sub.premiumYes : sub.premiumNo}</td></tr>
     </table>
-    <p><a href="${process.env.NEXTAUTH_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${sub.goToAdmin}</a></p>
+    <p><a href="${SITE_URL}/admin/submissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-top:12px;">${sub.goToAdmin}</a></p>
     `,
     locale
   )

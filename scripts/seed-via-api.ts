@@ -23,7 +23,7 @@ function loadEnv() {
 }
 loadEnv()
 
-const BASE_URL = process.env.NEXTAUTH_URL || process.env.SEED_BASE_URL || 'http://localhost:3000'
+const BASE_URL = process.env.SITE_URL || process.env.NEXTAUTH_URL || process.env.SEED_BASE_URL || 'http://localhost:3000'
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@example.com'
 const envPwd: string | undefined = process.env.ADMIN_SEED_PASSWORD
 function getCredential(): string { return envPwd || "" }

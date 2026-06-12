@@ -2,8 +2,10 @@
  * JSON-LD structured data generators for SEO
  */
 
+import { getSiteUrl } from '@/lib/site-url'
+
 const SITE_NAME = 'MCP Servers Catalog'
-const SITE_URL = process.env.SITE_URL || 'https://mcpservers.org'
+const SITE_URL = getSiteUrl()
 const SITE_DESC = 'Discover and compare MCP (Model Context Protocol) servers for AI assistants. Browse 1,500+ servers with ratings, health checks, and installation guides.'
 
 export function generateWebsiteJsonLd() {

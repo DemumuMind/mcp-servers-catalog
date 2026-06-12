@@ -19,6 +19,25 @@ interface HealthCheckRow {
   createdAt: Date
 }
 
+const healthCheckSelectFields = {
+  serverId: healthChecks.serverId,
+  status: healthChecks.status,
+  latency: healthChecks.latency,
+  createdAt: healthChecks.createdAt,
+}
+
+/** Fetch health checks for a set of servers since a given date. */
+async function fetchHealthChecks(serverIds: string[], sinceDate: Date, orderDir: 'asc' | 'desc' = 'desc'): Promise<HealthCheckRow[]> {
+  if (serverIds.length === 0) return []
+  const orderFn = orderDir === 'asc' ? asc : desc
+  return db.select(healthCheckSelectFields).from(healthChecks).where(
+    and(
+      inArray(healthChecks.serverId, serverIds),
+      gte(healthChecks.createdAt, sinceDate)
+    )
+  ).orderBy(orderFn(healthChecks.createdAt)) as Promise<HealthCheckRow[]>
+}
+
 function computeServerStats(
   server: ServerInfo,
   recentChecks: HealthCheckRow[],
@@ -108,33 +127,10 @@ export async function getHealthMonitoringData() {
 
   const serverIds = serverList.map((s: any) => s.id)
 
-  const recentChecks = serverIds.length > 0
-    ? await db.select({
-        serverId: healthChecks.serverId,
-        status: healthChecks.status,
-        latency: healthChecks.latency,
-        createdAt: healthChecks.createdAt,
-      }).from(healthChecks).where(
-        and(
-          inArray(healthChecks.serverId, serverIds),
-          gte(healthChecks.createdAt, oneDayAgo)
-        )
-      ).orderBy(desc(healthChecks.createdAt))
-    : []
-
-  const weeklyChecks = serverIds.length > 0
-    ? await db.select({
-        serverId: healthChecks.serverId,
-        status: healthChecks.status,
-        latency: healthChecks.latency,
-        createdAt: healthChecks.createdAt,
-      }).from(healthChecks).where(
-        and(
-          inArray(healthChecks.serverId, serverIds),
-          gte(healthChecks.createdAt, sevenDaysAgo)
-        )
-      ).orderBy(asc(healthChecks.createdAt))
-    : []
+  const [recentChecks, weeklyChecks] = await Promise.all([
+    fetchHealthChecks(serverIds, oneDayAgo, 'desc'),
+    fetchHealthChecks(serverIds, sevenDaysAgo, 'asc'),
+  ])
 
   const serverStats = serverList.map((server: any) =>
     computeServerStats(server, recentChecks, weeklyChecks)

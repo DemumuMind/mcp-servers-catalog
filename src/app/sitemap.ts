@@ -2,7 +2,9 @@ import { MetadataRoute } from 'next'
 import { db, servers, clients } from '@/lib/db'
 import { desc } from 'drizzle-orm'
 
-const BASE_URL = process.env.SITE_URL || 'https://mcpservers.org'
+import { getSiteUrl } from '@/lib/site-url'
+
+const BASE_URL = getSiteUrl()
 const LOCALES = ['en', 'ru']
 
 const STATIC_PAGES = [

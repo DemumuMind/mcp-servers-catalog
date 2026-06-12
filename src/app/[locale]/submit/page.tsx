@@ -129,7 +129,7 @@ export default function SubmitPage() {
         : []
       await createSubmission({
         ...data,
-        tags: tagsArray as any,
+        tags: tagsArray as string[],
       })
       setSubmitted(true)
     } catch (err) {

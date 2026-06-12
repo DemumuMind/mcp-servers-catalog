@@ -135,6 +135,7 @@ const schema = createSchema({
 })
 
 const yoga = createYoga({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   schema: schema as any,
   graphqlEndpoint: '/api/graphql',
   graphiql: true,

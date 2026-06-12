@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL || "https://mcpservers.org"),
+  metadataBase: new URL(process.env.SITE_URL || "https://mcpservers.org"), // TODO: use getSiteUrl() after Next.js supports async metadataBase
   title: {
     default: "Awesome MCP Servers",
     template: "%s | Awesome MCP Servers",

@@ -6,7 +6,6 @@ import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { generateShareSlug, findExistingBookmarkId } from '@/lib/action-helpers'
 
-/** Shared server column selection used by getUserBookmarks and getCollectionBookmarks */
 const serverSelectFields = {
   id: servers.id,
   name: servers.name,

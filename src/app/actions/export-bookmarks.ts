@@ -3,8 +3,8 @@
 import { db, bookmarks, servers } from '@/lib/db'
 import { eq, desc } from 'drizzle-orm'
 
-export async function exportBookmarksJSON(userId: string): Promise<string> {
-  const userBookmarks = await db.select({
+async function fetchUserBookmarks(userId: string) {
+  return db.select({
     id: servers.id,
     name: servers.name,
     description: servers.description,
@@ -16,23 +16,15 @@ export async function exportBookmarksJSON(userId: string): Promise<string> {
     stars: servers.stars,
     bookmarkedAt: bookmarks.createdAt,
   }).from(bookmarks).innerJoin(servers, eq(bookmarks.serverId, servers.id)).where(eq(bookmarks.userId, userId)).orderBy(desc(bookmarks.createdAt))
+}
 
+export async function exportBookmarksJSON(userId: string): Promise<string> {
+  const userBookmarks = await fetchUserBookmarks(userId)
   return JSON.stringify(userBookmarks, null, 2)
 }
 
 export async function exportBookmarksCSV(userId: string): Promise<string> {
-  const userBookmarks = await db.select({
-    id: servers.id,
-    name: servers.name,
-    description: servers.description,
-    owner: servers.owner,
-    repo: servers.repo,
-    category: servers.category,
-    githubUrl: servers.githubUrl,
-    tags: servers.tags,
-    stars: servers.stars,
-    bookmarkedAt: bookmarks.createdAt,
-  }).from(bookmarks).innerJoin(servers, eq(bookmarks.serverId, servers.id)).where(eq(bookmarks.userId, userId)).orderBy(desc(bookmarks.createdAt))
+  const userBookmarks = await fetchUserBookmarks(userId)
 
   const headers = ['Name', 'Owner', 'Repo', 'Category', 'Stars', 'Tags', 'GitHub URL', 'Bookmarked At']
   const rows = userBookmarks.map((b: any) => [

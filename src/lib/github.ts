@@ -90,6 +90,7 @@ export async function getRateLimitInfo(): Promise<RateLimitInfo> {
       }
     }
   } catch {
+    // Rate limit exceeded, skip
   }
 
   return { ...cachedRateLimit }

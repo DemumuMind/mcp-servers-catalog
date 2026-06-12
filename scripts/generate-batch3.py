@@ -5,8 +5,8 @@ Uses real GitHub repos + realistic synthetic entries based on the MCP ecosystem.
 """
 import json
 import os
-import hashlib
 import random
+import logging
 
 CATEGORIES = [
     "ai", "browser", "calendar", "cloud-service", "communication",
@@ -406,7 +406,7 @@ def load_existing_slugs():
             for s in data:
                 slugs.add(s["fullSlug"].lower())
         except Exception as e:
-            print(f"Warning: could not load {fname}: {e}")
+            logging.warning(f"Could not load {fname}: {e}")
             continue
     return slugs
 
@@ -542,7 +542,6 @@ def generate_synthetic_servers(existing_slugs, count_needed):
     extra_templates = []
     for category, templates in CATEGORY_TEMPLATES.items():
         for template_name, template_desc, template_tags in templates:
-            # Create variant with different owner prefix patterns
             for prefix in ["mcp", "fast", "easy", "smart", "auto", "pro", "mini", "micro", "nano", "hyper",
                            "super", "ultra", "mega", "power", "turbo", "quick", "swift", "rapid", "speedy", "lite",
                            "next", "neo", "flux", "bolt", "spark", "glide", "prime", "edge", "apex", "core"]:
@@ -729,10 +728,8 @@ def main():
     print(f"Needed from batch3: {needed_from_batch}")
     print(f"Real repos available: {len(real_servers)}")
     
-    # Start with real repos
     all_batch3 = list(real_servers)
     batch3_slugs = set(s["fullSlug"] for s in all_batch3)
-    
     # Fill the gap with synthetic entries
     remaining = needed_from_batch - len(all_batch3)
     if remaining > 0:
@@ -765,7 +762,6 @@ def main():
     for cat, count in sorted(cat_counts.items(), key=lambda x: -x[1]):
         print(f"  {cat}: {count}")
     
-    # Write output
     outpath = "/mnt/c/Users/Romanchello/source/repo/Coder/MCP_Servers/mcpservers-clone/Scripts/mcp-servers-batch3.json"
     with open(outpath, "w") as f:
         json.dump(final_servers, f, indent=2)
