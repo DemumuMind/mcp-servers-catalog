@@ -17,7 +17,7 @@ export async function logSearchQuery(query: string, results: number, source: str
 }
 
 export async function getSearchGaps(limit: number = 50) {
-  // Queries with 0 results, grouped by query text, ordered by frequency
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const gaps = await getClient().execute(sql<Array<{ query: string; count: bigint; lastSearch: Date }>>`
     SELECT query, COUNT(*) as count, MAX("createdAt") as "lastSearch"
     FROM "SearchQuery"
@@ -27,6 +27,7 @@ export async function getSearchGaps(limit: number = 50) {
     LIMIT ${limit}
   ` as any)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return gaps.rows.map((g: any) => ({
     query: g.query,
     count: Number(g.count),
@@ -35,6 +36,7 @@ export async function getSearchGaps(limit: number = 50) {
 }
 
 export async function getTopSearches(limit: number = 20) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const searches = await getClient().execute(sql<Array<{ query: string; count: bigint; avgResults: number }>>`
     SELECT query, COUNT(*) as count, AVG(results) as "avgResults"
     FROM "SearchQuery"
@@ -43,6 +45,7 @@ export async function getTopSearches(limit: number = 20) {
     LIMIT ${limit}
   ` as any)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return searches.rows.map((s: any) => ({
     query: s.query,
     count: Number(s.count),
@@ -52,8 +55,11 @@ export async function getTopSearches(limit: number = 20) {
 
 export async function getSearchStats(since: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)) {
   const [total, withResults, withoutResults] = await Promise.all([
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     db.select({ count: count() }).from(searchQueries).where(gte(searchQueries.createdAt, since)).then((r: any) => r[0]?.count ?? 0),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     db.select({ count: count() }).from(searchQueries).where(and(gte(searchQueries.createdAt, since), gt(searchQueries.results, 0))).then((r: any) => r[0]?.count ?? 0),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     db.select({ count: count() }).from(searchQueries).where(and(gte(searchQueries.createdAt, since), eq(searchQueries.results, 0))).then((r: any) => r[0]?.count ?? 0),
   ])
 

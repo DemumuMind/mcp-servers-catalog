@@ -1,16 +1,13 @@
 'use server'
 
 import { db, viewHistories, servers, bookmarks, users } from '@/lib/db'
-import { gte, lt, and, inArray, sql, SQL } from 'drizzle-orm'
+import { gte, lt, and, inArray, sql } from 'drizzle-orm'
 import type { SQLiteColumn } from 'drizzle-orm/sqlite-core'
 
-/**
- * Build a daily count query for a timestamp column.
- * Shared pattern used by multiple metrics in getTimeSeriesMetrics.
- */
 function buildDailyCountQuery(
   table: { createdAt: SQLiteColumn },
-  countExpr: SQL<unknown>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  countExpr: any,
   startDate: Date,
 ) {
   return db
@@ -18,6 +15,7 @@ function buildDailyCountQuery(
       date: sql<string>`date(${table.createdAt}, 'unixepoch')`,
       count: countExpr,
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .from(table as any)
     .where(gte(table.createdAt, startDate))
     .groupBy(sql`date(${table.createdAt}, 'unixepoch')`)
@@ -36,9 +34,13 @@ export async function getTimeSeriesMetrics(days: number = 30) {
   ])
 
   return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dailyActiveUsers: dailyActiveUsers.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dailyServers: dailyServers.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dailyViews: dailyViews.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dailyBookmarks: dailyBookmarks.map((r: any) => ({ date: r.date, count: Number(r.count) })),
   }
 }
@@ -64,6 +66,7 @@ export async function getCohortAnalysis(weeks: number = 8) {
 
     if (newUsers.length === 0) continue
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const userIds = newUsers.map((u: any) => u.id)
     const size = userIds.length
 

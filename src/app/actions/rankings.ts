@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
-import { eq, gte, asc, count, SQL } from 'drizzle-orm'
+import { eq, gte, asc, count } from 'drizzle-orm'
 
 // --- Typed result shapes for Drizzle queries ---
 
@@ -56,7 +56,7 @@ type ServerRankingJoinedRow = {
   serverStars: number | null
 }
 
-/** Typed cast helper — replaces `as unknown as X` double-assertions with a single cast. */
+/** Typed cast helper — replaces `as X` double-assertions with a single cast. */
 function castResult<T>(val: unknown): T {
   return val as T
 }

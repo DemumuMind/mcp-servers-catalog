@@ -5,85 +5,16 @@ import { eq, desc, or, isNull, gt, and } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth-guard'
 import { logAudit } from './audit-log'
+import { sponsorshipServerSelect, mapSponsorshipRow } from './sponsorship-helpers'
 
 export async function getSponsorships() {
-  const rows = await db.select({
-    id: sponsorships.id,
-    serverId: sponsorships.serverId,
-    sponsorName: sponsorships.sponsorName,
-    sponsorUrl: sponsorships.sponsorUrl,
-    sponsorLogo: sponsorships.sponsorLogo,
-    startDate: sponsorships.startDate,
-    endDate: sponsorships.endDate,
-    amount: sponsorships.amount,
-    currency: sponsorships.currency,
-    notes: sponsorships.notes,
-    active: sponsorships.active,
-    createdAt: sponsorships.createdAt,
-    updatedAt: sponsorships.updatedAt,
-    serverIdCol: servers.id,
-    serverName: servers.name,
-    serverDescription: servers.description,
-    serverOwner: servers.owner,
-    serverRepo: servers.repo,
-    serverFullSlug: servers.fullSlug,
-    serverCategory: servers.category,
-    serverIsOfficial: servers.isOfficial,
-    serverIsSponsored: servers.isSponsored,
-    serverGithubUrl: servers.githubUrl,
-    serverTags: servers.tags,
-    serverIsRemote: servers.isRemote,
-    serverAuthType: servers.authType,
-    serverEndpoint: servers.endpoint,
-    serverFeatured: servers.featured,
-    serverFeaturedUntil: servers.featuredUntil,
-    serverSponsoredUntil: servers.sponsoredUntil,
-    serverStars: servers.stars,
-    serverForks: servers.forks,
-    serverAuthorId: servers.authorId,
-    serverCreatedAt: servers.createdAt,
-    serverUpdatedAt: servers.updatedAt,
-  }).from(sponsorships).innerJoin(servers, eq(sponsorships.serverId, servers.id)).orderBy(desc(sponsorships.createdAt))
+  const rows = await db.select(sponsorshipServerSelect)
+    .from(sponsorships)
+    .innerJoin(servers, eq(sponsorships.serverId, servers.id))
+    .orderBy(desc(sponsorships.createdAt))
 
-  return rows.map((r: any) => ({
-    id: r.id,
-    serverId: r.serverId,
-    sponsorName: r.sponsorName,
-    sponsorUrl: r.sponsorUrl,
-    sponsorLogo: r.sponsorLogo,
-    startDate: r.startDate,
-    endDate: r.endDate,
-    amount: r.amount,
-    currency: r.currency,
-    notes: r.notes,
-    active: r.active,
-    createdAt: r.createdAt,
-    updatedAt: r.updatedAt,
-    server: {
-      id: r.serverIdCol,
-      name: r.serverName,
-      description: r.serverDescription,
-      owner: r.serverOwner,
-      repo: r.serverRepo,
-      fullSlug: r.serverFullSlug,
-      category: r.serverCategory,
-      isOfficial: r.serverIsOfficial,
-      isSponsored: r.serverIsSponsored,
-      githubUrl: r.serverGithubUrl,
-      tags: r.serverTags,
-      isRemote: r.serverIsRemote,
-      authType: r.serverAuthType,
-      endpoint: r.serverEndpoint,
-      featured: r.serverFeatured,
-      featuredUntil: r.serverFeaturedUntil,
-      sponsoredUntil: r.serverSponsoredUntil,
-      stars: r.serverStars,
-      forks: r.serverForks,
-      authorId: r.serverAuthorId,
-      createdAt: r.serverCreatedAt,
-      updatedAt: r.serverUpdatedAt,
-    },
-  }))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return rows.map((r: any) => mapSponsorshipRow(r))
 }
 
 export async function createSponsorship(data: {
@@ -97,6 +28,7 @@ export async function createSponsorship(data: {
   notes?: string
 }) {
   const userId = await requireAdmin()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sponsorship = await db.insert(sponsorships).values({
     ...data,
     active: true,
@@ -104,6 +36,7 @@ export async function createSponsorship(data: {
 
   await db.update(servers).set({ isSponsored: true }).where(eq(servers.id, data.serverId))
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const server = await db.select().from(servers).where(eq(servers.id, data.serverId)).limit(1).then((r: any) => r[0])
 
   try { await logAudit('sponsorship.create', 'Sponsorship', sponsorship.id, { sponsor: data.sponsorName, serverId: data.serverId }, userId) } catch { /* audit log failure — non-critical */ }
@@ -126,11 +59,12 @@ export async function updateSponsorship(
   }
 ) {
   const userId = await requireAdmin()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sponsorship = await db.update(sponsorships).set(data).where(eq(sponsorships.id, id)).returning().then((r: any) => r[0])
 
   await db.update(servers).set({ isSponsored: data.active !== false }).where(eq(servers.id, sponsorship.serverId))
 
-  // Get server data for the return value
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const server = await db.select().from(servers).where(eq(servers.id, sponsorship.serverId)).limit(1).then((r: any) => r[0])
 
   try { await logAudit('sponsorship.update', 'Sponsorship', id, { sponsor: data.sponsorName, active: data.active }, userId) } catch { /* audit log failure — non-critical */ }
@@ -141,6 +75,7 @@ export async function updateSponsorship(
 
 export async function deleteSponsorship(id: string) {
   const userId = await requireAdmin()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sponsorship = await db.select().from(sponsorships).where(eq(sponsorships.id, id)).limit(1).then((r: any) => r[0])
   if (sponsorship) {
     await db.update(servers).set({ isSponsored: false }).where(eq(servers.id, sponsorship.serverId))
@@ -154,86 +89,16 @@ export async function deleteSponsorship(id: string) {
 
 export async function getActiveSponsoredServers() {
   const now = new Date()
-  const rows = await db.select({
-    id: sponsorships.id,
-    serverId: sponsorships.serverId,
-    sponsorName: sponsorships.sponsorName,
-    sponsorUrl: sponsorships.sponsorUrl,
-    sponsorLogo: sponsorships.sponsorLogo,
-    startDate: sponsorships.startDate,
-    endDate: sponsorships.endDate,
-    amount: sponsorships.amount,
-    currency: sponsorships.currency,
-    notes: sponsorships.notes,
-    active: sponsorships.active,
-    createdAt: sponsorships.createdAt,
-    updatedAt: sponsorships.updatedAt,
-    // server fields
-    serverName: servers.name,
-    serverDescription: servers.description,
-    serverOwner: servers.owner,
-    serverRepo: servers.repo,
-    serverFullSlug: servers.fullSlug,
-    serverCategory: servers.category,
-    serverIsOfficial: servers.isOfficial,
-    serverIsSponsored: servers.isSponsored,
-    serverGithubUrl: servers.githubUrl,
-    serverTags: servers.tags,
-    serverIsRemote: servers.isRemote,
-    serverAuthType: servers.authType,
-    serverEndpoint: servers.endpoint,
-    serverFeatured: servers.featured,
-    serverFeaturedUntil: servers.featuredUntil,
-    serverSponsoredUntil: servers.sponsoredUntil,
-    serverStars: servers.stars,
-    serverForks: servers.forks,
-    serverAuthorId: servers.authorId,
-    serverCreatedAt: servers.createdAt,
-    serverUpdatedAt: servers.updatedAt,
-  }).from(sponsorships).innerJoin(servers, eq(sponsorships.serverId, servers.id)).where(
-    and(
-      eq(sponsorships.active, true),
-      or(isNull(sponsorships.endDate), gt(sponsorships.endDate, now))
-    )
-  ).orderBy(desc(sponsorships.createdAt)).limit(6)
+  const rows = await db.select(sponsorshipServerSelect)
+    .from(sponsorships)
+    .innerJoin(servers, eq(sponsorships.serverId, servers.id))
+    .where(
+      and(
+        eq(sponsorships.active, true),
+        or(isNull(sponsorships.endDate), gt(sponsorships.endDate, now))
+      )
+    ).orderBy(desc(sponsorships.createdAt)).limit(6)
 
-  return rows.map((r: any) => ({
-    id: r.id,
-    serverId: r.serverId,
-    sponsorName: r.sponsorName,
-    sponsorUrl: r.sponsorUrl,
-    sponsorLogo: r.sponsorLogo,
-    startDate: r.startDate,
-    endDate: r.endDate,
-    amount: r.amount,
-    currency: r.currency,
-    notes: r.notes,
-    active: r.active,
-    createdAt: r.createdAt,
-    updatedAt: r.updatedAt,
-    server: {
-      id: r.serverId,
-      name: r.serverName,
-      description: r.serverDescription,
-      owner: r.serverOwner,
-      repo: r.serverRepo,
-      fullSlug: r.serverFullSlug,
-      category: r.serverCategory,
-      isOfficial: r.serverIsOfficial,
-      isSponsored: r.serverIsSponsored,
-      githubUrl: r.serverGithubUrl,
-      tags: r.serverTags,
-      isRemote: r.serverIsRemote,
-      authType: r.serverAuthType,
-      endpoint: r.serverEndpoint,
-      featured: r.serverFeatured,
-      featuredUntil: r.serverFeaturedUntil,
-      sponsoredUntil: r.serverSponsoredUntil,
-      stars: r.serverStars,
-      forks: r.serverForks,
-      authorId: r.serverAuthorId,
-      createdAt: r.serverCreatedAt,
-      updatedAt: r.serverUpdatedAt,
-    },
-  }))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return rows.map((r: any) => mapSponsorshipRow(r))
 }

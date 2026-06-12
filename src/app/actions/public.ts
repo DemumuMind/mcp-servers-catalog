@@ -2,8 +2,11 @@
 
 import { db, servers, clients, bookmarks, ratings, comments, viewHistories, users, submissions } from '@/lib/db'
 import { eq, and, or, like, desc, asc, count, avg, sql, inArray, gte, ne } from 'drizzle-orm'
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimit } from '@/lib/rate-limit'
 import { fetchRatingMap } from '@/lib/action-helpers'
+import { getCacheKey, getCache, setCache } from '@/lib/cache'
+import { sanitizeUserHtml } from '@/lib/sanitize'
+import { buildSearchConditions, ITEMS_PER_PAGE, attachUserInfo, getServerCategoriesAgg } from './public-helpers'
 
 export async function checkServerExists(owner: string, repo: string): Promise<{ exists: boolean; inCatalog: boolean; inSubmissions: boolean; serverUrl?: string }> {
   const fullSlug = `${owner}/${repo}`.toLowerCase()
@@ -31,10 +34,6 @@ export async function checkServerExists(owner: string, repo: string): Promise<{ 
     serverUrl: inCatalog ? `/servers/${serverMatch[0].owner}/${serverMatch[0].repo}` : undefined,
   }
 }
-import { getCacheKey, getCache, setCache } from "@/lib/cache";
-import { sanitizeUserHtml } from '@/lib/sanitize'
-
-const ITEMS_PER_PAGE = 12
 
 export interface ServerWithRating {
   id: string
@@ -86,37 +85,7 @@ export async function getServersPublic(
 
   const skip = (page - 1) * ITEMS_PER_PAGE
 
-  const conditions = []
-  if (search) {
-    // Split into words and search each word separately (AND logic)
-    const words = search.toLowerCase().split(/\s+/).filter(Boolean)
-    if (words.length === 1) {
-      const term = `%${words[0]}%`
-      conditions.push(
-        or(
-          sql`LOWER(${servers.name}) LIKE ${term}`,
-          sql`LOWER(${servers.description}) LIKE ${term}`,
-          sql`LOWER(${servers.owner}) LIKE ${term}`,
-          sql`LOWER(${servers.repo}) LIKE ${term}`,
-          sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE LOWER(json_each.value) LIKE ${term})`,
-        )
-      )
-    } else {
-      // Multi-word: each word must match at least one field (AND across words)
-      for (const word of words) {
-        const term = `%${word}%`
-        conditions.push(
-          or(
-            sql`LOWER(${servers.name}) LIKE ${term}`,
-            sql`LOWER(${servers.description}) LIKE ${term}`,
-            sql`LOWER(${servers.owner}) LIKE ${term}`,
-            sql`LOWER(${servers.repo}) LIKE ${term}`,
-            sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE LOWER(json_each.value) LIKE ${term})`,
-          )
-        )
-      }
-    }
-  }
+  const conditions = buildSearchConditions(search, servers)
   if (category) conditions.push(eq(servers.category, category))
   if (tag) conditions.push(sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value = ${tag})`)
   if (onlyOfficial) conditions.push(eq(servers.isOfficial, true))
@@ -125,13 +94,14 @@ export async function getServersPublic(
 
   const whereClause = conditions.length > 0 ? and(...conditions) : undefined
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const orderByMap: Record<string, any[]> = {
     'featured': [desc(servers.featured)],
     'newest': [desc(servers.createdAt)],
     'stars': [desc(servers.stars)],
-    'rating': [desc(servers.createdAt)], // Will sort by rating manually if needed
+    'rating': [desc(servers.createdAt)],
     'alphabetical': [asc(servers.name)],
-    'trending': [desc(servers.createdAt)], // Will compute trend score
+    'trending': [desc(servers.createdAt)],
   }
 
   const orderByClause = orderByMap[sortBy] || [desc(servers.featured)]
@@ -141,9 +111,11 @@ export async function getServersPublic(
   const totalResult = await db.select({ count: count() }).from(servers).where(whereClause)
   const total = totalResult[0]?.count ?? 0
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const serverIds = serverRows.map((s: any) => s.id)
   const ratingMap = await fetchRatingMap(serverIds)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const serversWithRating = serverRows.map((server: any) => ({
     ...server,
     avgRating: ratingMap.get(server.id)?.avg ?? null,
@@ -157,7 +129,7 @@ export async function getServersPublic(
     currentPage: page,
   }
 
-  setCache(cacheKey, result, 300) // 5 minutes
+  setCache(cacheKey, result, 300)
   return result
 }
 
@@ -197,16 +169,10 @@ export async function getClientsPublic(
 }
 
 export async function getServerCategories() {
-  const result = await db.select({
-    category: servers.category,
-    count: count(),
-  }).from(servers).groupBy(servers.category).orderBy(desc(count()))
-
-  return result.map((r: any) => ({ name: r.category, count: r.count }))
+  return getServerCategoriesAgg()
 }
 
 export async function getServerTags() {
-  // Use raw libsql client for fast SQL aggregation (drizzle doesn't have .execute for turso)
   const { getClient } = await import('@/lib/db')
   const client = getClient()
   const result = await client.execute({
@@ -217,10 +183,12 @@ export async function getServerTags() {
           LIMIT 50`,
     args: [],
   })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return result.rows.map((row: any) => ({ name: String(row.name), count: Number(row.count) }))
 }
 
 export async function toggleBookmark(userId: string, serverId: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const existing = await db.select().from(bookmarks).where(
     and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId))
   ).limit(1).then((r: any) => r[0] ?? null)
@@ -246,10 +214,12 @@ export async function getUserBookmarks(userId: string) {
     .where(eq(bookmarks.userId, userId))
     .orderBy(desc(bookmarks.createdAt))
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return bookmarkRows.map((b: any) => b.server)
 }
 
 export async function isServerBookmarked(userId: string, serverId: string): Promise<boolean> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bookmark = await db.select().from(bookmarks).where(
     and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId))
   ).limit(1).then((r: any) => r[0] ?? null)
@@ -280,9 +250,7 @@ export async function rateServer(userId: string, serverId: string, value: number
 
 export async function getServerRating(serverId: string) {
   const { average, count } = await getServerAggRating(serverId)
-  const userRating = null // Will be fetched separately if needed
-
-  return { average, count, userRating }
+  return { average, count, userRating: null }
 }
 
 export async function addComment(userId: string, serverId: string, content: string) {
@@ -293,46 +261,49 @@ export async function addComment(userId: string, serverId: string, content: stri
 
   const sanitizedContent = sanitizeUserHtml(content)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r: any) => r[0])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const commentWithUser = await db.select({
     ...comments,
     userName: users.name,
     userImage: users.image,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .where(eq(comments.id, commentRow.id))
     .limit(1).then((r: any) => r[0] ?? null)
 
   if (!commentWithUser) return commentRow
-  const { userName, userImage, ...commentData } = commentWithUser
-  return {
-    ...commentData,
-    user: { name: userName, image: userImage },
-  }
+  return attachUserInfo(commentWithUser)
 }
 
 export async function getServerComments(serverId: string, isAdmin = false) {
   const conditions = [eq(comments.serverId, serverId)]
   if (!isAdmin) conditions.push(eq(comments.isModerated, true))
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const commentRows = await db.select({
     ...comments,
     userName: users.name,
     userImage: users.image,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))
 
-  return commentRows.map(({ userName, userImage, ...commentData }: any) => ({
-    ...commentData,
-    user: { name: userName, image: userImage },
-  }))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return commentRows.map(({ userName, userImage, ...commentData }: any) =>
+    attachUserInfo({ userName, userImage, ...commentData })
+  )
 }
 
 export async function searchServers(query: string, limit = 20) {
   const cacheKey = getCacheKey('servers:search', { query, limit })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cached = getCache<any[]>(cacheKey)
   if (cached) return cached
 
@@ -347,7 +318,7 @@ export async function searchServers(query: string, limit = 20) {
     )
   ).limit(limit)
 
-  // Simple ranking: exact name match > name contains > description contains > tags > owner
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ranked = serverRows.sort((a: any, b: any) => {
     const aName = a.name.toLowerCase()
     const bName = b.name.toLowerCase()
@@ -360,7 +331,9 @@ export async function searchServers(query: string, limit = 20) {
     const bNameMatch = bName.includes(searchLower) ? 3 : 0
     const aDescMatch = aDesc.includes(searchLower) ? 2 : 0
     const bDescMatch = bDesc.includes(searchLower) ? 2 : 0
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const aTagMatch = a.tags.some((t: any) => t.toLowerCase().includes(searchLower)) ? 1 : 0
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const bTagMatch = b.tags.some((t: any) => t.toLowerCase().includes(searchLower)) ? 1 : 0
 
     const aScore = aExact + aNameMatch + aDescMatch + aTagMatch
@@ -372,12 +345,13 @@ export async function searchServers(query: string, limit = 20) {
   const { logSearchQuery } = await import('./search-analytics')
   await logSearchQuery(query, ranked.length)
 
-  setCache(cacheKey, ranked, 180) // 3 minutes
+  setCache(cacheKey, ranked, 180)
   return ranked
 }
 
 export async function getTrendingServers(limit = 6) {
   const cacheKey = getCacheKey('servers:trending', { limit })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cached = getCache<any[]>(cacheKey)
   if (cached) return cached
 
@@ -400,12 +374,15 @@ export async function getTrendingServers(limit = 6) {
 
   const scoreMap = new Map<string, number>()
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   views.forEach((v: any) => {
     scoreMap.set(v.serverId, (scoreMap.get(v.serverId) || 0) + v.count * 1)
   })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   bookmarkAgg.forEach((b: any) => {
     scoreMap.set(b.serverId, (scoreMap.get(b.serverId) || 0) + b.count * 3)
   })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ratingAgg.forEach((r: any) => {
     scoreMap.set(r.serverId, (scoreMap.get(r.serverId) || 0) + r.count * 2)
   })
@@ -421,15 +398,15 @@ export async function getTrendingServers(limit = 6) {
   } else {
     const serverRows = await db.select().from(servers).where(inArray(servers.id, sorted))
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     result = sorted.map((id) => serverRows.find((s: any) => s.id === id)).filter((s): s is typeof serverRows[0] => !!s)
   }
 
-  setCache(cacheKey, result, 600) // 10 minutes
+  setCache(cacheKey, result, 600)
   return result
 }
 
 export async function getRelatedServers(serverId: string, category: string, tags: string[], limit = 4) {
-  // SQLite/Turso: use json_each for array overlap (replaces PostgreSQL && operator)
   const tagsOverlap = tags.length > 0
     ? sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value IN (${sql.join(tags.map(t => sql`${t}`), sql`, `)}))`
     : sql`false`
@@ -450,6 +427,7 @@ export async function getServersByIds(ids: string[]) {
 }
 
 export async function deleteComment(id: string, userId: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const comment = await db.select().from(comments).where(eq(comments.id, id)).limit(1).then((r: any) => r[0] ?? null)
   if (!comment || comment.userId !== userId) {
     throw new Error('Unauthorized')

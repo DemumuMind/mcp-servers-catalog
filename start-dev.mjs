@@ -13,7 +13,6 @@ const child = spawn('npm', ['run', 'dev'], {
 });
 
 child.unref();
-console.log('Dev server starting with PID:', child.pid);
 
 // Keep the process alive briefly
 setTimeout(() => {

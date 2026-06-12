@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { db, servers } from '@/lib/db'
-import { eq, and, or, like, desc, asc, count, sql } from 'drizzle-orm'
+import { eq, and, or, like, desc, asc, count, sql, SQL } from 'drizzle-orm'
 import { validateApiKey } from '@/app/actions/api-keys'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
 
@@ -17,36 +17,18 @@ const querySchema = z.object({
   order: z.enum(['asc', 'desc']).default('desc'),
 })
 
-export async function GET(request: NextRequest) {
-  const rateLimitResponse = await apiRateLimit(rateLimits.api)(request)
-  if (rateLimitResponse) return rateLimitResponse
-
-  const authHeader = request.headers.get('authorization')
-  let _apiKeyUser = null
-  
-  if (authHeader?.startsWith('Bearer ')) {
-    const key = authHeader.slice(7)
-    const result = await validateApiKey(key)
-    if (result.valid) {
-      _apiKeyUser = result.userId
-    } else {
-      return NextResponse.json({ error: 'Invalid API key' }, { status: 401 })
-    }
-  }
-
+function parseQueryParams(request: NextRequest) {
   const searchParams = Object.fromEntries(request.nextUrl.searchParams.entries())
-  const parsed = querySchema.safeParse(searchParams)
+  return querySchema.safeParse(searchParams)
+}
 
-  if (!parsed.success) {
-    return NextResponse.json(
-      { error: 'Invalid query parameters', details: parsed.error.flatten() },
-      { status: 400 }
-    )
-  }
-
-  const { page, limit, q: search, category, tag, official, remote, sort, order } = parsed.data
-  const offset = (page - 1) * limit
-
+function buildWhereClause(
+  search: string | undefined,
+  category: string | undefined,
+  tag: string | undefined,
+  official: string | undefined,
+  remote: string | undefined,
+): SQL<unknown> | undefined {
   const conditions = []
 
   if (search) {
@@ -61,7 +43,6 @@ export async function GET(request: NextRequest) {
   }
   if (category) conditions.push(eq(servers.category, category))
   if (tag) {
-    // Tags is a JSON array — use json_each for robust tag matching in SQLite
     conditions.push(
       sql`EXISTS (SELECT 1 FROM json_each(${servers.tags}) WHERE json_each.value = ${tag})`
     )
@@ -69,8 +50,10 @@ export async function GET(request: NextRequest) {
   if (official === 'true') conditions.push(eq(servers.isOfficial, true))
   if (remote === 'true') conditions.push(eq(servers.isRemote, true))
 
-  const whereClause = conditions.length > 0 ? and(...conditions) : undefined
+  return conditions.length > 0 ? and(...conditions) : undefined
+}
 
+async function fetchServers(whereClause: SQL<unknown> | undefined, sort: string, order: string, limit: number, offset: number) {
   const sortColumn = {
     stars: servers.stars,
     createdAt: servers.createdAt,
@@ -105,10 +88,24 @@ export async function GET(request: NextRequest) {
       .get(),
   ])
 
-  const total = totalResult?.total ?? 0
-  const totalPages = Math.ceil(total / limit)
+  return { serverList, total: totalResult?.total ?? 0 }
+}
 
-  const baseUrl = new URL(request.url).origin
+function formatResponse(
+  serverList: Awaited<ReturnType<typeof fetchServers>>['serverList'],
+  total: number,
+  page: number,
+  limit: number,
+  baseUrl: string,
+  search: string | undefined,
+  category: string | undefined,
+  tag: string | undefined,
+  official: string | undefined,
+  remote: string | undefined,
+  sort: string,
+  order: string,
+) {
+  const totalPages = Math.ceil(total / limit)
   const linkParts: string[] = []
 
   const buildPageUrl = (p: number) =>
@@ -124,7 +121,7 @@ export async function GET(request: NextRequest) {
   }
 
   const rateLimitLimit = rateLimits.api.maxRequests
-  const rateLimitRemaining = Math.max(0, rateLimitLimit - 1) // Approximation — actual tracking is per-IP
+  const rateLimitRemaining = Math.max(0, rateLimitLimit - 1)
 
   return NextResponse.json(
     {
@@ -144,4 +141,39 @@ export async function GET(request: NextRequest) {
       },
     }
   )
+}
+
+export async function GET(request: NextRequest) {
+  const rateLimitResponse = await apiRateLimit(rateLimits.api)(request)
+  if (rateLimitResponse) return rateLimitResponse
+
+  const authHeader = request.headers.get('authorization')
+  let _apiKeyUser = null
+
+  if (authHeader?.startsWith('Bearer ')) {
+    const key = authHeader.slice(7)
+    const result = await validateApiKey(key)
+    if (result.valid) {
+      _apiKeyUser = result.userId
+    } else {
+      return NextResponse.json({ error: 'Invalid API key' }, { status: 401 })
+    }
+  }
+
+  const parsed = parseQueryParams(request)
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: 'Invalid query parameters', details: parsed.error.flatten() },
+      { status: 400 }
+    )
+  }
+
+  const { page, limit, q: search, category, tag, official, remote, sort, order } = parsed.data
+  const offset = (page - 1) * limit
+
+  const whereClause = buildWhereClause(search, category, tag, official, remote)
+  const { serverList, total } = await fetchServers(whereClause, sort, order, limit, offset)
+
+  const baseUrl = new URL(request.url).origin
+  return formatResponse(serverList, total, page, limit, baseUrl, search, category, tag, official, remote, sort, order)
 }

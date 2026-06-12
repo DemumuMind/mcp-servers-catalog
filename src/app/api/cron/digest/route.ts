@@ -8,7 +8,6 @@ import { verifyCronAuth } from '@/lib/cron-auth'
 const checkCronRateLimit = apiRateLimit(rateLimits.cron)
 
 export async function GET(request: NextRequest) {
-  // Rate limit cron endpoint
   const limited = await checkCronRateLimit(request)
   if (limited) return limited
 
@@ -17,7 +16,6 @@ export async function GET(request: NextRequest) {
 
   const subscribers = await getDigestSubscribers()
 
-  // Group subscribers by category
   const subscribersByCategory = new Map<string | null, typeof subscribers>()
   for (const sub of subscribers) {
     const cat = sub.category || null
@@ -31,11 +29,11 @@ export async function GET(request: NextRequest) {
   let totalSent = 0
 
   for (const [category, subs] of subscribersByCategory) {
-    // Get recent servers, optionally filtered by category
     const { servers: latest } = await getServersPublic(
       1, undefined, category || undefined, undefined, false, false
     )
-    
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const recentServers = latest
       .filter((s: any) => new Date(s.createdAt) > oneWeekAgo)
       .slice(0, 10)
@@ -43,7 +41,7 @@ export async function GET(request: NextRequest) {
     if (recentServers.length === 0) continue
 
     const categoryTitle = category ? ` категории "${category}"` : ''
-    
+
     const batches: Array<typeof subs> = []
     for (let i = 0; i < subs.length; i += 10) {
       batches.push(subs.slice(i, i + 10))
@@ -52,6 +50,7 @@ export async function GET(request: NextRequest) {
     for (const batch of batches) {
       const results = await Promise.allSettled(
         batch.filter((sub) => sub.user.email).map((sub) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           sendDigestEmail(sub.user.email!, categoryTitle, recentServers.map((s: any) => ({ name: s.name, description: s.description })))
         )
       )

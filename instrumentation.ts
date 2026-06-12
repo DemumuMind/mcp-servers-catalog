@@ -7,4 +7,4 @@ export async function register() {
 
 // Stub for @sentry/nextjs — currently not installed.
 // To enable Sentry: install @sentry/nextjs, add SENTRY_DSN to .env, and uncomment the import in register().
-export const onRequestError = () => {}
+export const onRequestError = () => { /* Sentry stub — install @sentry/nextjs to enable */ }
