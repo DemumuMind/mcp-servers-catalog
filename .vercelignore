@@ -1,0 +1,8 @@
+.turso/
+.next/
+.git/
+.hermes/
+*.test.ts
+*.test.tsx
+*.spec.ts
+e2e/

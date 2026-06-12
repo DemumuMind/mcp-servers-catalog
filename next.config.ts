@@ -5,7 +5,6 @@ import { buildContentSecurityPolicy } from './src/lib/security-headers';
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
   serverExternalPackages: ['bcryptjs', 'sharp', '@libsql/client', 'libsql'],
   allowedDevOrigins: ['198.18.0.1'],
   images: {
