@@ -1,6 +1,6 @@
 'use server'
 
-import { db, collections, bookmarks, servers, users } from '@/lib/db'
+import { db, collections, bookmarks } from '@/lib/db'
 import { eq, and, desc } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'

@@ -1,5 +1,5 @@
 import { db, servers } from '@/lib/db'
-import { eq, like, or } from 'drizzle-orm'
+import { eq, or } from 'drizzle-orm'
 import { PageHero, PageShell } from '@/components/page-components'
 import { CompareView } from '@/components/compare-view'
 import { getTranslations } from 'next-intl/server'

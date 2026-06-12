@@ -1,7 +1,7 @@
 'use server'
 
 import { db, votes, collections, bookmarks, servers, digestSubscriptions, users } from '@/lib/db'
-import { eq, and, sum, count, inArray, sql } from 'drizzle-orm'
+import { eq, and, sum } from 'drizzle-orm'
 
 // Simple spam detection
 const SPAM_WORDS = ['casino', 'viagra', 'buy now', 'click here', 'earn money', 'free money', 'act now']

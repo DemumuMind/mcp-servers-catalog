@@ -1,7 +1,7 @@
 'use server'
 
 import { db, viewHistories, servers, bookmarks, users } from '@/lib/db'
-import { sql, gte, lt, and, inArray, count, desc } from 'drizzle-orm'
+import { gte, lt, and, inArray, sql } from 'drizzle-orm'
 
 export async function getTimeSeriesMetrics(days: number = 30) {
   const now = new Date()

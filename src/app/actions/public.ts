@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, clients, bookmarks, ratings, comments, viewHistories, users, submissions } from '@/lib/db'
-import { eq, and, or, like, desc, asc, count, avg, sql, inArray, gte, ne, isNotNull } from 'drizzle-orm'
+import { eq, and, or, like, desc, asc, count, avg, sql, inArray, gte, ne } from 'drizzle-orm'
 import { rateLimit } from "@/lib/rate-limit";
 
 // Check if a server already exists by owner/repo or fullSlug

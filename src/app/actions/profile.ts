@@ -1,7 +1,7 @@
 'use server'
 
 import { db, users, comments, ratings, servers, viewHistories, bookmarks } from '@/lib/db'
-import { eq, and, desc, count } from 'drizzle-orm'
+import { eq, desc, count } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
 

@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { getServerHealthHistory } from '@/app/actions/health'
-import { checkServerHealth } from '@/app/actions/health'
+import { getServerHealthHistory, checkServerHealth } from '@/app/actions/health'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'

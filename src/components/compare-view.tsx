@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { AutocompleteSearch } from '@/components/autocomplete-search'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { X, Plus, GitFork, Star, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
@@ -44,7 +43,7 @@ export function CompareView({ servers, locale }: CompareViewProps) {
   const [selectedServers, setSelectedServers] = useState<ServerData[]>(servers)
   const [searchQuery, setSearchQuery] = useState('')
 
-  const addServer = (server: ServerData) => {
+  const _addServer = (server: ServerData) => {
     if (selectedIds.includes(server.id) || selectedIds.length >= 6) return
     setSelectedIds(prev => [...prev, server.id])
     setSelectedServers(prev => [...prev, server])

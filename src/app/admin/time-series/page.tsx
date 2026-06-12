@@ -1,6 +1,6 @@
 import { getTimeSeriesMetrics, getCohortAnalysis } from '@/app/actions/analytics'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { BarChart3, Users, Server, Eye, Bookmark } from 'lucide-react'
+import { Users, Server, Eye, Bookmark } from 'lucide-react'
 import { AdminPageHeader } from '@/components/admin/admin-page-header'
 import { getAdminTranslations } from '@/lib/admin-i18n'
 

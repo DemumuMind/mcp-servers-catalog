@@ -1,7 +1,7 @@
 'use server'
 
 import { db, sponsorships, servers } from '@/lib/db'
-import { eq, desc, or, isNull, gt, and, inArray } from 'drizzle-orm'
+import { eq, desc, or, isNull, gt, and } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth-guard'
 import { logAudit } from './audit-log'

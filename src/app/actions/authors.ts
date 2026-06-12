@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, users, ratings, bookmarks, comments } from '@/lib/db'
-import { isNotNull, desc, eq, inArray } from 'drizzle-orm'
+import { isNotNull, eq, inArray } from 'drizzle-orm'
 
 export async function getTopAuthors(limit: number = 20) {
   // Find all servers with authorId and aggregate stats

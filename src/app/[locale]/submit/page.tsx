@@ -102,7 +102,7 @@ function inferCategory(topics: string[], language: string | null): string {
 
 export default function SubmitPage() {
   const t = useTranslations('Submit')
-  const locale = useLocale()
+  const _locale = useLocale()
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isFetching, setIsFetching] = useState(false)

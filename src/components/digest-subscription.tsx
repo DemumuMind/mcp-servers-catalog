@@ -12,7 +12,7 @@ interface DigestSubscriptionProps {
 
 const FREQUENCIES = ['daily', 'weekly', 'monthly'] as const
 
-export function DigestSubscription({ userId, locale }: DigestSubscriptionProps) {
+export function DigestSubscription({ userId, locale: _locale }: DigestSubscriptionProps) {
   const t = useTranslations('Digest')
   const [subscription, setSubscription] = useState<{
     frequency: string

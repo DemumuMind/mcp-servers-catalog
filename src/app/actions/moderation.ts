@@ -1,7 +1,7 @@
 'use server'
 
 import { db, comments, users, servers } from '@/lib/db'
-import { eq, and, inArray, desc } from 'drizzle-orm'
+import { eq, inArray, desc } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth-guard'
 import { logAudit } from './audit-log'

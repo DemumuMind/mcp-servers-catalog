@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-import { db, servers } from '@/lib/db'
-import { desc } from 'drizzle-orm'
 import { getServerBySlug } from '@/app/actions/servers'
 import { getServerRating, getServerComments, getRelatedServers, isServerBookmarked } from '@/app/actions/public'
 import { getServerReviews } from '@/app/actions/reviews'

@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { getRecentViews } from '@/app/actions/view-history'
-import { clearViewHistory } from '@/app/actions/view-history'
+import { getRecentViews, clearViewHistory } from '@/app/actions/view-history'
 import { Star, RadioTower, X, ChevronRight } from 'lucide-react'
 
 interface RecentlyViewedProps {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { servers, healthChecks, notifications } from '@/lib/db/schema'
+import { servers, notifications } from '@/lib/db/schema'
 import { eq, and, gte, isNotNull, sql } from 'drizzle-orm'
 import { createNotification } from '@/app/actions/notifications'
 import { verifyCronAuth } from '@/lib/cron-auth'

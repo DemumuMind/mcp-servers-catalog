@@ -1,9 +1,8 @@
 import { createYoga, createSchema } from 'graphql-yoga'
-import { db, getClient, servers, clients } from '@/lib/db'
-import { eq, and, or, like, desc, sql } from 'drizzle-orm'
+import { db, servers, clients } from '@/lib/db'
+import { eq, and, or, like, desc } from 'drizzle-orm'
 import { validateApiKey } from '@/app/actions/api-keys'
 import { apiRateLimit, rateLimits } from '@/lib/api-rate-limit'
-import { NextResponse } from 'next/server'
 
 const typeDefs = /* GraphQL */ `
   type Server {

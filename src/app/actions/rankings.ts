@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
-import { eq, and, gte, desc, asc, inArray, count } from 'drizzle-orm'
+import { eq, gte, asc, count } from 'drizzle-orm'
 
 export async function computeServerRankings(period: 'week' | 'month' = 'week') {
   const now = new Date()

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
+import { Menu, X, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { ThemeToggle } from '@/components/theme-toggle'

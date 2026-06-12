@@ -17,21 +17,6 @@ const querySchema = z.object({
   order: z.enum(['asc', 'desc']).default('desc'),
 })
 
-function apiResponse(data: unknown, meta?: Record<string, unknown>, status = 200) {
-  return NextResponse.json(
-    { data, ...(meta ? { meta } : {}) },
-    {
-      status,
-      headers: {
-        'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
-        'Deprecation': 'true',
-        'Sunset': 'Sat, 01 Jan 2028 00:00:00 GMT',
-        'Link': '</api/v2/servers>; rel="successor-version"',
-      },
-    }
-  )
-}
-
 export async function GET(request: NextRequest) {
   // Rate limit
   const rateLimitResponse = await apiRateLimit(rateLimits.api)(request)

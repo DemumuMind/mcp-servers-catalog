@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient, type Client } from '@libsql/client'
-import path from 'path'
 import { requireAdmin } from '@/lib/auth-guard'
 import { logAudit } from './audit-log'
 
@@ -63,7 +62,7 @@ export async function backupDatabase(userId?: string): Promise<string> {
 
     for (const table of tables) {
       // Get column info
-      const colResult = await client.execute(`PRAGMA table_info("${table}")`)
+      const colResult = await client.execute({ sql: 'PRAGMA table_info(?)', args: [table] })
       const columns = colResult.rows.map(r => ({
         name: r.name as string,
         type: r.type as string,
@@ -84,7 +83,7 @@ export async function backupDatabase(userId?: string): Promise<string> {
       sql += `CREATE TABLE IF NOT EXISTS "${table}" (${colDefs});\n\n`
 
       // Get data
-      const dataResult = await client.execute(`SELECT * FROM "${table}"`)
+      const dataResult = await client.execute({ sql: 'SELECT * FROM "?"', args: [table] })
       if (dataResult.rows.length > 0) {
         const colNames = columns.map(c => `"${c.name}"`).join(', ')
         for (const row of dataResult.rows) {

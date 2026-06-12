@@ -132,7 +132,6 @@ export function submissionNotificationTemplate(submission: {
 export function digestCategoryTitle(category: string | null | undefined, locale: Locale): string {
   if (!category) return ''
   const s = t(locale)
-  // The email template already prepends locale-appropriate prefix via {categoryTitle}
   // We need to match the pattern used in subject strings: " категории \"X\"" (ru) / " in category \"X\"" (en)
   const categoryStrings = {
     ru: ` категории "${category}"`,

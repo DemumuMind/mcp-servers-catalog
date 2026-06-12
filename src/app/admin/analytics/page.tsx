@@ -1,6 +1,5 @@
-import { db, submissions, servers } from '@/lib/db'
-import { getClient } from '@/lib/db'
-import { asc, count, eq, sql, desc } from 'drizzle-orm'
+import { db, getClient, submissions, servers } from '@/lib/db'
+import { asc, count, eq, desc } from 'drizzle-orm'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AnalyticsCharts } from '@/components/admin/analytics-charts'

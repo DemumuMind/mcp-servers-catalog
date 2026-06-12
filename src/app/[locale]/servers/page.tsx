@@ -4,8 +4,7 @@ import { InfiniteServerList, type ServerWithRating } from '@/components/infinite
 import { SortDropdown } from '@/components/sort-dropdown'
 import { EmptyState, FilterPanel, PageHero, PageShell } from '@/components/page-components'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Layers3, Filter, X } from 'lucide-react'
+import { Layers3, X } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
@@ -32,7 +31,7 @@ export default async function ServersPage({
   const onlyOfficial = sp.official === 'true'
   const onlyRemote = sp.remote === 'true'
   const sortBy = sp.sort || 'featured'
-  const view = sp.view || 'grid'
+  const _view = sp.view || 'grid'
 
   const t = await getTranslations({ locale, namespace: 'AllServers' })
   const tc = await getTranslations({ locale, namespace: 'Categories' })

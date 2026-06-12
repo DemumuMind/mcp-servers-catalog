@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/table'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Shield } from 'lucide-react'
 import { AdminPageHeader } from '@/components/admin/admin-page-header'
 import { getAdminTranslations } from '@/lib/admin-i18n'
 

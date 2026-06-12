@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, healthChecks } from '@/lib/db'
-import { inArray, gte, asc, desc, eq, and } from 'drizzle-orm'
+import { inArray, gte, asc, desc, and } from 'drizzle-orm'
 
 interface ServerInfo {
   id: string

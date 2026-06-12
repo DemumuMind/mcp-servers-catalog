@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { servers } from '@/lib/db/schema'
-import { eq, and, lt, isNotNull } from 'drizzle-orm'
+import { eq, and, lt } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { verifyCronAuth } from '@/lib/cron-auth'
 
