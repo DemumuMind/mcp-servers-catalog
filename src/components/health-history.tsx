@@ -1,3 +1,5 @@
+'use client'
+
 function toDailyHealth(data: unknown): DailyHealth[] {
   if (!Array.isArray(data)) return []
   return (data as Record<string, unknown>[]).map((row) => ({
@@ -12,8 +14,6 @@ function toDailyHealth(data: unknown): DailyHealth[] {
 }
 
 interface DailyHealth { date: string; online: number; degraded: number; offline: number; total: number; avgLatency: number | null; uptime: number; latency?: number | null; createdAt?: Date; id?: string; serverId?: string; status?: string; error?: string | null }
-'use client'
-
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { getServerHealthHistory, checkServerHealth } from '@/app/actions/health'

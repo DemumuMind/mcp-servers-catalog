@@ -54,14 +54,10 @@ async function fetchAnalyticsData(serverId: string, since30Days: Date) {
         db.select({ stars: servers.stars }).from(servers).where(eq(servers.id, serverId)).limit(1).then((r) => r[0] ?? null),
   ])
 
-    const dailyViews = await getClient().execute(sql<Array<{ date: string; count: bigint }>>`
-    SELECT date("createdAt", 'unixepoch') as date, COUNT(*) as count
-    FROM "ViewHistory"
-    WHERE "serverId" = ${serverId}
-      AND "createdAt" >= ${since30Days}
-    GROUP BY date("createdAt", 'unixepoch')
-    ORDER BY date ASC
-  ` as any)
+    const dailyViews = await getClient().execute({
+    sql: `SELECT date("createdAt", 'unixepoch') as date, COUNT(*) as count FROM "ViewHistory" WHERE "serverId" = ? AND "createdAt" >= ? GROUP BY date("createdAt", 'unixepoch') ORDER BY date ASC`,
+    args: [serverId, Math.floor(since30Days.getTime() / 1000)],
+  })
 
   return { views, bookmarks: bookmarksCount, ratings: ratingsAgg, comments: commentsCount, totalStars, dailyViews: dailyViews.rows }
 }

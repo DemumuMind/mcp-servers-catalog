@@ -257,10 +257,16 @@ export async function addComment(userId: string, serverId: string, content: stri
     const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r) => r[0])
 
     const commentWithUser = await db.select({
-    ...comments,
+    id: comments.id,
+    userId: comments.userId,
+    serverId: comments.serverId,
+    content: comments.content,
+    isModerated: comments.isModerated,
+    createdAt: comments.createdAt,
+    updatedAt: comments.updatedAt,
     userName: users.name,
     userImage: users.image,
-      } as any).from(comments)
+      }).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
         .where(eq(comments.id, commentRow.id))
     .limit(1).then((r) => r[0] ?? null)
@@ -274,10 +280,16 @@ export async function getServerComments(serverId: string, isAdmin = false) {
   if (!isAdmin) conditions.push(eq(comments.isModerated, true))
 
     const commentRows = await db.select({
-    ...comments,
+    id: comments.id,
+    userId: comments.userId,
+    serverId: comments.serverId,
+    content: comments.content,
+    isModerated: comments.isModerated,
+    createdAt: comments.createdAt,
+    updatedAt: comments.updatedAt,
     userName: users.name,
     userImage: users.image,
-      } as any).from(comments)
+      }).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))

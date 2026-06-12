@@ -1,7 +1,7 @@
 'use server'
 
 import { db, searchQueries, getClient } from '@/lib/db'
-import { eq, gte, gt, and, count, sql } from 'drizzle-orm'
+import {eq,gte,gt,and,count} from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
 export async function logSearchQuery(query: string, results: number, source: string = 'web') {

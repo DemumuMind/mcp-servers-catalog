@@ -2,10 +2,10 @@
 
 import { db, viewHistories, servers, bookmarks, users } from '@/lib/db'
 import { gte, lt, and, inArray, sql } from 'drizzle-orm'
-import type { SQLiteColumn } from 'drizzle-orm/sqlite-core'
+import type { SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core'
 
 function buildDailyCountQuery(
-  table: { createdAt: SQLiteColumn },
+  table: SQLiteTableWithColumns<any>,
     countExpr: any,
   startDate: Date,
 ) {
@@ -14,7 +14,7 @@ function buildDailyCountQuery(
       date: sql<string>`date(${table.createdAt}, 'unixepoch')`,
       count: countExpr,
     })
-        .from(table as any)
+        .from(table)
     .where(gte(table.createdAt, startDate))
     .groupBy(sql`date(${table.createdAt}, 'unixepoch')`)
     .orderBy(sql`date(${table.createdAt}, 'unixepoch') asc`)

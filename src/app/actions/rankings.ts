@@ -2,6 +2,7 @@
 
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
 import { eq, gte, asc, count } from 'drizzle-orm'
+import type { SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core'
 
 
 type ServerCountRow = { serverId: string; count: number }
@@ -62,12 +63,12 @@ function castResult<T>(val: unknown): T {
 
 /** Fetch serverId -> count aggregation for any table with serverId and createdAt columns. */
 async function fetchServerCountAgg(
-  table: { serverId: any; createdAt: any },
+  table: SQLiteTableWithColumns<any>,
   startDate: Date,
 ): Promise<ServerCountRow[]> {
     return castResult<Promise<ServerCountRow[]>>(
     db.select({ serverId: table.serverId, count: count() })
-      .from(table as any)
+      .from(table)
       .where(gte(table.createdAt, startDate))
       .groupBy(table.serverId),
   )

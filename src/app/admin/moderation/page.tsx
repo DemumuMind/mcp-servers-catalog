@@ -15,7 +15,7 @@ export default async function ModerationPage({
   const params = await searchParams
   const showAll = params.tab === 'all'
 
-  const comments = (showAll ? await getAllComments() : await getPendingComments()) as any
+  const comments: Awaited<ReturnType<typeof getAllComments>> = showAll ? await getAllComments() : await getPendingComments()
 
   async function handleApprove(id: string) {
     'use server'
@@ -68,7 +68,7 @@ export default async function ModerationPage({
       </div>
 
       <ModerationTable
-        comments={comments}
+        comments={comments as any}
         approveAction={handleApprove}
         rejectAction={handleReject}
         bulkApproveAction={handleBulkApprove}

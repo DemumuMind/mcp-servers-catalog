@@ -19,9 +19,7 @@ export async function getUserProfile(userId: string) {
 
   const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
         db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r) => r[0]?.count ?? 0),
-        db.select({ count: count() }).from(
-            comments as any
-    ).where(eq(comments.userId, userId)).then((r) => r[0]?.count ?? 0),
+        db.select({ count: count() }).from(comments).where(eq(comments.userId, userId)).then((r) => r[0]?.count ?? 0),
         db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r) => r[0]?.count ?? 0),
   ])
 
@@ -37,14 +35,18 @@ export async function getUserProfile(userId: string) {
 
 export async function getUserComments(userId: string) {
     const commentRows = await db.select({
-    ...comments,
+    id: comments.id,
+    userId: comments.userId,
     serverId: comments.serverId,
+    content: comments.content,
+    isModerated: comments.isModerated,
+    createdAt: comments.createdAt,
+    updatedAt: comments.updatedAt,
     serverId_col: servers.id,
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-      } as any).from(
-        comments as any
+      }).from(comments
   )
     .innerJoin(servers, eq(comments.serverId, servers.id))
     .where(eq(comments.userId, userId))
@@ -58,12 +60,17 @@ export async function getUserComments(userId: string) {
 
 export async function getUserRatings(userId: string) {
     const ratingRows = await db.select({
-    ...ratings,
+    id: ratings.id,
+    userId: ratings.userId,
+    serverId: ratings.serverId,
+    value: ratings.value,
+    createdAt: ratings.createdAt,
+    updatedAt: ratings.updatedAt,
     serverId_col: servers.id,
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-      } as any).from(ratings)
+      }).from(ratings)
     .innerJoin(servers, eq(ratings.serverId, servers.id))
     .where(eq(ratings.userId, userId))
     .orderBy(desc(ratings.createdAt))
@@ -76,7 +83,10 @@ export async function getUserRatings(userId: string) {
 
 export async function getUserHistory(userId: string, limit = 50) {
     const historyRows = await db.select({
-    ...viewHistories,
+    id: viewHistories.id,
+    userId: viewHistories.userId,
+    serverId: viewHistories.serverId,
+    createdAt: viewHistories.createdAt,
     serverId_col: servers.id,
     serverName: servers.name,
     serverDescription: servers.description,
@@ -88,13 +98,13 @@ export async function getUserHistory(userId: string, limit = 50) {
     serverIsOfficial: servers.isOfficial,
     serverIsSponsored: servers.isSponsored,
     serverTags: servers.tags,
-      } as any).from(viewHistories)
+      }).from(viewHistories)
     .innerJoin(servers, eq(viewHistories.serverId, servers.id))
     .where(eq(viewHistories.userId, userId))
     .orderBy(desc(viewHistories.createdAt))
     .limit(limit)
 
-    const mapped = historyRows.map((row: any) => {
+    const mapped = historyRows.map((row) => {
     const {
       serverId_col, serverName, serverDescription, serverOwner, serverRepo,
       serverCategory, serverStars, serverForks, serverIsOfficial, serverIsSponsored, serverTags,
