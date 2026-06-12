@@ -1,6 +1,6 @@
 # API Документация
 
-## REST API v1/v2
+## REST API v1
 
 ### `GET /api/v1/servers`
 Список серверов с пагинацией и фильтрами.
@@ -28,7 +28,7 @@
 **Response body:**
 ```json
 {
-  "data": [{ "id", "name", "description", "owner", "repo", "category", "stars", "forks", "isOfficial", "isRemote", ... }],
+  "data": [{ "id", "name", "description", "owner", "repo", "category", "stars", "forks", "isOfficial", "isRemote" }],
   "meta": { "total": 1598, "page": 1, "limit": 20, "pages": 80 }
 }
 ```
@@ -44,12 +44,12 @@
   "totalServers": 1598,
   "totalClients": 39,
   "totalUsers": 3,
-  "officialCount": 37,
-  "remoteCount": 26,
-  "featuredCount": 20,
-  "totalStars": 538291,
-  "categoryCounts": [{ "category": "ai", "count": 412 }, ...],
-  "recentlyAdded": [{ "id", "name", "owner", "repo", "stars" }, ...]
+  "officialCount": 0,
+  "remoteCount": 0,
+  "featuredCount": 0,
+  "totalStars": 0,
+  "categoryCounts": [],
+  "recentlyAdded": [{ "id", "name", "owner", "repo", "stars" }]
 }
 ```
 
@@ -85,7 +85,7 @@ Shared auth: `src/lib/cron-auth.ts` — `verifyCronAuth(req)` с `.trim()`.
 Проверка здоровья серверов (HTTP ping).
 
 ### `GET /api/cron/health-alerts`
-Алерты при проблемах со здоровьем. Raw SQL использует camelCase: `"HealthCheck"."serverId"`.
+Алерты при проблемах со здоровьем.
 
 ### `GET /api/cron/rankings`
 Вычисление рейтингов week/month. Sequential execution (не parallel — SQLite lock).
@@ -116,7 +116,6 @@ Shared auth: `src/lib/cron-auth.ts` — `verifyCronAuth(req)` с `.trim()`.
   "rateLimitRemaining": 4800,
   "rateLimitLimit": 5000,
   "rateLimitResetAt": "2026-06-12T16:00:00Z",
-  "preFlightRateLimit": { "remaining": 4980, "limit": 5000, "resetAt": "..." },
   "params": { "since": null, "limit": null, "serverIds": null }
 }
 ```
@@ -147,7 +146,7 @@ GraphQL endpoint. Схема: Server, Client, User, Query, Mutation.
 
 ---
 
-## Server Actions
+## Server Actions (42 actions)
 
 ### Публичные
 
@@ -161,11 +160,26 @@ GraphQL endpoint. Схема: Server, Client, User, Query, Mutation.
 3. Описание содержит запрос (2)
 4. Теги содержат запрос (1)
 
+#### `autocompleteSearch(query, limit?)`
+Автодополнение для поисковой строки.
+
+#### `advancedSearch(params)`
+Расширенный поиск с фильтрами по категориям, тегам, рейтингу.
+
+#### `trackSearch(query, resultsCount, clickedServerId?)`
+Трекинг поисковых запросов для аналитики.
+
 #### `toggleBookmark(userId, serverId)`
 Добавить/удалить закладку.
 
 #### `rateServer(userId, serverId, value)`
 Оценить сервер (1-5 звёзд).
+
+#### `submitReview(userId, serverId, content, rating)`
+Отправить текстовый отзыв с оценкой.
+
+#### `voteReview(reviewId, direction)`
+Голосовать за отзыв (up/down).
 
 #### `addComment(userId, serverId, content)`
 Комментарий (rate limit: 10/мин).
@@ -176,13 +190,25 @@ GraphQL endpoint. Схема: Server, Client, User, Query, Mutation.
 #### `computeServerRankings(period)`
 Вычисление рейтингов. Period: `week` | `month`. Batch insert, sequential.
 
+#### `getServerRankings(period, limit?)`
+Получить рейтинги за период.
+
+#### `validateServer(url)`
+Валидация GitHub URL сервера. **Returns:** `ValidationResult { valid, checks[] }`
+
 ### Профиль
 
-- `getUserProfile(userId)` — профиль со статистикой
+- `getUserProfile(userId)` — профиль со статистикой (_count: bookmarks, comments, ratings)
 - `getUserHistory(userId, limit?)` — история просмотров
 - `updateProfile(userId, { name })` — обновить имя
 - `updatePassword(userId, currentPassword, newPassword)` — сменить пароль
 - `updateSettings(userId, { emailNotifications })` — настройки уведомлений
+- `trackServerView(userId, serverId)` — записать просмотр
+
+### API Keys
+
+- `createApiKey(userId, name)` — создать API ключ
+- `listApiKeys(userId)` — список ключей пользователя
 
 ### Уведомления
 
@@ -230,8 +256,49 @@ GraphQL endpoint. Схема: Server, Client, User, Query, Mutation.
 - `id, userId, serverId, content, isModerated`
 - `createdAt, updatedAt`
 
+### Review
+- `id, serverId, userId, content, rating`
+- `helpful, isVerifiedAuthor`
+- `createdAt, updatedAt`
+
+### ReviewVote
+- `id, reviewId, userId, direction` (up/down)
+
+### ApiKey
+- `id, userId, key, name`
+- `createdAt, lastUsedAt`
+
 ### HealthCheck
 - `id, serverId, status, responseTime, statusCode, error`
 - `checkedAt`
 
-### ViewHistory, Bookmark, Rating, Notification, Submission, AuditLog, и др.
+### ViewHistory, Bookmark, Rating, Notification, Submission, AuditLog, Collection, SearchGap, и др.
+
+---
+
+## Тестирование
+
+### Unit тесты (35 тестов, 8 файлов)
+| Файл | Тестов | Покрытие |
+|---|---|---|
+| search.test.ts | 14 | autocomplete, advanced search, tracking |
+| auth.test.ts | 5 | validateServer, createApiKey, listApiKeys |
+| public.test.ts | 3 | getServersPublic, getServerRankings, voteReview |
+| profile.test.ts | 3 | getUserProfile, updateProfile, trackServerView |
+| health-checks.test.ts | 1 | cron auth rejection (401) |
+| date-utils.test.ts | 5 | formatDistanceToNow |
+| security-headers.test.ts | 1 | CSP policy |
+| theme-toggle.test.tsx | 2 | useTheme, useTranslations |
+
+### E2E тесты (21 тест, 7 spec файлов)
+| Spec | Тестов |
+|---|---|
+| homepage.spec.ts | 3 |
+| server-detail.spec.ts | 5 |
+| compare.spec.ts | 2 |
+| submit.spec.ts | 2 |
+| profile.spec.ts | 3 |
+| search.spec.ts | 4 |
+| navigation.spec.ts | 2 |
+
+**Запуск:** `npm run test:e2e` (нужен запущенный dev сервер)

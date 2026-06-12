@@ -2,18 +2,28 @@
 
 Каталог серверов и клиентов для Model Context Protocol (MCP). Платформа для поиска, сравнения и обмена MCP серверами.
 
+## Качество
+
+- aislop: 100/100 Clean run
+- TypeScript: 0 ошибок (`tsc --noEmit --incremental false`)
+- Unit тесты: 35/35 (8 файлов)
+- E2E тесты: 21/21 (7 spec файлов)
+- `as any` касты: 0
+
 ## Функции
 
 ### Для пользователей
 - Поиск и фильтрация — по категориям, тегам, названию, официальности, remote
 - Сравнение серверов — side-by-side таблица до 6 серверов (/compare)
 - Закладки — сохраняйте понравившиеся серверы
-- Оценки — рейтинг 1-5 звёзд
+- Оценки и отзывы — рейтинг 1-5 звёзд + текстовые ревью + голосование
 - Комментарии — обсуждайте серверы с сообществом
 - История просмотров — отслеживайте просмотренные серверы
 - Уведомления — о статусе заявок и ответах
-- Профиль — аккаунт, закладки, комментарии
+- Профиль — аккаунт, закладки, комментарии, настройки
 - PWA — офлайн-доступ, установка на рабочий стол
+- Коллекции — группировка серверов по темам
+- Лента активности — новые серверы, комментарии, рейтинги
 
 ### Для администраторов
 - Управление заявками — одобрение, отклонение, удаление
@@ -22,20 +32,22 @@
 - Бэкап и восстановление — SQL дампы базы данных
 - RSS/JSON Feed — фиды с новыми серверами
 - 8 cron endpoints — здоровье, рейтинги, дайджест, бэкап и др.
+- Модерация комментариев — с типизированным интерфейсом
 
 ### Для разработчиков
-- REST API v2 — /api/v1/servers, /api/v1/stats, /api/v1/export, /api/v1/search
+- REST API v1 — /api/v1/servers, /api/v1/stats, /api/v1/export, /api/v1/search
 - OpenAPI 3.0 спецификация — /api/docs
 - GraphQL endpoint — /api/graphql
 - Pagination headers — Link, X-Total-Count, X-RateLimit-*
 - Cache-Control — на статичных endpoints
+- API Keys — управление ключами для доступа к API
 
 ## Технологии
 
-- **Next.js 16** — App Router, Server Actions, Turbopack
-- **Drizzle ORM + Turso (libsql)** — ORM и SQLite-совместимая БД
+- **Next.js 16.2** — App Router, Server Actions, Turbopack
+- **Drizzle ORM + Turso (libsql)** — ORM и SQLite-совместимая БД (21 таблица)
 - **NextAuth v5** — аутентификация (email/password + GitHub OAuth)
-- **next-intl** — интернационализация (EN/RU), i18n в admin
+- **next-intl** — интернационализация (EN/RU), полный i18n включая admin и compare
 - **Tailwind CSS + shadcn/ui** — стилизация и компоненты
 - **recharts** — графики и аналитика
 - **Service Worker** — PWA, offline fallback, stale-while-revalidate
@@ -43,7 +55,7 @@
 ## Установка
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/DemumuMind/mcp-servers-catalog.git
 cd mcpservers-clone
 
 cp .env.example .env
@@ -59,7 +71,22 @@ npm run db:seed
 npm run dev
 ```
 
-> **WSL:** Dev сервер запускайте из PowerShell (`npx next dev`), не из WSL — libsql lockfile не работает на NTFS через WSL.
+> **WSL:** Dev сервер запускайте из PowerShell (`npm run dev`), не из WSL — libsql lockfile не работает на NTFS через WSL.
+
+### Скрипты
+
+| Скрипт | Описание |
+|---|---|
+| `npm run dev` | Dev сервер с Turbopack |
+| `npm run build` | Production сборка |
+| `npm run start` | Запуск production сервера |
+| `npm run lint` | ESLint проверка |
+| `npm run typecheck` | TypeScript проверка |
+| `npm run test:unit` | Unit тесты (Vitest) |
+| `npm run test:e2e` | E2E тесты (Playwright) |
+| `npm run db:push` | Применить Drizzle схему |
+| `npm run db:seed` | Заполнить БД данными |
+| `npm run db:studio` | Drizzle Studio (GUI для БД) |
 
 ### Переменные окружения
 
@@ -81,32 +108,38 @@ npm run dev
 ```
 src/
 ├── app/
-│   ├── [locale]/          # Публичные страницы (i18n)
+│   ├── [locale]/          # Публичные страницы (i18n, 24 страницы)
 │   │   ├── page.tsx       # Homepage
 │   │   ├── servers/       # Каталог серверов + детали [owner]/[repo]
-│   │   ├── compare/       # Сравнение side-by-side
+│   │   ├── compare/       # Сравнение side-by-side (до 6)
 │   │   ├── clients/       # Каталог клиентов
 │   │   ├── rankings/      # Рейтинги
 │   │   ├── all/           # Все серверы с поиском
+│   │   ├── collections/   # Коллекции серверов
+│   │   ├── activity/      # Лента активности
+│   │   ├── advanced-search/ # Расширенный поиск
 │   │   └── ...            # guide, about-mcp, ecosystem, badges, etc.
-│   ├── admin/             # Админ-панель (7 страниц, i18n)
+│   ├── admin/             # Админ-панель (13 страниц, i18n)
 │   ├── api/
-│   │   ├── v1/            # REST API v1/v2
+│   │   ├── v1/            # REST API v1 (27 routes)
 │   │   ├── cron/          # 8 cron endpoints (shared auth)
 │   │   ├── feed/          # RSS + JSON feed
 │   │   ├── docs/          # OpenAPI спецификация
 │   │   ├── graphql/       # GraphQL
 │   │   └── embed/         # Embed widget
 │   └── actions/           # 42 server actions
-├── components/            # 96 компонентов
+├── components/            # 65 компонентов
 ├── lib/
-│   ├── db.ts              # Drizzle + Turso connection manager
-│   ├── db/schema.ts       # 21 таблица, Drizzle schema
-│   ├── db/relations.ts    # Drizzle relations
+│   ├── db/
+│   │   ├── index.ts       # Drizzle + Turso connection manager
+│   │   ├── schema.ts      # 21 таблица, Drizzle schema
+│   │   └── relations.ts   # Drizzle relations
 │   ├── cron-auth.ts       # Shared cron verification (trim)
 │   ├── github.ts          # GitHub API + rate limit tracking
 │   ├── json-ld.ts         # SEO structured data generators
-│   └── ...
+│   ├── site-url.ts        # Centralized getSiteUrl()
+│   ├── client-urls.ts     # External client download URLs
+│   └── security-headers.ts # CSP builder
 └── messages/              # next-intl: en.json, ru.json
 ```
 
@@ -139,6 +172,12 @@ src/
 - `sitemap.xml` — динамический, 3,000+ URLs
 - JSON-LD — WebSite, Organization, SoftwareApplication, BreadcrumbList
 - Open Graph + Twitter Cards — на всех страницах
+
+## CI/CD
+
+GitHub Actions workflows:
+- **ci.yml** — lint, typecheck, build, unit tests, e2e tests (ветки: master/main)
+- **deploy.yml** — db:push, build, Vercel deploy (ветки: master/main)
 
 ## Лицензия
 

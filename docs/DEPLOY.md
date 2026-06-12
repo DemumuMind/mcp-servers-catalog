@@ -20,7 +20,7 @@
 
 ### После деплоя
 - Примените схему к Turso: `npx drizzle-kit push`
-- Seed: `npm run db:seed` (создаёт admin + 3 демо-сервера)
+- Seed: `npm run db:seed` (создаёт admin + демо-данные)
 - Настройте Vercel Cron для вызова `/api/cron/*` endpoints
 
 ### Vercel Cron
@@ -57,7 +57,7 @@ npm run db:seed
 npm run dev
 ```
 
-> **WSL:** Запускайте dev сервер из PowerShell. Libsql lockfile не работает на NTFS через WSL — используйте `powershell.exe -Command "npx next dev --port 3000"`.
+> **WSL:** Запускайте dev сервер из PowerShell. Libsql lockfile не работает на NTFS через WSL — используйте `powershell.exe -Command "npm run dev"`.
 
 ### Локальная БД
 По умолчанию `DATABASE_URL=file:.turso/local.db` — локальный SQLite файл через libsql.
@@ -75,11 +75,26 @@ npx drizzle-kit generate
 npx drizzle-kit migrate
 ```
 
+### Тестирование
+```bash
+# Unit тесты (Vitest)
+npm run test:unit
+
+# E2E тесты (Playwright) — нужен запущенный dev сервер
+npm run test:e2e
+
+# TypeScript проверка
+npm run typecheck
+
+# Качество кода
+npx aislop scan
+```
+
 ## Docker
 
 ### Запуск
 ```bash
-git clone <repo-url>
+git clone https://github.com/DemumuMind/mcp-servers-catalog.git
 cd mcpservers-clone
 docker-compose up -d
 
@@ -128,8 +143,6 @@ pm2 startup
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth secret |
 | `SITE_URL` | URL сайта для RSS/OG (via `getSiteUrl()`) |
 | `SMTP_HOST/PORT/USER/PASS` | SMTP для email уведомлений |
-| `STRIPE_SECRET_KEY` | Stripe для премиум-размещений |
-| `SENTRY_DSN` | Sentry error tracking |
 | `SYNC_BATCH_SIZE` | Чанк для sync-github (default: 50) |
 | `SYNC_CHUNK_DELAY_MS` | Пауза между чанками (default: 1000) |
 | `SYNC_RATE_LIMIT_THRESHOLD` | Пауза если GitHub API remaining < N (default: 100) |
@@ -181,7 +194,7 @@ cp .turso/local.db .turso/local.db.bak
 ### "libsql lockfile" ошибка (WSL)
 Не запускайте `npm run dev` из WSL. Используйте PowerShell:
 ```bash
-powershell.exe -Command "cd C:\path\to\project; npx next dev --port 3000"
+powershell.exe -Command "cd C:\path\to\project; npm run dev"
 ```
 
 ### Cron 401 (Unauthorized)
@@ -195,6 +208,9 @@ ServerRanking имеет unique index `(serverId, period)`. Если возни�
 rm -rf .next
 npm run dev
 ```
+
+### tsc зависает
+Всегда используйте `npx tsc --noEmit --incremental false` — без `--incremental false` tsc зависает из-за кэша `.next`.
 
 ### Drizzle "model not found"
 ```bash
