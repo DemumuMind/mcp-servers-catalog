@@ -13,7 +13,7 @@ concurrency:
 env:
   NEXT_TELEMETRY_DISABLED: 1
   DATABASE_URL: file:.turso/ci-test.db
-  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+
 
 jobs:
   lint:

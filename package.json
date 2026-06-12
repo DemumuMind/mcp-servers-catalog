@@ -32,7 +32,6 @@
     "@libsql/client": "^0.17.3",
     "@libsql/win32-x64-msvc": "^0.5.29",
     "@paralleldrive/cuid2": "^3.3.0",
-    "@sentry/nextjs": "^10.52.0",
     "@types/dompurify": "^3.0.5",
     "@types/sanitize-html": "^2.16.1",
     "bcryptjs": "^3.0.3",

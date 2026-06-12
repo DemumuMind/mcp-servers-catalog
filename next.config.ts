@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
 import { buildContentSecurityPolicy } from './src/lib/security-headers';
 
@@ -20,15 +19,13 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'github.com' },
       { protocol: 'https', hostname: '**' },
     ],
-    unoptimized: true, // Required for static export/standalone with external images
+    unoptimized: true,
   },
   turbopack: {
     root: process.cwd(),
   },
   async redirects() {
-    return [
-      // Admin routes are locale-free; no redirects needed
-    ];
+    return [];
   },
   async headers() {
     return [
@@ -45,31 +42,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-const sentryOrg = process.env.SENTRY_ORG
-const sentryProject = process.env.SENTRY_PROJECT
-const sentryDsn = process.env.SENTRY_DSN
-
-interface SentryWebpackPluginOptions {
-  silent?: boolean
-  sourcemaps?: { disable?: boolean }
-  org?: string
-  project?: string
-}
-
-const sentryOptions: SentryWebpackPluginOptions = {
-  silent: !sentryDsn,
-  sourcemaps: {
-    disable: true,
-  },
-}
-
-if (sentryOrg) sentryOptions.org = sentryOrg
-if (sentryProject) sentryOptions.project = sentryProject
-
-const config = withNextIntl(nextConfig);
-
-const sentryWrapped = sentryDsn
-  ? withSentryConfig(config, sentryOptions)
-  : config
-
-export default sentryWrapped
+export default withNextIntl(nextConfig)

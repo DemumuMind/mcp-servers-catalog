@@ -97,5 +97,3 @@ prisma.old/
 # Temp i18n agent files
 i18n-agent*.json
 
-# Sentry
-.sentryclirc
