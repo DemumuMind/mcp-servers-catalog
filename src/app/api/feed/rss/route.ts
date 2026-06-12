@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server'
 import { db, servers } from '@/lib/db'
 import { eq, desc } from 'drizzle-orm'
 import { fetchServerReleases } from '@/app/actions/releases'
+import { getSiteUrl } from '@/lib/site-url'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const category = searchParams.get('category')
   const serverSlug = searchParams.get('server') // owner/repo
 
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const baseUrl = getSiteUrl()
 
   // If server slug provided, return releases for that server
   if (serverSlug) {

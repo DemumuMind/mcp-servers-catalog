@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getSiteUrl } from '@/lib/site-url'
 
 // OpenAPI spec served lazily — generated on first request only
 let cachedSpec: object | null = null
@@ -11,7 +12,7 @@ function buildSpec() {
       version: '2.0.0',
       description: 'REST API for the MCP Servers Catalog — browse, search, and export MCP server data.',
     },
-    servers: [{ url: process.env.SITE_URL || 'https://mcpservers.org' }],
+    servers: [{ url: getSiteUrl() }],
     tags: [
       { name: 'Servers', description: 'Browse and search MCP servers' },
       { name: 'Stats', description: 'Catalog statistics' },

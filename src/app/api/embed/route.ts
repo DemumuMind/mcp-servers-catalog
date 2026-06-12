@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db, servers, ratings } from '@/lib/db'
 import { eq } from 'drizzle-orm'
+import { getSiteUrl } from '@/lib/site-url'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -22,7 +23,7 @@ export async function GET(request: Request) {
     ? serverRatings.reduce((s: number, r: any) => s + r.value, 0) / serverRatings.length
     : 0
 
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const baseUrl = getSiteUrl()
 
   const html = `<!DOCTYPE html>
 <html>
@@ -100,7 +101,7 @@ export async function GET(request: Request) {
           <div class="stat">⭐ ${server.stars.toLocaleString()}</div>
           ${avgRating > 0 ? `<div class="stat">★ ${avgRating.toFixed(1)}</div>` : ''}
         </div>
-        <div class="logo">mcpservers.org</div>
+        <div class="logo">MCP Servers</div>
       </div>
     </div>
   </a>

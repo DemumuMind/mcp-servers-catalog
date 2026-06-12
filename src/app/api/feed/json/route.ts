@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db, servers } from '@/lib/db'
 import { eq, desc } from 'drizzle-orm'
+import { getSiteUrl } from '@/lib/site-url'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -10,7 +11,7 @@ export async function GET(request: Request) {
     ? await db.select().from(servers).where(eq(servers.category, category)).orderBy(desc(servers.createdAt)).limit(50)
     : await db.select().from(servers).orderBy(desc(servers.createdAt)).limit(50)
 
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const baseUrl = getSiteUrl()
 
   const feed = {
     version: 'https://jsonfeed.org/version/1.1',

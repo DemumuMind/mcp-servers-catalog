@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowUpRight, Settings, Zap, Server, BookOpen, Shield, Globe, Cpu, Code2, Database, Search } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { DigestSubscription } from '@/components/digest-subscription'
+import { CLIENT_URLS } from '@/lib/client-urls'
 import { auth } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic' // revalidate = 86400
@@ -18,12 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 const clients = [
-  { name: 'Claude Desktop', icon: '🤖', descKey: 'claudeDesktop', url: 'https://claude.ai/download', tagKey: 'recommended' },
-  { name: 'Cursor', icon: '💻', descKey: 'cursor', url: 'https://cursor.com', tagKey: 'popular' },
-  { name: 'Windsurf', icon: '🌊', descKey: 'windsurf', url: 'https://codeium.com/windsurf', tagKey: '' },
-  { name: 'Cline', icon: '⚡', descKey: 'cline', url: 'https://cline.bot', tagKey: '' },
-  { name: 'Continue', icon: '🔄', descKey: 'continueDev', url: 'https://continue.dev', tagKey: 'openSource' },
-  { name: 'Zed', icon: '📝', descKey: 'zed', url: 'https://zed.dev', tagKey: '' },
+  { name: 'Claude Desktop', icon: '🤖', descKey: 'claudeDesktop', url: CLIENT_URLS.claudeDesktop, tagKey: 'recommended' },
+  { name: 'Cursor', icon: '💻', descKey: 'cursor', url: CLIENT_URLS.cursor, tagKey: 'popular' },
+  { name: 'Windsurf', icon: '🌊', descKey: 'windsurf', url: CLIENT_URLS.windsurf, tagKey: '' },
+  { name: 'Cline', icon: '⚡', descKey: 'cline', url: CLIENT_URLS.cline, tagKey: '' },
+  { name: 'Continue', icon: '🔄', descKey: 'continueDev', url: CLIENT_URLS.continue, tagKey: 'openSource' },
+  { name: 'Zed', icon: '📝', descKey: 'zed', url: CLIENT_URLS.zed, tagKey: '' },
 ]
 
 const popularServers = [

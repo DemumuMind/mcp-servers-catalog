@@ -54,7 +54,7 @@ export function useAutocompleteSearch(locale: string, defaultValue = '') {
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, results.length - 1)) }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setSelectedIndex(i => Math.max(i - 1, -1)) }
-    else if (e.key === 'Enter') { e.preventDefault(); selectedIndex >= 0 ? navigateToResult(results[selectedIndex]) : searchAll() }
+    else if (e.key === 'Enter') { e.preventDefault(); void (selectedIndex >= 0 ? navigateToResult(results[selectedIndex]) : searchAll()) }
     else if (e.key === 'Escape') { setShowDropdown(false); inputRef.current?.blur() }
   }, [results, selectedIndex, navigateToResult, searchAll])
 

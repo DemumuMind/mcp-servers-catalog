@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/components/auth-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 
+import { getSiteUrl } from "@/lib/site-url";
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
   variable: "--font-manrope",
@@ -23,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL || "https://mcpservers.org"), // TODO: use getSiteUrl() after Next.js supports async metadataBase
+  metadataBase: new URL(getSiteUrl()), // TODO: use getSiteUrl() after Next.js supports async metadataBase
   title: {
     default: "Awesome MCP Servers",
     template: "%s | Awesome MCP Servers",

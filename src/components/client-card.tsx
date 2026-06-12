@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
+import { CLIENT_FAVICON_BASES } from '@/lib/client-urls'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { ArrowUpRight, ExternalLink, Sparkles } from 'lucide-react'
 import { useState } from 'react'
@@ -25,11 +26,11 @@ const brandLogoMap: Record<string, string> = {
   'Cursor': 'https://cursor.sh/favicon.ico',
   'VS Code Copilot': 'https://code.visualstudio.com/favicon.ico',
   'Windsurf': 'https://codeium.com/favicon.ico',
-  'Cline': 'https://cline.bot/favicon.ico',
-  'Continue': 'https://continue.dev/favicon.ico',
-  'Zed': 'https://zed.dev/favicon.ico',
-  'PearAI': 'https://pearai.com/favicon.ico',
-  'Roo Code': 'https://roocode.com/favicon.ico',
+  'Cline': CLIENT_FAVICON_BASES['Cline'],
+  'Continue': CLIENT_FAVICON_BASES['Continue'],
+  'Zed': CLIENT_FAVICON_BASES['Zed'],
+  'PearAI': CLIENT_FAVICON_BASES['PearAI'],
+  'Roo Code': CLIENT_FAVICON_BASES['Roo Code'],
   'Aider': 'https://aider.chat/favicon.ico',
   'JetBrains AI': 'https://www.jetbrains.com/favicon.ico',
   // Dev platforms

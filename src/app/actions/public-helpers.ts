@@ -1,5 +1,5 @@
 import { db, servers } from '@/lib/db'
-import { eq, or, sql, desc, count } from 'drizzle-orm'
+import { or, sql, desc, count } from 'drizzle-orm'
 
 export const ITEMS_PER_PAGE = 12
 

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { AdminPageHeader } from '@/components/admin/admin-page-header'
+import { getSiteUrl } from '@/lib/site-url'
 
 export default function SettingsPage() {
   const t = useTranslations('Admin.settings')
@@ -14,7 +15,7 @@ export default function SettingsPage() {
   const [settings, setSettings] = useState({
     siteTitle: 'Awesome MCP Servers',
     siteDescription: 'Collection of servers for Model Context Protocol',
-    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://mcpservers.org',
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || getSiteUrl(),
     googleAnalytics: '',
     yandexMetrika: '',
   })

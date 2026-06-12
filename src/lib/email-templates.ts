@@ -97,7 +97,7 @@ function emailTemplate(title: string, content: string, locale: Locale = 'ru'): s
     ${content}
   </div>
   <div class="footer">
-    <p>${sub.footerAutoMessage} <a href="${SITE_URL}">mcpservers.org</a></p>
+    <p>${sub.footerAutoMessage} <a href="${SITE_URL}">MCP Servers</a></p>
     <p>${sub.footerReason}</p>
   </div>
 </body>

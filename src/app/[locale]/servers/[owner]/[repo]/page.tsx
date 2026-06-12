@@ -33,8 +33,9 @@ import { PageShell } from '@/components/page-components'
 import { ServerHealthBadge } from '@/components/server-health-badge'
 import { getTranslations } from 'next-intl/server'
 import { generateServerJsonLd, generateBreadcrumbJsonLd } from '@/lib/json-ld'
+import { getSiteUrl } from '@/lib/site-url'
 
-const SITE_URL = process.env.SITE_URL || 'https://mcpservers.org'
+const SITE_URL = getSiteUrl()
 
 export async function generateMetadata({
   params,

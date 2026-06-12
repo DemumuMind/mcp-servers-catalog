@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm'
 import { createCheckoutSession } from '@/lib/stripe'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { getSiteUrl } from '@/lib/site-url'
 
 export async function createPremiumCheckout(
   serverId: string,
@@ -44,7 +45,7 @@ export async function createPremiumCheckout(
     throw new Error('PROMOTE_UNAUTHORIZED')
   }
 
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const baseUrl = getSiteUrl()
   const successUrl = `${baseUrl}/servers/${server.owner}/${server.repo}?checkout=success&tier=${tier}`
   const cancelUrl = `${baseUrl}/servers/${server.owner}/${server.repo}?checkout=cancel`
 

@@ -12,8 +12,9 @@ import { getUserNotifications, getUnreadNotificationsCount } from "@/app/actions
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { generateWebsiteJsonLd, generateOrganizationJsonLd } from "@/lib/json-ld";
+import { getSiteUrl } from '@/lib/site-url'
 
-const SITE_URL = process.env.SITE_URL || "https://mcpservers.org";
+const SITE_URL = getSiteUrl();
 
 export async function generateMetadata({
   params,

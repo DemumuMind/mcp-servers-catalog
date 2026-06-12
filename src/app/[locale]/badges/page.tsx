@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { getSiteUrl } from '@/lib/site-url'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -34,7 +35,7 @@ export default async function BadgesPage({
 }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Badges' })
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const baseUrl = getSiteUrl()
 
   const badges = BADGE_DEFS.map((def) => {
     const urls = buildBadgeUrl(baseUrl, def.label, def.queryParam)

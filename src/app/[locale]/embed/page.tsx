@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { getSiteUrl } from '@/lib/site-url'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -19,7 +20,7 @@ export default async function EmbedPage({
 }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Embed' })
-  const baseUrl = process.env.SITE_URL || 'https://mcpservers.org'
+  const baseUrl = getSiteUrl()
 
   const exampleCode = `<iframe
   src="${baseUrl}/api/embed?id=SERVER_ID"
@@ -69,7 +70,7 @@ export default async function EmbedPage({
           <p className="text-muted-foreground">
             {t('whereIdDescPrefix')}{' '}
             <code>/servers/</code>. {t('whereIdDescMiddle')}{' '}
-            <code>mcpservers.org/ru/servers/anthropics/anthropic</code>
+            <code>{getSiteUrl()}/ru/servers/anthropics/anthropic</code>
             {' '}{t('whereIdDescSuffix')}
           </p>
         </section>

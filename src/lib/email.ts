@@ -26,7 +26,7 @@ export function resetTransporter(): void {
 
 export async function sendEmail(to: string, subject: string, html: string) {
   const mailOptions = {
-    from: process.env.SMTP_USER || 'noreply@mcpservers.org',
+    from: process.env.SMTP_FROM || process.env.SMTP_USER || process.env.SMTP_FROM || 'noreply@mcpservers.org',
     to,
     subject,
     html,
@@ -74,7 +74,7 @@ export async function sendSubmissionNotification(submission: {
 
   try {
     await getTransporter().sendMail({
-      from: process.env.SMTP_USER || 'noreply@mcpservers.org',
+      from: process.env.SMTP_FROM || process.env.SMTP_USER || process.env.SMTP_FROM || 'noreply@mcpservers.org',
       to: adminEmail,
       subject: s.newSubmission.replace('{name}', safeName),
       html: submissionNotificationTemplate(submission, locale),
@@ -95,7 +95,7 @@ export async function sendStatusUpdateNotification(submission: {
 
   try {
     await getTransporter().sendMail({
-      from: process.env.SMTP_USER || 'noreply@mcpservers.org',
+      from: process.env.SMTP_FROM || process.env.SMTP_USER || process.env.SMTP_FROM || 'noreply@mcpservers.org',
       to: submission.email,
       subject: s.yourSubmissionStatus.replace('{name}', safeName).replace('{status}', statusText),
       html: statusUpdateTemplate(submission, locale),
@@ -114,7 +114,7 @@ export async function sendDigestEmail(
   const s = subjectT(locale)
   try {
     await getTransporter().sendMail({
-      from: process.env.SMTP_USER || 'noreply@mcpservers.org',
+      from: process.env.SMTP_FROM || process.env.SMTP_USER || process.env.SMTP_FROM || 'noreply@mcpservers.org',
       to,
       subject: s.weeklyDigest.replace('{categoryTitle}', categoryTitle),
       html: digestTemplate(categoryTitle, servers, locale),
