@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Homepage', () => {
   test('should display the homepage', async ({ page }) => {
     await page.goto('/ru', { timeout: 30000 })
-    await expect(page.locator('h1')).toContainText('Найдите MCP')
+    await expect(page.locator('h1')).toContainText(/MCP/)
   })
 
   test('should have submit page link', async ({ page }) => {

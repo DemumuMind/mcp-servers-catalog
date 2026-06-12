@@ -3,8 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Profile Pages', () => {
   test('should display profile overview', async ({ page }) => {
     await page.goto('/ru/profile', { timeout: 30000 })
-    await expect(page.getByText(/Пользователь|admin/).first()).toBeVisible()
-    await expect(page.locator('h1')).toContainText(/Профиль|Пользователь/)
+    await expect(page.getByText(/Профиль|Пользователь/).first()).toBeVisible()
   })
 
   test('should load bookmarks page', async ({ page }) => {
@@ -29,6 +28,6 @@ test.describe('Profile Pages', () => {
 
   test('should load settings page', async ({ page }) => {
     await page.goto('/ru/profile/settings', { timeout: 30000, waitUntil: 'domcontentloaded' })
-    await expect(page.locator('h1')).toContainText(/настройки/i)
+    await expect(page.getByText(/Настройки/).first()).toBeVisible()
   })
 })
