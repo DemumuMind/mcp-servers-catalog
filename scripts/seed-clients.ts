@@ -1,307 +1,50 @@
-import { createClient } from '@libsql/client'
-import * as dotenv from 'dotenv'
-dotenv.config()
+import { db } from '../src/lib/db'
+import { clients } from '../src/lib/db/schema'
+import clientUrls from './seed-data/client-urls.json'
 
-const url = process.env.DATABASE_URL?.trim() || 'file:./.turso/local.db'
-const authToken = process.env.DATABASE_AUTH_TOKEN?.trim()
-const client = createClient(
-  url.startsWith('libsql://') || url.startsWith('http') ? { url, authToken } : { url }
-)
+async function seedClients() {
+  const urlMap = new Map(clientUrls.clients.map(c => [c.name, c.url]))
+  
+  const clientData = [
+    { name: 'Claude Desktop', slug: 'claude-desktop', icon: '🤖', type: 'desktop', description: 'AI assistant by Anthropic', isOfficial: true, category: 'desktop' },
+    { name: 'Cursor', slug: 'cursor', icon: '💻', type: 'desktop', description: 'AI-first code editor', isOfficial: false, category: 'desktop' },
+    { name: 'VS Code', slug: 'vscode', icon: '📝', type: 'desktop', description: 'Microsoft code editor with MCP support', isOfficial: false, category: 'desktop' },
+    { name: 'Windsurf', slug: 'windsurf', icon: '🌊', type: 'desktop', description: 'AI code editor by Codeium', isOfficial: false, category: 'desktop' },
+    { name: 'Cline', slug: 'cline', icon: '⚡', type: 'extension', description: 'Autonomous coding agent for VS Code', isOfficial: false, category: 'extension' },
+    { name: 'Continue', slug: 'continue', icon: '🔄', type: 'extension', description: 'Open-source AI code assistant', isOfficial: false, category: 'extension' },
+    { name: 'Zed', slug: 'zed', icon: '📝', type: 'desktop', description: 'High-performance code editor', isOfficial: false, category: 'desktop' },
+    { name: 'Roo Code', slug: 'roocode', icon: '🦘', type: 'extension', description: 'AI coding assistant', isOfficial: false, category: 'extension' },
+    { name: 'Open Interpreter', slug: 'open-interpreter', icon: '🖥️', type: 'cli', description: 'Open-source code interpreter', isOfficial: false, category: 'cli' },
+    { name: 'Aider', slug: 'aider', icon: '🤝', type: 'cli', description: 'AI pair programming in terminal', isOfficial: false, category: 'cli' },
+    { name: 'PearAI', slug: 'pearai', icon: '🍐', type: 'desktop', description: 'Open-source AI code editor', isOfficial: false, category: 'desktop' },
+    { name: 'Bolt', slug: 'bolt', icon: '⚡', type: 'web', description: 'AI web development platform', isOfficial: false, category: 'web' },
+    { name: 'Replit', slug: 'replit', icon: '🔄', type: 'web', description: 'Online IDE with AI features', isOfficial: false, category: 'web' },
+    { name: 'Devin', slug: 'devin', icon: '🤖', type: 'agent', description: 'Autonomous AI software engineer', isOfficial: false, category: 'agent' },
+    { name: 'Amazon Q Developer', slug: 'amazon-q', icon: '☁️', type: 'extension', description: 'AWS AI coding companion', isOfficial: false, category: 'extension' },
+    { name: 'JetBrains AI', slug: 'jetbrains-ai', icon: '🧠', type: 'extension', description: 'AI assistant for JetBrains IDEs', isOfficial: false, category: 'extension' },
+    { name: 'Smithery', slug: 'smithery', icon: '🏭', type: 'platform', description: 'MCP server registry', isOfficial: false, category: 'platform' },
+    { name: 'Superinterface', slug: 'superinterface', icon: '✨', type: 'platform', description: 'AI interface platform', isOfficial: false, category: 'platform' },
+    { name: 'Microsoft Copilot', slug: 'copilot', icon: '🪟', type: 'extension', description: 'AI assistant by Microsoft', isOfficial: false, category: 'extension' },
+    { name: 'LlamaIndex', slug: 'llamaindex', icon: '🦙', type: 'framework', description: 'Data framework for LLM apps', isOfficial: false, category: 'framework' },
+    { name: 'CrewAI', slug: 'crewai', icon: '👥', type: 'framework', description: 'Multi-agent AI framework', isOfficial: false, category: 'framework' },
+    { name: 'AutoGPT', slug: 'autogpt', icon: '🤖', type: 'agent', description: 'Autonomous AI agent', isOfficial: false, category: 'agent' },
+    { name: 'Dify', slug: 'dify', icon: '🎯', type: 'platform', description: 'LLM application development platform', isOfficial: false, category: 'platform' },
+    { name: 'Glama', slug: 'glama', icon: '🎭', type: 'platform', description: 'MCP server directory', isOfficial: false, category: 'platform' },
+    { name: 'LibreChat', slug: 'librechat', icon: '💬', type: 'web', description: 'Open-source AI chat platform', isOfficial: false, category: 'web' },
+    { name: 'Botpress', slug: 'botpress', icon: '🤖', type: 'platform', description: 'Conversational AI platform', isOfficial: false, category: 'platform' },
+    { name: 'Hermes Agent', slug: 'hermes-agent', icon: '🕊️', type: 'agent', description: 'AI agent by Nous Research', isOfficial: false, category: 'agent' },
+    { name: 'Vercel AI SDK', slug: 'vercel-ai-sdk', icon: '▲', type: 'framework', description: 'AI SDK for web developers', isOfficial: false, category: 'framework' },
+    { name: 'Fireflies', slug: 'fireflies', icon: '🔥', type: 'web', description: 'AI meeting assistant', isOfficial: false, category: 'web' },
+  ].map(c => ({
+    ...c,
+    url: urlMap.get(c.name) || '',
+  }))
 
-const mcpClients = [
-  {
-    name: 'Claude Desktop',
-    description: 'Anthropic desktop app with native MCP server support. Connect to local and remote MCP servers for extended AI capabilities.',
-    url: 'https://claude.ai/download',
-    icon: '🤖',
-    featured: true,
-  },
-  {
-    name: 'Cursor',
-    description: 'AI-first code editor with built-in MCP support. Configure MCP servers for enhanced code generation, analysis and debugging.',
-    url: 'https://cursor.sh',
-    icon: '🖱️',
-    featured: true,
-  },
-  {
-    name: 'VS Code Copilot',
-    description: 'Visual Studio Code with GitHub Copilot and MCP integration via the Copilot MCP extension. Connect MCP servers for AI-powered development.',
-    url: 'https://code.visualstudio.com',
-    icon: '💻',
-    featured: true,
-  },
-  {
-    name: 'Windsurf',
-    description: 'Codeium AI IDE with MCP server support. Flow-based AI coding with deep codebase understanding and MCP extensibility.',
-    url: 'https://codeium.com/windsurf',
-    icon: '🏄',
-    featured: true,
-  },
-  {
-    name: 'Cline',
-    description: 'Autonomous AI coding agent for VS Code with MCP support. Create and use MCP tools for file editing, browser automation, and terminal access.',
-    url: 'https://cline.bot',
-    icon: '⚡',
-    featured: true,
-  },
-  {
-    name: 'Continue',
-    description: 'Open-source AI code assistant for VS Code and JetBrains with MCP support. Connect any MCP server as a tool provider.',
-    url: 'https://continue.dev',
-    icon: '▶️',
-    featured: true,
-  },
-  {
-    name: 'Zed',
-    description: 'High-performance code editor with built-in MCP support. Connect MCP servers for AI-assisted editing and collaboration.',
-    url: 'https://zed.dev',
-    icon: '⚡',
-    featured: true,
-  },
-  {
-    name: 'Roo Code',
-    description: 'AI-powered autonomous coding agent for VS Code. Supports MCP servers for extensible tool integration and task automation.',
-    url: 'https://roocode.com',
-    icon: '🦘',
-    featured: false,
-  },
-  {
-    name: 'MCP Inspector',
-    description: 'Official Model Context Protocol debugging and inspection tool. Test, debug and validate MCP server implementations interactively.',
-    url: 'https://github.com/modelcontextprotocol/inspector',
-    icon: '🔍',
-    featured: true,
-  },
-  {
-    name: 'AgentGPT',
-    description: 'Autonomous AI agent platform with MCP integration. Build and deploy AI agents that leverage MCP servers for tool access.',
-    url: 'https://github.com/reworkd/AgentGPT',
-    icon: '🤖',
-    featured: false,
-  },
-  {
-    name: 'Open Interpreter',
-    description: 'Open-source AI code interpreter with MCP support. Run natural language commands locally using MCP server tools.',
-    url: 'https://openinterpreter.com',
-    icon: '🖥️',
-    featured: false,
-  },
-  {
-    name: 'Claude Code',
-    description: 'Anthropic CLI tool for AI-powered software development with MCP support. Use MCP servers for extended development capabilities.',
-    url: 'https://docs.anthropic.com/en/docs/claude-code',
-    icon: '⌨️',
-    featured: true,
-  },
-  {
-    name: 'Aider',
-    description: 'AI pair programming tool in the terminal with MCP support. Connect MCP servers for enhanced code generation and editing.',
-    url: 'https://aider.chat',
-    icon: '🤝',
-    featured: false,
-  },
-  {
-    name: 'PearAI',
-    description: 'AI code editor forked from VS Code with MCP support. Built-in AI chat and code generation with MCP extensibility.',
-    url: 'https://pearai.com',
-    icon: '🍐',
-    featured: false,
-  },
-  {
-    name: 'AIChat',
-    description: 'All-in-one AI chat CLI with MCP support. Connect to multiple LLM providers and MCP servers for rich tool use.',
-    url: 'https://github.com/sigoden/aichat',
-    icon: '💬',
-    featured: false,
-  },
-  {
-    name: 'bolt.new',
-    description: 'AI-powered full-stack web development platform with MCP integration. Build and deploy apps using MCP server tools.',
-    url: 'https://bolt.new',
-    icon: '⚡',
-    featured: false,
-  },
-  {
-    name: 'Replit Agent',
-    description: 'AI coding agent on Replit platform with MCP support. Build, deploy and manage applications using MCP tools.',
-    url: 'https://replit.com',
-    icon: '🔄',
-    featured: false,
-  },
-  {
-    name: 'Devin',
-    description: 'Autonomous AI software engineer by Cognition with MCP integration. Full-stack development with MCP tool access.',
-    url: 'https://www.cognition.ai/devin',
-    icon: '🧠',
-    featured: false,
-  },
-  {
-    name: 'Amazon Q Developer',
-    description: 'AWS AI coding assistant with MCP support. Build cloud applications using MCP servers for AWS service integration.',
-    url: 'https://aws.amazon.com/q/developer/',
-    icon: '☁️',
-    featured: false,
-  },
-  {
-    name: 'JetBrains AI',
-    description: 'AI assistant for JetBrains IDEs with MCP support. Connect MCP servers for enhanced code completion and analysis.',
-    url: 'https://www.jetbrains.com/ai/',
-    icon: '🛠️',
-    featured: false,
-  },
-  {
-    name: 'MCP CLI',
-    description: 'Command-line interface for interacting with MCP servers. Test, query and manage MCP server connections from the terminal.',
-    url: 'https://github.com/modelcontextprotocol/mcp-cli',
-    icon: '⌨️',
-    featured: false,
-  },
-  {
-    name: 'Smithery CLI',
-    description: 'CLI tool for discovering and installing MCP servers. Browse the Smithery registry and configure servers for any MCP client.',
-    url: 'https://smithery.ai',
-    icon: '🏭',
-    featured: false,
-  },
-  {
-    name: 'mcpm',
-    description: 'MCP package manager CLI. Install, configure and manage MCP servers across different clients and projects.',
-    url: 'https://github.com/mcpm-io/mcpm',
-    icon: '📦',
-    featured: false,
-  },
-  {
-    name: 'Superinterface',
-    description: 'Embeddable AI chat widget with MCP support. Add MCP-powered AI assistants to any website or application.',
-    url: 'https://superinterface.ai',
-    icon: '🌐',
-    featured: false,
-  },
-  {
-    name: 'Copilot Studio',
-    description: 'Microsoft Copilot Studio with MCP integration. Build custom AI copilots that leverage MCP servers for actions and data.',
-    url: 'https://copilot.microsoft.com/',
-    icon: '🎯',
-    featured: false,
-  },
-  {
-    name: 'LlamaIndex',
-    description: 'Data framework for LLM applications with MCP support. Build RAG pipelines using MCP servers as data and tool sources.',
-    url: 'https://llamaindex.ai',
-    icon: '🦙',
-    featured: false,
-  },
-  {
-    name: 'CrewAI',
-    description: 'Multi-agent AI framework with MCP tool integration. Orchestrate AI agent crews that use MCP servers for real-world actions.',
-    url: 'https://crewai.com',
-    icon: '👥',
-    featured: false,
-  },
-  {
-    name: 'AutoGPT',
-    description: 'Autonomous AI agent platform with MCP support. Build and deploy AI agents that use MCP servers for tool access.',
-    url: 'https://agpt.co',
-    icon: '🤖',
-    featured: false,
-  },
-  {
-    name: 'Dify',
-    description: 'Open-source LLM app development platform with MCP integration. Build AI workflows that connect to MCP servers for tool use.',
-    url: 'https://dify.ai',
-    icon: '🔧',
-    featured: false,
-  },
-  {
-    name: 'LangGraph Studio',
-    description: 'LangChain visual agent builder with MCP support. Design and deploy AI agents with MCP server tool integrations.',
-    url: 'https://github.com/langchain-ai/langgraph-studio',
-    icon: '📊',
-    featured: false,
-  },
-  {
-    name: 'Glama',
-    description: 'AI chat platform with MCP server support. Connect to multiple MCP servers for enhanced AI capabilities and tool use.',
-    url: 'https://glama.ai',
-    icon: '✨',
-    featured: false,
-  },
-  {
-    name: 'LibreChat',
-    description: 'Open-source AI chat platform with MCP support. Multi-model chat interface with MCP server tool integration.',
-    url: 'https://librechat.ai',
-    icon: '💬',
-    featured: false,
-  },
-  {
-    name: 'Botpress',
-    description: 'Conversational AI platform with MCP integration. Build chatbots that leverage MCP servers for tools and data access.',
-    url: 'https://botpress.com',
-    icon: '🤖',
-    featured: false,
-  },
-  {
-    name: 'OpenAI Agents SDK',
-    description: 'Python SDK for building AI agents with MCP tool support. Create agents that connect to MCP servers for real-world actions.',
-    url: 'https://github.com/openai/openai-agents-python',
-    icon: '🔑',
-    featured: false,
-  },
-  {
-    name: 'Hermes Agent',
-    description: 'Autonomous CLI AI agent with native MCP support. Built-in MCP client for connecting to servers, tools and data sources.',
-    url: 'https://hermes-agent.nousresearch.com',
-    icon: '🔮',
-    featured: false,
-  },
-  {
-    name: 'Vercel AI SDK',
-    description: 'TypeScript SDK for building AI apps with MCP support. Integrate MCP servers as tool providers in Next.js and React apps.',
-    url: 'https://sdk.vercel.ai',
-    icon: '▲',
-    featured: false,
-  },
-  {
-    name: 'Google ADK',
-    description: 'Google Agent Development Kit with MCP integration. Build AI agents that leverage MCP servers for tools and data.',
-    url: 'https://github.com/google/adk-python',
-    icon: '🔍',
-    featured: false,
-  },
-  {
-    name: 'Semantic Kernel',
-    description: 'Microsoft Semantic Kernel with MCP support. Build enterprise AI applications with MCP server tool integrations.',
-    url: 'https://github.com/microsoft/semantic-kernel',
-    icon: '🧠',
-    featured: false,
-  },
-  {
-    name: 'Fireflies.ai',
-    description: 'AI meeting assistant with MCP integration. Transcribe, summarize and analyze meetings using MCP-powered tools.',
-    url: 'https://fireflies.ai',
-    icon: '🔥',
-    featured: false,
-  },
-]
-
-async function seed() {
-  process.stdout.write(`Seeding ${mcpClients.length} MCP clients...\n`)
-
-  let created = 0
-  for (const c of mcpClients) {
-    try {
-      await client.execute({
-        sql: `INSERT INTO Client (id, name, description, url, icon, featured, createdAt, updatedAt)
-              VALUES (?, ?, ?, ?, ?, ?, strftime('%s','now') * 1000, strftime('%s','now') * 1000)`,
-        args: [crypto.randomUUID(), c.name, c.description, c.url, c.icon, c.featured ? 1 : 0],
-      })
-      created++
-    } catch (err: any) {
-      console.error(`Error inserting ${c.name}: ${err.message}`)
-    }
+  for (const client of clientData) {
+    await db.insert(clients).values(client).onConflictDoNothing()
   }
 
-  process.stdout.write(`Done: ${created} clients created\n`)
+  console.error(`Seeded ${clientData.length} clients`)
 }
 
-seed().catch(console.error)
+seedClients().catch(console.error)

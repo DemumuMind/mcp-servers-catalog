@@ -126,7 +126,7 @@ pm2 startup
 | `GITHUB_TOKEN` | GitHub PAT для sync (scopes: `public_repo`) |
 | `GITHUB_CLIENT_ID` | GitHub OAuth для логина |
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth secret |
-| `SITE_URL` | URL сайта для RSS/OG (default: `https://mcpservers.org`) |
+| `SITE_URL` | URL сайта для RSS/OG (via `getSiteUrl()`) |
 | `SMTP_HOST/PORT/USER/PASS` | SMTP для email уведомлений |
 | `STRIPE_SECRET_KEY` | Stripe для премиум-размещений |
 | `SENTRY_DSN` | Sentry error tracking |

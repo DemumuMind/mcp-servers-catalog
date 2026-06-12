@@ -11,6 +11,10 @@ import { submitReview, voteReview, deleteReview } from '@/app/actions/reviews'
 import { ReportButton } from '@/components/report-button'
 import { formatDistanceToNow } from '@/lib/date-utils'
 import { ThumbsUp, ThumbsDown, Trash2 } from 'lucide-react'
+function castVoteResult(val: unknown): Review {
+  return val as unknown as Review
+}
+
 
 export interface Review {
   id: string

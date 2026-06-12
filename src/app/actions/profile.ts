@@ -6,8 +6,7 @@ import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
 
 export async function getUserProfile(userId: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const user = await db.select({
+    const user = await db.select({
     id: users.id,
     name: users.name,
     email: users.email,
@@ -19,15 +18,11 @@ export async function getUserProfile(userId: string) {
   if (!user) return null
 
   const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: any) => r[0]?.count ?? 0),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    db.select({ count: count() }).from(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      comments as any
-    ).where(eq(comments.userId, userId)).then((r: any) => r[0]?.count ?? 0),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r: any) => r[0]?.count ?? 0),
+        db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
+        db.select({ count: count() }).from(
+            comments as any
+    ).where(eq(comments.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
+        db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
   ])
 
   return {
@@ -41,54 +36,46 @@ export async function getUserProfile(userId: string) {
 }
 
 export async function getUserComments(userId: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const commentRows = await db.select({
+    const commentRows = await db.select({
     ...comments,
     serverId: comments.serverId,
     serverId_col: servers.id,
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any).from(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    comments as any
+      } as any).from(
+        comments as any
   )
     .innerJoin(servers, eq(comments.serverId, servers.id))
     .where(eq(comments.userId, userId))
     .orderBy(desc(comments.createdAt))
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return commentRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...commentData }: any) => ({
+    return commentRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...commentData }: any) => ({
     ...commentData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
   }))
 }
 
 export async function getUserRatings(userId: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ratingRows = await db.select({
+    const ratingRows = await db.select({
     ...ratings,
     serverId_col: servers.id,
     serverName: servers.name,
     serverOwner: servers.owner,
     serverRepo: servers.repo,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any).from(ratings)
+      } as any).from(ratings)
     .innerJoin(servers, eq(ratings.serverId, servers.id))
     .where(eq(ratings.userId, userId))
     .orderBy(desc(ratings.createdAt))
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ratingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...ratingData }: any) => ({
+    return ratingRows.map(({ serverId_col, serverName, serverOwner, serverRepo, ...ratingData }: any) => ({
     ...ratingData,
     server: { id: serverId_col, name: serverName, owner: serverOwner, repo: serverRepo },
   }))
 }
 
 export async function getUserHistory(userId: string, limit = 50) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const historyRows = await db.select({
+    const historyRows = await db.select({
     ...viewHistories,
     serverId_col: servers.id,
     serverName: servers.name,
@@ -101,15 +88,13 @@ export async function getUserHistory(userId: string, limit = 50) {
     serverIsOfficial: servers.isOfficial,
     serverIsSponsored: servers.isSponsored,
     serverTags: servers.tags,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any).from(viewHistories)
+      } as any).from(viewHistories)
     .innerJoin(servers, eq(viewHistories.serverId, servers.id))
     .where(eq(viewHistories.userId, userId))
     .orderBy(desc(viewHistories.createdAt))
     .limit(limit)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mapped = historyRows.map((row: any) => {
+    const mapped = historyRows.map((row: any) => {
     const {
       serverId_col, serverName, serverDescription, serverOwner, serverRepo,
       serverCategory, serverStars, serverForks, serverIsOfficial, serverIsSponsored, serverTags,
@@ -134,8 +119,7 @@ export async function getUserHistory(userId: string, limit = 50) {
   })
 
   const seen = new Set<string>()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return mapped.filter((h: any) => {
+    return mapped.filter((h: any) => {
     if (seen.has(h.serverId)) return false
     seen.add(h.serverId)
     return true
@@ -155,8 +139,7 @@ export async function trackServerView(userId: string, serverId: string) {
 }
 
 export async function updateProfile(userId: string, data: { name: string }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const user = await db.update(users).set({ name: data.name }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
+    const user = await db.update(users).set({ name: data.name }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
   revalidatePath('/ru/profile')
   return { success: true, user: { name: user.name, email: user.email } }
 }
@@ -166,8 +149,7 @@ export async function updatePassword(
   currentPassword: string,
   newPassword: string
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const user = await db.select({ password: users.password }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] ?? null)
+    const user = await db.select({ password: users.password }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] ?? null)
 
   if (!user?.password) {
     throw new Error('CANNOT_CHANGE_PASSWORD')
@@ -188,8 +170,7 @@ export async function updateSettings(
   userId: string,
   data: { emailNotifications: boolean }
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const user = await db.update(users).set({ emailNotifications: data.emailNotifications }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
+    const user = await db.update(users).set({ emailNotifications: data.emailNotifications }).where(eq(users.id, userId)).returning().then((r: any) => r[0])
   revalidatePath('/ru/profile/settings')
   return { success: true, emailNotifications: user.emailNotifications }
 }

@@ -1278,7 +1278,7 @@
     "nameLabel": "Название коллекции",
     "descriptionLabel": "Описание коллекции",
     "publicLabel": "Публичная коллекция",
-    "shareLink": "Ссылка: mcpservers.org/{locale}/collections/{slug}",
+    "shareLink": "Ссылка: {siteUrl}/{locale}/collections/{slug}",
     "save": "Сохранить",
     "public": "Публичная",
     "serverCount": "{count} серверов",

@@ -6,7 +6,7 @@
  * - Client-side code: use process.env.NEXT_PUBLIC_SITE_URL (Next.js requires NEXT_PUBLIC_ prefix)
  */
 
-// eslint-disable-next-line ai-slop/hardcoded-url
+// eslint-disable-next-line no-hardcoded-url
 const DEFAULT_SITE_URL = 'https://mcpservers.org'
 
 export function getSiteUrl(): string {

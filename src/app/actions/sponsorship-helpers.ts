@@ -39,7 +39,6 @@ export const sponsorshipServerSelect = {
   serverUpdatedAt: servers.updatedAt,
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mapSponsorshipRow(r: any) {
   return {
     id: r.id,

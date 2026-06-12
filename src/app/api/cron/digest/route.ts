@@ -33,8 +33,7 @@ export async function GET(request: NextRequest) {
       1, undefined, category || undefined, undefined, false, false
     )
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const recentServers = latest
+        const recentServers = latest
       .filter((s: any) => new Date(s.createdAt) > oneWeekAgo)
       .slice(0, 10)
 
@@ -50,8 +49,7 @@ export async function GET(request: NextRequest) {
     for (const batch of batches) {
       const results = await Promise.allSettled(
         batch.filter((sub) => sub.user.email).map((sub) =>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          sendDigestEmail(sub.user.email!, categoryTitle, recentServers.map((s: any) => ({ name: s.name, description: s.description })))
+                    sendDigestEmail(sub.user.email!, categoryTitle, recentServers.map((s: any) => ({ name: s.name, description: s.description })))
         )
       )
       for (const r of results) {

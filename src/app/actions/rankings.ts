@@ -3,7 +3,6 @@
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
 import { eq, gte, asc, count } from 'drizzle-orm'
 
-// --- Typed result shapes for Drizzle queries ---
 
 type ServerCountRow = { serverId: string; count: number }
 
@@ -66,8 +65,7 @@ async function fetchServerCountAgg(
   table: { serverId: any; createdAt: any },
   startDate: Date,
 ): Promise<ServerCountRow[]> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return castResult<Promise<ServerCountRow[]>>(
+    return castResult<Promise<ServerCountRow[]>>(
     db.select({ serverId: table.serverId, count: count() })
       .from(table as any)
       .where(gte(table.createdAt, startDate))

@@ -25,7 +25,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npm run lint
 
@@ -40,11 +40,11 @@ jobs:
           cache: 'npm'
       - run: npm ci
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npx prisma generate
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npm run typecheck
 
@@ -59,17 +59,17 @@ jobs:
           cache: 'npm'
       - run: npm ci
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npx prisma generate
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npm run build
         env:
           AUTH_SECRET: test-secret-for-ci-build-only
           NEXTAUTH_SECRET: test-secret-for-ci-build-only
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
 
   test-unit:
@@ -83,11 +83,11 @@ jobs:
           cache: 'npm'
       - run: npm ci
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npx prisma generate
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npm run test:unit
 
@@ -102,11 +102,11 @@ jobs:
           cache: 'npm'
       - run: npm ci
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npx prisma generate
         env:
-          DATABASE_URL: postgresql://localhost:5432/test
+          DATABASE_URL: file:.turbo/ci-test.db
           DATABASE_DIR: .pglite
       - run: npm run db:init
         env:

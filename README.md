@@ -74,7 +74,7 @@ npm run dev
 | `GITHUB_CLIENT_ID` | GitHub OAuth (для логина) | Нет |
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth secret | Нет |
 | `SMTP_*` | Настройки почты для уведомлений | Нет |
-| `SITE_URL` | URL сайта для RSS/OG (default: `https://mcpservers.org`) | Нет |
+| `SITE_URL` | URL сайта для RSS/OG (fallback: `getSiteUrl()`) | Нет |
 
 ## Структура проекта
 

@@ -60,6 +60,16 @@ function cookiesToString(cookies: Record<string, string>): string {
   return Object.entries(cookies).map(([k, v]) => `${k}=${v}`).join('; ')
 }
 
+async function seedServer(baseUrl: string, slug: string) {
+  const res = await fetch(`${baseUrl}/api/servers/submit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slug }),
+  })
+  if (!res.ok) throw new Error(`Failed to seed ${slug}: ${res.status}`)
+  return res.json()
+}
+
 async function main() {
   if (!getCredential()) {
     process.stdout.write('ERROR: Set ADMIN_SEED_PASSWORD env var before running\n')

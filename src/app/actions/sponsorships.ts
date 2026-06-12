@@ -13,8 +13,7 @@ export async function getSponsorships() {
     .innerJoin(servers, eq(sponsorships.serverId, servers.id))
     .orderBy(desc(sponsorships.createdAt))
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return rows.map((r: any) => mapSponsorshipRow(r))
+    return rows.map((r: any) => mapSponsorshipRow(r))
 }
 
 export async function createSponsorship(data: {
@@ -28,16 +27,14 @@ export async function createSponsorship(data: {
   notes?: string
 }) {
   const userId = await requireAdmin()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sponsorship = await db.insert(sponsorships).values({
+    const sponsorship = await db.insert(sponsorships).values({
     ...data,
     active: true,
   }).returning().then((r: any) => r[0])
 
   await db.update(servers).set({ isSponsored: true }).where(eq(servers.id, data.serverId))
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const server = await db.select().from(servers).where(eq(servers.id, data.serverId)).limit(1).then((r: any) => r[0])
+    const server = await db.select().from(servers).where(eq(servers.id, data.serverId)).limit(1).then((r: any) => r[0])
 
   try { await logAudit('sponsorship.create', 'Sponsorship', sponsorship.id, { sponsor: data.sponsorName, serverId: data.serverId }, userId) } catch { /* audit log failure — non-critical */ }
   revalidatePath('/admin/sponsorships')
@@ -59,13 +56,11 @@ export async function updateSponsorship(
   }
 ) {
   const userId = await requireAdmin()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sponsorship = await db.update(sponsorships).set(data).where(eq(sponsorships.id, id)).returning().then((r: any) => r[0])
+    const sponsorship = await db.update(sponsorships).set(data).where(eq(sponsorships.id, id)).returning().then((r: any) => r[0])
 
   await db.update(servers).set({ isSponsored: data.active !== false }).where(eq(servers.id, sponsorship.serverId))
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const server = await db.select().from(servers).where(eq(servers.id, sponsorship.serverId)).limit(1).then((r: any) => r[0])
+    const server = await db.select().from(servers).where(eq(servers.id, sponsorship.serverId)).limit(1).then((r: any) => r[0])
 
   try { await logAudit('sponsorship.update', 'Sponsorship', id, { sponsor: data.sponsorName, active: data.active }, userId) } catch { /* audit log failure — non-critical */ }
   revalidatePath('/admin/sponsorships')
@@ -75,8 +70,7 @@ export async function updateSponsorship(
 
 export async function deleteSponsorship(id: string) {
   const userId = await requireAdmin()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sponsorship = await db.select().from(sponsorships).where(eq(sponsorships.id, id)).limit(1).then((r: any) => r[0])
+    const sponsorship = await db.select().from(sponsorships).where(eq(sponsorships.id, id)).limit(1).then((r: any) => r[0])
   if (sponsorship) {
     await db.update(servers).set({ isSponsored: false }).where(eq(servers.id, sponsorship.serverId))
   }
@@ -99,6 +93,5 @@ export async function getActiveSponsoredServers() {
       )
     ).orderBy(desc(sponsorships.createdAt)).limit(6)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return rows.map((r: any) => mapSponsorshipRow(r))
+    return rows.map((r: any) => mapSponsorshipRow(r))
 }

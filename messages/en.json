@@ -1278,7 +1278,7 @@
     "nameLabel": "Collection name",
     "descriptionLabel": "Collection description",
     "publicLabel": "Public collection",
-    "shareLink": "Link: mcpservers.org/{locale}/collections/{slug}",
+    "shareLink": "Link: {siteUrl}/{locale}/collections/{slug}",
     "save": "Save",
     "public": "Public",
     "serverCount": "{count} servers",

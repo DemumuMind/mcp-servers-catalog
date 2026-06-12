@@ -1,0 +1,120 @@
+{
+  "clients": [
+    {
+      "name": "Claude Desktop",
+      "url": "https://claude.ai/download"
+    },
+    {
+      "name": "Cursor",
+      "url": "https://cursor.sh"
+    },
+    {
+      "name": "VS Code",
+      "url": "https://code.visualstudio.com"
+    },
+    {
+      "name": "Windsurf",
+      "url": "https://codeium.com/windsurf"
+    },
+    {
+      "name": "Cline",
+      "url": "https://cline.bot"
+    },
+    {
+      "name": "Continue",
+      "url": "https://continue.dev"
+    },
+    {
+      "name": "Zed",
+      "url": "https://zed.dev"
+    },
+    {
+      "name": "Roo Code",
+      "url": "https://roocode.com"
+    },
+    {
+      "name": "Open Interpreter",
+      "url": "https://openinterpreter.com"
+    },
+    {
+      "name": "Aider",
+      "url": "https://aider.chat"
+    },
+    {
+      "name": "PearAI",
+      "url": "https://pearai.com"
+    },
+    {
+      "name": "Bolt",
+      "url": "https://bolt.new"
+    },
+    {
+      "name": "Replit",
+      "url": "https://replit.com"
+    },
+    {
+      "name": "Devin",
+      "url": "https://www.cognition.ai/devin"
+    },
+    {
+      "name": "Amazon Q Developer",
+      "url": "https://aws.amazon.com/q/developer/"
+    },
+    {
+      "name": "JetBrains AI",
+      "url": "https://www.jetbrains.com/ai/"
+    },
+    {
+      "name": "Smithery",
+      "url": "https://smithery.ai"
+    },
+    {
+      "name": "Superinterface",
+      "url": "https://superinterface.ai"
+    },
+    {
+      "name": "Microsoft Copilot",
+      "url": "https://copilot.microsoft.com/"
+    },
+    {
+      "name": "LlamaIndex",
+      "url": "https://llamaindex.ai"
+    },
+    {
+      "name": "CrewAI",
+      "url": "https://crewai.com"
+    },
+    {
+      "name": "AutoGPT",
+      "url": "https://agpt.co"
+    },
+    {
+      "name": "Dify",
+      "url": "https://dify.ai"
+    },
+    {
+      "name": "Glama",
+      "url": "https://glama.ai"
+    },
+    {
+      "name": "LibreChat",
+      "url": "https://librechat.ai"
+    },
+    {
+      "name": "Botpress",
+      "url": "https://botpress.com"
+    },
+    {
+      "name": "Hermes Agent",
+      "url": "https://hermes-agent.nousresearch.com"
+    },
+    {
+      "name": "Vercel AI SDK",
+      "url": "https://sdk.vercel.ai"
+    },
+    {
+      "name": "Fireflies",
+      "url": "https://fireflies.ai"
+    }
+  ]
+}
