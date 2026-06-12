@@ -60,26 +60,11 @@ function cookiesToString(cookies: Record<string, string>): string {
   return Object.entries(cookies).map(([k, v]) => `${k}=${v}`).join('; ')
 }
 
-async function _seedServer(baseUrl: string, slug: string) {
-  const res = await fetch(`${baseUrl}/api/servers/submit`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ slug }),
-  })
-  if (!res.ok) throw new Error(`Failed to seed ${slug}: ${res.status}`)
-  return res.json()
-}
-
-async function main() {
+async function authenticate(): Promise<string> {
   if (!getCredential()) {
     process.stdout.write('ERROR: Set ADMIN_SEED_PASSWORD env var before running\n')
     process.exit(1)
   }
-
-  const seedPath = path.resolve(process.cwd(), 'scripts', 'mcp-servers-seed.json')
-  const data = readFileSync(seedPath, 'utf-8')
-  const servers: SeedServer[] = JSON.parse(data)
-  process.stdout.write(`Loaded ${servers.length} servers to seed\n`)
 
   const csrfRes = await fetch(`${BASE_URL}/api/auth/csrf`)
   const csrfCookies = extractCookies(csrfRes.headers.getSetCookie?.() || [])
@@ -105,7 +90,7 @@ async function main() {
 
   const sessionKey = Object.keys(allCookies).find(k => k.includes('session-token'))
   if (!sessionKey) {
-    process.stdout.write(`ERROR: No session cookie found\n`)
+    process.stdout.write('ERROR: No session cookie found\n')
     process.stdout.write(`Login status: ${loginRes.status}\n`)
     process.stdout.write(`Login location: ${loginRes.headers.get('location') || 'none'}\n`)
     process.stdout.write(`Cookies received: ${Object.keys(loginCookies).join(', ') || 'none'}\n`)
@@ -113,8 +98,15 @@ async function main() {
     process.exit(1)
   }
 
-  const cookieStr = cookiesToString(allCookies)
   process.stdout.write('Logged in successfully\n')
+  return cookiesToString(allCookies)
+}
+
+async function seedServers(cookieStr: string) {
+  const seedPath = path.resolve(process.cwd(), 'scripts', 'mcp-servers-seed.json')
+  const data = readFileSync(seedPath, 'utf-8')
+  const servers: SeedServer[] = JSON.parse(data)
+  process.stdout.write(`Loaded ${servers.length} servers to seed\n`)
 
   let created = 0
   let failed = 0
@@ -161,6 +153,11 @@ async function main() {
   process.stdout.write(`\n=== Seed Complete ===\n`)
   process.stdout.write(`Created: ${created}\n`)
   process.stdout.write(`Failed: ${failed}\n`)
+}
+
+async function main() {
+  const cookieStr = await authenticate()
+  await seedServers(cookieStr)
   process.exit(0)
 }
 

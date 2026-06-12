@@ -68,7 +68,7 @@ export default async function ModerationPage({
       </div>
 
       <ModerationTable
-        comments={comments as any}
+        comments={comments}
         approveAction={handleApprove}
         rejectAction={handleReject}
         bulkApproveAction={handleBulkApprove}

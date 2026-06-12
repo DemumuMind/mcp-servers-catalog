@@ -18,11 +18,14 @@ import { CheckCircle, XCircle, ExternalLink } from 'lucide-react'
 
 interface Comment {
   id: string
+  userId: string
+  serverId: string
   content: string
   isModerated: boolean
   createdAt: Date
-  user: { name: string | null; email: string }
-  server: { name: string; owner: string; repo: string }
+  updatedAt: Date
+  user: { name: string | null; email: string } | null
+  server: { name: string; owner: string; repo: string } | null
 }
 
 interface ModerationTableProps {
@@ -153,20 +156,20 @@ export function ModerationTable({
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{comment.server.name}</div>
+                      <div className="font-medium">{(comment.server?.name ?? "—")}</div>
                       <a
-                        href={`/servers/${comment.server.owner}/${comment.server.repo}`}
+                        href={`/servers/${(comment.server?.owner ?? "")}/${(comment.server?.repo ?? "")}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-primary hover:underline inline-flex items-center gap-1"
                       >
-                        {comment.server.owner}/{comment.server.repo}
+                        {(comment.server?.owner ?? "")}/{(comment.server?.repo ?? "")}
                         <ExternalLink className="h-3 w-3" />
                       </a>
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{comment.user.name || t('anonymous')}</div>
-                      <div className="text-sm text-muted-foreground">{comment.user.email}</div>
+                      <div className="font-medium">{(comment.user?.name ?? "—") || t('anonymous')}</div>
+                      <div className="text-sm text-muted-foreground">{(comment.user?.email ?? "")}</div>
                     </TableCell>
                     <TableCell className="max-w-md">
                       <p className="text-sm line-clamp-3">{comment.content}</p>

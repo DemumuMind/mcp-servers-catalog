@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, healthChecks } from '@/lib/db'
-import {eq,desc,and,gte, sql} from 'drizzle-orm'
+import {eq, desc, and, gte, sql} from 'drizzle-orm'
 
 export async function checkServerHealth(
   serverId: string

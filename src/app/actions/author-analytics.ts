@@ -1,7 +1,7 @@
 'use server'
 
 import { db, servers, users, viewHistories, bookmarks, ratings, comments, getClient } from '@/lib/db'
-import { eq, and, ne, gte, desc, count, avg, sql } from 'drizzle-orm'
+import {eq, and, ne, gte, desc, count, avg} from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
 export async function claimServer(serverId: string, userId: string) {

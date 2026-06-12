@@ -8,6 +8,23 @@ import { getCacheKey, getCache, setCache } from '@/lib/cache'
 import { sanitizeUserHtml } from '@/lib/sanitize'
 import { buildSearchConditions, ITEMS_PER_PAGE, attachUserInfo, getServerCategoriesAgg } from './public-helpers'
 
+const commentWithUserSelect = {
+  id: comments.id,
+  userId: comments.userId,
+  serverId: comments.serverId,
+  content: comments.content,
+  isModerated: comments.isModerated,
+  createdAt: comments.createdAt,
+  updatedAt: comments.updatedAt,
+  userName: users.name,
+  userImage: users.image,
+} as const
+
+function commentQuery() {
+  return db.select(commentWithUserSelect).from(comments).innerJoin(users, eq(comments.userId, users.id))
+}
+
+
 export async function checkServerExists(owner: string, repo: string): Promise<{ exists: boolean; inCatalog: boolean; inSubmissions: boolean; serverUrl?: string }> {
   const fullSlug = `${owner}/${repo}`.toLowerCase()
 
@@ -256,18 +273,7 @@ export async function addComment(userId: string, serverId: string, content: stri
 
     const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r) => r[0])
 
-    const commentWithUser = await db.select({
-    id: comments.id,
-    userId: comments.userId,
-    serverId: comments.serverId,
-    content: comments.content,
-    isModerated: comments.isModerated,
-    createdAt: comments.createdAt,
-    updatedAt: comments.updatedAt,
-    userName: users.name,
-    userImage: users.image,
-      }).from(comments)
-    .innerJoin(users, eq(comments.userId, users.id))
+    const commentWithUser = await commentQuery()
         .where(eq(comments.id, commentRow.id))
     .limit(1).then((r) => r[0] ?? null)
 
@@ -279,18 +285,7 @@ export async function getServerComments(serverId: string, isAdmin = false) {
   const conditions = [eq(comments.serverId, serverId)]
   if (!isAdmin) conditions.push(eq(comments.isModerated, true))
 
-    const commentRows = await db.select({
-    id: comments.id,
-    userId: comments.userId,
-    serverId: comments.serverId,
-    content: comments.content,
-    isModerated: comments.isModerated,
-    createdAt: comments.createdAt,
-    updatedAt: comments.updatedAt,
-    userName: users.name,
-    userImage: users.image,
-      }).from(comments)
-    .innerJoin(users, eq(comments.userId, users.id))
+    const commentRows = await commentQuery()
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))
 
