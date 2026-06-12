@@ -1,60 +1,70 @@
-'use server'
+import { db, searchQueries } from '@/lib/db'
+import { sql, gte, desc } from 'drizzle-orm'
+import { getClient } from '@/lib/db'
 
-import { db, searchQueries, getClient } from '@/lib/db'
-import { eq, gte, gt, and, count, sql } from 'drizzle-orm'
-import { auth } from '@/lib/auth'
+interface SearchGapRow {
+  query: string
+  count: number
+  lastSearch: string
+}
 
-export async function logSearchQuery(query: string, results: number, source: string = 'web') {
-  const session = await auth()
-  const userId = session?.user?.id || null
+interface TopSearchRow {
+  query: string
+  count: number
+  avgResults: number
+}
 
+export async function getPopularSearches(days: number = 7, limit: number = 10) {
+  const since = new Date(Date.now() - days * 86400000)
+  const rows = await db
+    .select({ query: searchQueries.query, count: sql<number>`COUNT(*)` })
+    .from(searchQueries)
+    .where(gte(searchQueries.createdAt, since))
+    .groupBy(searchQueries.query)
+    .orderBy(desc(sql`COUNT(*)`))
+    .limit(limit)
+
+  return rows.map((r) => ({ query: r.query, count: r.count }))
+}
+
+export async function getSearchGaps(limit: number = 50): Promise<SearchGapRow[]> {
+  const result = await getClient().execute({
+    sql: `SELECT query, COUNT(*) as count, MAX("createdAt") as "lastSearch" FROM "SearchQuery" WHERE results = 0 GROUP BY query ORDER BY count DESC LIMIT ?`,
+    args: [limit],
+  })
+
+  return result.rows.map((row) => ({
+    query: String(row.query ?? ''),
+    count: Number(row.count ?? 0),
+    lastSearch: String(row.lastSearch ?? ''),
+  }))
+}
+
+export async function getTopSearches(limit: number = 20): Promise<TopSearchRow[]> {
+  const result = await getClient().execute({
+    sql: `SELECT query, COUNT(*) as count, AVG(results) as "avgResults" FROM "SearchQuery" GROUP BY query ORDER BY count DESC LIMIT ?`,
+    args: [limit],
+  })
+
+  return result.rows.map((row) => ({
+    query: String(row.query ?? ''),
+    count: Number(row.count ?? 0),
+    avgResults: Number(row.avgResults ?? 0),
+  }))
+}
+
+
+export async function logSearchQuery(query: string, results: number = 0, userId?: string) {
   await db.insert(searchQueries).values({
-    query: query.trim().toLowerCase().slice(0, 200),
+    query: query.toLowerCase().trim(),
     results,
-    userId,
-    source,
+    userId: userId || null,
   })
 }
 
-export async function getSearchGaps(limit: number = 50) {
-    const gaps = await getClient().execute(sql<Array<{ query: string; count: bigint; lastSearch: Date }>>`
-    SELECT query, COUNT(*) as count, MAX("createdAt") as "lastSearch"
-    FROM "SearchQuery"
-    WHERE results = 0
-    GROUP BY query
-    ORDER BY count DESC
-    LIMIT ${limit}
-  ` as any)
-
-    return gaps.rows.map((g: any) => ({
-    query: g.query,
-    count: Number(g.count),
-    lastSearch: g.lastSearch,
-  }))
-}
-
-export async function getTopSearches(limit: number = 20) {
-    const searches = await getClient().execute(sql<Array<{ query: string; count: bigint; avgResults: number }>>`
-    SELECT query, COUNT(*) as count, AVG(results) as "avgResults"
-    FROM "SearchQuery"
-    GROUP BY query
-    ORDER BY count DESC
-    LIMIT ${limit}
-  ` as any)
-
-    return searches.rows.map((s: any) => ({
-    query: s.query,
-    count: Number(s.count),
-    avgResults: Number(s.avgResults),
-  }))
-}
-
-export async function getSearchStats(since: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)) {
-  const [total, withResults, withoutResults] = await Promise.all([
-        db.select({ count: count() }).from(searchQueries).where(gte(searchQueries.createdAt, since)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
-        db.select({ count: count() }).from(searchQueries).where(and(gte(searchQueries.createdAt, since), gt(searchQueries.results, 0))).then((r: unknown) => (r as {count?: number})?.count ?? 0),
-        db.select({ count: count() }).from(searchQueries).where(and(gte(searchQueries.createdAt, since), eq(searchQueries.results, 0))).then((r: unknown) => (r as {count?: number})?.count ?? 0),
-  ])
-
-  return { total, withResults, withoutResults, gapRate: total > 0 ? (withoutResults / total) : 0 }
+export async function getSearchStats() {
+  const total = await db.select({ count: sql<number>`COUNT(*)` }).from(searchQueries).then((r) => r[0]?.count ?? 0)
+  const unique = await db.select({ count: sql<number>`COUNT(DISTINCT query)` }).from(searchQueries).then((r) => r[0]?.count ?? 0)
+  const zeroResults = await db.select({ count: sql<number>`COUNT(*)` }).from(searchQueries).where(sql`results = 0`).then((r) => r[0]?.count ?? 0)
+  return { total, unique, zeroResults }
 }

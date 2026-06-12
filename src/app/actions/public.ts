@@ -35,6 +35,18 @@ export async function checkServerExists(owner: string, repo: string): Promise<{ 
   }
 }
 
+export interface CommentWithUserRow {
+  id: string
+  userId: string
+  serverId: string
+  content: string
+  isModerated: boolean
+  createdAt: Date
+  updatedAt: Date
+  userName: string | null
+  userImage: string | null
+}
+
 export interface ServerWithRating {
   id: string
   name: string
@@ -256,11 +268,17 @@ export async function addComment(userId: string, serverId: string, content: stri
 
     const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r: any) => r[0])
 
-    const commentWithUser = await db.select({
-    ...comments,
-    userName: users.name,
-    userImage: users.image,
-      } as any).from(comments)
+    const commentWithUser: CommentWithUserRow | null = await db.select({
+      id: comments.id,
+      userId: comments.userId,
+      serverId: comments.serverId,
+      content: comments.content,
+      isModerated: comments.isModerated,
+      createdAt: comments.createdAt,
+      updatedAt: comments.updatedAt,
+      userName: users.name,
+      userImage: users.image,
+    }).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
         .where(eq(comments.id, commentRow.id))
     .limit(1).then((r: any) => r[0] ?? null)
@@ -273,11 +291,17 @@ export async function getServerComments(serverId: string, isAdmin = false) {
   const conditions = [eq(comments.serverId, serverId)]
   if (!isAdmin) conditions.push(eq(comments.isModerated, true))
 
-    const commentRows = await db.select({
-    ...comments,
-    userName: users.name,
-    userImage: users.image,
-      } as any).from(comments)
+    const commentRows: CommentWithUserRow[] = await db.select({
+      id: comments.id,
+      userId: comments.userId,
+      serverId: comments.serverId,
+      content: comments.content,
+      isModerated: comments.isModerated,
+      createdAt: comments.createdAt,
+      updatedAt: comments.updatedAt,
+      userName: users.name,
+      userImage: users.image,
+    }).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
     .where(and(...conditions))
     .orderBy(desc(comments.createdAt))

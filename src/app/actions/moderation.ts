@@ -6,6 +6,18 @@ import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth-guard'
 import { logAudit } from './audit-log'
 
+export interface ModerationCommentRow {
+  id: string
+  content: string
+  isModerated: boolean
+  createdAt: Date
+  updatedAt: Date
+  userId: string
+  serverId: string
+  user: { name: string | null; email: string | null } | null
+  server: { name: string | null; owner: string | null; repo: string | null } | null
+}
+
 function buildCommentSelect() {
   return {
     id: comments.id,
@@ -20,7 +32,7 @@ function buildCommentSelect() {
   }
 }
 
-export async function getPendingComments() {
+export async function getPendingComments(): Promise<ModerationCommentRow[]> {
   await requireAdmin()
   return db
     .select(buildCommentSelect())
@@ -31,7 +43,7 @@ export async function getPendingComments() {
     .orderBy(desc(comments.createdAt))
 }
 
-export async function getAllComments(limit: number = 100) {
+export async function getAllComments(limit: number = 100): Promise<ModerationCommentRow[]> {
   await requireAdmin()
   return db
     .select(buildCommentSelect())

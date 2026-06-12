@@ -1,8 +1,8 @@
 'use server'
 
 import { db, servers, viewHistories, bookmarks, ratings, comments, serverRankings } from '@/lib/db'
-import { eq, gte, asc, count } from 'drizzle-orm'
-
+import { eq, gte, asc, count, SQL } from 'drizzle-orm'
+import type { SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core'
 
 type ServerCountRow = { serverId: string; count: number }
 
@@ -62,12 +62,12 @@ function castResult<T>(val: unknown): T {
 
 /** Fetch serverId -> count aggregation for any table with serverId and createdAt columns. */
 async function fetchServerCountAgg(
-  table: { serverId: any; createdAt: any },
+  table: SQLiteTableWithColumns<any>,
   startDate: Date,
 ): Promise<ServerCountRow[]> {
-    return castResult<Promise<ServerCountRow[]>>(
+  return castResult<Promise<ServerCountRow[]>>(
     db.select({ serverId: table.serverId, count: count() })
-      .from(table as any)
+      .from(table)
       .where(gte(table.createdAt, startDate))
       .groupBy(table.serverId),
   )
@@ -104,17 +104,17 @@ export async function computeServerRankings(period: 'week' | 'month' = 'week') {
     const ratingCount = ratingMap.get(server.id) ?? 0
     const commentCount = commentMap.get(server.id) ?? 0
 
-      // Composite score: views(1) + bookmarks(3) + ratings(2) + comments(2) + stars(0.5)
-      const score = views * 1 + bookmarkCount * 3 + ratingCount * 2 + commentCount * 2 + (server.stars || 0) * 0.5
+    // Composite score: views(1) + bookmarks(3) + ratings(2) + comments(2) + stars(0.5)
+    const score = views * 1 + bookmarkCount * 3 + ratingCount * 2 + commentCount * 2 + (server.stars || 0) * 0.5
 
-      return {
-        serverId: server.id,
-        score,
-        views,
-        bookmarks: bookmarkCount,
-        ratings: ratingCount,
-      }
-    })
+    return {
+      serverId: server.id,
+      score,
+      views,
+      bookmarks: bookmarkCount,
+      ratings: ratingCount,
+    }
+  })
 
   const sorted = rankingData
     .filter((r) => r.score > 0)

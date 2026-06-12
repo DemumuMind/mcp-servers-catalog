@@ -55,10 +55,19 @@ export async function checkServerHealth(
   }
 }
 
+export interface HealthCheckRow {
+  id: string
+  serverId: string
+  status: string
+  latency: number | null
+  error: string | null
+  createdAt: Date
+}
+
 export async function getServerHealthHistory(
   serverId: string,
   limit: number = 30
-) {
+): Promise<HealthCheckRow[]> {
   return db
     .select()
     .from(healthChecks)

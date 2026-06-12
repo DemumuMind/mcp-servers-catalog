@@ -1,4 +1,5 @@
 import { getPendingComments, getAllComments, approveComment, rejectComment, bulkApproveComments, bulkRejectComments } from '@/app/actions/moderation'
+import type { ModerationCommentRow } from '@/app/actions/moderation'
 import { ModerationTable } from '@/components/admin/moderation-table'
 import { AdminPageHeader } from '@/components/admin/admin-page-header'
 import Link from 'next/link'
@@ -15,7 +16,7 @@ export default async function ModerationPage({
   const params = await searchParams
   const showAll = params.tab === 'all'
 
-  const comments = (showAll ? await getAllComments() : await getPendingComments()) as any
+  const comments: ModerationCommentRow[] = showAll ? await getAllComments() : await getPendingComments()
 
   async function handleApprove(id: string) {
     'use server'

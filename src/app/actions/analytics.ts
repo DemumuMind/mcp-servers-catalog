@@ -1,12 +1,17 @@
 'use server'
 
 import { db, viewHistories, servers, bookmarks, users } from '@/lib/db'
-import { gte, lt, and, inArray, sql } from 'drizzle-orm'
-import type { SQLiteColumn } from 'drizzle-orm/sqlite-core'
+import { gte, lt, and, inArray, sql, SQL } from 'drizzle-orm'
+import type { SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core'
+
+interface DailyCountRow {
+  date: string
+  count: number
+}
 
 function buildDailyCountQuery(
-  table: { createdAt: SQLiteColumn },
-    countExpr: any,
+  table: SQLiteTableWithColumns<any>,
+  countExpr: SQL<number>,
   startDate: Date,
 ) {
   return db
@@ -14,7 +19,7 @@ function buildDailyCountQuery(
       date: sql<string>`date(${table.createdAt}, 'unixepoch')`,
       count: countExpr,
     })
-        .from(table as any)
+    .from(table)
     .where(gte(table.createdAt, startDate))
     .groupBy(sql`date(${table.createdAt}, 'unixepoch')`)
     .orderBy(sql`date(${table.createdAt}, 'unixepoch') asc`)
@@ -31,11 +36,13 @@ export async function getTimeSeriesMetrics(days: number = 30) {
     buildDailyCountQuery(bookmarks, sql<number>`count(*)`, startDate),
   ])
 
+  const mapRow = (r: DailyCountRow) => ({ date: r.date, count: Number(r.count) })
+
   return {
-        dailyActiveUsers: dailyActiveUsers.map((r: any) => ({ date: r.date, count: Number(r.count) })),
-        dailyServers: dailyServers.map((r: any) => ({ date: r.date, count: Number(r.count) })),
-        dailyViews: dailyViews.map((r: any) => ({ date: r.date, count: Number(r.count) })),
-        dailyBookmarks: dailyBookmarks.map((r: any) => ({ date: r.date, count: Number(r.count) })),
+    dailyActiveUsers: dailyActiveUsers.map(mapRow),
+    dailyServers: dailyServers.map(mapRow),
+    dailyViews: dailyViews.map(mapRow),
+    dailyBookmarks: dailyBookmarks.map(mapRow),
   }
 }
 
@@ -60,7 +67,7 @@ export async function getCohortAnalysis(weeks: number = 8) {
 
     if (newUsers.length === 0) continue
 
-        const userIds = newUsers.map((u: any) => u.id)
+    const userIds = newUsers.map((u) => u.id)
     const size = userIds.length
 
     const retention: number[] = []

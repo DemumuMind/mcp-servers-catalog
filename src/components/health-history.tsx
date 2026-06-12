@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { getServerHealthHistory, checkServerHealth } from '@/app/actions/health'
+import { getServerHealthHistory, checkServerHealth, type HealthCheckRow } from '@/app/actions/health'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -32,14 +32,22 @@ export function HealthHistory({ serverId, isRemote }: HealthHistoryProps) {
   const [loading, setLoading] = useState(false)
 
   const loadHistory = useCallback(async () => {
-    const data = await getServerHealthHistory(serverId, 7)
-    setHistory(data as any)
+    const data: HealthCheckRow[] = await getServerHealthHistory(serverId, 7)
+    setHistory(data.map((row) => ({
+      date: row.createdAt.toISOString(),
+      online: row.status === 'online' ? 1 : 0,
+      degraded: row.status === 'degraded' ? 1 : 0,
+      offline: row.status === 'offline' ? 1 : 0,
+      total: 1,
+      avgLatency: row.latency,
+      uptime: row.status === 'online' ? 100 : 0,
+    })))
     if (data.length > 0) {
-      const first = (data as any)[0]
+      const first = data[0]
       setLatest({
-        status: first.online > 0 ? 'online' : first.degraded > 0 ? 'degraded' : 'offline',
-        latency: first.avgLatency ?? first.latency ?? null,
-        createdAt: new Date(first.date ?? first.createdAt),
+        status: first.status === 'online' ? 'online' : first.status === 'degraded' ? 'degraded' : 'offline',
+        latency: first.latency ?? null,
+        createdAt: first.createdAt,
       })
     }
   }, [serverId])

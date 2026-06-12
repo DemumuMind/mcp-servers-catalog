@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 interface SearchGap {
   query: string
   count: number
-  lastSearch: Date
+  lastSearch: string
 }
 
 interface TopSearch {
@@ -19,6 +19,8 @@ interface TopSearch {
 
 interface SearchStats {
   total: number
+  unique: number
+  zeroResults: number
   withResults: number
   withoutResults: number
   gapRate: number
