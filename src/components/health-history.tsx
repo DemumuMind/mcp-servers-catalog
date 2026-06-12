@@ -1,3 +1,17 @@
+function toDailyHealth(data: unknown): DailyHealth[] {
+  if (!Array.isArray(data)) return []
+  return (data as Record<string, unknown>[]).map((row) => ({
+    date: String(row.date ?? ''),
+    online: Number(row.online ?? 0),
+    degraded: Number(row.degraded ?? 0),
+    offline: Number(row.offline ?? 0),
+    total: Number(row.total ?? 0),
+    avgLatency: row.avgLatency != null ? Number(row.avgLatency) : null,
+    uptime: Number(row.uptime ?? 0),
+  }))
+}
+
+interface DailyHealth { date: string; online: number; degraded: number; offline: number; total: number; avgLatency: number | null; uptime: number; latency?: number | null; createdAt?: Date; id?: string; serverId?: string; status?: string; error?: string | null }
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
@@ -33,9 +47,9 @@ export function HealthHistory({ serverId, isRemote }: HealthHistoryProps) {
 
   const loadHistory = useCallback(async () => {
     const data = await getServerHealthHistory(serverId, 7)
-    setHistory(data as any)
+    setHistory(toDailyHealth(data))
     if (data.length > 0) {
-      const first = (data as any)[0]
+      const first = toDailyHealth(data)[0]
       setLatest({
         status: first.online > 0 ? 'online' : first.degraded > 0 ? 'degraded' : 'offline',
         latency: first.avgLatency ?? first.latency ?? null,

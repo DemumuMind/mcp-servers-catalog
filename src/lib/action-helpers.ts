@@ -20,7 +20,7 @@ export async function fetchRatingMap(
     })
     .from(ratings)
     .where(inArray(ratings.serverId, serverIds))
-    .groupBy(ratings.serverId)) as any[]
+    .groupBy(ratings.serverId)).map((row) => ({ serverId: row.serverId, avgRating: row.avgValue ? Number(row.avgValue) : 0, count: row.countValue ?? 0 }))
 
   return new Map(
     ratingsAgg.map((r: any) => [

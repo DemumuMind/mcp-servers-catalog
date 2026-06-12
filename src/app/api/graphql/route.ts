@@ -1,3 +1,4 @@
+import type { GraphQLSchema } from 'graphql'
 import { createYoga, createSchema } from 'graphql-yoga'
 import { db, servers, clients } from '@/lib/db'
 import { eq, and, or, like, desc } from 'drizzle-orm'
@@ -135,7 +136,7 @@ const schema = createSchema({
 })
 
 const yoga = createYoga({
-    schema: schema as any,
+    schema: schema as GraphQLSchema,
   graphqlEndpoint: '/api/graphql',
   graphiql: true,
   landingPage: false,

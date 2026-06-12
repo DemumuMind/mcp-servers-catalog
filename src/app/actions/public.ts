@@ -110,10 +110,10 @@ export async function getServersPublic(
   const totalResult = await db.select({ count: count() }).from(servers).where(whereClause)
   const total = totalResult[0]?.count ?? 0
 
-    const serverIds = serverRows.map((s: any) => s.id)
+    const serverIds = serverRows.map((s) => s.id)
   const ratingMap = await fetchRatingMap(serverIds)
 
-    const serversWithRating = serverRows.map((server: any) => ({
+    const serversWithRating = serverRows.map((server) => ({
     ...server,
     avgRating: ratingMap.get(server.id)?.avg ?? null,
     ratingCount: ratingMap.get(server.id)?.count ?? 0,
@@ -180,13 +180,13 @@ export async function getServerTags() {
           LIMIT 50`,
     args: [],
   })
-    return result.rows.map((row: any) => ({ name: String(row.name), count: Number(row.count) }))
+    return result.rows.map((row) => ({ name: String(row.name), count: Number(row.count) }))
 }
 
 export async function toggleBookmark(userId: string, serverId: string) {
     const existing = await db.select().from(bookmarks).where(
     and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId))
-  ).limit(1).then((r: any) => r[0] ?? null)
+  ).limit(1).then((r) => r[0] ?? null)
 
   if (existing) {
     await db.delete(bookmarks).where(
@@ -209,13 +209,13 @@ export async function getUserBookmarks(userId: string) {
     .where(eq(bookmarks.userId, userId))
     .orderBy(desc(bookmarks.createdAt))
 
-    return bookmarkRows.map((b: any) => b.server)
+    return bookmarkRows.map((b) => b.server)
 }
 
 export async function isServerBookmarked(userId: string, serverId: string): Promise<boolean> {
     const bookmark = await db.select().from(bookmarks).where(
     and(eq(bookmarks.userId, userId), eq(bookmarks.serverId, serverId))
-  ).limit(1).then((r: any) => r[0] ?? null)
+  ).limit(1).then((r) => r[0] ?? null)
   return !!bookmark
 }
 
@@ -254,7 +254,7 @@ export async function addComment(userId: string, serverId: string, content: stri
 
   const sanitizedContent = sanitizeUserHtml(content)
 
-    const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r: any) => r[0])
+    const commentRow = await db.insert(comments).values({ userId, serverId, content: sanitizedContent }).returning().then((r) => r[0])
 
     const commentWithUser = await db.select({
     ...comments,
@@ -263,7 +263,7 @@ export async function addComment(userId: string, serverId: string, content: stri
       } as any).from(comments)
     .innerJoin(users, eq(comments.userId, users.id))
         .where(eq(comments.id, commentRow.id))
-    .limit(1).then((r: any) => r[0] ?? null)
+    .limit(1).then((r) => r[0] ?? null)
 
   if (!commentWithUser) return commentRow
   return attachUserInfo(commentWithUser)
@@ -303,7 +303,7 @@ export async function searchServers(query: string, limit = 20) {
     )
   ).limit(limit)
 
-    const ranked = serverRows.sort((a: any, b: any) => {
+    const ranked = serverRows.sort((a, b) => {
     const aName = a.name.toLowerCase()
     const bName = b.name.toLowerCase()
     const aDesc = a.description.toLowerCase()
@@ -315,8 +315,8 @@ export async function searchServers(query: string, limit = 20) {
     const bNameMatch = bName.includes(searchLower) ? 3 : 0
     const aDescMatch = aDesc.includes(searchLower) ? 2 : 0
     const bDescMatch = bDesc.includes(searchLower) ? 2 : 0
-        const aTagMatch = a.tags.some((t: any) => t.toLowerCase().includes(searchLower)) ? 1 : 0
-        const bTagMatch = b.tags.some((t: any) => t.toLowerCase().includes(searchLower)) ? 1 : 0
+        const aTagMatch = a.tags.some((t) => t.toLowerCase().includes(searchLower)) ? 1 : 0
+        const bTagMatch = b.tags.some((t) => t.toLowerCase().includes(searchLower)) ? 1 : 0
 
     const aScore = aExact + aNameMatch + aDescMatch + aTagMatch
     const bScore = bExact + bNameMatch + bDescMatch + bTagMatch
@@ -355,13 +355,13 @@ export async function getTrendingServers(limit = 6) {
 
   const scoreMap = new Map<string, number>()
 
-    views.forEach((v: any) => {
+    views.forEach((v) => {
     scoreMap.set(v.serverId, (scoreMap.get(v.serverId) || 0) + v.count * 1)
   })
-    bookmarkAgg.forEach((b: any) => {
+    bookmarkAgg.forEach((b) => {
     scoreMap.set(b.serverId, (scoreMap.get(b.serverId) || 0) + b.count * 3)
   })
-    ratingAgg.forEach((r: any) => {
+    ratingAgg.forEach((r) => {
     scoreMap.set(r.serverId, (scoreMap.get(r.serverId) || 0) + r.count * 2)
   })
 
@@ -376,7 +376,7 @@ export async function getTrendingServers(limit = 6) {
   } else {
     const serverRows = await db.select().from(servers).where(inArray(servers.id, sorted))
 
-        result = sorted.map((id) => serverRows.find((s: any) => s.id === id)).filter((s): s is typeof serverRows[0] => !!s)
+        result = sorted.map((id) => serverRows.find((s) => s.id === id)).filter((s): s is typeof serverRows[0] => !!s)
   }
 
   setCache(cacheKey, result, 600)
@@ -404,7 +404,7 @@ export async function getServersByIds(ids: string[]) {
 }
 
 export async function deleteComment(id: string, userId: string) {
-    const comment = await db.select().from(comments).where(eq(comments.id, id)).limit(1).then((r: any) => r[0] ?? null)
+    const comment = await db.select().from(comments).where(eq(comments.id, id)).limit(1).then((r) => r[0] ?? null)
   if (!comment || comment.userId !== userId) {
     throw new Error('Unauthorized')
   }

@@ -10,7 +10,7 @@ export async function claimServer(serverId: string, userId: string) {
     return { success: false, error: 'Unauthorized' }
   }
 
-    const server = await db.select({ authorId: servers.authorId, owner: servers.owner }).from(servers).where(eq(servers.id, serverId)).limit(1).then((r: any) => r[0])
+    const server = await db.select({ authorId: servers.authorId, owner: servers.owner }).from(servers).where(eq(servers.id, serverId)).limit(1).then((r) => r[0])
 
   if (server?.authorId) {
     return { success: false, error: 'Server already claimed' }
@@ -34,7 +34,7 @@ export async function getServerAuthor(userId: string) {
     email: users.email,
     image: users.image,
     isVerifiedAuthor: users.isVerifiedAuthor,
-  }).from(users).where(eq(users.id, userId)).limit(1).then((r: any) => r[0] || null)
+  }).from(users).where(eq(users.id, userId)).limit(1).then((r) => r[0] || null)
 }
 
 export async function verifyAuthor(userId: string, verified: boolean) {
@@ -49,9 +49,9 @@ async function fetchAnalyticsData(serverId: string, since30Days: Date) {
         db.select({
       avgValue: avg(ratings.value),
       countValue: count(ratings.value),
-    }).from(ratings).where(eq(ratings.serverId, serverId)).then((r: any) => r[0] ?? { avgValue: null, countValue: 0 }),
+    }).from(ratings).where(eq(ratings.serverId, serverId)).then((r) => ({ avgValue: r[0]?.avgValue ? Number(r[0].avgValue) : null, countValue: r[0]?.countValue ?? 0 })),
         db.select({ count: count() }).from(comments).where(eq(comments.serverId, serverId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
-        db.select({ stars: servers.stars }).from(servers).where(eq(servers.id, serverId)).limit(1).then((r: any) => r[0] ?? null),
+        db.select({ stars: servers.stars }).from(servers).where(eq(servers.id, serverId)).limit(1).then((r) => r[0] ?? null),
   ])
 
     const dailyViews = await getClient().execute(sql<Array<{ date: string; count: bigint }>>`
@@ -73,7 +73,7 @@ async function fetchSimilarServers(serverId: string, category: string, since30Da
     stars: servers.stars,
   }).from(servers).where(and(eq(servers.category, category), ne(servers.id, serverId))).limit(5)
 
-    const withStats = await Promise.all(similarServers.map(async (s: any) => {
+    const withStats = await Promise.all(similarServers.map(async (s) => {
         const [bmkCount, ratingRows, viewCount] = await Promise.all([
       db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.serverId, s.id)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
       db.select({ value: ratings.value }).from(ratings).where(eq(ratings.serverId, s.id)),
@@ -86,7 +86,7 @@ async function fetchSimilarServers(serverId: string, category: string, since30Da
       stars: s.stars,
       bookmarks: bmkCount,
       avgRating: ratingRows.length > 0
-                ? ratingRows.reduce((sum: any, r: any) => sum + r.value, 0) / ratingRows.length
+                ? ratingRows.reduce((sum, r) => sum + r.value, 0) / ratingRows.length
         : 0,
       views30d: viewCount,
     }
@@ -121,7 +121,7 @@ function generateRecommendations(
 }
 
 export async function getServerAnalytics(serverId: string, userId: string) {
-    const server = await db.select().from(servers).where(and(eq(servers.id, serverId), eq(servers.authorId, userId))).limit(1).then((r: any) => r[0])
+    const server = await db.select().from(servers).where(and(eq(servers.id, serverId), eq(servers.authorId, userId))).limit(1).then((r) => r[0])
 
   if (!server) {
     return null
@@ -149,9 +149,9 @@ export async function getServerAnalytics(serverId: string, userId: string) {
     avgRating: ratings.avgValue || 0,
     ratingsCount: ratings.countValue,
     comments,
-        dailyViews: dailyViews.map((d: any) => ({
-      date: d.date,
-      count: Number(d.count),
+        dailyViews: dailyViews.map((d) => ({
+      date: String(d.date ?? ''),
+      count: Number(d.count ?? 0),
     })),
     similar,
     recommendations,
@@ -166,7 +166,7 @@ export async function getAuthorDashboardData(userId: string) {
     category: servers.category,
   }).from(servers).where(eq(servers.authorId, userId))
 
-    const serversWithCounts = await Promise.all(authorServers.map(async (s: any) => {
+    const serversWithCounts = await Promise.all(authorServers.map(async (s) => {
         const [bmkCount, cmtCount, ratCount, viewCount] = await Promise.all([
       db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.serverId, s.id)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
             db.select({ count: count() }).from(comments).where(eq(comments.serverId, s.id)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
@@ -176,11 +176,11 @@ export async function getAuthorDashboardData(userId: string) {
     return { ...s, _bookmarks: bmkCount, _comments: cmtCount, _ratings: ratCount, _views: viewCount }
   }))
 
-    const totalViews = serversWithCounts.reduce((sum: any, s: any) => sum + s._views, 0)
-    const totalBookmarks = serversWithCounts.reduce((sum: any, s: any) => sum + s._bookmarks, 0)
-    const totalComments = serversWithCounts.reduce((sum: any, s: any) => sum + s._comments, 0)
-    const totalRatings = serversWithCounts.reduce((sum: any, s: any) => sum + s._ratings, 0)
-    const totalStars = serversWithCounts.reduce((sum: any, s: any) => sum + s.stars, 0)
+    const totalViews = serversWithCounts.reduce((sum, s) => sum + s._views, 0)
+    const totalBookmarks = serversWithCounts.reduce((sum, s) => sum + s._bookmarks, 0)
+    const totalComments = serversWithCounts.reduce((sum, s) => sum + s._comments, 0)
+    const totalRatings = serversWithCounts.reduce((sum, s) => sum + s._ratings, 0)
+    const totalStars = serversWithCounts.reduce((sum, s) => sum + s.stars, 0)
 
   const categoryCount: Record<string, number> = {}
   for (const s of serversWithCounts) {
@@ -189,7 +189,7 @@ export async function getAuthorDashboardData(userId: string) {
   const topCategory = Object.entries(categoryCount).sort((a, b) => b[1] - a[1])[0]?.[0] || null
 
   return {
-        servers: serversWithCounts.map((s: any) => ({
+        servers: serversWithCounts.map((s) => ({
       id: s.id,
       name: s.name,
       stars: s.stars,

@@ -17,35 +17,28 @@ export async function logSearchQuery(query: string, results: number, source: str
 }
 
 export async function getSearchGaps(limit: number = 50) {
-    const gaps = await getClient().execute(sql<Array<{ query: string; count: bigint; lastSearch: Date }>>`
-    SELECT query, COUNT(*) as count, MAX("createdAt") as "lastSearch"
-    FROM "SearchQuery"
-    WHERE results = 0
-    GROUP BY query
-    ORDER BY count DESC
-    LIMIT ${limit}
-  ` as any)
+    const { rows: gapRows } = await getClient().execute({
+    sql: 'SELECT query, COUNT(*) as count, MAX("createdAt") as "lastSearch" FROM "SearchQuery" WHERE results = 0 GROUP BY query ORDER BY count DESC LIMIT ?',
+    args: [limit],
+  })
 
-    return gaps.rows.map((g: any) => ({
-    query: g.query,
-    count: Number(g.count),
-    lastSearch: g.lastSearch,
+  return gapRows.map((g) => ({
+    query: String(g.query ?? ''),
+    count: Number(g.count ?? 0),
+    lastSearch: String(g.lastSearch ?? ''),
   }))
 }
 
 export async function getTopSearches(limit: number = 20) {
-    const searches = await getClient().execute(sql<Array<{ query: string; count: bigint; avgResults: number }>>`
-    SELECT query, COUNT(*) as count, AVG(results) as "avgResults"
-    FROM "SearchQuery"
-    GROUP BY query
-    ORDER BY count DESC
-    LIMIT ${limit}
-  ` as any)
+    const { rows: searchRows } = await getClient().execute({
+    sql: 'SELECT query, COUNT(*) as count, AVG(results) as "avgResults" FROM "SearchQuery" GROUP BY query ORDER BY count DESC LIMIT ?',
+    args: [limit],
+  })
 
-    return searches.rows.map((s: any) => ({
-    query: s.query,
-    count: Number(s.count),
-    avgResults: Number(s.avgResults),
+  return searchRows.map((s) => ({
+    query: String(s.query ?? ''),
+    count: Number(s.count ?? 0),
+    avgResults: Number(s.avgResults ?? 0),
   }))
 }
 

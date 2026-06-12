@@ -77,7 +77,7 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
 
   const handleVote = async (reviewId: string, helpful: boolean) => {
     if (!userId) return
-    const result = await voteReview(userId, reviewId, helpful)
+    const result = await voteReview(userId, reviewId, helpful) as { success: boolean; action: 'added' | 'removed' | 'changed' }
 
     setReviews((prev) =>
       prev.map((r) => {
@@ -87,15 +87,15 @@ export function ReviewSection({ serverId, userId, initialReviews }: ReviewSectio
         let newHelpful = r.helpfulCount
         let newNotHelpful = r.notHelpfulCount
 
-        if ((result as any).action === 'added') {
+        if (result.action === 'added') {
           newVotes.push({ userId, helpful })
           if (helpful) newHelpful++
           else newNotHelpful++
-        } else if ((result as any).action === 'removed' && existingVote) {
+        } else if (result.action === 'removed' && existingVote) {
           newVotes = newVotes.filter((v) => v.userId !== userId)
           if (existingVote.helpful) newHelpful--
           else newNotHelpful--
-        } else if ((result as any).action === 'changed' && existingVote) {
+        } else if (result.action === 'changed' && existingVote) {
           newVotes = newVotes.map((v) => (v.userId === userId ? { userId, helpful } : v))
           if (helpful) {
             newHelpful++

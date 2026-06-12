@@ -18,11 +18,11 @@ export async function getUserProfile(userId: string) {
   if (!user) return null
 
   const [bookmarkCount, commentCount, ratingCount] = await Promise.all([
-        db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
+        db.select({ count: count() }).from(bookmarks).where(eq(bookmarks.userId, userId)).then((r) => r[0]?.count ?? 0),
         db.select({ count: count() }).from(
             comments as any
-    ).where(eq(comments.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
-        db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r: unknown) => (r as {count?: number})?.count ?? 0),
+    ).where(eq(comments.userId, userId)).then((r) => r[0]?.count ?? 0),
+        db.select({ count: count() }).from(ratings).where(eq(ratings.userId, userId)).then((r) => r[0]?.count ?? 0),
   ])
 
   return {
