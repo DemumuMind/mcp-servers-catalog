@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { X, Plus, GitFork, Star, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 interface ServerData {
   id: string
@@ -39,6 +40,7 @@ const METRICS = [
 ]
 
 export function CompareView({ servers, locale }: CompareViewProps) {
+  const t = useTranslations('Compare')
   const [selectedIds, setSelectedIds] = useState<string[]>(servers.map(s => s.id))
   const [selectedServers, setSelectedServers] = useState<ServerData[]>(servers)
   const [searchQuery, setSearchQuery] = useState('')
@@ -77,7 +79,7 @@ export function CompareView({ servers, locale }: CompareViewProps) {
         <div className="flex-1">
           <input
             type="text"
-            placeholder="Search servers to add..."
+            placeholder={t("searchPlaceholder")}
             aria-label="Select server to compare"
             className="w-full px-4 py-2 rounded-lg border bg-background"
             value={searchQuery}
@@ -85,7 +87,7 @@ export function CompareView({ servers, locale }: CompareViewProps) {
           />
         </div>
         <span className="text-sm text-muted-foreground">
-          {selectedServers.length}/6 selected
+          {selectedServers.length}/6 {t("selected")}
         </span>
       </div>
 

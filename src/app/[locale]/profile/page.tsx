@@ -1,7 +1,7 @@
 import { getUserProfile } from '@/app/actions/profile'
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import { User, Bookmark, MessageSquare, Star, Calendar, Settings, Send } from 'lucide-react'
+import { User, Bookmark, MessageSquare, Star, Calendar, Pencil, Send } from 'lucide-react'
 import Link from 'next/link'
 import { AuthorAnalytics } from '@/components/author-analytics'
 import { Button } from '@/components/ui/button'
@@ -44,7 +44,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" render={<Link href={`/${locale}/profile/settings`} />}><Settings className="size-4" /> {t('edit')}</Button>
+            <Button variant="outline" render={<Link href={`/${locale}/profile/settings`} />}><Pencil className="size-4" /> {t('edit')}</Button>
             <Button render={<Link href={`/${locale}/submit`} />}><Send className="size-4" /> {t('addServer')}</Button>
           </div>
         </div>

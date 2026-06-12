@@ -43,7 +43,7 @@ export function HelpModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 z-50 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:opacity-90 transition-opacity"
+        className="fixed bottom-4 right-4 z-40 bg-primary/80 text-primary-foreground rounded-full p-2.5 shadow-md opacity-40 hover:opacity-100 hover:scale-110 transition-all duration-200"
         aria-label={t('ariaLabel')}
       >
         <Keyboard className="h-5 w-5" />
