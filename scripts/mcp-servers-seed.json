@@ -1494,6 +1494,23 @@
     "fullSlug": "jeroslator/mcp-server-telegram"
   },
   {
+    "owner": "Xquik-dev",
+    "repo": "x-twitter-scraper",
+    "description": "X search, profile lookup, monitoring, and webhook workflows through Xquik",
+    "category": "social",
+    "stars": 0,
+    "tags": [
+      "x",
+      "search",
+      "monitoring"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "featured": false,
+    "githubUrl": "https://github.com/Xquik-dev/x-twitter-scraper",
+    "fullSlug": "xquik-dev/x-twitter-scraper"
+  },
+  {
     "owner": "modelcontextprotocol",
     "repo": "server-gmail",
     "description": "Gmail integration for email reading and sending",
