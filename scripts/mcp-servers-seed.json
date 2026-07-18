@@ -646,7 +646,7 @@
   },
   {
     "owner": "apify",
-    "repo": "apify-mcp-server",
+    "repo": "actors-mcp-server",
     "description": "3000+ pre-built web scrapers via Apify",
     "category": "search",
     "stars": 2014,
@@ -659,7 +659,7 @@
     "isRemote": true,
     "featured": false,
     "githubUrl": "https://github.com/apify/apify-mcp-server",
-    "fullSlug": "apify/apify-mcp-server"
+    "fullSlug": "apify/actors-mcp-server"
   },
   {
     "owner": "tanigami",
@@ -1506,6 +1506,8 @@
     ],
     "isOfficial": false,
     "isRemote": true,
+    "authType": "oauth",
+    "endpoint": "https://xquik.com/mcp",
     "featured": false,
     "githubUrl": "https://github.com/Xquik-dev/x-twitter-scraper",
     "fullSlug": "xquik-dev/x-twitter-scraper"
