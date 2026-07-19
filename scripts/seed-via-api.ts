@@ -37,6 +37,8 @@ interface SeedServer {
   tags: string[]
   isOfficial: boolean
   isRemote: boolean
+  authType?: string
+  endpoint?: string
   featured: boolean
   githubUrl: string
   fullSlug: string
@@ -130,6 +132,8 @@ async function seedServers(cookieStr: string) {
           tags: s.tags,
           isOfficial: s.isOfficial,
           isRemote: s.isRemote,
+          authType: s.authType,
+          endpoint: s.endpoint,
           featured: s.featured,
           stars: s.stars,
           forks: 0,

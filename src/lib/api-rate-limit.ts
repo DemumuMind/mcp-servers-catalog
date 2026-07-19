@@ -12,7 +12,7 @@ export function apiRateLimit(config: RateLimitConfig = { maxRequests: 100, windo
     const ip = await getClientIP(request)
     const identifier = config.identifier 
       ? config.identifier(request)
-      : `api:${ip}:${request.url}`
+      : `api:${ip}:${new URL(request.url).pathname}`
     
     const result = await rateLimit(identifier, config.maxRequests, config.windowMs)
     

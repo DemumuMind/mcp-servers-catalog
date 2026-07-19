@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { servers } from '@/lib/db/schema'
+import { auth } from '@/lib/auth'
 import { eq, count } from 'drizzle-orm'
 
-export async function POST(req: NextRequest) {
-  // Simple auth check - verify session cookie exists
-  const sessionToken = req.cookies.get('authjs.session-token')?.value
-  if (!sessionToken) {
+/** Return a response when the current user cannot access admin routes. */
+async function authorizeAdmin(): Promise<NextResponse | null> {
+  const session = await auth()
+  if (!session?.user?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
+  if (session.user.role !== 'admin') {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+  return null
+}
+
+/** Create or update one MCP server as an authenticated administrator. */
+export async function POST(req: NextRequest) {
+  const authorizationError = await authorizeAdmin()
+  if (authorizationError) return authorizationError
 
   try {
     const body = await req.json()
@@ -22,6 +33,8 @@ export async function POST(req: NextRequest) {
       tags,
       isOfficial,
       isRemote,
+      authType,
+      endpoint,
       featured,
       stars,
       forks,
@@ -50,6 +63,8 @@ export async function POST(req: NextRequest) {
       tags: tags || [],
       isOfficial: isOfficial || false,
       isRemote: isRemote || false,
+      authType: authType || null,
+      endpoint: endpoint || null,
       featured: featured || false,
       stars: stars || 0,
       forks: forks || 0,
@@ -61,11 +76,10 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
-  const sessionToken = req.cookies.get('authjs.session-token')?.value
-  if (!sessionToken) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+/** Return the MCP server count to an authenticated administrator. */
+export async function GET() {
+  const authorizationError = await authorizeAdmin()
+  if (authorizationError) return authorizationError
 
   const result = await db.select({ count: count() }).from(servers).get()
   return NextResponse.json({ count: result?.count ?? 0 })

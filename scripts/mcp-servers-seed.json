@@ -68,7 +68,7 @@
     "fullSlug": "qdrant/mcp-server-qdrant"
   },
   {
-    "owner": "ClickHouse",
+    "owner": "clickhouse",
     "repo": "mcp-clickhouse",
     "description": "Analytics database integration for ClickHouse",
     "category": "database",
@@ -288,7 +288,7 @@
     "fullSlug": "donghao1393/mcp-dbutils"
   },
   {
-    "owner": "LucasHild",
+    "owner": "lucashild",
     "repo": "mcp-server-bigquery",
     "description": "Query and inspect BigQuery databases",
     "category": "database",
@@ -305,7 +305,7 @@
     "fullSlug": "lucashild/mcp-server-bigquery"
   },
   {
-    "owner": "Couchbase-Ecosystem",
+    "owner": "couchbase-ecosystem",
     "repo": "mcp-server-couchbase",
     "description": "Couchbase database integration for AI agents",
     "category": "database",
@@ -357,7 +357,7 @@
     "fullSlug": "awslabs/mcp"
   },
   {
-    "owner": "Azure",
+    "owner": "azure",
     "repo": "azure-mcp",
     "description": "Microsoft Official Azure MCP for Storage, Cosmos DB, Monitor",
     "category": "cloud-service",
@@ -408,7 +408,7 @@
     "fullSlug": "hashicorp/terraform-mcp-server"
   },
   {
-    "owner": "GoogleCloudPlatform",
+    "owner": "googlecloudplatform",
     "repo": "cloud-run-mcp",
     "description": "Google Cloud Run management and deployment",
     "category": "cloud-service",
@@ -527,7 +527,7 @@
     "fullSlug": "hmk/box-mcp-server"
   },
   {
-    "owner": "StacklokLabs",
+    "owner": "stackloklabs",
     "repo": "mkp",
     "description": "Kubernetes MCP platform for cluster operations",
     "category": "cloud-service",
@@ -679,7 +679,7 @@
     "fullSlug": "tanigami/mcp-server-perplexity"
   },
   {
-    "owner": "Tomatio13",
+    "owner": "tomatio13",
     "repo": "mcp-server-tavily",
     "description": "Tavily search API integration for AI agents",
     "category": "search",
@@ -814,7 +814,7 @@
     "fullSlug": "mzxrai/mcp-webresearch"
   },
   {
-    "owner": "ChanMeng666",
+    "owner": "chanmeng666",
     "repo": "server-google-news",
     "description": "Google News search integration for AI assistants",
     "category": "search",
@@ -882,7 +882,7 @@
     "fullSlug": "browserbase/mcp-server-browserbase"
   },
   {
-    "owner": "BrowserMCP",
+    "owner": "browsermcp",
     "repo": "mcp",
     "description": "Browser control for AI applications, automate your local Chrome",
     "category": "browser",
@@ -1494,6 +1494,25 @@
     "fullSlug": "jeroslator/mcp-server-telegram"
   },
   {
+    "owner": "xquik-dev",
+    "repo": "x-twitter-scraper",
+    "description": "X search, profile lookup, monitoring, and webhook workflows through Xquik",
+    "category": "social",
+    "stars": 156,
+    "tags": [
+      "x",
+      "search",
+      "monitoring"
+    ],
+    "isOfficial": false,
+    "isRemote": true,
+    "authType": "oauth",
+    "endpoint": "https://xquik.com/mcp",
+    "featured": false,
+    "githubUrl": "https://github.com/Xquik-dev/x-twitter-scraper",
+    "fullSlug": "xquik-dev/x-twitter-scraper"
+  },
+  {
     "owner": "modelcontextprotocol",
     "repo": "server-gmail",
     "description": "Gmail integration for email reading and sending",
@@ -1596,7 +1615,7 @@
     "fullSlug": "idoru/influxdb-mcp-server"
   },
   {
-    "owner": "GreptimeTeam",
+    "owner": "greptimeteam",
     "repo": "greptimedb-mcp-server",
     "description": "GreptimeDB time-series database querying",
     "category": "monitoring",
@@ -1715,7 +1734,7 @@
     "fullSlug": "stripe/mcp-server-stripe"
   },
   {
-    "owner": "XGenerationLab",
+    "owner": "xgenerationlab",
     "repo": "xiyan_mcp_server",
     "description": "Natural language SQL queries powered by XiyanSQL",
     "category": "database",
@@ -1766,7 +1785,7 @@
     "fullSlug": "sirmews/mcp-pinecone"
   },
   {
-    "owner": "KashiwaByte",
+    "owner": "kashiwabyte",
     "repo": "vikingdb-mcp-server",
     "description": "VikingDB vector store and search functionalities",
     "category": "database",
@@ -1800,7 +1819,7 @@
     "fullSlug": "quarkiverse/quarkus-mcp-jdbc"
   },
   {
-    "owner": "FreePeak",
+    "owner": "freepeak",
     "repo": "db-mcp-server",
     "description": "High-performance multi-database server with MySQL & PostgreSQL",
     "category": "database",
@@ -1817,7 +1836,7 @@
     "fullSlug": "freepeak/db-mcp-server"
   },
   {
-    "owner": "Dumpling-AI",
+    "owner": "dumpling-ai",
     "repo": "mcp-server-dumplingai",
     "description": "Dumpling AI web search and data extraction",
     "category": "search",
@@ -1936,7 +1955,7 @@
     "fullSlug": "yan5236/bing-cn-mcp-server"
   },
   {
-    "owner": "Azure",
+    "owner": "azure",
     "repo": "blue-bridge",
     "description": "Azure resource management with zero-secret authentication",
     "category": "cloud-service",
