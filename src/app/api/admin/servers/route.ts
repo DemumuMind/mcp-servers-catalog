@@ -4,6 +4,7 @@ import { servers } from '@/lib/db/schema'
 import { auth } from '@/lib/auth'
 import { eq, count } from 'drizzle-orm'
 
+/** Return a response when the current user cannot access admin routes. */
 async function authorizeAdmin(): Promise<NextResponse | null> {
   const session = await auth()
   if (!session?.user?.id) {
@@ -15,6 +16,7 @@ async function authorizeAdmin(): Promise<NextResponse | null> {
   return null
 }
 
+/** Create or update one MCP server as an authenticated administrator. */
 export async function POST(req: NextRequest) {
   const authorizationError = await authorizeAdmin()
   if (authorizationError) return authorizationError
@@ -74,6 +76,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
+/** Return the MCP server count to an authenticated administrator. */
 export async function GET() {
   const authorizationError = await authorizeAdmin()
   if (authorizationError) return authorizationError
